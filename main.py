@@ -1,25 +1,28 @@
+from fulldf import full_df
 import pandas as pd
-from getdata import getdata
-from methods import compare
-
 symbols = ["RELIANCE.BSE","TTFL.BSE"]
 
-Outdf = pd.DataFrame(columns=['Symbol','Date','Open', 'Close', 'High', 'Low','Type'])
+main_df = full_df(symbols)
+i=j = 0 
 
-date_list =  []
-final_list =  []
-
-for symbol in symbols:
+while i < main_df.shape[0]:
+    i = j + 30
+    stock_df = main_df.iloc[j:i,:]
+    j = i
     
-    required_data = getdata(symbol)
-    for each_item in required_data:
-        if len(date_list) < 5:
-            date_list.append(each_item)
-        else:
-            break
-    for each_date in date_list:
-        open,close = required_data[each_date]['1. open'],required_data[each_date]['4. close']
-        Outdf.loc[len(Outdf.index)] = symbol,each_date,open,close,required_data[each_date]['3. low'],required_data[each_date]['2. high'],compare(open,close)  # type: ignore
-        
+    close_price = stock_df['Close'].to_list()
+    present_price = float(close_price[0])
 
-print(Outdf)
+    last_week_price = float(close_price[7])
+
+    last_15_price = float(close_price[15])
+
+    last_month_price = float(close_price[29])
+
+    week_diff = (present_price-last_week_price)/last_week_price * 100
+
+    month_diff = (present_price-last_month_price)/last_month_price * 100
+
+    fort_diff = (present_price-last_15_price)/last_15_price * 100
+
+    print(week_diff,fort_diff,month_diff)
