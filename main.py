@@ -20,7 +20,7 @@ while i < main_df.shape[0]:
 
     last_month_price = float(close_price[29])
 
-    wk_com,week_diff,mon_com,month_diff,fort_com,fort_diff = find_trend(present_price,last_week_price,last_15_price,last_month_price)
+    week_diff,month_diff,fort_diff = find_trend(present_price,last_week_price,last_15_price,last_month_price)
 
     
 
