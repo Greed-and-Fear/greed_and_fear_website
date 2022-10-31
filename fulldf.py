@@ -1,6 +1,5 @@
 import pandas as pd
 from getdata import getdata
-from methods import compare
 
 
 

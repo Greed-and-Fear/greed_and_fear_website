@@ -1,5 +1,4 @@
 import requests
-from methods import compare
 
 def getdata(symbol):
     url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&outputsize=full&apikey=8SP5CFNLUHXR9F34&outputsize=compact'
