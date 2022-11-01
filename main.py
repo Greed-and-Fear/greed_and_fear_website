@@ -5,7 +5,7 @@ from methods import find_trend,get_five_day_trend
 from stockname import sub_stock
 
 Outdf = pd.DataFrame(columns=["Stock","Day1","Day2","Day3","Day4","Day5","Day6","Day7","weekly","15 day","Monthly"])
-symbols = sub_stock[0]
+symbols = sub_stock[0:1]
 
 for each_sub_stock in symbols:
     main_df = full_df(each_sub_stock)

@@ -1,6 +1,3 @@
-from re import I
-
-
 names = [
     "TTFl.BSE",
     "JPPOWER.BSE",
@@ -4301,5 +4298,4 @@ sub_stock = []
 
 for i in range(0,len(names),5):
     sub_stock.append(names[i:i+5])
-
 
