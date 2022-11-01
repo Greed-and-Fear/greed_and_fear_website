@@ -21,4 +21,4 @@ print(new_df.to_string())
 
 # "Stock","Ltp","D+1","D+2","D+3","D+4","D+5","D+6","D+7","D+10","D+15","D+20",
 # "D+25","D+30","D+45","D+60","D+90","D+0-Vol",
-# "D+1-Vol","D+2-Vol","D+3-Vol","D+4-Vol","D+5-Vol","D+6-Vol","D+7-Vol"]
+# "D+1-Vol","D+2-Vol","D+3-Vol","D+4-Vol","D+5-Vol","D+6-Vol","D+7-Vol"] new data
