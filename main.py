@@ -39,7 +39,7 @@ for symbol in symbols:
 
     week_diff,month_diff,fort_diff = find_trend(present_price,last_week_price,last_15_price,last_month_price)
 
-    Outdf.loc[len(Outdf.index)] = [symbol,five_data_trend[0],five_data_trend[1],five_data_trend[2],five_data_trend[3],five_data_trend[4],five_data_trend[5],five_data_trend[6],week_diff,fort_diff,month_diff]
+    Outdf.loc[len(Outdf.index)] = [symbol,five_data_trend[0],five_data_trend[1],five_data_trend[2],five_data_trend[3],five_data_trend[4],five_data_trend[5],five_data_trend[6],week_diff,fort_diff,month_diff]  # type: ignore
 
 
 print(Outdf.to_string())
