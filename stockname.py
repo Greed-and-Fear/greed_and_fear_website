@@ -4293,9 +4293,3 @@ names = [
 "WEBSL.BSE",
 "ADHIRAJ.BSE"
 ]
-
-sub_stock = []
-
-for i in range(0,len(names),5):
-    sub_stock.append(names[i:i+5])
-
