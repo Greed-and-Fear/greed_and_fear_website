@@ -9,8 +9,9 @@ date_list =  []
 final_list =  []
 
 def full_df(symbols):
+    
     for symbol in symbols:
-        
+        print(symbol)
         required_data = getdata(symbol)
         for each_item in required_data:
             if len(date_list) < 30:
