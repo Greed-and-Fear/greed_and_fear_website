@@ -2,6 +2,10 @@ from re import I
 
 
 names = [
+    "TTFl.BSE",
+    "JPPOWER.BSE",
+    "ASHSI.BSE",
+    "TATAPOWER.BSE",
     "ABB.BSE",
 "AEGISLOG.BSE",
 "AMARAJABAT.BSE",
@@ -167,7 +171,6 @@ names = [
 "ORIENTHOT.BSE",
 "OSWALAGRO.BSE",
 "INDSUCR.BSE",
-"RELIANCE.BSE",
 "PILITA.BSE",
 "RAYMOND.BSE",
 "PIDILITIND.BSE",
@@ -196,7 +199,6 @@ names = [
 "SHREECEM.BSE",
 "SKPMIL.BSE",
 "RELINFRA.BSE",
-"TATAPOWER.BSE",
 "SPMLINFRA.BSE",
 "SUNDRMFAST.BSE",
 "SUNFLAG.BSE",
@@ -1748,7 +1750,6 @@ names = [
 "SPICEISL.BSE",
 "CONFIPET.BSE",
 "SIPL.BSE",
-"ASHSI.BSE",
 "BANARBEADS.BSE",
 "AREXMIS.BSE",
 "BI.BSE",
@@ -3632,7 +3633,6 @@ names = [
 "SBILIFE.BSE",
 "DIAMONDYD.BSE",
 "SHAREINDIA.BSE",
-"TTFL.BSE",
 "POOJA.BSE",
 "SAYAJIIND.BSE",
 "VANTABIO.BSE",
@@ -4301,4 +4301,5 @@ sub_stock = []
 
 for i in range(0,len(names),5):
     sub_stock.append(names[i:i+5])
+
 
