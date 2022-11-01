@@ -1,5 +1,3 @@
-import io
-from operator import index
 import pandas as pd
 import methods
 

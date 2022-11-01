@@ -1,5 +1,4 @@
 import time
-from fulldf import full_df
 import pandas as pd
 from stockname import names
 from getdata import getdata
