@@ -7,7 +7,7 @@ Outdf = pd.DataFrame(columns=["Stock","Ltp","D+1","D+2","D+3","D+4","D+5","D+6",
 
 symbols = names
 
-data = getdata("TTFL.BSE")
+data = getdata("TATAPOWER.BSE")
 
 date_list = [each_data for each_data in data]
 
