@@ -1,7 +1,7 @@
-import requests
+import pandas as pd
+from getdata import Getdata
 
-url = "https://www.nseindia.com/api/quote-equity?symbol=AARON"
+get_data = Getdata()
+df = pd.read_csv("nse.csv")
 
-data = requests.get(url).json()
-
-print(data)
+print(df)
