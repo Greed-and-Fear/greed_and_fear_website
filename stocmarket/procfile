@@ -1,0 +1,1 @@
+web: gunicorn stocmarket.wsgi --log-file -
