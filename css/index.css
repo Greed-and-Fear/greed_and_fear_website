@@ -35,6 +35,7 @@
 
   .logo{
     border-radius: 50px;
+    
   }
   .navbar .nav-links{
     display: inline;
@@ -63,6 +64,10 @@
   /* responsive navbar toggle button */
   .navbar #nav-check, .navbar .nav-btn{
     display: none;
+  }
+
+  .slogan{
+    padding: 0px 10px;
   }
    
 
@@ -127,5 +132,6 @@
   @media (max-width:400px) {
     .slogan {
       width: 200px;
+      
     }
   }
