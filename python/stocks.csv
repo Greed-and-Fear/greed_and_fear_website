@@ -1,0 +1,4 @@
+name,ltp,s1,t1,t2,t3,type,support,resistance,breakprice
+dmart,100,98,102,104,106,Sell,80,120,110
+mrf,1000,970,1100,1150,1300,Buy,900,1500,1100
+Reliance,2600,2500,2700,2800,3000,Buy,2500,3600,2650
