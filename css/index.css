@@ -81,13 +81,12 @@
   
 }
 
+
+
 .row {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-
-  
-
 }
 
 ::-webkit-scrollbar {
@@ -107,6 +106,21 @@
   border-radius: 25px;
 }
 
+.card .card-name{
+  color: #000;
+  font-weight: bold;
+}
+
+.card .buy-price{
+  color: #000;
+}
+
+.card .sell-price{
+ color: #000;
+}
+
+
+
 .message{
   margin: auto;
   text-align: center;
@@ -117,6 +131,7 @@
   color: rgb(235, 244, 244);
   
 }
+
 /* Responsive columns - one column layout (vertical) on small screens */
 
   @media (max-width:800px) {
