@@ -13,21 +13,14 @@
     color: rgb(243, 242, 242); 
   }
 
-  .center{
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
-
   .container{
-    padding: 15px;
+    padding: 5%;
     width: 500px;
     height: 300px;
-    background-color: rgba(17, 11, 45, .7);
-}
+    background-color: rgba(198, 192, 223, 0.3);
+    box-shadow: 0px 0px 5px rgb(57, 113, 132);
+    backdrop-filter: blur(7px);
+  }
 
   .nav-header
   {
@@ -42,20 +35,72 @@
     height: 100px;
    border-radius: 50%;
   }
+
   .slogan
   {
     width: 490px;
     height: 100px;
   }
-  
-  .button{
-    width: 70px;
-    margin: 15px;
+
+  .center{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
 
-  .label{
-    padding: 10px;
-  }
+  .container{
+    padding: 1px;
+    width: 500px;
+    height: 300px;
+    background-color: rgba(17, 11, 45, .7);
+}
+
+input[type=text] {
+  color: rgb(192, 192, 192);
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid rgb(246, 233, 233);
+  height: 40px;
+}
+
+input[type=password] {
+  color: rgb(192, 192, 192);
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid rgb(246, 233, 233);
+  height: 40px;
+}
+
+.text-center{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.label{
+  margin-top: 35px;
+  margin-bottom: 35px;
+  width: 100%;
+  
+}
+  
+.button{
+  width: 100%;
+  background-color: rgb(7, 18, 223);
+  border: none;
+  height: 40px;
+  border-radius: 25px;
+}
+  
+
 
   @media (max-width:800px) {
     .container{
@@ -78,9 +123,28 @@
     }
     .slogan
     {
+      margin-left: 6px;
       width: 70%;
       height: 60px;
     }
 
+    .container{
+      padding-top: 10%;
     }
+
+    .text-center{
+      top: 30%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .label{
+      margin-top: 45px;
+      margin-bottom: 45px;
+    }
+
+    
+
+  }
   
