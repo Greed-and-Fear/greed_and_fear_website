@@ -110,7 +110,7 @@
 .message{
   margin: auto;
   text-align: center;
-  width: 50%;
+  width: 60%;
   font-family: "Times New Roman", Times, serif;
   font-size: 20pt;
   padding: 10px;
@@ -191,7 +191,7 @@
       
     }
     .message{
-      font-size : 15px;
+      font-size : 17px;
       padding: 6px;
     }
   }
