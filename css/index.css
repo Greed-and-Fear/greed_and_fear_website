@@ -190,4 +190,8 @@
       width: 200px;
       
     }
+    .message{
+      font-size : 15px;
+      padding: 6px;
+    }
   }
