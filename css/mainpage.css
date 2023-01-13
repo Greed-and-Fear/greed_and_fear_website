@@ -107,7 +107,7 @@
   .stockcard .card-name{
     position: absolute;
     top: 10%;
-    left: 6%;
+    left: 8%;
     font-size: 18px;
     color: #000;
     font-weight: bold;
@@ -138,6 +138,24 @@
     font-size: 18px;
     color: #000;
     font-weight: bold;
+  }
+
+  .img-trend-up{
+    position: absolute;
+    top: 45%;
+    right: 75%;
+    color: #000;
+    font-weight: bold;
+    width: 80px;
+  }
+
+  .img-trend-down{
+    position: absolute;
+    top: 29%;
+    right: 75%;
+    color: #000;
+    font-weight: bold;
+    width: 80px;
   }
 
   .message{
