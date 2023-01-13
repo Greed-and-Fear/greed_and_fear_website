@@ -69,140 +69,219 @@
   .slogan{
     padding: 0px 10px;
   }
-   
-  
 
 /* Style the counter cards */
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
-  padding: 16px;
-  text-align: center;
-  background-color: #f1f1f1;
-  
-}
+  .stockcard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-color: #f1f1f1;
+  }
 
+  .row {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
 
+  ::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+  }
 
-.row {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
+  .row .column {
+    display: inline-block;
+    margin-left: 2%;
+    margin-right: 2%;
+    
+  }
 
-::-webkit-scrollbar {
-  width: 0px;  /* Remove scrollbar space */
-  background: transparent;  /* Optional: just make scrollbar invisible */
-}
-
-.row .column {
-  display: inline-block;
-  margin-left: 2%;
-  
-}
-
-.row .column .card{
-  width: 300px;
+  .row .column .stockcard{
+    width: 300px;
   height: 100px;
   border-radius: 25px;
-}
+  }
 
-.card .card-name{
+  .stockcard .card-name{
+    color: #000;
+    font-weight: bold;
+  }
+
+  .stockcard .buy-price{
+    color: #000;
+  }
+
+  .stockcard .sell-price{
   color: #000;
-  font-weight: bold;
+  }
+
+  .message{
+    margin: auto;
+    text-align: center;
+    width: 60%;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 20pt;
+    padding: 10px;
+    color: rgb(235, 244, 244);
+    
+  }
+
+  .wrapper {
+    padding: 1.5rem 1.5rem 1.5rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .card {
+    padding: 3rem;
+    padding-bottom: 2.81rem;
+    max-width: 20.45rem;
+    margin-inline: auto;
+    background-color: #f1f1f1;
+  }
+
+
+  
+  .card-1 {
+    background-color: hsl(30deg, 77%, 52%);
+    border-radius: 0.625rem 0.625rem 0 0;
+  }
+  .card-1 .btn {
+  color: hsl(30deg, 77%, 52%);
+ }
+
+.btn {
+  cursor: pointer;
+  padding: 0.85rem 1.85rem;
+  border-radius: 1.6rem;
+  border: 2px solid transparent;
+  transition: all 0.4s ease-in-out;
+}
+.btn:hover {
+  border-color: hsl(0deg, 0%, 100%);
+  background-color: transparent;
+  color: hsl(0deg, 0%, 100%);
 }
 
-.card .buy-price{
-  color: #000;
+.card-2 {
+  background-color: hsl(185deg, 98%, 23%);
+}
+.card-2 .btn {
+  color: hsl(185deg, 98%, 23%);
 }
 
-.card .sell-price{
- color: #000;
+.card-3 {
+  background-color: hsl(179deg, 100%, 13%);
+  border-radius: 0 0 0.625rem 0.625rem;
+}
+.card-3 .btn {
+  color: hsl(179deg, 100%, 13%);
 }
 
-
-
-.message{
-  margin: auto;
-  text-align: center;
-  width: 60%;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 20pt;
-  padding: 10px;
-  color: rgb(235, 244, 244);
+.card__icon{
+  width: 80px;
+  height: 80px;
   
 }
 
-/* Responsive columns - one column layout (vertical) on small screens */
+.card__headline {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
 
-  @media (max-width:800px) {
-    .navbar .nav-btn{
-      display: inline-block;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-    }
-    .navbar .nav-btn label {
-      display: inline-block;
-      width: 80px;
-      height: 70px;
-      padding: 25px;
-    }
-    .navbar .nav-btn label span {
-      display: block;
-      height: 10px;
-      width: 25px;
-      border-top: 3px solid #eee;
-    }
-    .navbar .nav-btn label:hover, .navbar #nav-check:checked ~ .nav-btn label {
-      background-color: rgb(9, 14, 90);
-    }
-    .navbar .nav-links{
-      position: absolute;
-      display: block;
-      text-align: center;
-      width: 25%;
-      background-color: rgb(9, 14, 90);
-      transition: all 0.3s ease-in;
-      overflow-y: hidden;
-      top: 70px;
-      right: 0px;
-    }
-    .navbar .nav-links a {
-      display: block;
-    }
-   
-    /* when nav toggle button not checked */
-    .navbar #nav-check:not(:checked) ~ .nav-links {
-      height: 0px;
-    }
-   
-    /* when nav toggle button is checked */
-    .navbar #nav-check:checked ~ .nav-links {
-      height: calc(100vh - 70px);
-      overflow-y: auto;
-    }
-    .navbar .nav-links .loginBtn {
-      padding: 10px 40px ;
-      margin: 20px;
-      font-size:  18px;
-      font-weight: bold;
-      color: rgb(9, 14, 90);
-    }
-     
-    .row .column .card{
-      width: 100px;
-    }
+.card__desc {
+  line-height: 1.56rem;
+  margin-bottom: 1.56rem;
+}
 
-    .message{
-      font-size : 17px;
-      padding: 6px;
-    }
-   
+@media (min-width: 1000px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 19.125rem);
+    justify-content: center;
   }
 
-  @media (max-width:400px) {
-    .slogan {
-      width: 200px;
-      
-    }
+  .card-1 {
+    border-radius: 0.625rem 0 0 0.625rem;
   }
+
+  .card-3 {
+    border-radius: 0 0.625rem 0.625rem 0;
+  }
+
+  .card__desc {
+    margin-bottom: 5.3rem;
+  }
+}
+
+@media (max-width:800px) {
+  .navbar .nav-btn{
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  .navbar .nav-btn label {
+    display: inline-block;
+    width: 80px;
+    height: 70px;
+    padding: 25px;
+  }
+  .navbar .nav-btn label span {
+    display: block;
+    height: 10px;
+    width: 25px;
+    border-top: 3px solid #eee;
+  }
+  .navbar .nav-btn label:hover, .navbar #nav-check:checked ~ .nav-btn label {
+    background-color: rgb(9, 14, 90);
+  }
+  .navbar .nav-links{
+    position: absolute;
+    display: block;
+    text-align: center;
+    width: 25%;
+    background-color: rgb(9, 14, 90);
+    transition: all 0.3s ease-in;
+    overflow-y: hidden;
+    top: 70px;
+    right: 0px;
+  }
+  .navbar .nav-links a {
+    display: block;
+  }
+  
+  /* when nav toggle button not checked */
+  .navbar #nav-check:not(:checked) ~ .nav-links {
+    height: 0px;
+  }
+  
+  /* when nav toggle button is checked */
+  .navbar #nav-check:checked ~ .nav-links {
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+  .navbar .nav-links .loginBtn {
+    padding: 10px 40px ;
+    margin: 20px;
+    font-size:  18px;
+    font-weight: bold;
+    color: rgb(9, 14, 90);
+  }
+    
+  .row .column .stockcard{
+    width: 100px;
+  }
+
+  .message{
+    font-size : 17px;
+    padding: 6px;
+  }
+  
+}
+
+@media (max-width:400px) {
+  .slogan {
+    width: 200px;
+    
+  }
+}
