@@ -48,19 +48,13 @@
   .center{
     margin: 0;
     position: absolute;
-    top: 55%;
+    top: 60%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
-    -webkit-transition-delay: 9999s;
-}
+
   
 input[type=text],textarea {
   color: rgb(192, 192, 192);
@@ -85,11 +79,13 @@ input[type=password],textarea {
 
 
 .label{
-  margin-top: 35px;
-  margin-bottom: 35px;
-  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  width: 60%;
   
 }
+
+
   
 .button{
   width: 100%;
@@ -114,6 +110,14 @@ input[type=password],textarea {
   text-decoration: none;
   color: #737fd7;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+}
   
 
 
@@ -121,11 +125,13 @@ input[type=password],textarea {
     .container{
         width: 80vw;
         height: 60vh;
-        padding-top: 10%;
+        margin: 0px;
     }
 
     .label{
-      width: 100%;
+      width: 80%;
+      margin-top: 0px;
+      margin-bottom: 5px;
     }
 
     .nav-header
@@ -148,19 +154,12 @@ input[type=password],textarea {
       height: 60px;
     }
 
-
-    .login .label{
-      margin-top: 45px;
-      margin-bottom: 45px;
-    }
-
-    .register .label{
-      margin-top: 35px;
-      margin-bottom: 35px;
-    }
-
     .sub-head{
       font-size: 12px;
+    }
+
+    .center{
+      top: 50%;
     }
 
 

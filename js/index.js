@@ -31,3 +31,12 @@ const togglePassword = document.querySelector('#togglePassword');
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
 });
+
+function load_login(){
+    document.getElementById('register').style.display = "none";
+    document.getElementById('login').style.display = "block";
+    }
+function load_register(){
+document.getElementById('register').style.display = "block";
+document.getElementById('login').style.display = "none";
+}
