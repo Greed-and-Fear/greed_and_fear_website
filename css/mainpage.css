@@ -144,8 +144,6 @@
     position: absolute;
     top: 45%;
     right: 75%;
-    color: #000;
-    font-weight: bold;
     width: 80px;
   }
 
@@ -153,8 +151,6 @@
     position: absolute;
     top: 29%;
     right: 75%;
-    color: #000;
-    font-weight: bold;
     width: 80px;
   }
 
@@ -264,6 +260,19 @@
   .card__desc {
     margin-bottom: 5.3rem;
   }
+
+  .img-trend-up{
+    top: 12%;
+    right: 70%;
+    width: 120px;
+  }
+
+  .img-trend-down{
+
+    top: -10%;
+    right: 68%;
+    width: 120px;
+  }
 }
 
 @media (max-width:800px) {
@@ -345,6 +354,19 @@
 
   .card{
     border-radius: 25px;;
+  }
+
+  .img-trend-up{
+    top: 10%;
+    right: 60%;
+    width: 150px;
+  }
+
+  .img-trend-down{
+
+    top: -10%;
+    right: 60%;
+    width: 150px;
   }
 
 
