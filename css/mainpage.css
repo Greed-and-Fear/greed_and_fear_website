@@ -97,22 +97,47 @@
   }
 
   .row .column .stockcard{
-    width: 300px;
+  background-color: rgb(198, 201, 236);
+  width: 300px;
   height: 100px;
   border-radius: 25px;
+  position: relative;
   }
 
   .stockcard .card-name{
+    position: absolute;
+    top: 10%;
+    left: 6%;
+    font-size: 18px;
     color: #000;
     font-weight: bold;
   }
 
-  .stockcard .buy-price{
+  .stockcard .entry-price{
+    position: absolute;
+    top: 10%;
+    right : 10%;
+    font-size: 18px;
     color: #000;
+    font-weight: bold;
   }
 
-  .stockcard .sell-price{
-  color: #000;
+  .stockcard .exit-price{
+    position: absolute;
+    top: 37%;
+    right: 10%;
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+  }
+
+  .stockcard .stoploss{
+    position: absolute;
+    top: 65%;
+    right: 10%;
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
   }
 
   .message{
@@ -133,8 +158,8 @@
 
   .card {
     padding: 3rem;
-    padding-bottom: .81rem;
-    max-width: 29rem;
+    padding-bottom:.81rem;
+    max-width: 30rem;
     margin-inline: auto;
     background-color: #f1f1f1;
     border-radius: 0.625rem;
@@ -157,13 +182,10 @@
   .grid {
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: repeat(3, 19.125rem);
+    grid-template-columns: repeat(3, 21.125rem);
     justify-content: center;
   }
 
-  .card{
-    
-  }
   
   .card-1 {
     background-color: hsl(30deg, 77%, 52%);
@@ -201,14 +223,16 @@
   }
 
   .card__headline {
+    text-align: center;
     width: fit-content;
     margin-top: 2rem;
     margin-bottom: 1.5rem;
   }
 
   .card__desc {
+    text-align: justify;
     line-height: 1.56rem;
-    margin-bottom: 1.56rem;
+    margin-bottom: 1.06rem;
   }
 
 @media (max-width: 1000px) {
@@ -285,7 +309,7 @@
     
   .row .column .stockcard{
     height: 8em;
-    width: 15em;
+    width: 17em;
   }
 
   .message{
@@ -293,10 +317,11 @@
     padding: 6px;
   }
 
+
   .grid {
     display: grid;
     grid-row-gap: 20px;
-    grid-template-columns: repeat(1, 19.125rem);
+    grid-template-columns: repeat(1, 17.125rem);
     justify-content: center;
   }
 
