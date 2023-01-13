@@ -58,7 +58,7 @@
     background-color: rgba(17, 11, 45, .7);
 }
 
-input[type=text] {
+input[type=text],textarea {
   color: rgb(192, 192, 192);
   outline: none;
   border: none;
@@ -67,7 +67,7 @@ input[type=text] {
   height: 40px;
 }
 
-input[type=password] {
+input[type=password],textarea {
   color: rgb(192, 192, 192);
   outline: none;
   border: none;
