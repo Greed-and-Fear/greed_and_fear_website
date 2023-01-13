@@ -133,79 +133,90 @@
 
   .card {
     padding: 3rem;
-    padding-bottom: 2.81rem;
-    max-width: 20.45rem;
+    padding-bottom: .81rem;
+    max-width: 29rem;
     margin-inline: auto;
     background-color: #f1f1f1;
+    border-radius: 0.625rem;
+    
   }
 
+  .btn {
+    cursor: pointer;
+    padding: 0.85rem 1.85rem;
+    border-radius: 1.6rem;
+    border: 2px solid transparent;
+    transition: all 0.4s ease-in-out;
+  }
+  .btn:hover {
+    border-color: hsl(0deg, 0%, 100%);
+    background-color: transparent;
+    color: hsl(0deg, 0%, 100%);
+  }
 
+  .grid {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(3, 19.125rem);
+    justify-content: center;
+  }
+
+  .card{
+    
+  }
   
   .card-1 {
     background-color: hsl(30deg, 77%, 52%);
-    border-radius: 0.625rem 0.625rem 0 0;
   }
   .card-1 .btn {
   color: hsl(30deg, 77%, 52%);
  }
 
-.btn {
-  cursor: pointer;
-  padding: 0.85rem 1.85rem;
-  border-radius: 1.6rem;
-  border: 2px solid transparent;
-  transition: all 0.4s ease-in-out;
-}
-.btn:hover {
-  border-color: hsl(0deg, 0%, 100%);
-  background-color: transparent;
-  color: hsl(0deg, 0%, 100%);
-}
-
-.card-2 {
-  background-color: hsl(185deg, 98%, 23%);
-}
-.card-2 .btn {
-  color: hsl(185deg, 98%, 23%);
-}
-
-.card-3 {
-  background-color: hsl(179deg, 100%, 13%);
-  border-radius: 0 0 0.625rem 0.625rem;
-}
-.card-3 .btn {
-  color: hsl(179deg, 100%, 13%);
-}
-
-.card__icon{
-  width: 80px;
-  height: 80px;
-  
-}
-
-.card__headline {
-  margin-top: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.card__desc {
-  line-height: 1.56rem;
-  margin-bottom: 1.56rem;
-}
-
-@media (min-width: 1000px) {
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 19.125rem);
-    justify-content: center;
+  .card-2 {
+    background-color: hsl(185deg, 98%, 23%);
   }
-
-  .card-1 {
-    border-radius: 0.625rem 0 0 0.625rem;
+  .card-2 .btn {
+    color: hsl(185deg, 98%, 23%);
   }
 
   .card-3 {
-    border-radius: 0 0.625rem 0.625rem 0;
+    background-color: rgb(103, 198, 197);
+    
+  }
+  .card-3 .btn {
+    color: hsl(179deg, 100%, 13%);
+  }
+
+  .card-4 {
+    background-color: rgb(61, 148, 148);
+  }
+  .card-4 .btn {
+    color: hsl(179deg, 100%, 13%);
+  }
+
+  .card__icon{
+    width: 80px;
+    height: 80px;
+    
+  }
+
+  .card__headline {
+    width: fit-content;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card__desc {
+    line-height: 1.56rem;
+    margin-bottom: 1.56rem;
+  }
+
+@media (max-width: 1000px) {
+  .grid {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2, 19.125rem);
+    justify-content: center;
   }
 
   .card__desc {
@@ -267,15 +278,33 @@
     font-weight: bold;
     color: rgb(9, 14, 90);
   }
+
+  .column{
+    height: 8em;
+  }
     
   .row .column .stockcard{
-    width: 100px;
+    height: 8em;
+    width: 15em;
   }
 
   .message{
     font-size : 17px;
     padding: 6px;
   }
+
+  .grid {
+    display: grid;
+    grid-row-gap: 20px;
+    grid-template-columns: repeat(1, 19.125rem);
+    justify-content: center;
+  }
+
+  .card{
+    border-radius: 25px;;
+  }
+
+
   
 }
 
