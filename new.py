@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs
 import pandas as pd
+import json
 
 def get_high_voume():
     URL = 'https://chartink.com/screenerstocks-rising-with-increasing-volumes'
@@ -15,6 +16,7 @@ def get_high_voume():
         soup = bs(r.content, 'lxml')
         s.headers['X-CSRF-TOKEN'] = soup.select_one('[name=csrf-token]')['content']
         r = s.post('https://chartink.com/screener/process', data=data).json()
-        print(r['data'])
+        with open("jsondata/highvolume.json", "w") as fp:
+            json.dump(r['data'],fp) 
 
 get_high_voume()

@@ -64,6 +64,7 @@
   /* Hover effects */
   .navbar .nav-links a:hover{
     background-color: rgba(0, 0, 0, 0.3);
+
   }
    
   /* responsive navbar toggle button */
@@ -83,7 +84,7 @@
     background-color: #f1f1f1;
   }
 
-  .row {
+  .row,.high-vol {
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
@@ -95,14 +96,14 @@
     background: transparent;  /* Optional: just make scrollbar invisible */
   }
 
-  .row .column {
+  .row .column,.high-vol .column {
     display: inline-block;
     margin-left: 2%;
     margin-right: 2%;
     
   }
 
-  .row .column .stockcard{
+  .row .column .stockcard,.high-vol .column .stockcard{
   background-color: rgb(198, 201, 236);
   width: 300px;
   height: 100px;
@@ -379,7 +380,7 @@
     height: 8em;
   }
     
-  .row .column .stockcard{
+  .row .column .stockcard,.high-vol .column .stockcard{
     height: 8em;
     width: 17em;
   }
