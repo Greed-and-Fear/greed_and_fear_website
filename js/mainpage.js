@@ -29,20 +29,25 @@ fetch('./jsondata/highvolume.json')
     return response.json();
 })
 .then(function(today_pick){
-    let high_vol_cards = document.querySelector(".high-vol");
+    let high_vol_cards = document.querySelector(".high-row");
     let newhtml="";
     for(let single_stock of today_pick){
         newhtml +=
         `
         <div class="column">
             <div class="stockcard">
-                ${single_stock.name}
+                <div class = "fullname"> ${single_stock.name}</div>
+                <div class = "nsename"> ${single_stock.nsecode}</div>
+                <div class = "percentage"> ${single_stock.per_chg}%</div>
+                <div class = "close-price">Price: ${single_stock.close}₹</div>
+                <div class = "volume">Volume : ${single_stock.volume}</div>
             </div>
         </div>
                 `;
             }
             high_vol_cards.innerHTML = newhtml;
 })
+
 
 
  // <div class="column">
