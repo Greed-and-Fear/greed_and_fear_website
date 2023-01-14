@@ -357,6 +357,11 @@
     bottom: 0px;
     left: 25%;
   }
+
+  .fullname{
+    font-size: 11px;
+    top:40%;
+  }
 }
 
 @media (max-width:800px) {
