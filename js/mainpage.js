@@ -1,3 +1,7 @@
+function on_load(){
+
+
+
 fetch('./jsondata/today_pick.json')
 .then(function(response){
     return response.json();
@@ -48,6 +52,7 @@ fetch('./jsondata/highvolume.json')
             high_vol_cards.innerHTML = newhtml;
 })
 
+}
 
 
  // <div class="column">
