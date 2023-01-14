@@ -2,7 +2,7 @@
     "id": 1,
     "stockname": "BATA",
     "entry_price": 1000,
-    "exit_price": 1200,
+    "exit_price": 1300,
     "stoploss": "900",
     "pictureUrl":"images/svg/increase-up-profit-icon.svg",
     "trend":"img-trend-up",
