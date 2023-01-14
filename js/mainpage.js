@@ -90,6 +90,3 @@ function show_today_pick()
 function on_load(){
     show_today_pick()
 }
-
-
-
