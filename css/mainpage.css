@@ -130,7 +130,7 @@
 
   .stockcard .exit-price{
     position: absolute;
-    top: 37%;
+    top: 30%;
     right: 10%;
     font-size: 17px;
     color: #000;
@@ -139,7 +139,16 @@
 
   .stockcard .stoploss{
     position: absolute;
-    top: 65%;
+    top: 50%;
+    right: 10%;
+    font-size: 17px;
+    color: #000;
+    font-weight: bold;
+  }
+
+  .stockcard .time-frame{
+    position: absolute;
+    top: 70%;
     right: 10%;
     font-size: 17px;
     color: #000;
@@ -412,14 +421,11 @@
     margin-bottom: 10px;
     bottom: 0px;
     left: 25%;
-
-
-  
-}
-
-@media (max-width:400px) {
-  .slogan {
-    width: 200px;
-    
   }
 }
+
+  @media (max-width:400px) {
+    .slogan {
+      width: 200px;
+    }
+    }

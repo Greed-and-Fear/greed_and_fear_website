@@ -8,7 +8,8 @@ function show_today_pick()
         exit_price: 1200,
         stoploss: "900",
         pictureUrl:"images/svg/increase-up-profit-icon.svg",
-        trend:"img-trend-up"
+        trend:"img-trend-up",
+        time_frame : "30 Min"
         },
         {
             id: 2,
@@ -17,7 +18,8 @@ function show_today_pick()
             exit_price: 1200,
             stoploss: "900",
             pictureUrl:"images/svg/decrease-down-loss-icon.svg",
-            trend:"img-trend-down"
+            trend:"img-trend-down",
+            time_frame : "15 Min"
         },
         {
             id: 3,
@@ -26,7 +28,8 @@ function show_today_pick()
             exit_price: 1200,
             stoploss: "900",
             pictureUrl:"images/svg/increase-up-profit-icon.svg",
-            trend:"img-trend-up"
+            trend:"img-trend-up",
+            time_frame : "1 Month"
         },
         {
             id: 4,
@@ -35,7 +38,8 @@ function show_today_pick()
             exit_price: 1200,
             stoploss: "900",
             pictureUrl:"images/svg/decrease-down-loss-icon.svg",
-            trend:"img-trend-down"
+            trend:"img-trend-down",
+            time_frame : "1 Week"
         },
         {
             id: 5,
@@ -44,7 +48,8 @@ function show_today_pick()
             exit_price: 1200,
             stoploss: "900",
             pictureUrl:"images/svg/decrease-down-loss-icon.svg",
-            trend:"img-trend-down"
+            trend:"img-trend-down",
+            time_frame : "5 Min"
         },
         {
             id: 6,
@@ -53,7 +58,8 @@ function show_today_pick()
             exit_price: 1200,
             stoploss: "900",
             pictureUrl:"images/svg/decrease-down-loss-icon.svg",
-            trend:"img-trend-down"
+            trend:"img-trend-down",
+            time_frame : "30 Min"
         },
         {
             id: 7,
@@ -62,7 +68,8 @@ function show_today_pick()
             exit_price: 1200,
             stoploss: "900",
             pictureUrl:"images/svg/decrease-down-loss-icon.svg",
-            trend:"img-trend-down"
+            trend:"img-trend-down",
+            time_frame : "1 Hour"
         },
         ];
 
@@ -79,6 +86,8 @@ function show_today_pick()
             <div class="entry-price">ENTRY@${single_stock.entry_price}₹</div>
             <div class="exit-price">EXIT@${single_stock.exit_price}₹</div>
             <div class="stoploss">SL@${single_stock.stoploss}₹</div>
+            <div class="time-frame">Time Frame:${single_stock.time_frame}</div>
+
             </div>
             </div>
         `;
