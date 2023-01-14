@@ -202,7 +202,7 @@
   .grid {
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: repeat(3, 21.125rem);
+    grid-template-columns: repeat(3, 30%);
     justify-content: center;
   }
 
@@ -317,6 +317,15 @@
   .navbar .nav-links a {
     display: block;
   }
+
+  .wrapper{
+    width: 100%;
+    text-align: center;
+  }
+
+  .card__desc{
+    margin-bottom: 2.3rem;
+  }
   
   /* when nav toggle button not checked */
   .navbar #nav-check:not(:checked) ~ .nav-links {
@@ -354,7 +363,7 @@
   .grid {
     display: grid;
     grid-row-gap: 20px;
-    grid-template-columns: repeat(1, 17.125rem);
+    grid-template-columns: repeat(1, 100%);
     justify-content: center;
   }
 
