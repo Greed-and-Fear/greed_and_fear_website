@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <title>Login Page</title>
+</head>
+<body>
+
+    <div class="nav-header">
+        <div class="nav-logo">
+            <img class = "logo" src="images/logo/logo.jpeg" width="50px" height="50px" alt="logo" >
+            <img class="slogan" src="images/logo/greed.png" width="250px" height="50px" alt="logo" > 
+        </div>
+    </div>
+    
+    <div id="login" style="display: none;" >
+         <div class="center">
+            <div class = "container">
+                <div class="label">
+                    <div class="heading" id="heading">
+                        Welcome Back
+                    </div>
+                </div>
+                <div class="label"><input type="text" placeholder="Enter username" id="name" required></div>
+                <div class="label"><input  type="password" placeholder="Enter Password" id="psw" required ><i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i></div>
+                <div  class="label"><button class="button" onclick = "getVal()" >SIGN IN</button></div>
+                <div class="sub-head">
+                    Dont have an account? <a class="register-label" href="#" onclick="load_register()">Register </a>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    <div class="register"  id="register">
+        <div class="center">
+            <div class = "container">
+                <div class="label">
+                <div class="heading" id="heading">Welcome</div>
+                </div>
+                <div class="label"><input type="text" placeholder="First Name" id="fname" required></div>
+                <div class="label"><input type="text" placeholder="Last Name" id="lname" required></div>
+                <div class="label"><input  type="password" placeholder="Enter Password" id="regpsw" required ><i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i></div>
+                <div  class="label"><button class="button" onclick = "getVal()" >REGISTER</button></div>
+                <div class="sub-head">Have an account? <a class="register-label" href="#" onclick="load_login()">Sign In </a>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+</body>
+<script src="js/login.js"></script>
+
+</html>
