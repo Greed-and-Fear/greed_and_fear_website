@@ -410,9 +410,6 @@
     height: 85%;  
 }
 
-.scrolling-wrapper {
-  -webkit-overflow-scrolling: touch;
-}
 
 .first-row-list-item{
     display: inline-block;
