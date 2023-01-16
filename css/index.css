@@ -161,7 +161,7 @@
   .message{
     margin: auto;
     text-align: center;
-    width: 60%;
+    width: 100%;
     font-family: "Times New Roman", Times, serif;
     font-size: 20pt;
     padding: 10px;
@@ -181,16 +181,22 @@
   }
 
   .first-row-list{
-    background-color: #091943;
     overflow-y: scroll;
     width: 100%;
   }
+
+  ::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+  }
   
   .first-row-list-item{
-    background-color: #eee;
-    margin: 5px 0px;
-    height: 50px;
-    width: 100%;
+    text-align: center;
+    background-color: rgb(236, 240, 241);
+    margin:15px 25px;
+    height: 80px;
+    width: 90%;
+    border-radius: 5px;
   }
   
   .card-1 {
@@ -275,6 +281,7 @@
 }
 
 @media (max-width:800px) {
+  /*######################### 800 ############################################## */
   .navbar .nav-btn{
     display: inline-block;
     position: absolute;
@@ -363,6 +370,52 @@
     margin-bottom: 10px;
     bottom: 0px;
     left: 25%;
+  }
+
+  .row-card {
+    padding-top: 0rem;
+    padding-bottom:.81rem;
+    width: 100%;
+    height: 300px;
+    border-radius: 0.625rem;
+    
+  }
+  
+  .first-row{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(1, 93%);
+  }
+  
+  .row-card-title{
+    position: sticky;
+    top: 0;
+    background-color: inherit;
+    padding-top: 5px;
+    width: 100%;
+    z-index: 7;
+  }
+  
+  .first-row-list{
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 0px;
+    margin: 0px;
+    height: 90%;  
+}
+
+.scrolling-wrapper {
+  -webkit-overflow-scrolling: touch;
+}
+
+.first-row-list-item{
+    display: inline-block;
+    margin: 9px;
+    padding-right: 10px;
+    height: 100%;
+    width: 200px;  
   }
 
 }
