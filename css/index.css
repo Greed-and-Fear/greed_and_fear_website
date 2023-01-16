@@ -326,6 +326,29 @@
     line-height: 1.56rem;
     margin-bottom: 5.06rem;
   }
+  
+  
+    .telegram{
+      margin-top: 40px;
+      position: relative;
+      left: 37%;
+      display:inline-flex;
+      white-space:nowrap; 
+    }
+
+  .tele-img{
+    left: 70%;
+    width: 100px;
+    margin:0px;
+  }
+
+  .join{  
+    margin:0px;
+    text-decoration: none;
+    font-size: 30px;
+    color:#eee;
+  }
+
 
 @media (max-width: 1000px) {
   .grid {
@@ -372,6 +395,15 @@
   .fullname{
     font-size: 11px;
     top:40%;
+  }
+
+  .telegram{
+    left: 15%;
+    width: 10%;
+  }
+  .tele-img{
+    margin-left: 20px;
+    width: 100px;
   }
 }
 
@@ -439,6 +471,20 @@
     font-weight: bold;
     color: rgb(9, 14, 90);
   }
+
+  .telegram{
+    left: 8%;
+  }
+
+  .join{
+    font-size: 20px;
+  }
+
+  .tele-img{
+    margin-left: 20px;
+    width: 60px;
+  }
+
 
 
   .message{
