@@ -350,6 +350,12 @@
     color:rgb(0, 0, 0);
   }
 
+  .join{
+    text-decoration: none;
+    color: #eee;
+    font-size: 30px;
+  }
+
 
 @media (max-width: 1000px) {
   .grid {
@@ -405,6 +411,22 @@
   .tele-img{
     margin-left: 20px;
     width: 100px;
+  }
+
+  .reg-button{
+    font-size: 18px;
+    border-color: #eee;
+    background-color: white;
+    position: absolute;
+    left: 25%;
+    bottom: 10px;
+    border-radius: 25%;
+    padding: 10px;
+  }
+
+  .para{
+    padding-top: 10px;
+    font-size: 1.2rem;
   }
 }
 
