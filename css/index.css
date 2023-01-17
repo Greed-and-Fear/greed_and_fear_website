@@ -214,7 +214,8 @@ body {
 
 .stock-name {
   position: absolute;
-  left: 45%;
+  width: 100%;
+  text-align: center;
   font-weight: bold;
   font-size: 20px;
   color: #091943;
@@ -222,28 +223,28 @@ body {
 
 .stock-entry {
   position: absolute;
-  top: 10%;
+  top: 25%;
   right: 10%;
   color: #091943;
 }
 
 .stock-exit {
   position: absolute;
-  top: 30%;
+  top: 50%;
   right: 10%;
   color: #091943;
 }
 
 .stock-sl {
   position: absolute;
-  top: 50%;
+  top: 75%;
   right: 10%;
   color: #091943;
 }
 
 .stock-img {
   position: absolute;
-  top: -30%;
+  top: -40%;
   width: 150px;
   height: 150px;
   left: -5%;
@@ -251,13 +252,13 @@ body {
 }
 
 .up {
-  top: 0%;
+  top: -10%;
 }
 
 .stock-tf {
   position: absolute;
   top: 70%;
-  right: 10%;
+  left: 10%;
   color: #091943
 }
 
@@ -670,6 +671,8 @@ body {
   }
 
   .stock-name {
+    left: 0%;
+    text-align: center;
     top: 5%;
     font-size: larger;
   }
@@ -697,6 +700,14 @@ body {
 
   .stock-tf {
     top: 70%;
+    left: 50%;
+    
+  }
+
+  .today .stock-tf {
+    top: 70%;
+    left: 70%;
+    
   }
 
   .reg-button {
