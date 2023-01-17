@@ -1,360 +1,424 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body{
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-image: url("../images/background/wallpaper.jpg");
-    background-size: auto;
-    background-attachment: fixed;
-    background-color: #0e175e;
-    background-position: center center;   
-  }
-  .navbar{
-    height: 70px;
-    width: 100%;
-    padding: 14px 30px;
-    background-color: #091943;
-    /* position: relative; */
-    opacity: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 9;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-image: url("../images/background/wallpaper.jpg");
+  background-size: auto;
+  background-attachment: fixed;
+  background-color: #0e175e;
+  background-position: center center;
+}
+
+.navbar {
+  height: 70px;
+  width: 100%;
+  padding: 14px 30px;
+  background-color: #091943;
+  /* position: relative; */
+  opacity: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 9;
 
 
-  }
+}
 
-  .navbar .nav-header{
-      display: inline;
-      text-decoration: none;
-      font-size: 18px;
-      color: #eee;
-    }
-    
-  .navbar .nav-header .nav-logo{
-    display: inline-block;
-    margin-top: -7px;
-    border-radius: 50px;
-  }
+.navbar .nav-header {
+  display: inline;
+  text-decoration: none;
+  font-size: 18px;
+  color: #eee;
+}
 
-  .logo{
-    border-radius: 50px;
-    
-  }
-  .navbar .nav-links{
-    display: inline;
-    float: right;
-    font-size: 18px;
-  }
-   
-  .navbar .nav-links .loginBtn{
-    display: inline-block;
-    padding: 5px 15px;
-    margin-left: 20px;
-    font-size: 17px;
-    color: rgb(9, 14, 90);
-  }
-  .navbar .nav-links a{
-    padding: 10px 12px;
-    text-decoration: none;
-    font-weight: 550;
-    color: white;
-  }
-  /* Hover effects */
-  .navbar .nav-links a:hover{
-    background-color: rgba(0, 0, 0, 0.3);
+.navbar .nav-header .nav-logo {
+  display: inline-block;
+  margin-top: -7px;
+  border-radius: 50px;
+}
 
-  }
-   
-  /* responsive navbar toggle button */
-  .navbar #nav-check, .navbar .nav-btn{
-    display: none;
-  }
+.logo {
+  border-radius: 50px;
 
-  .slogan{
-    padding: 0px 10px;
-  }
+}
+
+.navbar .nav-links {
+  display: inline;
+  float: right;
+  font-size: 18px;
+}
+
+.navbar .nav-links .loginBtn {
+  display: inline-block;
+  padding: 5px 15px;
+  margin-left: 20px;
+  font-size: 17px;
+  color: rgb(9, 14, 90);
+}
+
+.navbar .nav-links a {
+  padding: 10px 12px;
+  text-decoration: none;
+  font-weight: 550;
+  color: white;
+}
+
+/* Hover effects */
+.navbar .nav-links a:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+
+}
+
+/* responsive navbar toggle button */
+.navbar #nav-check,
+.navbar .nav-btn {
+  display: none;
+}
+
+.slogan {
+  padding: 0px 10px;
+}
 
 /* Style the counter cards */
 
-  .wrapper {
-    padding: 1.5rem 1.5rem 1.5rem;
-    transition: all 0.5s ease-in-out;
+.wrapper {
+  padding: 1.5rem 1.5rem 1.5rem;
+  transition: all 0.5s ease-in-out;
+}
+
+
+.row-card {
+  position: relative;
+  padding-bottom: .81rem;
+  width: 100%;
+  height: 300px;
+  margin-inline: auto;
+  background-color: #f1f1f1;
+  border-radius: 0.625rem;
+  overflow-y: scroll;
+}
+
+.today {
+  background-color: antiquewhite;
+}
+
+.yesterday {
+  background-color: aquamarine;
+}
+
+.weekly {
+  background-color: lightblue;
+}
+
+.short_term {
+  background-color: lightpink;
+}
+
+
+
+.card {
+  position: relative;
+  padding: 3rem;
+  padding-bottom: .81rem;
+  max-width: 30rem;
+  margin-inline: auto;
+  background-color: #f1f1f1;
+  border-radius: 0.625rem;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 0.85rem 1.85rem;
+  border-radius: 1.6rem;
+  border: 2px solid transparent;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn:hover {
+  border-color: hsl(0deg, 0%, 100%);
+  background-color: transparent;
+  color: hsl(0deg, 0%, 100%);
+}
+
+.grid {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(3, 30%);
+  justify-content: center;
+}
+
+.first-row {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(2, 45%);
+  justify-content: center;
+}
+
+.btn__container {
+  position: absolute;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  bottom: 0px;
+}
+
+.message {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20pt;
+  padding: 10px;
+  color: rgb(235, 244, 244);
+}
+
+.row-card-title {
+  position: sticky;
+  top: 0%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: inherit;
+  width: 100%;
+  z-index: 7;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 20pt;
+  color: rgb(0, 7, 7);
+}
+
+.first-row-list {
+  overflow-y: scroll;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
+.first-row-list-item {
+  position: relative;
+  background-color: rgb(236, 240, 241);
+  margin: 15px 25px;
+  height: 110px;
+  left: 8%;
+  width: 80%;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.stock-name {
+  position: absolute;
+  left: 45%;
+  font-weight: bold;
+  font-size: 20px;
+  color: #091943;
+}
+
+.stock-entry {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  color: #091943;
+}
+
+.stock-exit {
+  position: absolute;
+  top: 30%;
+  right: 10%;
+  color: #091943;
+}
+
+.stock-sl {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  color: #091943;
+}
+
+.stock-img {
+  position: absolute;
+  top: -30%;
+  width: 150px;
+  height: 150px;
+  left: -5%;
+  color: #091943;
+}
+
+.up {
+  top: 0%;
+}
+
+.stock-tf {
+  position: absolute;
+  top: 70%;
+  right: 10%;
+  color: #091943
+}
+
+.reg-button {
+  font-size: 18px;
+  border-color: #eee;
+  background-color: white;
+  position: absolute;
+  left: 40%;
+  bottom: 10px;
+  border-radius: 25%;
+  padding: 10px;
+}
+
+.reg-button:hover {
+  background-color: inherit;
+}
+
+.promo-msg {
+  position: absolute;
+  text-align: center;
+  font-size: 25px;
+  width: 100%;
+}
+
+.today .first-row-list-item {
+  background-color: rgb(88, 244, 255);
+}
+
+
+.card-1 {
+  background-color: hsl(30deg, 77%, 52%);
+}
+
+.card-1 .btn {
+  color: hsl(30deg, 77%, 52%);
+}
+
+.card-2 {
+  background-color: hsl(185deg, 98%, 23%);
+}
+
+.card-2 .btn {
+  color: hsl(185deg, 98%, 23%);
+}
+
+.card-3 {
+  background-color: rgb(103, 198, 197);
+
+}
+
+.card-3 .btn {
+  color: hsl(179deg, 100%, 13%);
+}
+
+.card-4 {
+  background-color: rgb(61, 148, 148);
+}
+
+.card-4 .btn {
+  color: hsl(179deg, 100%, 13%);
+}
+
+.card__icon {
+  width: 80px;
+  height: 80px;
+
+}
+
+.card__headline {
+  text-align: center;
+  width: fit-content;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.card__desc {
+  text-align: justify;
+  line-height: 1.56rem;
+  margin-bottom: 5.06rem;
+}
+
+
+.telegram {
+  margin-top: 40px;
+  position: relative;
+  left: 37%;
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.tele-img {
+  left: 70%;
+  width: 100px;
+  margin: 0px;
+}
+
+.para {
+  margin: 0px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 30px;
+  color: rgb(0, 0, 0);
+}
+
+.join {
+  text-decoration: none;
+  color: #eee;
+  font-size: 30px;
+}
+  /* Register card end */
+
+  /* Yesterday and weekly result start */
+
+  .yesterday .stock-name,.weekly .stock-name{
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      left: 0%;
+  }
+  .yesterday .stock-entry ,.weekly .stock-entry{
+    top: 30%;
+    left: 5%;
   }
 
-
-  .row-card {
-    position: relative;
-    padding-bottom:.81rem;
-    width: 100%;
-    height: 300px;
-    margin-inline: auto;
-    background-color: #f1f1f1;
-    border-radius: 0.625rem;
-    overflow-y: scroll;
+  .yesterday .stock-exit ,.weekly .stock-exit{
+    top: 50%;
+    left: 5%;
   }
 
-  .today{
-    background-color: antiquewhite;
-  }
-
-  .yesterday{
-    background-color: aquamarine;
-  }
-
-  .weekly{
-    background-color: lightblue;
-  }
-
-  .short_term{
-    background-color: lightpink;
-  }
-
-  
-
-  .card {
-    position: relative;
-    padding: 3rem;
-    padding-bottom:.81rem;
-    max-width: 30rem;
-    margin-inline: auto;
-    background-color: #f1f1f1;
-    border-radius: 0.625rem;
-  }
-
-  .btn {
-    cursor: pointer;
-    padding: 0.85rem 1.85rem;
-    border-radius: 1.6rem;
-    border: 2px solid transparent;
-    transition: all 0.4s ease-in-out;
-  }
-  .btn:hover {
-    border-color: hsl(0deg, 0%, 100%);
-    background-color: transparent;
-    color: hsl(0deg, 0%, 100%);
-  }
-
-  .grid {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(3, 30%);
-    justify-content: center;
-  }
-
-  .first-row{
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(2, 45%);
-    justify-content: center;
-  }
-
-  .btn__container{
+  .stock-predicted{
     position: absolute;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    bottom: 0px;
+    top: 70%;
+    left : 5%;
   }
 
-  .message{
-    margin: auto;
-    text-align: center;
-    width: 100%;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 20pt;
-    padding: 10px;
-    color: rgb(235, 244, 244);
-  }
-
-  .row-card-title{
-    position: sticky;
-    top: 0%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: inherit;
-    width: 100%;
-    z-index: 7;
-    text-align: center;
-    font-family: "Times New Roman", Times, serif;
-    font-weight: bold;
-    font-size: 20pt;
-    color: rgb(0, 7, 7);
-  }
-
-  .first-row-list{
-    overflow-y: scroll;
-    width: 100%;
-  }
-
-  ::-webkit-scrollbar {
-    width: 0px;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
-  }
-  
-  .first-row-list-item{
-    position: relative;
-    background-color: rgb(236, 240, 241);
-    margin:15px 25px;
-    height: 110px;
-    left: 8%;
-    width: 80%;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-
-  .stock-name{
+  .stock-result{
     position: absolute;
-    left: 45%;
-    font-weight: bold;
-    font-size: 20px;
-    color: #091943;
-  }
-
-  .stock-entry{
-    position: absolute;
-    top: 10%;
+    top: 60%;
     right: 10%;
-    color: #091943;
   }
 
-  .stock-exit{
+  .stock-gain{
     position: absolute;
     top: 30%;
     right: 10%;
-    color: #091943;
   }
 
-  .stock-sl{
-    position: absolute;
-    top: 50%;
-    right: 10%;
-    color: #091943;
+  .stock-gain ,.stock-result{
+    font-size: 25px;
+    color: rgb(38, 212, 38);
+    font-weight: bolder;
   }
 
-  .stock-img{
-    position: absolute;
-    top: -30%;
-    width: 150px;
-    height: 150px;
-    left: -5%;
-    color: #091943;
-  } 
-
-  .up {
-    top: 0%;
-  }
-
-  .stock-tf{
+  .stock-calldate{
     position: absolute;
     top: 70%;
-    right: 10%;
-    color: #091943
+    left: 5%;
   }
+  /* Yesterday and weekly result end */
 
-  .reg-button{
-    font-size: 18px;
-    border-color: #eee;
-    background-color: white;
-    position: absolute;
-    left: 40%;
-    bottom: 10px;
-    border-radius: 25%;
-    padding: 10px;
-  }
-
-  .reg-button:hover{
-    background-color: inherit;
-  }
-
-  .promo-msg{
-    position: absolute;
-    text-align: center;
-    font-size: 25px;
-    width: 100%;
-  }
-
-  .today .first-row-list-item{
-    background-color: rgb(88, 244, 255);
-  }
-  
-  
-  .card-1 {
-    background-color: hsl(30deg, 77%, 52%);
-  }
-  .card-1 .btn {
-    color: hsl(30deg, 77%, 52%);
- }
-
-  .card-2 {
-    background-color: hsl(185deg, 98%, 23%);
-  }
-  .card-2 .btn {
-    color: hsl(185deg, 98%, 23%);
-  }
-
-  .card-3 {
-    background-color: rgb(103, 198, 197);
-    
-  }
-  .card-3 .btn {
-    color: hsl(179deg, 100%, 13%);
-  }
-
-  .card-4 {
-    background-color: rgb(61, 148, 148);
-  }
-  .card-4 .btn {
-    color: hsl(179deg, 100%, 13%);
-  }
-
-  .card__icon{
-    width: 80px;
-    height: 80px;
-    
-  }
-
-  .card__headline {
-    text-align: center;
-    width: fit-content;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .card__desc {
-    text-align: justify;
-    line-height: 1.56rem;
-    margin-bottom: 5.06rem;
-  }
-  
-  
-    .telegram{
-      margin-top: 40px;
-      position: relative;
-      left: 37%;
-      display:inline-flex;
-      white-space:nowrap; 
-    }
-
-  .tele-img{
-    left: 70%;
-    width: 100px;
-    margin:0px;
-  }
-
-  .para{  
-    margin:0px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 30px;
-    color:rgb(0, 0, 0);
-  }
-
-  .join{
-    text-decoration: none;
-    color: #eee;
-    font-size: 30px;
-  }
 
 
 @media (max-width: 1000px) {
@@ -365,22 +429,22 @@
     justify-content: center;
   }
 
-  .stock-name{         
+  .stock-name {
     font-size: 15px;
     left: 40%;
   }
 
-  .promo-msg{
+  .promo-msg {
     font-size: 18px;
     left: 10%;
   }
 
-  .reg-button{
+  .reg-button {
     left: 40%;
   }
 
 
-  .wrapper{
+  .wrapper {
     width: 100%;
     text-align: center;
   }
@@ -389,9 +453,9 @@
     margin-bottom: 5.3rem;
   }
 
-  
 
-  .btn__container{
+
+  .btn__container {
     position: absolute;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -399,21 +463,24 @@
     left: 25%;
   }
 
-  .fullname{
+  .fullname {
     font-size: 11px;
-    top:40%;
+    top: 40%;
   }
 
-  .telegram{
+  .telegram {
     left: 15%;
     width: 10%;
   }
-  .tele-img{
+
+  .tele-img {
     margin-left: 20px;
     width: 100px;
   }
 
-  .reg-button{
+  /* Register card start */
+
+  .reg-button {
     font-size: 18px;
     border-color: #eee;
     background-color: white;
@@ -424,36 +491,45 @@
     padding: 10px;
   }
 
-  .para{
+  .para {
     padding-top: 10px;
     font-size: 1.2rem;
   }
+
+  
+
 }
 
 @media (max-width:800px) {
+
   /*######################### 800 ############################################## */
-  .navbar .nav-btn{
+  .navbar .nav-btn {
     display: inline-block;
     position: absolute;
     top: 0px;
     right: 0px;
   }
+
   .navbar .nav-btn label {
     display: inline-block;
     width: 80px;
     height: 70px;
     padding: 25px;
   }
+
   .navbar .nav-btn label span {
     display: block;
     height: 10px;
     width: 25px;
     border-top: 3px solid #eee;
   }
-  .navbar .nav-btn label:hover, .navbar #nav-check:checked ~ .nav-btn label {
+
+  .navbar .nav-btn label:hover,
+  .navbar #nav-check:checked~.nav-btn label {
     background-color: rgb(9, 14, 90);
   }
-  .navbar .nav-links{
+
+  .navbar .nav-links {
     position: absolute;
     display: block;
     text-align: center;
@@ -464,59 +540,59 @@
     top: 70px;
     right: 0px;
   }
+
   .navbar .nav-links a {
     display: block;
   }
 
-  .wrapper{
+  .wrapper {
     width: 100%;
     text-align: center;
   }
 
-  .card__desc{
+  .card__desc {
     margin-bottom: 5.3rem;
   }
-  
+
   /* when nav toggle button not checked */
-  .navbar #nav-check:not(:checked) ~ .nav-links {
+  .navbar #nav-check:not(:checked)~.nav-links {
     height: 0px;
   }
-  
+
   /* when nav toggle button is checked */
-  .navbar #nav-check:checked ~ .nav-links {
+  .navbar #nav-check:checked~.nav-links {
     height: calc(100vh - 70px);
     overflow-y: auto;
   }
+
   .navbar .nav-links .loginBtn {
-    padding: 10px 40px ;
+    padding: 10px 40px;
     margin: 20px;
-    font-size:  18px;
+    font-size: 18px;
     font-weight: bold;
     color: rgb(9, 14, 90);
   }
 
-  .telegram{
+  .telegram {
     left: 8%;
   }
 
-  .join{
+  .join {
     font-size: 20px;
   }
 
-  .tele-img{
+  .tele-img {
     margin-left: 20px;
     width: 60px;
   }
 
-
-
-  .message{
-    font-size : 15px;
+  .message {
+    font-size: 15px;
     padding: 15px 6px;
   }
 
-  .row-card-title{
-    font-size : 25px;
+  .row-card-title {
+    font-size: 25px;
     width: 100%;
   }
 
@@ -528,12 +604,12 @@
     justify-content: center;
   }
 
-  .card{
+  .card {
     position: relative;
-    border-radius: 25px;  
+    border-radius: 25px;
   }
 
-  .btn__container{
+  .btn__container {
     position: absolute;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -545,19 +621,16 @@
     padding: 10px;
     width: 100%;
     height: 300px;
-    border-radius: 0.625rem;  
-    
-
-    
+    border-radius: 0.625rem;
   }
-  
-  .first-row{
+
+  .first-row {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(1, 93%);
   }
-  
-  .row-card-title{
+
+  .row-card-title {
     position: sticky;
     top: 0;
     background-color: inherit;
@@ -565,61 +638,61 @@
     width: 100%;
     z-index: 7;
   }
-  
-  .first-row-list{
+
+  .first-row-list {
     position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
     padding: 0px;
     margin: 0px;
-    height: 85%;  
-    
-}
+    height: 85%;
+
+  }
 
 
-.first-row-list-item{
+  .first-row-list-item {
     display: inline-block;
     flex-direction: row;
     padding-right: 1px;
     height: 90%;
-    width: 250px;  
+    width: 250px;
     margin-left: 0px;
     white-space: normal;
-    
+
   }
 
-  .stock-name{
+  .stock-name {
     top: 5%;
     font-size: larger;
   }
 
-  .stock-entry{
+  .stock-entry {
     top: 25%;
   }
 
-  .stock-exit{
+  .stock-exit {
     top: 40%;
   }
 
-  .stock-sl{
+  .stock-sl {
     top: 55%;
   }
 
-  .stock-img{
+  .stock-img {
     top: 14%;
     left: -20%;
-  } 
+  }
 
   .up {
     top: 20%;
   }
 
-  .stock-tf{
+  .stock-tf {
     top: 70%;
   }
 
-  .reg-button{
+  .reg-button {
     font-size: 18px;
     border-color: #eee;
     background-color: white;
@@ -630,7 +703,7 @@
     padding: 10px;
   }
 
-  .para{
+  .para {
     margin: 25px 0px;
     text-align: center;
     font-size: 1.85rem;
@@ -641,8 +714,8 @@
 
 }
 
-  @media (max-width:400px) {
-    .slogan {
-      width: 200px;
-    }
-    }
+@media (max-width:400px) {
+  .slogan {
+    width: 200px;
+  }
+}
