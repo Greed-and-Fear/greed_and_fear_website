@@ -283,8 +283,8 @@ body {
   width: 100%;
 }
 
-.today .first-row-list-item {
-  background-color: rgb(88, 244, 255);
+.first-row-list-item {
+  background-color: rgb(255, 254, 229);
 }
 
 
@@ -397,18 +397,17 @@ body {
   .stock-result{
     position: absolute;
     top: 60%;
-    right: 10%;
+    right: 5%;
   }
 
   .stock-gain{
     position: absolute;
     top: 30%;
-    right: 10%;
+    right: 5%;
   }
 
   .stock-gain ,.stock-result{
     font-size: 25px;
-    color: rgb(38, 212, 38);
     font-weight: bolder;
   }
 
@@ -416,6 +415,14 @@ body {
     position: absolute;
     top: 70%;
     left: 5%;
+  }
+
+  .profit{
+    color: rgb(38, 212, 38);
+  }
+
+  .loss{
+    color: rgb(230, 23, 23);
   }
   /* Yesterday and weekly result end */
 
@@ -711,54 +718,52 @@ body {
     width: 250px;
   }
 
-   /* Yesterday and weekly result start */
+  /* Yesterday and weekly result start */
 
-   .yesterday .stock-name,.weekly .stock-name{
-    position: absolute;
+  .yesterday .stock-name,.weekly .stock-name{
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  left: 0%;
+  }
+  .yesterday .stock-entry ,.weekly .stock-entry{
+    top: 25%;
+    left: 5%;
+  }
+
+  .yesterday .stock-exit ,.weekly .stock-exit{
+    top: 40%;
+    left: 5%;
+  }
+
+  .stock-predicted{
+    top: 55%;
+    left : 5%;
+  }
+
+  .stock-result{
     text-align: center;
     width: 100%;
     left: 0%;
-}
-.yesterday .stock-entry ,.weekly .stock-entry{
-  top: 30%;
-  left: 5%;
-}
+    top:70%;
 
-.yesterday .stock-exit ,.weekly .stock-exit{
-  top: 50%;
-  left: 5%;
-}
+  }
 
-.stock-predicted{
-  position: absolute;
-  top: 70%;
-  left : 5%;
-}
+  .stock-gain{
+    top:40%;
+    right: 10%;
+  }
 
-.stock-result{
-  position: absolute;
-  top: 60%;
-  right: 10%;
-}
+  .stock-gain ,.stock-result{
+    font-size: 30px;
+  }
 
-.stock-gain{
-  position: absolute;
-  top: 30%;
-  right: 10%;
-}
-
-.stock-gain ,.stock-result{
-  font-size: 25px;
-  color: rgb(38, 212, 38);
-  font-weight: bolder;
-}
-
-.stock-calldate{
-  position: absolute;
-  top: 70%;
-  left: 5%;
-}
-/* Yesterday and weekly result end */
+  .stock-calldate{
+    position: absolute;
+    top: 55%;
+    left: 5%;
+  }
+  /* Yesterday and weekly result end */
 
 
 }
