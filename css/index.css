@@ -711,6 +711,55 @@ body {
     width: 250px;
   }
 
+   /* Yesterday and weekly result start */
+
+   .yesterday .stock-name,.weekly .stock-name{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0%;
+}
+.yesterday .stock-entry ,.weekly .stock-entry{
+  top: 30%;
+  left: 5%;
+}
+
+.yesterday .stock-exit ,.weekly .stock-exit{
+  top: 50%;
+  left: 5%;
+}
+
+.stock-predicted{
+  position: absolute;
+  top: 70%;
+  left : 5%;
+}
+
+.stock-result{
+  position: absolute;
+  top: 60%;
+  right: 10%;
+}
+
+.stock-gain{
+  position: absolute;
+  top: 30%;
+  right: 10%;
+}
+
+.stock-gain ,.stock-result{
+  font-size: 25px;
+  color: rgb(38, 212, 38);
+  font-weight: bolder;
+}
+
+.stock-calldate{
+  position: absolute;
+  top: 70%;
+  left: 5%;
+}
+/* Yesterday and weekly result end */
+
 
 }
 
