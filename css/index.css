@@ -444,6 +444,12 @@ body {
   
 }
 
+.thankyou-msg{
+  position: relative;
+  top: 40%;
+  font-size: larger;
+}
+
 .contact{
   width: 100%;
   color: #eee

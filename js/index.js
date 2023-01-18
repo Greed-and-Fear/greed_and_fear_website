@@ -28,4 +28,6 @@ function send_message() {
   document.getElementById("call-phone").value = ''
   document.getElementById("call-mail").value = ''
   document.getElementById("call-desc-box").value = ''
+
+  document.getElementById("contact-div").innerHTML = '<div class="thankyou-msg">Thank you for Enquiring.<br><br>One of our executive will get back to you shortly</div>'
 }
