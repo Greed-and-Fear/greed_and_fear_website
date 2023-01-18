@@ -1,5 +1,9 @@
 function send_message() {
-  var text = "Hello\nHow are You"
+  var name = document.getElementById("call-fname").value;
+  var phone = document.getElementById("call-phone").value;
+  var mail = document.getElementById("call-mail").value;
+  var desc = document.getElementById("call-desc-box").value;
+  var text = "Name:"+name+"\n"+"Phone"+phone+"\n"+"Email"+mail+"\n"+"Desc:"+desc+"\n"
 
   var settings = {
     "async": true,
@@ -19,5 +23,9 @@ function send_message() {
   $.ajax(settings).done(function (response) {
     console.log(response);
   });
-
+  
+  document.getElementById("call-fname").value = ''
+  document.getElementById("call-phone").value = ''
+  document.getElementById("call-mail").value = ''
+  document.getElementById("call-desc-box").value = ''
 }
