@@ -450,7 +450,7 @@ body {
 }
 
 input[type=text],input[type=number],textarea {
-  color: rgb(255, 255, 255,0.3);
+  color: rgba(255, 255, 255, 1);
   outline: 1px wheat;
   border: 1px wheat;
   width: 50%;
@@ -920,12 +920,11 @@ input[type=text],input[type=number],textarea {
     left: 0%;
     width: 90%;
     backdrop-filter: blur(10px);
+    height: 550px;
   }
 
   /* Yesterday and weekly result end */
-  .contact-div{
-    height: 550px;
-  }
+
 
   input[type=text],input[type=number],textarea {
     width: 80%;
