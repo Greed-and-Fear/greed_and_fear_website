@@ -123,7 +123,7 @@ body {
   position: relative;
   padding: 3rem;
   padding-bottom: .81rem;
-  max-width: 30rem;
+  max-width: 40rem;
   margin-inline: auto;
   background-color: #f1f1f1;
   border-radius: 0.625rem;
@@ -145,8 +145,8 @@ body {
 
 .grid {
   display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(3, 30%);
+  grid-gap: 60px;
+  grid-template-columns: repeat(2, 45%);
   justify-content: center;
 }
 
@@ -369,63 +369,191 @@ body {
   color: #eee;
   font-size: 30px;
 }
-  /* Register card end */
 
-  /* Yesterday and weekly result start */
+/* Register card end */
 
-  .yesterday .stock-name,.weekly .stock-name{
-      position: absolute;
-      text-align: center;
-      width: 100%;
-      left: 0%;
-  }
-  .yesterday .stock-entry ,.weekly .stock-entry{
-    top: 30%;
-    left: 5%;
-  }
+/* Yesterday and weekly result start */
 
-  .yesterday .stock-exit ,.weekly .stock-exit{
-    top: 50%;
-    left: 5%;
-  }
+.yesterday .stock-name,
+.weekly .stock-name {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  left: 0%;
+}
 
-  .stock-predicted{
-    position: absolute;
-    top: 70%;
-    left : 5%;
-  }
+.yesterday .stock-entry,
+.weekly .stock-entry {
+  top: 30%;
+  left: 5%;
+}
 
-  .stock-result{
-    position: absolute;
-    top: 60%;
-    right: 5%;
-  }
+.yesterday .stock-exit,
+.weekly .stock-exit {
+  top: 50%;
+  left: 5%;
+}
 
-  .stock-gain{
-    position: absolute;
-    top: 30%;
-    right: 5%;
-  }
+.stock-predicted {
+  position: absolute;
+  top: 70%;
+  left: 5%;
+}
 
-  .stock-gain ,.stock-result{
-    font-size: 25px;
-    font-weight: bolder;
-  }
+.stock-result {
+  position: absolute;
+  top: 60%;
+  right: 5%;
+}
 
-  .stock-calldate{
-    position: absolute;
-    top: 70%;
-    left: 5%;
-  }
+.stock-gain {
+  position: absolute;
+  top: 30%;
+  right: 5%;
+}
 
-  .profit{
-    color: rgb(38, 212, 38);
-  }
+.stock-gain,
+.stock-result {
+  font-size: 25px;
+  font-weight: bolder;
+}
 
-  .loss{
-    color: rgb(230, 23, 23);
-  }
-  /* Yesterday and weekly result end */
+.stock-calldate {
+  position: absolute;
+  top: 70%;
+  left: 5%;
+}
+
+.profit {
+  color: rgb(38, 212, 38);
+}
+
+.loss {
+  color: rgb(230, 23, 23);
+}
+
+.contact-div{
+  position: relative;
+  background-color: rgba(249, 249, 255, 0.3);
+  margin:  20px;
+  text-align: center;
+  left: 25%;
+  height: 500px;
+  width: 50%;
+  backdrop-filter: blur(10px)
+}
+
+.contact{
+  width: 100%;
+  color: #eee
+}
+
+input[type=text],input[type=number],textarea {
+  color: rgb(255, 255, 255,0.3);
+  outline: 1px wheat;
+  border: 1px wheat;
+  width: 50%;
+  background-color: transparent;
+  border: 3px solid rgb(246, 233, 233);
+  height: 40px;
+  border-radius: 10px;
+}
+
+.calltext{
+  position: absolute;
+  font-size: medium;
+}
+
+.name{
+  position: absolute;
+  width: 55%;
+  top: 5%;
+}
+
+
+.call-fname{
+  position: absolute;
+  top: 10%;
+}
+
+.call-phone{
+  position: absolute;
+  top: 30%;
+}
+
+.phone{
+  position: absolute;
+  width: 55%;
+  top: 25%;
+}
+
+.call-mail{
+  position: absolute;
+  top: 50%;
+}
+
+.mail{
+  position: absolute;
+  width: 55%;
+  top: 45%;
+}
+
+.call-desc{
+  position: absolute;
+  height: 20px;
+  top: 70%;
+}
+
+.desc{
+  position: absolute;
+  width: 60%;
+  top: 65%;
+}
+
+.call-button{
+  position: absolute;
+  top: 90%;
+  width: 100%;
+}
+
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(255, 255, 255);
+  opacity: .3; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: rgb(255, 255, 255);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: rgb(255, 255, 255);
+}
+
+
+.call-button{
+  position: absolute;
+  top: 85%;
+  width: 100%;
+}
+
+.sendbtn{
+  width: 50%;
+  height: 40px;
+  border-radius: 25px;
+  border-color: transparent;
+  background-color: rgb(232, 208, 208,0.5);
+  color: #eee;
+}
+
+.sendbtn:hover,.sendbtn:active{
+  background-color: #eee;
+  color: #091943;
+}
+
+
+/* Yesterday and weekly result end */
 
 
 
@@ -504,7 +632,13 @@ body {
     font-size: 1.2rem;
   }
 
+  .name,.phone,.mail{
+    width: 60%;
+  }
   
+  .desc{
+    width: 67%;
+  }
 
 }
 
@@ -701,13 +835,13 @@ body {
   .stock-tf {
     top: 70%;
     left: 50%;
-    
+
   }
 
   .today .stock-tf {
     top: 70%;
     left: 70%;
-    
+
   }
 
   .reg-button {
@@ -731,52 +865,82 @@ body {
 
   /* Yesterday and weekly result start */
 
-  .yesterday .stock-name,.weekly .stock-name{
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  left: 0%;
+  .yesterday .stock-name,
+  .weekly .stock-name {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0%;
   }
-  .yesterday .stock-entry ,.weekly .stock-entry{
+
+  .yesterday .stock-entry,
+  .weekly .stock-entry {
     top: 25%;
     left: 5%;
   }
 
-  .yesterday .stock-exit ,.weekly .stock-exit{
+  .yesterday .stock-exit,
+  .weekly .stock-exit {
     top: 40%;
     left: 5%;
   }
 
-  .stock-predicted{
+  .stock-predicted {
     top: 55%;
-    left : 5%;
+    left: 5%;
   }
 
-  .stock-result{
+  .stock-result {
     text-align: center;
     width: 100%;
     left: 0%;
-    top:70%;
+    top: 70%;
 
   }
 
-  .stock-gain{
-    top:40%;
+  .stock-gain {
+    top: 40%;
     right: 10%;
   }
 
-  .stock-gain ,.stock-result{
+  .stock-gain,
+  .stock-result {
     font-size: 30px;
   }
 
-  .stock-calldate{
+  .stock-calldate {
     position: absolute;
     top: 55%;
     left: 5%;
   }
+
+  .contact-div{
+    background-color: rgba(249, 249, 255, 0.3);
+    left: 0%;
+    width: 90%;
+    backdrop-filter: blur(10px)
+  }
+
   /* Yesterday and weekly result end */
+  .contact-div{
+    height: 550px;
+  }
 
+  input[type=text],input[type=number],textarea {
+    width: 80%;
+    height: 60px;
+  }
+  .calltext{
+    font-size: medium;
+  }
 
+  .name,.phone,.mail{
+    width: 40%;
+  }
+  
+  .desc{
+    width: 50%;
+  }
 }
 
 @media (max-width:400px) {
