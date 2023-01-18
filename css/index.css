@@ -440,7 +440,8 @@ body {
   left: 25%;
   height: 500px;
   width: 50%;
-  backdrop-filter: blur(10px)
+  backdrop-filter: blur(10px);
+  
 }
 
 .contact{
@@ -915,10 +916,10 @@ input[type=text],input[type=number],textarea {
   }
 
   .contact-div{
-    background-color: rgba(249, 249, 255, 0.3);
+    background-color: rgba(132, 132, 255, 0.3);
     left: 0%;
     width: 90%;
-    backdrop-filter: blur(10px)
+    backdrop-filter: blur(10px);
   }
 
   /* Yesterday and weekly result end */
