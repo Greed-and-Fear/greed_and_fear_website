@@ -3,7 +3,7 @@ function send_message() {
   var phone = document.getElementById("call-phone").value;
   var mail = document.getElementById("call-mail").value;
   var desc = document.getElementById("call-desc-box").value;
-  var text = "Name:"+name+"\n"+"Phone"+phone+"\n"+"Email"+mail+"\n"+"Desc:"+desc+"\n"
+  var text = "Name:"+name+"\n"+"Phone:"+phone+"\n"+"Email:"+mail+"\n"+"Desc:"+desc+"\n"
 
   var settings = {
     "async": true,
