@@ -184,7 +184,7 @@ body {
   width: 100%;
   font-size: 25px ;
   font-weight: bold;
-  top: 2%;
+  top: 5%;
   text-align: center;
 }
 
@@ -192,7 +192,7 @@ body {
   position: absolute;
   font-size: 15px;
   left: 10px;
-  top: 13%;
+  top: 17%;
 }
 
 .entry-price{
@@ -235,7 +235,7 @@ body {
   position: absolute;
   right: 7%;
   font-size: 40px;
-  bottom: 30%;
+  bottom: 26%;
 }
 
 .amt{
@@ -243,7 +243,7 @@ body {
   text-align: center;
 
   font-size: 40px;
-  bottom: 10%;
+  bottom: 8%;
   width: 100%;
 }
 
@@ -403,6 +403,82 @@ body {
     font-weight: bold;
     color: rgb(9, 14, 90);
   }
+
+  /* WELCOME message */
+
+.welcome-msg {
+  font-size: 45px;
+}
+
+.small-welcome {
+  font-size: 10px;
+}
+
+.welcome-msg,.small-welcome {
+  margin-left: 5px;
+}
+/* End of welcome message */
+
+/* start of results */
+
+.results{
+  margin-top: 10px;
+}
+
+.message {
+  font-size: 30px;
+}
+
+/* CARD personalation */
+
+.full-stock-name{
+    top: 15%;
+}
+
+.card{
+  margin  : 10px 30px;
+}
+
+/* card personalize end */
+
+/* end of results */
+
+
+/* start of moto  */
+.moto{
+
+  padding: 20px;
+  text-align: justify;
+  padding-bottom: 30px;
+}
+
+.contact-page{
+  margin: 20px;
+  position: relative;
+  left: 5%;
+}
+
+.moto-form{
+  text-align: center;
+  width: 90%;
+  margin: 10px;
+}
+
+
+/* End of moto */
+
+/* Footer starts */
+
+.footer{
+  height: 350px;
+}
+
+.main-list{
+  margin-top: 3%;
+  margin-left: 11%;
+  display: inline-block;
+}
+/* Footer */
 }
 
 @media (max-width:400px) {
