@@ -144,6 +144,32 @@ body {
 
 /* End of welcome message */
 
+/* start of results */
+
+.results .message{
+  color: #fcfdff;
+}
+
+.results{
+  margin-top: 40px;
+  background-color: #9b9b1d;
+}
+
+.card{
+  display: inline-block;
+  margin: 40px;
+  background-color: aquamarine;
+  height: 300px;
+  width: 300px;
+}
+
+.cards{
+  overflow-y: scroll;
+  white-space: nowrap;
+  background-color: rgb(80, 24, 80);
+}
+/* end of results */
+
 /* start of moto  */
 .message {
   margin: auto;
@@ -152,7 +178,7 @@ body {
   font-family: "Times New Roman", Times, serif;
   font-size: 40pt;
   padding: 10px;
-  color: rgb(0, 0, 0);
+  color: rgb(2, 2, 2);
 }
 
 .moto{
@@ -182,6 +208,7 @@ body {
   width: 100%;
   color: black;
   font-size: larger;
+  margin-bottom: 10px;
 }
 
 /* End of moto */
