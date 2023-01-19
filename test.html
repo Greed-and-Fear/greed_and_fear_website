@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content=
+        "width=device-width, initial-scale=1.0" />
+    <title>Text Fill</title>
+  
+    <style>
+        h1 {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 5em;
+            color: #ccc;
+        }
+  
+        h1::before {
+            /* This will create the layer
+               over original text*/
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+  
+            /* Setting different color than
+               that of original text  */
+            color: green;
+            overflow: hidden;
+  
+            /* Setting width as 0*/
+            width: 0%;
+            transition: 1s;
+        }
+  
+        h1:hover::before {
+  
+            /* Setting width to 100 on hover*/
+            width: 90%;
+        }
+    </style>
+</head>
+  
+<body>
+    <h1 data-text="Geeks">Geeks</h1>
+</body>
+  
+</html>
