@@ -110,6 +110,7 @@ body {
   margin-right: 20px;
   padding: 7px;
   width: 80px;
+  z-index: 9;
 }
 
 /* Telegram refrence link start*/
@@ -126,7 +127,7 @@ body {
 
 .small-welcome {
   color: #eee;
-  font-family: "Times New Roman", Times, serif;
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0px;
   font-size: 20px;
 }
@@ -152,25 +153,28 @@ body {
 
 .results{
   margin-top: 40px;
-  background-color: #9b9b1d;
+  border-top: 1px solid white;
+  /* background-color: #9b9b1d; */
 }
 
 .card{
+  color: #ccced2;
   position: relative;
   box-shadow: 0px 0px 15px 2px rgb(0, 0, 0);
   display: inline-block;
   margin: 40px;
-  background-color: aquamarine;
+  background-color: rgb(7, 10, 65);
   height: 320px;
   width: 320px;
-  font-family: "Times New Roman", Times, serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 19px;
+  border-radius: 10px;
 }
 
 .cards{
   overflow-y: scroll;
   white-space: nowrap;
-  background-color: rgb(80, 24, 80);
+  /* background-color: rgba(41, 28, 41, 0.5); */
 }
 
 /* CARD personalation */
@@ -178,7 +182,7 @@ body {
 .stockname{
   position: absolute;
   width: 100%;
-  font-size: large;
+  font-size: 25px ;
   font-weight: bold;
   top: 2%;
   text-align: center;
@@ -186,32 +190,32 @@ body {
 
 .full-stock-name{
   position: absolute;
-  font-size: small;
+  font-size: 15px;
   left: 10px;
-  top: 10%;
+  top: 13%;
 }
 
 .entry-price{
   position: absolute;
-  top: 20%;
+  top: 25%;
   left: 5%;
 }
 
 .exit-price{
   position: absolute;
-  top: 20%;
+  top: 25%;
   right: 10%;
 }
 
 .exit-date{
   position: absolute;
-  top: 30%;
+  top: 35%;
   right: 10%;
 }
 
 .entry-date{
   position: absolute;
-  top: 30%;
+  top: 35%;
   left: 5%;
 }
 
@@ -223,7 +227,7 @@ body {
 
 .profit{
   position: absolute;
-  color: rgb(1, 255, 35);
+  color: rgb(6, 209, 33);
   font-weight: 700;
 }
 
