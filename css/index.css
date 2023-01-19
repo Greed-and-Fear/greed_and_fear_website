@@ -82,118 +82,6 @@ body {
   padding: 0px 10px;
 }
 
-/* Style the counter cards */
-
-.wrapper {
-  padding: 1.5rem 1.5rem 1.5rem;
-  transition: all 0.5s ease-in-out;
-}
-
-
-.row-card {
-  position: relative;
-  padding-bottom: .81rem;
-  width: 100%;
-  height: 300px;
-  margin-inline: auto;
-  background-color: #f1f1f1;
-  border-radius: 0.625rem;
-  overflow-y: scroll;
-}
-
-.today {
-  background-color: antiquewhite;
-}
-
-.yesterday {
-  background-color: aquamarine;
-}
-
-.weekly {
-  background-color: lightblue;
-}
-
-.short_term {
-  background-color: lightpink;
-}
-
-
-
-.card {
-  position: relative;
-  padding: 3rem;
-  padding-bottom: .81rem;
-  max-width: 40rem;
-  margin-inline: auto;
-  background-color: #f1f1f1;
-  border-radius: 0.625rem;
-}
-
-.btn {
-  cursor: pointer;
-  padding: 0.85rem 1.85rem;
-  border-radius: 1.6rem;
-  border: 2px solid transparent;
-  transition: all 0.4s ease-in-out;
-}
-
-.btn:hover {
-  border-color: hsl(0deg, 0%, 100%);
-  background-color: transparent;
-  color: hsl(0deg, 0%, 100%);
-}
-
-.grid {
-  display: grid;
-  grid-gap: 60px;
-  grid-template-columns: repeat(2, 45%);
-  justify-content: center;
-}
-
-.first-row {
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(2, 45%);
-  justify-content: center;
-}
-
-.btn__container {
-  position: absolute;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  bottom: 0px;
-}
-
-.message {
-  margin: auto;
-  text-align: center;
-  width: 100%;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 20pt;
-  padding: 10px;
-  color: rgb(235, 244, 244);
-}
-
-.row-card-title {
-  position: sticky;
-  top: 0%;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  background-color: inherit;
-  width: 100%;
-  z-index: 7;
-  text-align: center;
-  font-family: "Times New Roman", Times, serif;
-  font-weight: bold;
-  font-size: 20pt;
-  color: rgb(0, 7, 7);
-}
-
-.first-row-list {
-  overflow-y: scroll;
-  width: 100%;
-}
-
 ::-webkit-scrollbar {
   width: 0px;
   /* Remove scrollbar space */
@@ -201,457 +89,256 @@ body {
   /* Optional: just make scrollbar invisible */
 }
 
-.first-row-list-item {
-  position: relative;
-  background-color: rgb(236, 240, 241);
-  margin: 15px 25px;
-  height: 110px;
-  left: 8%;
-  width: 80%;
-  border-radius: 25px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+/* Telegram refrence link start*/
 
-.stock-name {
-  position: absolute;
-  width: 100%;
+.telegram-top,
+.links{
+  background-color: #fcfdff;
   text-align: center;
   font-weight: bold;
-  font-size: 20px;
-  color: #091943;
-}
-
-.stock-entry {
-  position: absolute;
-  top: 25%;
-  right: 10%;
-  color: #091943;
-}
-
-.stock-exit {
-  position: absolute;
-  top: 50%;
-  right: 10%;
-  color: #091943;
-}
-
-.stock-sl {
-  position: absolute;
-  top: 75%;
-  right: 10%;
-  color: #091943;
-}
-
-.stock-img {
-  position: absolute;
-  top: -40%;
-  width: 150px;
-  height: 150px;
-  left: -5%;
-  color: #091943;
-}
-
-.up {
-  top: -10%;
-}
-
-.stock-tf {
-  position: absolute;
-  top: 70%;
-  left: 10%;
-  color: #091943
-}
-
-.reg-button {
-  font-size: 18px;
-  border-color: #eee;
-  background-color: white;
-  position: absolute;
-  left: 40%;
-  bottom: 10px;
-  border-radius: 25%;
-  padding: 10px;
-}
-
-.reg-button:hover {
-  background-color: inherit;
-}
-
-.promo-msg {
-  position: absolute;
-  text-align: center;
-  font-size: 25px;
-  width: 100%;
-}
-
-.first-row-list-item {
-  background-color: rgb(255, 254, 229);
-}
-
-
-.card-1 {
-  background-color: hsl(30deg, 77%, 52%);
-}
-
-.card-1 .btn {
-  color: hsl(30deg, 77%, 52%);
-}
-
-.card-2 {
-  background-color: hsl(185deg, 98%, 23%);
-}
-
-.card-2 .btn {
-  color: hsl(185deg, 98%, 23%);
-}
-
-.card-3 {
-  background-color: rgb(103, 198, 197);
-
-}
-
-.card-3 .btn {
-  color: hsl(179deg, 100%, 13%);
-}
-
-.card-4 {
-  background-color: rgb(61, 148, 148);
-}
-
-.card-4 .btn {
-  color: hsl(179deg, 100%, 13%);
-}
-
-.card__icon {
-  width: 80px;
-  height: 80px;
-
-}
-
-.card__headline {
-  text-align: center;
-  width: fit-content;
-  margin-top: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.card__desc {
-  text-align: justify;
-  line-height: 1.56rem;
-  margin-bottom: 5.06rem;
-}
-
-
-.telegram {
-  margin-top: 40px;
-  position: relative;
-  left: 37%;
-  display: inline-flex;
-  white-space: nowrap;
-}
-
-.tele-img {
-  left: 70%;
-  width: 100px;
-  margin-left: 20px;
-}
-
-.para {
-  margin: 0px;
-  text-align: center;
   text-decoration: none;
-  font-size: 30px;
   color: rgb(0, 0, 0);
+  padding: 2px;
 }
 
-.join {
-  text-decoration: none;
+.telegram-logo{
+  position: fixed;
+  left: auto;
+  top: auto;
+  right: 0%;
+  bottom: 5%;
+  margin-right: 20px;
+  padding: 7px;
+  width: 80px;
+}
+
+/* Telegram refrence link start*/
+
+/* WELCOME message */
+
+.welcome-msg {
+  margin-left: 20px;
   color: #eee;
-  font-size: 30px;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 110px;
 }
 
-/* Register card end */
-
-/* Yesterday and weekly result start */
-
-.yesterday .stock-name,
-.weekly .stock-name {
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  left: 0%;
+.small-welcome {
+  color: #eee;
+  font-family: "Times New Roman", Times, serif;
+  margin: 0px;
+  font-size: 20px;
 }
 
-.yesterday .stock-entry,
-.weekly .stock-entry {
-  top: 30%;
-  left: 5%;
+.welcome-msg,.small-welcome {
+  margin-left: 30px;
 }
 
-.yesterday .stock-exit,
-.weekly .stock-exit {
-  top: 50%;
-  left: 5%;
+.companyname {
+  background: -webkit-linear-gradient(0deg, rgb(0, 255, 13) 0%, rgba(255, 255, 255, 1) 63%, rgb(221, 119, 119) 68%, rgba(253, 0, 0, 1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: auto;
 }
 
-.stock-predicted {
-  position: absolute;
-  top: 70%;
-  left: 5%;
+/* End of welcome message */
+
+/* start of results */
+
+.results .message{
+  color: #fcfdff;
 }
 
-.stock-result {
-  position: absolute;
-  top: 60%;
-  right: 5%;
+.results{
+  margin-top: 40px;
+  background-color: #9b9b1d;
 }
 
-.stock-gain {
-  position: absolute;
-  top: 30%;
-  right: 5%;
-}
-
-.stock-gain,
-.stock-result {
-  font-size: 25px;
-  font-weight: bolder;
-}
-
-.stock-calldate {
-  position: absolute;
-  top: 70%;
-  left: 5%;
-}
-
-.profit {
-  color: rgb(38, 212, 38);
-}
-
-.loss {
-  color: rgb(230, 23, 23);
-}
-
-.contact-div{
+.card{
   position: relative;
-  background-color: rgba(249, 249, 255, 0.3);
-  margin:  20px;
-  text-align: center;
-  left: 25%;
-  height: 500px;
-  width: 50%;
-  backdrop-filter: blur(10px);
-  
+  box-shadow: 0px 0px 15px 2px rgb(0, 0, 0);
+  display: inline-block;
+  margin: 40px;
+  background-color: aquamarine;
+  height: 320px;
+  width: 320px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 19px;
 }
 
-.thankyou-msg{
-  position: relative;
-  top: 40%;
-  font-size: larger;
+.cards{
+  overflow-y: scroll;
+  white-space: nowrap;
+  background-color: rgb(80, 24, 80);
 }
 
-.contact{
+/* CARD personalation */
+
+.stockname{
+  position: absolute;
   width: 100%;
-  color: #eee
+  font-size: large;
+  font-weight: bold;
+  top: 2%;
+  text-align: center;
 }
 
-input[type=text],input[type=number],textarea {
-  color: rgba(255, 255, 255, 1);
-  outline: 1px wheat;
-  border: 1px wheat;
-  width: 50%;
-  background-color: transparent;
-  border: 3px solid rgb(246, 233, 233);
-  height: 40px;
-  border-radius: 10px;
-}
-
-.calltext{
+.full-stock-name{
   position: absolute;
-  font-size: medium;
-}
-
-.name{
-  position: absolute;
-  width: 55%;
-  top: 5%;
-}
-
-
-.call-fname{
-  position: absolute;
+  font-size: small;
+  left: 10px;
   top: 10%;
 }
 
-.call-phone{
+.entry-price{
+  position: absolute;
+  top: 20%;
+  left: 5%;
+}
+
+.exit-price{
+  position: absolute;
+  top: 20%;
+  right: 10%;
+}
+
+.exit-date{
   position: absolute;
   top: 30%;
+  right: 10%;
 }
 
-.phone{
+.entry-date{
   position: absolute;
-  width: 55%;
-  top: 25%;
+  top: 30%;
+  left: 5%;
 }
 
-.call-mail{
+.strategy{
   position: absolute;
-  top: 50%;
-}
-
-.mail{
-  position: absolute;
-  width: 55%;
   top: 45%;
+  left: 5%;
 }
 
-.call-desc{
+.profit{
   position: absolute;
-  height: 20px;
-  top: 70%;
+  color: rgb(1, 255, 35);
+  font-weight: 700;
 }
 
-.desc{
+.per{
   position: absolute;
-  width: 60%;
-  top: 65%;
+  right: 7%;
+  font-size: 40px;
+  bottom: 30%;
 }
 
-.call-button{
+.amt{
   position: absolute;
-  top: 90%;
+  text-align: center;
+
+  font-size: 40px;
+  bottom: 10%;
   width: 100%;
 }
 
-
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: rgb(255, 255, 255);
-  opacity: .3; /* Firefox */
-}
-
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: rgb(255, 255, 255);
-}
-
-::-ms-input-placeholder { /* Microsoft Edge */
-  color: rgb(255, 255, 255);
-}
-
-
-.call-button{
+.prem-message{
   position: absolute;
-  top: 85%;
-  width: 100%;
+  margin: 40px 20px;
+  text-align: center;
+  font-size: xx-large;
+  white-space : normal;
 }
 
-.sendbtn{
+.card button{
+  position: absolute;
+  font-size: 20px;
+  left: 25%;
+  height: 50px;
   width: 50%;
+  bottom: 10%;
+  border-radius: 20px;
+}
+
+
+/* end of results */
+
+
+/* start of moto  */
+.message {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 40pt;
+  padding: 10px;
+  color: rgb(2, 2, 2);
+}
+
+.moto{
+  width: 100%;
+  text-align: center;
+  font-size: larger;
+  font-weight: bold;
+  color: rgb(0, 247, 82);
+  padding-bottom: 30px;
+}
+
+.contact-page{
+  margin: 20px;
+  position: relative;
+  left: 10%;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 80%;
+}
+
+.moto-form{
+  width: 80%;
   height: 40px;
-  border-radius: 25px;
-  border-color: transparent;
-  background-color: rgb(232, 208, 208,0.5);
-  color: #eee;
+  margin: 10px;
 }
 
-.sendbtn:hover,.sendbtn:active{
-  background-color: #eee;
-  color: #091943;
+.heading{
+  width: 100%;
+  color: black;
+  font-size: larger;
+  margin-bottom: 10px;
+}
+
+/* End of moto */
+
+/* Footer starts */
+
+.footer{
+  border-top: 2px solid rgb(255, 255, 255);
+  width: 100%;
+  height: 250px;
+  background-color: rgb(73, 193, 249,0.8);
+}
+
+.main-list{
+  margin-top: 3%;
+  margin-left: 11%;
+  display: inline-block;
+}
+
+.header{
+  font-weight: bolder;
+  font-size: 25px;
+}
+
+.sub-list{
+  margin-top: 8px;
+  font-size: 18px;
 }
 
 
-/* Yesterday and weekly result end */
+/* Footer */
 
-
-
-@media (max-width: 1000px) {
-  .grid {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(2, 40%);
-    justify-content: center;
-  }
-
-  .stock-name {
-    font-size: 15px;
-    left: 40%;
-  }
-
-  .promo-msg {
-    font-size: 18px;
-    left: 10%;
-  }
-
-  .reg-button {
-    left: 40%;
-  }
-
-
-  .wrapper {
-    width: 100%;
-    text-align: center;
-  }
-
-  .card__desc {
-    margin-bottom: 5.3rem;
-  }
-
-
-
-  .btn__container {
-    position: absolute;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    bottom: 0px;
-    left: 25%;
-  }
-
-  .fullname {
-    font-size: 11px;
-    top: 40%;
-  }
-
-  .telegram {
-    left: 15%;
-    width: 10%;
-  }
-
-  .tele-img {
-    margin-left: 20px;
-    width: 100px;
-  }
-
-  /* Register card start */
-
-  .reg-button {
-    font-size: 18px;
-    border-color: #eee;
-    background-color: white;
-    position: absolute;
-    left: 25%;
-    bottom: 10px;
-    border-radius: 25%;
-    padding: 10px;
-  }
-
-  .para {
-    padding-top: 10px;
-    font-size: 1.2rem;
-  }
-
-  .name,.phone,.mail{
-    width: 60%;
-  }
-  
-  .desc{
-    width: 67%;
-  }
-
-}
+@media (max-width: 1000px) {}
 
 @media (max-width:800px) {
-
-  /*######################### 800 ############################################## */
   .navbar .nav-btn {
     display: inline-block;
     position: absolute;
@@ -694,15 +381,6 @@ input[type=text],input[type=number],textarea {
     display: block;
   }
 
-  .wrapper {
-    width: 100%;
-    text-align: center;
-  }
-
-  .card__desc {
-    margin-bottom: 5.3rem;
-  }
-
   /* when nav toggle button not checked */
   .navbar #nav-check:not(:checked)~.nav-links {
     height: 0px;
@@ -720,232 +398,6 @@ input[type=text],input[type=number],textarea {
     font-size: 18px;
     font-weight: bold;
     color: rgb(9, 14, 90);
-  }
-
-  .telegram {
-    left: 8%;
-  }
-
-  .join {
-    font-size: 20px;
-  }
-
-  .tele-img {
-    margin-left: 20px;
-    width: 60px;
-  }
-
-  .message {
-    font-size: 15px;
-    padding: 15px 6px;
-  }
-
-  .row-card-title {
-    font-size: 25px;
-    width: 100%;
-  }
-
-
-  .grid {
-    display: grid;
-    grid-row-gap: 20px;
-    grid-template-columns: repeat(1, 100%);
-    justify-content: center;
-  }
-
-  .card {
-    position: relative;
-    border-radius: 25px;
-  }
-
-  .btn__container {
-    position: absolute;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    bottom: 0px;
-    left: 25%;
-  }
-
-  .row-card {
-    padding: 10px;
-    width: 100%;
-    height: 300px;
-    border-radius: 0.625rem;
-  }
-
-  .first-row {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(1, 93%);
-  }
-
-  .row-card-title {
-    position: sticky;
-    top: 0;
-    background-color: inherit;
-    padding-top: 5px;
-    width: 100%;
-    z-index: 7;
-  }
-
-  .first-row-list {
-    position: relative;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    padding: 0px;
-    margin: 0px;
-    height: 85%;
-
-  }
-
-
-  .first-row-list-item {
-    display: inline-block;
-    flex-direction: row;
-    padding-right: 1px;
-    height: 90%;
-    width: 250px;
-    margin-left: 0px;
-    white-space: normal;
-
-  }
-
-  .stock-name {
-    left: 0%;
-    text-align: center;
-    top: 5%;
-    font-size: larger;
-  }
-
-  .stock-entry {
-    top: 25%;
-  }
-
-  .stock-exit {
-    top: 40%;
-  }
-
-  .stock-sl {
-    top: 55%;
-  }
-
-  .stock-img {
-    top: 14%;
-    left: -20%;
-  }
-
-  .up {
-    top: 20%;
-  }
-
-  .stock-tf {
-    top: 70%;
-    left: 50%;
-
-  }
-
-  .today .stock-tf {
-    top: 70%;
-    left: 70%;
-
-  }
-
-  .reg-button {
-    font-size: 18px;
-    border-color: #eee;
-    background-color: white;
-    position: absolute;
-    left: 25%;
-    bottom: 10px;
-    border-radius: 25%;
-    padding: 10px;
-  }
-
-  .para {
-    margin: 25px 0px;
-    text-align: center;
-    font-size: 1.85rem;
-    position: absolute;
-    width: 250px;
-  }
-
-  /* Yesterday and weekly result start */
-
-  .yesterday .stock-name,
-  .weekly .stock-name {
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    left: 0%;
-  }
-
-  .yesterday .stock-entry,
-  .weekly .stock-entry {
-    top: 25%;
-    left: 5%;
-  }
-
-  .yesterday .stock-exit,
-  .weekly .stock-exit {
-    top: 40%;
-    left: 5%;
-  }
-
-  .stock-predicted {
-    top: 55%;
-    left: 5%;
-  }
-
-  .stock-result {
-    text-align: center;
-    width: 100%;
-    left: 0%;
-    top: 70%;
-
-  }
-
-  .stock-gain {
-    top: 40%;
-    right: 10%;
-  }
-
-  .stock-gain,
-  .stock-result {
-    font-size: 30px;
-  }
-
-  .stock-calldate {
-    position: absolute;
-    top: 55%;
-    left: 5%;
-  }
-
-  .contact-div{
-    background-color: rgba(132, 132, 255, 0.3);
-    left: 0%;
-    width: 90%;
-    backdrop-filter: blur(10px);
-    height: 550px;
-  }
-
-  /* Yesterday and weekly result end */
-
-
-  input[type=text],input[type=number],textarea {
-    width: 80%;
-    height: 60px;
-  }
-  .calltext{
-    font-size: medium;
-  }
-
-  .name,.phone,.mail{
-    width: 40%;
-  }
-  
-  .desc{
-    width: 50%;
   }
 }
 
