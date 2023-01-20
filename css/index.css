@@ -355,6 +355,12 @@ body {
 
 /* Footer */
 
+/* delete */
+.bitcoin{
+  color: rgb(219, 54, 54);
+}
+/* delete */
+
 @media (max-width: 1000px) {}
 
 @media (max-width:800px) {
@@ -364,7 +370,7 @@ body {
     top: 0px;
     right: 0px;
   }
-
+  
   .navbar .nav-btn label {
     display: inline-block;
     width: 80px;
@@ -445,6 +451,7 @@ body {
 }
 
 /* IFRAME  ENd*/
+
 
 /* start of results */
 
