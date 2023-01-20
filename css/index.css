@@ -13,6 +13,49 @@ body {
   background-position: center center;
 }
 
+/* Top icon bar */
+.top-icon{
+  margin: 0px 10px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.top-nav{
+  position: relative;
+  font-size: 13px;
+  height: 25px;
+  background-color: #c1c0c0; 
+  font-family: 'Mukta', sans-serif; 
+  font-weight: 500;
+  color: rgb(45, 44, 44);
+}
+
+.top-nav-left{
+  position: absolute;
+  top: 10%;
+  left: 3%;
+  width: fit-content;
+}
+
+.top-nav-right{
+  position: absolute;
+  top: 10%;
+  right: 2%;
+  width: fit-content;
+}
+.top-nav-items{
+  margin-top: 10px;
+  margin-top: 10px;
+  display: inline;  
+}
+
+.top-icon-button{
+  background-color: inherit;
+  border: none;
+  margin: 0px 15px;
+}
+/* Top icon bar */
+
 .navbar {
   height: 70px;
   width: 100%;
@@ -21,7 +64,7 @@ body {
   /* position: relative; */
   opacity: 100%;
   position: sticky;
-  top: 0;
+  top: -1px;
   z-index: 9;
 
 
@@ -118,10 +161,11 @@ body {
 /* IFRAME  Start*/
 
 .youtube-div{
-  position: relative;
-  left: 10%;
-  width: 80%;
-  height: 500px;
+  position: absolute;
+  top: 17%;
+  left:35%;
+  width: 60%;
+  height: 400px;
   text-align: center;
   background-color: #ccced2;
   margin-top: 50px;
@@ -131,44 +175,71 @@ body {
 /* IFRAME  ENd*/
 /* WELCOME message */
 
+.welcome{
+  position: relative;
+  background-color: #c1c0c0;
+  height: 600px;
+  background-image: url("/images/background/ytbackground.jpg");
+
+}
+
 .welcome-msg {
+  position: absolute;
+  top: 10px;
   margin-left: 20px;
   color: #eee;
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
-  font-size: 110px;
+  font-size: 130px;
+  width: fit-content;
+  margin-top: 0px;
 }
 
 .small-welcome {
+  position: absolute;
+  top:50%;
   color: #eee;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0px;
   font-size: 20px;
+  width: fit-content;
+
 }
 
 .welcome-msg,.small-welcome {
   margin-left: 30px;
+  margin-right: 0px;
 }
 
-.companyname {
-  background: -webkit-linear-gradient(0deg, rgb(0, 255, 13) 0%, rgba(255, 255, 255, 1) 63%, rgb(221, 119, 119) 68%, rgba(253, 0, 0, 1) 100%);
+.companyname,.companyname2 {
+  background: -webkit-linear-gradient(0deg, rgb(0, 255, 13) 0%, rgb(255, 255, 255) 59%, rgb(255, 0, 0) 62%,rgb(241, 104, 104) 82%, rgb(255, 255, 255) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: auto;
 }
 
+.companyname2{
+  display: none;
+}
 /* End of welcome message */
 
 /* start of results */
 
 .results .message{
   color: #fcfdff;
+  font-family: 'Roboto Slab', serif;
+  color: #2403a6;
+  font-weight: 600;
+  text-decoration: double;
 }
 
 .results{
-  margin-top: 40px;
-  border-top: 1px solid white;
+  margin-top: 0px;
+  border-top: 5px solid white;
+  border-bottom: 5px solid white;
+  background-color: rgba(0, 255, 234, 0.7);
+  height: 550px;
   /* background-color: #9b9b1d; */
 }
 
@@ -178,7 +249,7 @@ body {
   box-shadow: 0px 0px 15px 2px rgb(0, 0, 0);
   display: inline-block;
   margin: 40px;
-  background-color: rgb(7, 10, 65);
+  background-color: rgb(234, 234, 235);
   height: 320px;
   width: 320px;
   font-family: Arial, Helvetica, sans-serif;
@@ -200,10 +271,12 @@ body {
   font-size: 25px ;
   font-weight: bold;
   top: 5%;
+  color: black;
   text-align: center;
 }
 
 .full-stock-name{
+  color: rgb(123, 121, 121);
   position: absolute;
   font-size: 15px;
   left: 10px;
@@ -211,30 +284,35 @@ body {
 }
 
 .entry-price{
+  color: rgb(74, 73, 73);
   position: absolute;
   top: 25%;
   left: 5%;
 }
 
 .exit-price{
+  color: rgb(74, 73, 73);
   position: absolute;
   top: 25%;
   right: 10%;
 }
 
 .exit-date{
+  color: rgb(74, 73, 73);
   position: absolute;
   top: 35%;
   right: 10%;
 }
 
 .entry-date{
+  color: rgb(74, 73, 73);
   position: absolute;
   top: 35%;
   left: 5%;
 }
 
 .strategy{
+  color: rgb(74, 73, 73);
   position: absolute;
   top: 45%;
   left: 5%;
@@ -263,6 +341,7 @@ body {
 }
 
 .prem-message{
+  color: darkblue;
   position: absolute;
   margin: 40px 20px;
   text-align: center;
@@ -361,7 +440,76 @@ body {
 }
 /* delete */
 
-@media (max-width: 1000px) {}
+@media (max-width: 1000px) {
+
+.companyname{
+  display: none;
+}
+
+.companyname2{
+  display: block;
+}
+
+  
+/* IFRAME  Start*/
+
+.youtube-div{
+  position: absolute;
+  top: 80px;
+  left: 10%;
+  width: 80%;
+  height: 330px;
+  
+}
+
+/* IFRAME  ENd*/
+/* WELCOME message */
+
+.welcome{
+  position: relative; 
+  height: 500px;
+}
+
+.welcome-msg {
+  top: 0%;
+  font-size: 100px;
+}
+
+.small-welcome {
+  top:20%; 
+
+
+}
+
+.welcome-msg,.small-welcome {
+  margin-left: 20px;
+}
+
+/* End of welcome message */
+
+/* Cards results */
+
+
+
+.results .message{
+  font-size: 45px;
+}
+
+/* Footer starts */
+
+.footer{
+  height: 250px;
+}
+
+.main-list{
+  margin-top: 3%;
+  margin-left: 70px;
+}
+
+/* Footer */
+
+
+}
 
 @media (max-width:800px) {
   .navbar .nav-btn {
@@ -427,16 +575,20 @@ body {
 
   /* WELCOME message */
 
+  .welcome{
+    height: 450px;
+  }
 .welcome-msg {
   font-size: 45px;
 }
 
 .small-welcome {
-  font-size: 10px;
+  top: 10%;
+  font-size: 15px;
 }
 
 .welcome-msg,.small-welcome {
-  margin-left: 5px;
+  margin-left: 15px;
 }
 /* End of welcome message */
 
@@ -445,8 +597,8 @@ body {
 .youtube-div{
   left: 5%;
   width: 90%;
-  height: 400px;
-  margin: 50px 0px;
+  height: 300px;
+  margin: 20px 0px;
   
 }
 
@@ -457,12 +609,13 @@ body {
 
 .results{
   margin-top: 10px;
+  height: 500px;
 }
 
-.message {
+
+.results .message{
   font-size: 30px;
 }
-
 /* CARD personalation */
 
 .full-stock-name{
@@ -512,6 +665,11 @@ body {
   margin-left: 11%;
   display: inline-block;
 }
+
+.top-nav{
+  display: none;
+}
+
 /* Footer */
 }
 
