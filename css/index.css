@@ -118,12 +118,16 @@ body {
 /* IFRAME  Start*/
 
 .youtube-div{
-  
   position: relative;
+  left: 10%;
+  width: 80%;
+  height: 500px;
   text-align: center;
-  margin: 20px;
+  background-color: #ccced2;
+  margin-top: 50px;
   
 }
+
 /* IFRAME  ENd*/
 /* WELCOME message */
 
@@ -429,6 +433,18 @@ body {
   margin-left: 5px;
 }
 /* End of welcome message */
+
+/* IFRAME  Start*/
+
+.youtube-div{
+  left: 5%;
+  width: 90%;
+  height: 400px;
+  margin: 50px 0px;
+  
+}
+
+/* IFRAME  ENd*/
 
 /* start of results */
 
