@@ -25,7 +25,7 @@ function on_load(){
 }
 
 function get_intraday_stock(){
-fetch('./jsondata/intraday_first.json')
+fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
 .then(function(response){
     return response.json();
 })
