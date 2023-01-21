@@ -179,7 +179,7 @@ body {
   position: relative;
   background-color: #c1c0c0;
   height: 600px;
-  background-image: url("/images/background/ytbackground.jpg");
+  background-image: url("../images/background/ytbackground.jpg");
 
 }
 
