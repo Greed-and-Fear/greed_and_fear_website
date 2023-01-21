@@ -8,23 +8,24 @@
 // setInterval(get_intraday_stock(), 100);
 
 function on_load(){
-    fetch("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR")
-    .then(function(response){
-        return response.json();
-    })
-    .then(function(today_pick){
-        let bitcoinele = document.getElementById("bitcoin");
-        let out=`
-        USD : ${today_pick.USD} <br> EUR : ${today_pick.EUR}
-        `;
+    get_intraday_stock()
+    // fetch("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR")
+    // .then(function(response){
+    //     return response.json();
+    // })
+    // .then(function(today_pick){
+    //     let bitcoinele = document.getElementById("bitcoin");
+    //     let out=`
+    //     USD : ${today_pick.USD} <br> EUR : ${today_pick.EUR}
+    //     `;
         
-        bitcoinele.innerHTML = out;
-    })
+    //     bitcoinele.innerHTML = out;
+    // })
 
 }
 
 function get_intraday_stock(){
-fetch('../jsondata/intraday_first.json')
+fetch('./jsondata/intraday_first.json')
 .then(function(response){
     return response.json();
 })
@@ -53,5 +54,3 @@ fetch('../jsondata/intraday_first.json')
             stock_cards.innerHTML = out;
 })
 }
-
-get_intraday_stock()
