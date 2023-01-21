@@ -792,6 +792,55 @@ body {
 
 
 /* End of moto */
+.community{
+  height: 550px;
+}
+
+.community .youtube-div{
+  margin: 30px 30px;
+  width: 80%;
+  height: 150px;
+}
+
+.community-message{
+  top: 30%;
+  left:0%;
+  width: 100%;
+  height: 330px;
+  margin: 0px;
+}
+
+.community-message .sub-heading{
+  font-size: 50px;
+}
+
+.items{
+  padding: 5px 0px;
+  font-size: 16px;
+}
+
+.itembtn .btn{
+  left: 0%;
+}
+
+.discord .youtube-div {
+  left: 5%;
+}
+
+.discord .community-message {
+  left: 0%;
+ 
+  
+}
+
+.companyname{
+display: none;
+}
+
+.companyname2{
+display: block;
+}
+
 
 /* Footer starts */
 
