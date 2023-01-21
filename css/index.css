@@ -60,16 +60,16 @@ body {
 /* Top icon bar */
 
 .navbar {
-  height: 100px;
+  height: fit-content ;
   width: 100%;
-  padding: 14px 30px;
+  padding: 14px 5px;
   background-color: #000000;
   /* position: relative; */
   opacity: 100%;
   position: sticky;
   top: -1px;
   z-index: 9;
-
+  border-bottom: 2px solid white;
 
 }
 
@@ -78,6 +78,7 @@ body {
   text-decoration: none;
   font-size: 18px;
   color: rgb(137, 255, 131);
+  z-index: 8;
 }
 
 .navbar .nav-header .nav-logo {
@@ -86,16 +87,12 @@ body {
   border-radius: 50px;
 }
 
-.logo {
-  border-radius: 50px;
-
-}
-
 .navbar .nav-links {
   display: inline;
   float: right;
-  padding: 10px 20px;
+  margin-top: 50px;
   font-size: 18px;
+  z-index: 6;
 }
 
 .navbar .nav-links .loginBtn {
@@ -126,7 +123,7 @@ body {
 }
 
 .slogan {
-  padding: 0px 10px;
+  padding: 0px 0px;
 }
 
 ::-webkit-scrollbar {
@@ -258,18 +255,17 @@ body {
   border-top: 5px solid rgb(0, 0, 0);
   border-bottom: 5px solid rgb(0, 0, 0);
   /* background-image: linear-gradient(180deg, white 0%, #ebebeb 100%); */
-  background-color: white;
-  height: 700px;
+  background-color: rgb(220, 250, 207);
+  height: 600px;
   /* background-color: #9b9b1d; */
 }
 
 .card{
-  color: #a7a8a9;
   position: relative;
-  box-shadow: 0px 0px 15px 2px rgb(0, 0, 0);
+  box-shadow: 0px 0px 2px 4px rgb(0, 0, 0);
   display: inline-block;
-  margin: 40px;
-  background-color: rgb(234, 234, 235);
+  margin: 30px;
+  background-color: rgb(205, 255, 252);
   height: 400px;
   width: 400px;
   font-family: Arial, Helvetica, sans-serif;
@@ -302,32 +298,32 @@ body {
 
 .per{
   position: absolute;
-  left: 10%;
-  font-size: 40px;
-  bottom: 10%;
+  left: 5%;
+  font-size: 36px;
+  bottom: 5%;
 }
 
 .amt{
   position: absolute;
-  left: 40%;
-  font-size: 40px;
-  bottom: 10%;
+  left: 35%;
+  font-size: 35px;
+  bottom: 5%;
   width: 100%;
 }
 
 .image{
   position: absolute;
-  top: 60px;
-  width: 80%;
-
-  left: 10%;
-  background-color: #009afa;
-  width: 80%;
+  top: 55px;
+  height: 65%;
+  width: 100%;
+  left: 5%;
+  width: 90%;
 }
 
 .result-img{
   position: absolute;
   width: 100%;
+  height: 100%
 }
 
 .prem-message{
@@ -852,7 +848,7 @@ font-weight: 600;
 
 .results{
   margin-top: 0px;
-  height: 500px;
+  height: 550px;
 }
 
 
