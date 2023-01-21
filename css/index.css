@@ -63,7 +63,7 @@ body {
   height: 70px;
   width: 100%;
   padding: 14px 30px;
-  background-color: #091943;
+  background-color: #000000;
   /* position: relative; */
   opacity: 100%;
   position: sticky;
@@ -77,7 +77,7 @@ body {
   display: inline;
   text-decoration: none;
   font-size: 18px;
-  color: #eee;
+  color: rgb(137, 255, 131);
 }
 
 .navbar .nav-header .nav-logo {
@@ -109,7 +109,7 @@ body {
   padding: 10px 12px;
   text-decoration: none;
   font-weight: 550;
-  color: white;
+  color: rgb(21, 190, 30);
 }
 
 /* Hover effects */
@@ -776,7 +776,7 @@ left: 10%;
 
   .navbar .nav-btn label:hover,
   .navbar #nav-check:checked~.nav-btn label {
-    background-color: rgb(9, 14, 90);
+    background-color: rgb(2, 3, 24);
   }
 
   .navbar .nav-links {
@@ -784,7 +784,7 @@ left: 10%;
     display: block;
     text-align: center;
     width: 25%;
-    background-color: rgb(9, 14, 90);
+    background-color: rgb(0, 0, 5);
     transition: all 0.3s ease-in;
     overflow-y: hidden;
     top: 70px;
