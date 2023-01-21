@@ -411,7 +411,7 @@ body {
   width: fit-content;
   position: absolute;
   top: 80px;
-  left: 15%;
+  left: 30%;
   font-size: 20px;
   color: #000000;
   font-family: "Montserrat", Sans-serif;
@@ -717,6 +717,33 @@ body {
 
 /* Footer */
 
+.studentprogram{
+  height: 400px;
+}
+
+.studentprogram-img .img{
+  top: 90px;
+  left: 10%;
+}
+
+.studentprogram .heading{
+left: 10%;
+}
+
+.studentprogram .message{
+  left: 40%;
+  font-size: 20px;
+}
+
+.studentprogram .button{
+  top: 50%;
+  left: 60%;
+  padding: 25px;
+  border-radius: 50px;
+}
+
+
+
 
 }
 
@@ -819,12 +846,35 @@ body {
 }
 
 /* IFRAME  ENd*/
+.studentprogram{
+  height: 400px;
+}
 
+.studentprogram-img .img{
+  top: 60px;
+  left: 18%;
+}
+
+.studentprogram .heading{
+font-size: 18px;
+left: 10%;
+font-weight: 600;
+}
+
+.studentprogram .message{
+  display: none;
+}
+
+.studentprogram .button{
+  top: 80%;
+  left: 25%;
+  padding: 20px;
+}
 
 /* start of results */
 
 .results{
-  margin-top: 10px;
+  margin-top: 0px;
   height: 500px;
 }
 
