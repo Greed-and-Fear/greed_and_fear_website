@@ -60,7 +60,7 @@ body {
 /* Top icon bar */
 
 .navbar {
-  height: 70px;
+  height: 100px;
   width: 100%;
   padding: 14px 30px;
   background-color: #000000;
@@ -94,6 +94,7 @@ body {
 .navbar .nav-links {
   display: inline;
   float: right;
+  padding: 10px 20px;
   font-size: 18px;
 }
 
@@ -102,7 +103,7 @@ body {
   padding: 5px 15px;
   margin-left: 20px;
   font-size: 17px;
-  color: rgb(9, 14, 90);
+  color: black;
 }
 
 .navbar .nav-links a {
@@ -238,7 +239,7 @@ body {
   background-color: rgb(232, 232, 232,0.3);
   border-radius: 50px;
   padding: 15px;
-  color: #000000;
+  color: #ffffff;
 }
 /* End of welcome message */
 
@@ -756,7 +757,7 @@ left: 10%;
   .navbar .nav-btn {
     display: inline-block;
     position: absolute;
-    top: 0px;
+    top: 10px;
     right: 0px;
   }
   
@@ -776,18 +777,18 @@ left: 10%;
 
   .navbar .nav-btn label:hover,
   .navbar #nav-check:checked~.nav-btn label {
-    background-color: rgb(2, 3, 24);
+    background-color: rgb(0, 0, 0);
   }
 
   .navbar .nav-links {
     position: absolute;
     display: block;
     text-align: center;
-    width: 25%;
-    background-color: rgb(0, 0, 5);
+    width: 40%;
+    background-color: rgb(0, 0, 0);
     transition: all 0.3s ease-in;
     overflow-y: hidden;
-    top: 70px;
+    top: 50px;
     right: 0px;
   }
 
@@ -802,7 +803,7 @@ left: 10%;
 
   /* when nav toggle button is checked */
   .navbar #nav-check:checked~.nav-links {
-    height: calc(100vh - 70px);
+    height: calc(100vh - 0px);
     overflow-y: auto;
   }
 
@@ -811,7 +812,7 @@ left: 10%;
     margin: 20px;
     font-size: 18px;
     font-weight: bold;
-    color: rgb(9, 14, 90);
+    color: rgb(0, 0, 0);
   }
 
   /* WELCOME message */
