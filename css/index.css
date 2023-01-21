@@ -13,7 +13,10 @@ body {
   background-position: center center;
 }
 
+
 /* Top icon bar */
+
+
 .top-icon{
   margin: 0px 10px;
   height: 20px;
@@ -221,6 +224,21 @@ body {
 
 .companyname2{
   display: none;
+}
+
+
+.register-btn{
+  position: absolute;
+  bottom: 18%;
+  left: 50px;
+}
+
+.btn{
+  font-size: 40px;
+  background-color: rgb(232, 103, 56);
+  border-radius: 50px;
+  padding: 15px;
+  color: #ccced2;
 }
 /* End of welcome message */
 
@@ -440,6 +458,7 @@ body {
 }
 /* delete */
 
+
 @media (max-width: 1000px) {
 
 .companyname{
@@ -455,9 +474,9 @@ body {
 
 .youtube-div{
   position: absolute;
-  top: 80px;
-  left: 10%;
-  width: 80%;
+  top: 110px;
+  left: 8%;
+  width: 85%;
   height: 330px;
   
 }
@@ -467,7 +486,7 @@ body {
 
 .welcome{
   position: relative; 
-  height: 500px;
+  height: 600px;
 }
 
 .welcome-msg {
@@ -483,6 +502,19 @@ body {
 
 .welcome-msg,.small-welcome {
   margin-left: 20px;
+}
+
+.register-btn{
+  left: 0px;
+  bottom: 15px;
+  width: 100%;
+}
+
+.btn{
+  position: relative;
+  font-size: 30px;
+  left: 35%;
+  
 }
 
 /* End of welcome message */
@@ -576,7 +608,7 @@ body {
   /* WELCOME message */
 
   .welcome{
-    height: 450px;
+    height: 470px;
   }
 .welcome-msg {
   font-size: 45px;
@@ -590,15 +622,22 @@ body {
 .welcome-msg,.small-welcome {
   margin-left: 15px;
 }
+
+.btn{
+  left: 20%;
+  font-size: 18px;
+  padding: 10px 50px;
+}
 /* End of welcome message */
 
 /* IFRAME  Start*/
 
 .youtube-div{
   left: 5%;
+  top: 80px;
   width: 90%;
   height: 300px;
-  margin: 20px 0px;
+  margin: 0px 0px;
   
 }
 
