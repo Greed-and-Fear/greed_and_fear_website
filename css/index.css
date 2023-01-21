@@ -715,6 +715,11 @@ body {
   margin-left: 70px;
 }
 
+.footer-item{
+  font-size: 27px;
+  margin: 10px;
+}
+
 /* Footer */
 
 .studentprogram{
@@ -983,6 +988,15 @@ display: block;
 
 .top-nav{
   display: none;
+}
+
+.footer-item{
+  font-size: 13px;
+  margin: 0px;
+}
+
+.footer2{
+  height: fit-content;
 }
 
 /* Footer */
