@@ -7,7 +7,7 @@
 
 // setInterval(get_intraday_stock(), 100);
 
-function on_load(){
+async function on_load(){
     get_intraday_stock()
     // fetch("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR")
     // .then(function(response){
