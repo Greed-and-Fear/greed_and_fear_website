@@ -9,42 +9,42 @@
     {
         "sl": 2,
         "stock_name": "FORTHIS",
-        "img_path": "../images/intraday/CIPLA.png",
+        "img_path": "../images/intraday/FORTHIS.png",
         "profit": 6543,
         "percentage": 6.8
     },
     {
         "sl": 3,
         "stock_name": "HDFC",
-        "img_path": "../images/intraday/CIPLA.png",
+        "img_path": "../images/intraday/HDFC.png",
         "profit": 5700,
         "percentage": 12.4
     },
     {
         "sl": 4,
         "stock_name": "IDFC",
-        "img_path": "../images/intraday/CIPLA.png",
+        "img_path": "../images/intraday/IDFC.png",
         "profit": 8000,
         "percentage": 15.0
     },
     {
         "sl": 5,
         "stock_name": "NIFTY BANK",
-        "img_path": "../images/intraday/CIPLA.png",
+        "img_path": "../images/intraday/NIFTYBANK.png",
         "profit": 11000,
         "percentage": 35.0
     },
     {
         "sl": 6,
         "stock_name": "NMDC",
-        "img_path": "../images/intraday/CIPLA.png",
+        "img_path": "../images/intraday/NMDC.png",
         "profit": 9300,
         "percentage": 6.1
     },
     {
         "sl": 7,
         "stock_name": "POWER GRID",
-        "img_path": "../images/intraday/",
+        "img_path": "../images/intraday/POWERGRID.png",
         "profit": 3578,
         "percentage": 4.5
     }
