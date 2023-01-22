@@ -2,49 +2,49 @@
     {
         "sl": 1,
         "stock_name": "CIPLA",
-        "img_path": "https://johnson845173.github.io/algotrade/images/intraday/CIPLA.webp",
+        "img_path":"images/intraday/CIPLA.webp",
         "profit": 2700,
         "percentage": 7.6
     },
     {
         "sl": 2,
         "stock_name": "FORTHIS",
-        "img_path": "https://johnson845173.github.io/algotrade/images/intraday/FORTHIS.webp",
+        "img_path": "images/intraday/FORTHIS.webp",
         "profit": 6543,
         "percentage": 6.8
     },
     {
         "sl": 3,
         "stock_name": "HDFC",
-        "img_path": "https://johnson845173.github.io/algotrade/images/intraday/HDFC.webp",
+        "img_path": "images/intraday/HDFC.webp",
         "profit": 5700,
         "percentage": 12.4
     },
     {
         "sl": 4,
         "stock_name": "IDFC",
-        "img_path": "https://johnson845173.github.io/algotrade/images/intraday/IDFC.webp",
+        "img_path": "images/intraday/IDFC.webp",
         "profit": 8000,
         "percentage": 15.0
     },
     {
         "sl": 5,
         "stock_name": "NIFTY BANK",
-        "img_path": "https://johnson845173.github.io/algotrade/images/intraday/NIFTYBANK.webp",
+        "img_path": "images/intraday/NIFTYBANK.webp",
         "profit": 11000,
         "percentage": 35.0
     },
     {
         "sl": 6,
         "stock_name": "NMDC",
-        "img_path": "https://johnson845173.github.io/algotrade/images/intraday/NMDC.webp",
+        "img_path": "images/intraday/NMDC.webp",
         "profit": 9300,
         "percentage": 6.1
     },
     {
         "sl": 7,
         "stock_name": "POWER GRID",
-        "img_path": "https://johnson845173.github.io/algotrade/images/intraday/POWERGRID.webp",
+        "img_path": "images/intraday/POWERGRID.webp",
         "profit": 3578,
         "percentage": 4.5
     }
