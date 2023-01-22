@@ -76,7 +76,7 @@ body {
   display: inline;
   text-decoration: none;
   font-size: 18px;
-  color: rgb(137, 255, 131);
+  color: rgb(105, 197, 255);
   z-index: 8;
 }
 
@@ -89,7 +89,7 @@ body {
 .navbar .nav-links {
   display: inline;
   float: right;
-  margin-top: 50px;
+  margin-top: 30px;
   font-size: 18px;
   z-index: 6;
 }
@@ -103,10 +103,10 @@ body {
 }
 
 .navbar .nav-links a {
-  padding: 10px 12px;
+  padding: 20px 40px;
   text-decoration: none;
   font-weight: 550;
-  color: rgb(21, 190, 30);
+  color: rgb(121, 192, 236);
 }
 
 /* Hover effects */
@@ -187,12 +187,13 @@ body {
   position: absolute;
   top: 10px;
   margin-left: 20px;
-  color: #eee;
+  /* color: #eee; */
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   font-size: 130px;
   width: fit-content;
   margin-top: 0px;
+  /* text-shadow: -1px -1px 0 rgb(255, 255, 255), 1px -1px 0 rgb(240, 240, 240), -1px 1px 0 #000, 1px 1px 0 #000; */
 }
 
 .small-welcome {
@@ -212,7 +213,7 @@ body {
 }
 
 .companyname,.companyname2 {
-  background: -webkit-linear-gradient(0deg, rgb(0, 255, 13) 0%, rgb(255, 255, 255) 59%, rgb(255, 0, 0) 62%,rgb(241, 104, 104) 82%, rgb(255, 255, 255) 100%);
+  background: -webkit-linear-gradient(0deg, rgb(97, 129, 166) 0%, rgb(255, 255, 255) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -253,7 +254,7 @@ body {
   margin-top: 0px;
   border-top: 5px solid rgb(0, 0, 0);
   border-bottom: 5px solid rgb(0, 0, 0);
-  background-image: linear-gradient(320deg, rgb(14, 21, 59) 0%, #444cdb 100%); 
+  background-image: linear-gradient(320deg, rgb(26, 14, 60) 0%, #082654 100%); 
   background-color: rgb(69, 167, 232);
   height: 600px;
   /* background-color: #9b9b1d; */
@@ -264,7 +265,7 @@ body {
   box-shadow: 0px 0px 2px 4px rgb(0, 0, 0);
   display: inline-block;
   margin: 30px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(244, 242, 242);
   height: 400px;
   width: 400px;
   font-family: Arial, Helvetica, sans-serif;
@@ -351,7 +352,7 @@ body {
 
 .studentprogram{
   position: relative;
-  background-image: linear-gradient(140deg, #47a4f0 0%, #5f7aff 100%);
+  background-image: linear-gradient(140deg, #236193 0%, #101c53 100%);
   height: 300px;
   width: 100%;
 }
@@ -369,7 +370,7 @@ body {
   top: 25px;
   left: 40%;
   font-size: 35px;
-  color: #000000;
+  color: #ffffff;
   font-family: "Montserrat", Sans-serif;
   font-weight: 300;
 }
@@ -380,7 +381,7 @@ body {
   top: 80px;
   left: 30%;
   font-size: 20px;
-  color: #ffffff;
+  color: #bcbcbc;
   font-family: "Montserrat", Sans-serif;
   font-weight: 300;
 }
@@ -413,7 +414,7 @@ body {
   width: 100%;
   background-color: #ccced2;
   height: 450px;
-  background-image: linear-gradient(40deg, #5365bf 0%, #060c28 100%);
+  background-image: linear-gradient(40deg, #5365bf 0%, #142263 100%);
 }
 
 .community .youtube-div{
@@ -788,16 +789,17 @@ left: 10%;
     height: 470px;
   }
 .welcome-msg {
-  font-size: 45px;
+  font-size: 53px;
 }
 
 .small-welcome {
-  top: 10%;
-  font-size: 15px;
+  display: none;
 }
 
 .welcome-msg,.small-welcome {
-  margin-left: 15px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
 }
 
 .btn{
@@ -811,7 +813,7 @@ left: 10%;
 
 .youtube-div{
   left: 5%;
-  top: 80px;
+  top: 70px;
   width: 90%;
   height: 300px;
   margin: 0px 0px;
