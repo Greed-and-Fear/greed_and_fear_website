@@ -597,19 +597,28 @@ body {
 
 @media (max-width: 1000px) {
 
+  .navbar .nav-links a {
+    padding: 20px 20px;
+  }
+
   .community .youtube-div{
     margin: 60px 30px;
-    width: 45%;
+    left: 0%;
+    width: 55%;
   }
   
   .community-message{
-    left: 55%;
+    left: 60%;
     height: 330px;
     
   }
   
+  .community-message .heading{
+    font-size: 40px;
+  }
+
   .community-message .sub-heading{
-    font-size: 50px;
+    font-size: 40px;
   }
   
   .items{
@@ -635,19 +644,32 @@ body {
 
 .youtube-div{
   position: absolute;
-  top: 110px;
-  left: 8%;
-  width: 60%;
+  top: 70px;
+  left: 5%;
+  width: 90%;
   height: 330px;
   
 }
 
 /* IFRAME  ENd*/
+
+.discord .youtube-div {
+  left: 38%;
+}
+
+.discord .community-message {
+  left: 0%;
+}
+
+.community-message{
+  margin-top: 45px;
+}
 /* WELCOME message */
 
 .welcome{
   position: relative; 
-  height: 600px;
+  height: 550px;
+  background-size: cover;
 }
 
 .welcome-msg {
@@ -656,7 +678,7 @@ body {
 }
 
 .small-welcome {
-  top:20%; 
+  display: none;
 
 
 }
@@ -667,7 +689,7 @@ body {
 
 .register-btn{
   left: 0px;
-  bottom: 15px;
+  bottom: 20px;
   width: 100%;
 }
 
@@ -865,16 +887,22 @@ font-weight: 600;
 
 .results{
   margin-top: 0px;
-  height: 550px;
+  height: 450px;
 }
 
 
 .results .message{
   font-size: 30px;
 }
+
+.profit{
+  font-size: 30px;
+}
 /* CARD personalation */
 
 .card{
+  width: 350px;
+  height: 300px;
   margin  : 10px 30px;
 }
 
@@ -909,14 +937,25 @@ font-weight: 600;
   height: 550px;
 }
 
-.community .youtube-div{
-  margin: 30px 30px;
-  width: 80%;
-  height: 150px;
+
+.community .youtube-div,.community .discord .youtube-div {
+  left: 0%;
+  padding: 0px;
+  margin: 20px 10px;
+  width: 95%;
+  height: 250px;
 }
 
 .community-message{
-  top: 30%;
+  top: 47%;
+  left:0%;
+  width: 100%;
+  height: 330px;
+  margin: 0px;
+}
+
+.youtube .community-message {
+  top: 40%;
   left:0%;
   width: 100%;
   height: 330px;
@@ -926,6 +965,10 @@ font-weight: 600;
 .community-message .sub-heading{
   font-size: 50px;
 }
+.youtube{
+  height: 650px;
+}
+
 
 .items{
   padding: 5px 0px;
@@ -933,18 +976,10 @@ font-weight: 600;
 }
 
 .itembtn .btn{
-  left: 0%;
+  left: 25%;
 }
 
-.discord .youtube-div {
-  left: 5%;
-}
 
-.discord .community-message {
-  left: 0%;
- 
-  
-}
 
 .companyname{
 display: none;
@@ -963,7 +998,7 @@ display: block;
 
 .main-list{
   margin-top: 3%;
-  margin-left: 11%;
+  margin-left: 15%;
   display: inline-block;
 }
 
