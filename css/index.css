@@ -134,16 +134,6 @@ body {
 
 /* Telegram refrence link start*/
 
-.telegram-top,
-.links{
-  background-color: #fcfdff;
-  text-align: center;
-  font-weight: bold;
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-  padding: 2px;
-}
-
 .telegram-logo{
   position: fixed;
   left: auto;
@@ -185,39 +175,34 @@ body {
 }
 
 .welcome-msg {
-  position: absolute;
   top: 10px;
   margin-left: 20px;
-  /* color: #eee; */
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   font-size: 130px;
-  width: fit-content;
   margin-top: 0px;
-  /* text-shadow: -1px -1px 0 rgb(255, 255, 255), 1px -1px 0 rgb(240, 240, 240), -1px 1px 0 #000, 1px 1px 0 #000; */
-}
+  }
 
 .small-welcome {
-  position: absolute;
   top:27%;
   color: rgb(251, 252, 199);
   font-weight: 400;
   text-align: justify;
-  /* background-color:  sans-#ffffff; */
   font-family: 'Merriweather', serif; 
-  margin: 0px;
   font-size: 22px;
+  margin: 0px;
   max-width: 460px;
-  width: fit-content;
-
+  
 }
 
 .welcome-msg,.small-welcome {
+  position: absolute;
+  width: fit-content;
   margin-left: 30px;
   margin-right: 0px;
 }
 
-.companyname,.companyname2 {
+.companyname{
   background: -webkit-linear-gradient(0deg, rgb(97, 129, 166) 0%, rgb(255, 255, 255) 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -225,9 +210,6 @@ body {
   margin: auto;
 }
 
-.companyname2{
-  display: none;
-}
 
 
 .register-btn{
@@ -237,7 +219,6 @@ body {
 }
 
 .btn{
-  display: block;
   border: none;
   font-size: 40px;
   border-radius: 25px;
@@ -250,6 +231,23 @@ body {
 }
 
 .btn:hover{
+  background-position: left bottom;
+  color: white;
+}
+
+.yt-btn{
+  border: none;
+  font-size: 20px;
+  border-radius: 25px;
+  padding: 15px;
+  font-family: 'Merriweather', sans-serif;
+  background: linear-gradient(to right,#f00404 50%, rgb(234, 228, 228) 50% );
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all .5s ease-out;
+}
+
+.yt-btn:hover{
   background-position: left bottom;
   color: white;
 }
@@ -269,7 +267,7 @@ body {
   margin-top: 0px;
   border-top: 5px solid rgb(0, 0, 0);
   border-bottom: 5px solid rgb(0, 0, 0);
-  background-image: linear-gradient(320deg, rgb(26, 14, 60) 0%, #082654 100%); 
+  background-image: linear-gradient(320deg, rgb(37, 18, 90) 0%, #082654 100%); 
   background-color: rgb(69, 167, 232);
   height: 600px;
   /* background-color: #9b9b1d; */
@@ -280,7 +278,7 @@ body {
   box-shadow: 0px 0px 2px 4px rgb(0, 0, 0);
   display: inline-block;
   margin: 30px;
-  background-color: rgb(244, 242, 242);
+  background-color: rgb(255, 255, 255);
   height: 400px;
   width: 400px;
   font-family: Arial, Helvetica, sans-serif;
@@ -290,7 +288,6 @@ body {
 .cards{
   overflow-y: scroll;
   white-space: nowrap;
-  /* background-color: rgba(41, 28, 41, 0.5); */
 }
 
 /* CARD personalation */
@@ -430,6 +427,7 @@ body {
   background-color: #ccced2;
   height: 450px;
   background-image: linear-gradient(40deg, #5365bf 0%, #142263 100%);
+  color: rgb(252, 252, 252);
 }
 
 .community .youtube-div{
@@ -437,12 +435,11 @@ body {
   margin: 60px;
   top: 0%;
   left: 5%;
-  width: 45%;
+  width: 40%;
   height: 330px;
 }
 
 .community-message{
-  color: rgb(252, 252, 252);
   font-size:50px;
   text-align: center;
   position: absolute;
@@ -456,14 +453,12 @@ body {
 
 .community-message .heading{
   margin-top: 30px;
-  color: rgb(255, 255, 255);
   font-family: 'Montserrat', sans-serif;
   font-size: 50px;
   margin-bottom: 0px;
 }
 
 .community-message .sub-heading{
-  color: rgb(255, 255, 255);
   font-size: 60px;
   font-weight: 300;
 }
@@ -473,22 +468,18 @@ body {
   font-size: 16px;
 }
 
-.community-message .items .btn{
-  padding: 10px 30px;
-  background-color: inherit;
-  border: 1px solid white;
-}
+/* .yt-btn{
+  background: linear-gradient(to right,#ff0000 50%, rgb(234, 228, 228) 50% );
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all .5s ease-out;
+  font-size: 20px;
+} */
 
 .community-message .items .btn:hover{
-  color: purple;
-  background-color: white;
-  border: 1px solid white;
+  background-position: left bottom;
 }
 
-.itembtn .btn{
-  font-size: 20px;
-  font-weight: bold;
-}
 
 
 .discord .youtube-div {
@@ -536,7 +527,6 @@ body {
 
 .heading{
   width: 100%;
-  color: black;
   font-size: larger;
   margin-bottom: 10px;
 }
@@ -613,31 +603,15 @@ body {
     
   }
   
-  .community-message .heading{
-    font-size: 40px;
-  }
-
-  .community-message .sub-heading{
+  .community-message .heading,.community-message .sub-heading{
     font-size: 40px;
   }
   
   .items{
     padding: 5px 0px;
     font-size: 16px;
+    align-items: center;
   }
-  
-  .itembtn .btn{
-    left: 0%;
-  }
-
-.companyname{
-  display: none;
-}
-
-.companyname2{
-  display: block;
-}
-
 
   
 /* IFRAME  Start*/
@@ -691,13 +665,12 @@ body {
   left: 0px;
   bottom: 20px;
   width: 100%;
+  text-align: center;
 }
 
 .btn{
   position: relative;
   font-size: 30px;
-  left: 35%;
-  
 }
 
 /* End of welcome message */
@@ -826,12 +799,11 @@ left: 10%;
     height: 470px;
   }
 .welcome-msg {
-  font-size: 53px;
+  font-size: 45px;
 }
 
-.small-welcome {
-  display: none;
-}
+
+
 
 .welcome-msg,.small-welcome {
   width: 100%;
@@ -840,8 +812,7 @@ left: 10%;
 }
 
 .btn{
-  left: 20%;
-  font-size: 18px;
+  font-size: 25px;
   padding: 10px 50px;
 }
 /* End of welcome message */
@@ -977,16 +948,6 @@ font-weight: 600;
 
 .itembtn .btn{
   left: 25%;
-}
-
-
-
-.companyname{
-display: none;
-}
-
-.companyname2{
-display: block;
 }
 
 
