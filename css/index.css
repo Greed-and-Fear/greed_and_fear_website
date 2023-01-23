@@ -163,9 +163,9 @@ body {
 .youtube-div{
   position: absolute;
   top: 17%;
-  left:35%;
-  width: 60%;
-  height: 400px;
+  left:45%;
+  width: 50%;
+  height: 450px;
   text-align: center;
   background-color: #ccced2;
   margin-top: 50px;
@@ -178,8 +178,9 @@ body {
 .welcome{
   position: relative;
   background-color: #c1c0c0;
-  height: 600px;
+  height: 650px;
   background-image: url("../images/background/ytbackground.jpg");
+  background-size: contain;
 
 }
 
@@ -198,11 +199,15 @@ body {
 
 .small-welcome {
   position: absolute;
-  top:50%;
-  color: #eee;
-  font-family: Arial, Helvetica, sans-serif;
+  top:27%;
+  color: rgb(251, 252, 199);
+  font-weight: 400;
+  text-align: justify;
+  /* background-color:  sans-#ffffff; */
+  font-family: 'Merriweather', serif; 
   margin: 0px;
-  font-size: 20px;
+  font-size: 22px;
+  max-width: 460px;
   width: fit-content;
 
 }
@@ -227,16 +232,26 @@ body {
 
 .register-btn{
   position: absolute;
-  bottom: 18%;
-  left: 50px;
+  bottom: 10%;
+  left: 7%;
 }
 
 .btn{
+  display: block;
+  border: none;
   font-size: 40px;
-  background-color: rgb(232, 232, 232,0.3);
-  border-radius: 50px;
+  border-radius: 25px;
   padding: 15px;
-  color: #ffffff;
+  font-family: 'Merriweather', sans-serif;
+  background: linear-gradient(to right,#3ee51c 50%, rgb(234, 228, 228) 50% );
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all .5s ease-out;
+}
+
+.btn:hover{
+  background-position: left bottom;
+  color: white;
 }
 /* End of welcome message */
 
@@ -622,7 +637,7 @@ body {
   position: absolute;
   top: 110px;
   left: 8%;
-  width: 85%;
+  width: 60%;
   height: 330px;
   
 }
