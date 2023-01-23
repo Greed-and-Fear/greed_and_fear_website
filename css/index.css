@@ -255,10 +255,9 @@ body {
 
 /* start of results */
 
-.results .message{
+.results .message,.posresults .message{
   color: #fcfdff;
   font-family: 'Roboto Slab', serif;
-
   font-weight: 600;
   text-decoration: double;
 }
@@ -682,7 +681,7 @@ body {
 
 
 
-.results .message{
+.results .message,.posresults .message{
   font-size: 45px;
 }
 
@@ -863,13 +862,13 @@ font-weight: 600;
 
 /* start of results */
 
-.results{
+.results,.posresults{
   margin-top: 0px;
   height: 450px;
 }
 
 
-.results .message{
+.results .message,.posresults .message{
   font-size: 30px;
 }
 
