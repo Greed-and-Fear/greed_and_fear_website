@@ -266,10 +266,17 @@ body {
   margin-top: 0px;
   border-top: 5px solid rgb(0, 0, 0);
   border-bottom: 5px solid rgb(0, 0, 0);
-  background-image: linear-gradient(320deg, rgb(37, 18, 90) 0%, #082654 100%); 
   background-color: rgb(69, 167, 232);
   height: 600px;
   /* background-color: #9b9b1d; */
+}
+
+.results{
+  background-image: linear-gradient(320deg, rgb(37, 18, 90) 0%, #082654 100%);
+}
+
+.posresults{
+  background-image: url("../images/background/wallpaper.jpg");
 }
 
 .card{
@@ -428,6 +435,17 @@ body {
   background-image: linear-gradient(40deg, #5365bf 0%, #142263 100%);
   color: rgb(252, 252, 252);
 }
+
+.img-base{
+  position: relative;
+  width: 500px;
+  height: 350px;
+  margin: 40px 100px;
+  background-color: #aaa7a7;
+
+}
+
+
 
 .community .youtube-div{
   position: absolute;
