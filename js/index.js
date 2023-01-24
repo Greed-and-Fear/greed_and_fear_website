@@ -5,22 +5,28 @@
 // }  
 // // document.cookie = "path =/;domain www.youtube-nocookie.com; SameSite=Strict;";
 
-// setInterval(get_intraday_stock(), 100);
+let names = ["s1", "s2", "s3", "s4", "s5"];
+let count = 0;
+
+function cycleArray() {
+    let name = names[count];
+    document.getElementById(name).checked = true;
+    // increment our counter
+    count++;
+    
+    // reset counter if we reach end of array
+    if (count === names.length) {
+        count = 0;
+    }
+}
+
+setInterval(cycleArray, 5000);
+
+// change_card()
+
 
 async function on_load(){
     get_intraday_stock()
-    // fetch("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR")
-    // .then(function(response){
-    //     return response.json();
-    // })
-    // .then(function(today_pick){
-    //     let bitcoinele = document.getElementById("bitcoin");
-    //     let out=`
-    //     USD : ${today_pick.USD} <br> EUR : ${today_pick.EUR}
-    //     `;
-        
-    //     bitcoinele.innerHTML = out;
-    // })
 
 }
 
