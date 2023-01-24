@@ -13,7 +13,7 @@ function cycleArray() {
     document.getElementById(name).checked = true;
     // increment our counter
     count++;
-    
+
     // reset counter if we reach end of array
     if (count === names.length) {
         count = 0;
@@ -25,22 +25,22 @@ setInterval(cycleArray, 1500);
 // change_card()
 
 
-async function on_load(){
+async function on_load() {
     get_intraday_stock()
 
 }
 
-function get_intraday_stock(){
-fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
-.then(function(response){
-    return response.json();
-})
-.then(function(today_pick){
-    let stock_cards = document.getElementById("cards");
-    let out="";
-    for(let single_stock of today_pick){
-        out +=
-        `
+function get_intraday_stock() {
+    fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (today_pick) {
+            let stock_cards = document.getElementById("cards");
+            let out = "";
+            for (let single_stock of today_pick) {
+                out +=
+                    `
         <div class="card">
             <div class="stockname">${single_stock.stock_name}</div>
             <div class="image"><img alt =${single_stock.stock_name}-chart class="result-img" src="${single_stock.img_path}"></div>
@@ -49,7 +49,7 @@ fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
         </div>
                 `;
             }
-            out+=`
+            out += `
             <div class="card">
                 <div class="prem-message">
                     Checkout our daily, weekly and short term results
@@ -58,5 +58,31 @@ fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
             </div>
             `
             stock_cards.innerHTML = out;
-})
+        })
 }
+
+
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton.addEventListener('click', () => {
+    container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+    container.classList.remove("right-panel-active");
+});
+
+function show_or_hide() {
+    if (document.getElementById('register-window').style.display = "none") {
+        document.getElementById('register-window').style.display = "block";
+    }
+}
+
+document.addEventListener('mouseup', function(e) {
+    var container = document.getElementById('register-window');
+    if (!container.contains(e.target)) {
+        container.style.display = 'none';
+    }
+});
