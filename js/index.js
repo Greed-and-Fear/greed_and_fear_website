@@ -20,7 +20,7 @@ function cycleArray() {
     }
 }
 
-setInterval(cycleArray, 5000);
+setInterval(cycleArray, 1500);
 
 // change_card()
 
