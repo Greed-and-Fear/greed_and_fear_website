@@ -438,11 +438,56 @@ body {
 
 .img-base{
   position: relative;
+  display: flex;
   width: 500px;
   height: 350px;
-  margin: 40px 100px;
+  margin: 40px 50px;
   background-color: #aaa7a7;
 
+}
+
+.telecard{
+  position: absolute;
+  width: 150px;
+  height: 300px;
+  background-color: #000000;
+  top: 20px;
+  border-radius: 15px;
+}
+
+.telecard-img{
+  width: 100%;
+  height: 100%;
+}
+
+.card1{
+  background-color: #ff0000;
+  left: 95px;
+  z-index: 1;
+}
+
+.card2{
+  background-color: #04ff00;
+  left: 135px;
+  z-index: 2;
+}
+
+.card3{
+  background-color: #1500ff;
+  left: 175px;
+  z-index: 3;
+}
+
+.card4{
+  background-color: #d4ff00;
+  left: 215px;
+  z-index: 2;
+}
+
+.card5{
+  background-color: #ff00c8;
+  left: 255px;
+  z-index: 1;
 }
 
 
