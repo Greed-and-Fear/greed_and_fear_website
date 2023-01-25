@@ -448,6 +448,7 @@ input {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: auto;
+  width: fit-content;
 }
 
 
