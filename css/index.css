@@ -171,8 +171,8 @@ body {
 .register-window{
   transition: 12s ease-in-out;
   position: fixed;
-  /* display: block; */
-    display: none;
+  display: block;
+    /* display: none; */
   /* background-color: white; */
   top: 27%;
   height: fit-content;
@@ -1178,8 +1178,50 @@ left: 10%;
   font-size: 45px;
 }
 
+.container{
+  width: 90%;
+}
 
+form{
+  padding: 0px 15px;
+}
 
+.overlay-container{
+  left: 60%;
+  width: 40%;
+}
+
+.sign-in-container{
+  width: 60%;
+}
+
+.sign-up-container{
+  width: 63%;
+}
+
+.container.right-panel-active .sign-up-container {
+  transform: translateX(60%);
+}
+
+.container.right-panel-active .overlay-container {
+  transform: translateX(-150%);
+}
+
+.container-btn{
+  padding: 12px 30px;
+}
+
+.overlay-container .container-btn{
+  padding: 12px 20px;
+}
+
+.overlay-panel {
+  padding: 0px 20px;
+}
+
+h1{
+  font-size: 1.5em;
+}
 
 .welcome-msg,.small-welcome {
   width: 100%;
@@ -1395,4 +1437,11 @@ font-weight: 600;
   }
 }
 
- 
+
+@media (max-width:400px) {
+  .overlay-container .container-btn{
+    padding: 12px 10px;
+  }
+  
+}
+
