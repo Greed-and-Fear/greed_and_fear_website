@@ -74,15 +74,10 @@ signInButton.addEventListener('click', () => {
     container.classList.remove("right-panel-active");
 });
 
-function show_or_hide() {
-    if (document.getElementById('register-window').style.display = "none") {
+function show_reg() {
         document.getElementById('register-window').style.display = "block";
-    }
 }
 
-document.addEventListener('mouseup', function(e) {
-    var container = document.getElementById('register-window');
-    if (!container.contains(e.target)) {
-        container.style.display = 'none';
-    }
-});
+function hide_reg() {
+    document.getElementById('register-window').style.display = "none"
+}
