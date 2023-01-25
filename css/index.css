@@ -61,7 +61,7 @@ body {
 /* Top icon bar */
 
 .navbar {
-  height: fit-content ;
+  height: 100px; ;
   width: 100%;
   padding: 14px 5px;
   background-color: #000000;
@@ -517,6 +517,7 @@ input {
 
 .posresults{
   background-image: url("../images/background/wallpaper.jpg");
+  height: 600px;
 }
 
 .card{
@@ -524,7 +525,7 @@ input {
   box-shadow: 0px 0px 2px 4px rgb(0, 0, 0);
   display: inline-block;
   margin: 30px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255); 
   height: 400px;
   width: 400px;
   font-family: Arial, Helvetica, sans-serif;
@@ -536,6 +537,9 @@ input {
   white-space: nowrap;
 }
 
+.pos-cards{
+  height: 100%;
+}
 /* CARD personalation */
 
 .stockname{
@@ -572,12 +576,42 @@ input {
 .image{
   position: absolute;
   top: 55px;
-  height: 65%;
+  height: 75%;
   width: 100%;
   left: 5%;
   width: 90%;
 }
 
+.pos-cards .image{
+  top: 30px;
+  bottom: 15px;
+  height: 95%;
+  width: 100%;
+  left: 0%;
+  width: 100%;
+}
+
+.pos-cards .stockname{
+  position: absolute;
+  width: 100%;
+  font-size: 25px ;
+  font-weight: bold;
+  top: 0%;
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+
+
+.pos-cards .stockname{
+  color: white;
+}
+
+.pos-cards .card{
+  background-color: transparent;
+  box-shadow: none;
+
+
+}
 .result-img{
   position: absolute;
   width: 100%;
