@@ -74,10 +74,15 @@ signInButton.addEventListener('click', () => {
     container.classList.remove("right-panel-active");
 });
 
-function show_reg() {
-        document.getElementById('register-window').style.display = "block";
-}
 
 function hide_reg() {
     document.getElementById('register-window').style.display = "none"
+}
+function hide_option(){ 
+    document.getElementById('nav-check').checked = false;
+}
+
+function show_reg() {
+
+    document.getElementById('register-window').style.display = "block";
 }
