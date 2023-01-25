@@ -218,7 +218,7 @@ a {
 	margin: 15px 0;
 }
 
-button {
+.container-btn{
 	border-radius: 20px;
 	border: 1px solid #FF4B2B;
 	background-color: #FF4B2B;
@@ -231,15 +231,15 @@ button {
 	transition: transform 80ms ease-in;
 }
 
-button:active {
+.container-btn:active {
 	transform: scale(0.95);
 }
 
-button:focus {
+.container-btn:focus {
 	outline: none;
 }
 
-button.ghost {
+.container-btn.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
 }
@@ -401,30 +401,6 @@ input {
 	width: 40px;
 }
 
-footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 8;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
-}
 
 /* END Register */
 /* WELCOME message */
