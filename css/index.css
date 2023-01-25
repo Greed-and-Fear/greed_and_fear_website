@@ -437,8 +437,8 @@ input {
 
 .welcome-msg,.small-welcome {
   position: absolute;
-  width: fit-content;
-  margin-left: 30px;
+  
+  margin-left: 20px;
   margin-right: 0px;
 }
 
@@ -987,7 +987,7 @@ input[type=radio]:checked {
 /* delete */
 
 
-@media (max-width: 1000px) {
+@media (max-width: 1000px){
 
   .navbar .nav-links a {
     padding: 20px 20px;
@@ -1048,7 +1048,7 @@ input[type=radio]:checked {
 
 .welcome{
   position: relative; 
-  height: 550px;
+  height: 800px;
   background-size: cover;
 }
 
@@ -1058,18 +1058,19 @@ input[type=radio]:checked {
 }
 
 .small-welcome {
-  display: none;
-
-
-}
-
-.welcome-msg,.small-welcome {
+  top: 60%;
+  text-align: justify ;
+  display: block;
+  max-width: 88%;
   margin-left: 20px;
+
+
 }
+
 
 .register-btn{
   left: 0px;
-  bottom: 20px;
+  bottom: 25px;
   width: 100%;
   text-align: center;
 }
@@ -1205,11 +1206,18 @@ left: 10%;
 
   /* WELCOME message */
 
-  .welcome{
-    height: 470px;
-  }
+.welcome{
+  height:900px;
+}
 .welcome-msg {
+  width: 100%;
+  margin: 0px;
   font-size: 45px;
+}
+
+.small-welcome{
+  top:43%;
+  
 }
 
 .container{
@@ -1258,8 +1266,6 @@ h1{
 }
 
 .welcome-msg,.small-welcome {
-  width: 100%;
-  margin: auto;
   text-align: center;
 }
 
@@ -1343,7 +1349,8 @@ font-weight: 600;
 /* start of results */
 
 .results,.posresults{
-  margin-top: 0px;
+  border-top: 4px solid white;
+  margin-top:0px;
   height: 450px;
 }
 
