@@ -172,13 +172,13 @@ body {
   transition: 12s ease-in-out;
   position: fixed;
   display: block;
-  /* display: none; */
+    /* display: none; */
   /* background-color: white; */
   top: 30%;
-  left: 20%;
   height: fit-content;
-  width: 50%;
+  width:100%;
   z-index: 8;
+
 }
 
 .close-btn{
@@ -264,6 +264,7 @@ input {
 }
 
 .container {
+  margin: auto;
 	background-color: #fff;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
