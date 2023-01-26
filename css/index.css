@@ -940,18 +940,32 @@ input[type=radio]:checked {
 }
 
 .contact-page{
-  margin: 20px;
+  margin: 50px auto;
+  background-color: white;
+  width: 60%;
+  height: 500px;
   position: relative;
-  left: 10%;
-  background-color: rgba(255, 255, 255, 0.5);
-  width: 80%;
 }
 
-.moto-form{
-  width: 80%;
-  height: 40px;
-  margin: 10px;
+.contact-item{
+  display: relative;
+  width: 50%;
+  height: 100%;
 }
+
+.left{
+  position: absolute;
+  margin: 0px;
+  background-color: #32b517;
+}
+
+.right{
+  position: absolute;
+  left: 50%;
+  background-color: #04a2c2;
+}
+
+
 
 .heading{
   width: 100%;
@@ -1405,24 +1419,6 @@ font-weight: 600;
 
 
 /* start of moto  */
-.moto{
-
-  padding: 20px;
-  text-align: justify;
-  padding-bottom: 30px;
-}
-
-.contact-page{
-  margin: 20px;
-  position: relative;
-  left: 5%;
-}
-
-.moto-form{
-  text-align: center;
-  width: 90%;
-  margin: 10px;
-}
 
 
 /* End of moto */
