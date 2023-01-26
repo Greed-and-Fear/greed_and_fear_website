@@ -492,6 +492,19 @@ input {
   background-position: left bottom;
   color: white;
 }
+
+.telegram .yt-btn{
+  padding: 15px 60px;
+  background: linear-gradient(to right,#04a2c2 50%, rgb(234, 228, 228) 50% );
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all .5s ease-out;
+}
+
+.telegram .yt-btn:hover{
+  background-position: left bottom;
+  color: white;
+}
 /* End of welcome message */
 
 /* start of results */
@@ -515,6 +528,8 @@ input {
 .results{
   background-image: url(../images/background/intradaylogo.png);
   background-size: contain;
+  background-position: center;
+  background-repeat:repeat-y;
   background-color: rgb(20, 18, 90);
   border-bottom: 5px solid  white;
 
@@ -1320,7 +1335,7 @@ input[type=radio] {
 }
 
 .telegram{
-  height: 650px;
+  height: 700px;
 }
 
 .telegram .community-message{
