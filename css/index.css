@@ -943,7 +943,7 @@ input[type=radio]:checked {
   margin: 50px auto;
   background-color: white;
   width: 60%;
-  height: 500px;
+  height: 550px;
   position: relative;
 }
 
@@ -956,13 +956,58 @@ input[type=radio]:checked {
 .left{
   position: absolute;
   margin: 0px;
-  background-color: #32b517;
+  background-color: #d0e4cc;
+  background-image: url(../images/background/contactbackground.jpg);
+  background-size: cover;
+  
+  
 }
 
 .right{
+  color: white;
+  background-color: #09090e;
   position: absolute;
   left: 50%;
-  background-color: #04a2c2;
+  
+}
+
+.contact-right-items{
+  width: 80%;
+  margin: 15px auto;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+.main-head{
+  margin-top: 40px;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.sub-head{
+  margin: 5px auto;
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+input::placeholder,textarea::placeholder{
+  color: rgb(255, 255, 255,0.5);
+}
+textarea,input{
+  color: whitesmoke;
+  background-color: transparent;
+  width: 100%;
+  resize: horizontal;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid rgb(255, 255, 255,0.2);
+}
+
+.contact-btn{
+  color: white;
+  font-size: medium;
+  background-color: #05c3e9;
+  padding: 10px 30px;
+  border-radius: 15px;
 }
 
 
