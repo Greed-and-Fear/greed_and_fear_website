@@ -167,7 +167,7 @@
 
     <div class="studentprogram">
         <div class="studentprogram-img">
-            <img class="img" src="images/background/studentprogram.jpeg">
+            <img class="img" src="images/background/studentprogram.png">
         </div>
         <div class="heading">STUDENT DISCOUNT PROGRAM</div>
         <div class="message">IF YOU ARE A STUDENT YOU CAN GET 10% DISCOUNT FOR PREMIUM MEMBERSHIP</div>
@@ -252,16 +252,19 @@
             <div class="contact-item left">
             </div>
             <div class="contact-item right">
-                <div class="contact-right-items main-head">Contact us</div>
-                <div class="contact-right-items sub-head">We're open to suggestion or to have a chat</div>
-                <div class="contact-right-items "><input id="cont-name" type="text" placeholder="Name"></div>
-                <div class="contact-right-items "><input id="cont-mail" type="text" placeholder="Email"></div>
-                <div class="contact-right-items "><input id="cont-phone" type="tel" placeholder="Phone"></div>
-                <div class="contact-right-items "><input id="cont-sub" type="text" placeholder="Subject"></div>
-                <div class="contact-right-items "><textarea id="cont-text" name="message" class="form-control"
-                        id="message" rows="4" placeholder="Create a message here"></textarea></div>
-                <div class="contact-right-items "><button class="contact-btn" onclick="send_message2()">Send
-                        Message</button></div>
+                <div id="form-response" class="form-response">
+                    <div class="contact-right-items main-head">Contact us</div>
+                    <div class="contact-right-items sub-head">We're open to suggestion or to have a chat</div>
+                    <div class="contact-right-items "><input id="cont-name" type="text" placeholder="Name"></div>
+                    <div class="contact-right-items "><input id="cont-mail" type="text" placeholder="Email"></div>
+                    <div class="contact-right-items "><input id="cont-phone" type="tel" placeholder="Phone"></div>
+                    <div class="contact-right-items "><input id="cont-sub" type="text" placeholder="Subject"></div>
+                    <div class="contact-right-items "><textarea id="cont-text" name="message" class="form-control"
+                            id="message" rows="4" placeholder="Create a message here"></textarea></div>
+                    <div class="contact-right-items "><button class="contact-btn"
+                            onclick="send_message2()">SendMessage</button></div>
+                </div>
+                <div id="responseform" class="contact-right-items response" style="display:none;">Thank you for your valuble suggestion</div>
             </div>
         </div>
     </div>
