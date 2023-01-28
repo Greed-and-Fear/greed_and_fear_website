@@ -5,6 +5,8 @@
 // }  
 // // document.cookie = "path =/;domain www.youtube-nocookie.com; SameSite=Strict;";
 
+
+
 let names = ["s1", "s2", "s3", "s4", "s5"];
 let count = 0;
 
@@ -30,7 +32,7 @@ async function on_load() {
 
 }
 
-function get_intraday_stock() {
+async function get_intraday_stock() {
     fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
         .then(function (response) {
             return response.json();
@@ -125,17 +127,4 @@ function send_message2() {
     // form-response
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        console.log(entry);
-        if(entry.isIntersecting){
-            entry.target.classList.add('show');
-        }
-        else{
-            entry.target.classList.remove('show');
-        }
-    });
-  });
-
-  const hiddenelement = document.querySelectorAll('.hidden');
-  hiddenelement.forEach((el)=>observer.observe(el));
+ 
