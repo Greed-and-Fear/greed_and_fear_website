@@ -14,6 +14,26 @@ body {
   background-position: center center;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+.hidden{
+  opacity : 0;
+  transition: all 1s;
+  transform: translateY(5%);
+}
+
+.show{
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+@media(prefers-reduced-motion){
+  .hidden{
+    transition: none;
+  }
+}
 
 /* Top icon bar */
 
@@ -425,7 +445,7 @@ input {
 
 .small-welcome {
   top:27%;
-  color: rgb(251, 252, 199);
+  color: rgb(202, 255, 246);
   font-weight: 400;
   text-align: justify;
   font-family: 'Merriweather', serif; 

@@ -124,3 +124,18 @@ function send_message2() {
     document.getElementById("responseform").style.display = "block";
     // form-response
   }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        console.log(entry);
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        }
+        else{
+            entry.target.classList.remove('show');
+        }
+    });
+  });
+
+  const hiddenelement = document.querySelectorAll('.hidden');
+  hiddenelement.forEach((el)=>observer.observe(el));
