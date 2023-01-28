@@ -120,5 +120,7 @@ function send_message2() {
     document.getElementById("cont-sub").value = ''
     document.getElementById("cont-text").value = ''
   
-    // document.getElementById("contact-div").innerHTML = '<div class="thankyou-msg">Thank you for Enquiring.<br><br>One of our executive will get back to you shortly</div>'
+    document.getElementById("form-response").style.display = "none";
+    document.getElementById("responseform").style.display = "block";
+    // form-response
   }
