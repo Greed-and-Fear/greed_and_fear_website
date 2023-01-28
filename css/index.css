@@ -98,9 +98,9 @@ html {
   background-color: #000000;
   /* position: relative; */
   opacity: 100%;
-  position: sticky;
-  top: -1px;
-  z-index: 8;
+  position: fixed;
+  top: 0px;
+  z-index: 1;
   border-bottom: 2px solid white;
 
 }
@@ -437,9 +437,10 @@ input {
 /* WELCOME message */
 
 .welcome{
+  top: 100px;
   position: relative;
   background-color: #c1c0c0;
-  height: 650px;
+  height: 750px;
   background-image: url("../images/background/ytbackground.jpg");
   background-size: contain;
 
@@ -486,7 +487,7 @@ input {
 
 .register-btn{
   position: absolute;
-  bottom: 10%;
+  bottom: 20%;
   left: 7%;
 }
 
@@ -1183,7 +1184,7 @@ textarea,input{
 
 .welcome{
   position: relative; 
-  height: 800px;
+  height: 900px;
   background-size: cover;
 }
 
@@ -1193,7 +1194,7 @@ textarea,input{
 }
 
 .small-welcome {
-  top: 60%;
+  top: 55%;
   text-align: justify ;
   display: block;
   max-width: 88%;
@@ -1205,7 +1206,7 @@ textarea,input{
 
 .register-btn{
   left: 0px;
-  bottom: 25px;
+  bottom: 100px;
   width: 100%;
   text-align: center;
 }
@@ -1356,7 +1357,8 @@ left: 10%;
   /* WELCOME message */
 
 .welcome{
-  height:900px;
+  position: relative;
+  height:1000px;
 }
 .welcome-msg {
   width: 100%;
