@@ -14,9 +14,11 @@ body {
   /* background-image: url(../images/background/wallpaper.jpg); */
   /* background-color: #1e2d9e; */
   background-position: center center;
+  overflow-x: hidden;
 }
 
 html {
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -29,7 +31,7 @@ html {
 .hidden2{
   opacity : 0;
   transition: all 1s;
-  transform: translateX(+25%);
+  /* transform: translateX(+25%); */
 }
 
 .show{
@@ -1280,16 +1282,16 @@ left: 10%;
   .hidden{
     transform: translateY(+50%);
   }
-
+  
   .hidden2{
     transform: translateX(+100%);
   }
-
+  
   .show{
     transform: translateY(0%);
     transform: translateX(0%);
   }
-
+  
   .navbar .nav-btn {
     display: inline-block;
     position: absolute;
@@ -1489,14 +1491,24 @@ input[type=radio] {
   position: relative;
   left: 20%;
 }
+
+
+.studentprogram{
+  align-items: center;
+}
+
 .studentprogram-img .img{
   top: 60px;
-  left: 18%;
+  left: 0%;
+  margin: 0% 30%; 
 }
 
 .studentprogram .heading{
+  text-align: center;
 font-size: 18px;
-left: 10%;
+width: 100%;
+margin: 0% 0%; 
+left: 0%;
 font-weight: 600;
 }
 
@@ -1505,8 +1517,10 @@ font-weight: 600;
 }
 
 .studentprogram .button{
+  align-items: center;
+  left: 30%;
   top: 80%;
-  left: 25%;
+  margin: 0% auto; 
   padding: 20px;
 }
 
