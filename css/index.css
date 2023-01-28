@@ -1269,6 +1269,15 @@ left: 10%;
 }
 
 @media (max-width:800px) {
+
+  .hidden{
+    transform: translateY(+50%);
+  }
+
+  .show{
+    transform: translateY(0%);
+  }
+
   .navbar .nav-btn {
     display: inline-block;
     position: absolute;
