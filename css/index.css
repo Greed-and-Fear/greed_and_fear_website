@@ -730,7 +730,7 @@ input {
   height: fit-content;
   display: grid;
   grid-gap: 5%;
-  grid-template-columns: repeat(2, 40%);
+  grid-template-columns: repeat(2, 45%);
   justify-content: center;
 }
 
@@ -747,7 +747,7 @@ input {
   margin-top: 3%;
   font-family: 'Bebas Neue', sans-serif;
   color: #aff000;
-  font-size: 3vw;
+  font-size: 3.3vw;
   line-height: 50px;
   font-weight: 600;
 }
@@ -757,7 +757,7 @@ input {
   margin-left: 10px;
   font-family: Roboto, sans-serif;
   font-weight: 400;
-  font-size: 1.2vw;
+  font-size: 1.6vw;
   margin-top: 5px;
   color: rgb(255, 255, 255);
   font-style: normal;
@@ -1205,8 +1205,25 @@ textarea,input{
 
 /* Cards results */
 
+.product-container{
+  grid-template-columns: repeat(2, 45%);
+}
 
+.product-items{
+  margin-top: 0%;
+  border-top: 2px solid white;
+  margin-bottom: 10%;
+}
 
+.product-items-title{
+  margin-top: 0%;
+  font-size: 4vw;
+}
+
+.product-item-list{
+  font-size: 2.5vw;
+
+}
 .results .message,.posresults .message{
   font-size: 40px;
 }
@@ -1511,28 +1528,14 @@ font-weight: 600;
   padding: 20px;
 }
 
-.product-tab{
-  margin-bottom: 20px;
-}
-.product-title{
-  font-size: 6vw;
-  font-weight: 600;
-}
-
 .product-container{
   grid-template-columns: repeat(1, 80%);
 }
 
-.product-items{
-  margin-top: 0%;
-  border-top: 1px solid white;
-  margin-bottom: 10%;
+.product-tab{
+  margin-bottom: 20px;
 }
 
-.product-items-title{
-  margin-top: 0%;
-  font-size: 6vw;
-}
 
 .product-item-list{
   font-size: 4vw;
