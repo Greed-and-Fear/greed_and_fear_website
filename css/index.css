@@ -167,7 +167,7 @@ html {
   font-family: 'Roboto', sans-serif;
   font-size: 40px;
   margin-bottom: 25px;
-  font-weight: 050;
+  font-weight: 650;
 }
 
 .button1{
@@ -1371,7 +1371,7 @@ left: 10%;
   }
 
   .hidden{
-    transform: translateY(+50%);
+    transform: translateY(+40%);
   }
   
   .hidden2{
