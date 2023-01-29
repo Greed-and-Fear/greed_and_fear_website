@@ -29,6 +29,7 @@ setInterval(cycleArray, 1500);
 
 async function on_load() {
     get_intraday_stock()
+    get_positional_stock()
 
 }
 
@@ -62,6 +63,36 @@ async function get_intraday_stock() {
             stock_cards.innerHTML = out;
         })
 }
+
+async function get_positional_stock() {
+    fetch('https://johnson845173.github.io/algotrade/jsondata/positional.json')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (positional_pick) {
+            let stock_cards = document.getElementById("pos-cards");
+            let out_pos = "";
+            for (let each_pos_trade of positional_pick) {
+                out_pos +=
+                    `
+        <div class="card">
+            <div class="stockname">${each_pos_trade.name_and_tf}</div>
+            <div class="image"><img alt =${each_pos_trade.name_and_tf}-chart class="result-img" src="${each_pos_trade.img_path}"></div>
+        </div>
+                `;
+            }
+            out_pos += `
+            <div class="card">
+                <div class="prem-message">
+                    Checkout our daily, weekly and short term results
+                </div>
+                <a href="result.html"><button class="button">View More</button></a>
+            </div>
+            `
+            stock_cards.innerHTML = out_pos;
+        })
+}
+
 
 
 const signUpButton = document.getElementById('signUp');

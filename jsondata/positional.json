@@ -1,1 +1,27 @@
-[{"id":1,"name_and_tf":"ABB INDIA LTD - 1 Hour TF","img_path":"images/positional/abbindia.jpg"},{"id":2,"name_and_tf":"HINDUSTAN UNILEVER - 1 Hour TF","img_path":"images/positional/hul.jpg"},{"id":3,"name_and_tf":"LA-OPALA RG LTD-1 Hour TF","img_path":"images/positional/laopala.jpg"},{"id":4,"name_and_tf":"NIFTY BANK - 5 Min TF","img_path":"images/positional/niftybank.jpg"},{"id":5,"name_and_tf":"TATA COMMUNICATION - 15 Min TF","img_path":"images/positional/tatacom.jpg"}]
+[
+    {
+        "id": 1,
+        "name_and_tf": "ABB INDIA LTD - 1 Hour TF",
+        "img_path": "images/positional/abbindia.jpg"
+    },
+    {
+        "id": 2,
+        "name_and_tf": "HINDUSTAN UNILEVER - 1 Hour TF",
+        "img_path": "images/positional/hul.jpg"
+    },
+    {
+        "id": 3,
+        "name_and_tf": "LA-OPALA RG LTD-1 Hour TF",
+        "img_path": "images/positional/laopala.jpg"
+    },
+    {
+        "id": 4,
+        "name_and_tf": "NIFTY BANK - 5 Min TF",
+        "img_path": "images/positional/niftybank.jpg"
+    },
+    {
+        "id": 5,
+        "name_and_tf": "TATA COMMUNICATION - 15 Min TF",
+        "img_path": "images/positional/tatacom.jpg"
+    }
+]
