@@ -717,28 +717,37 @@ input {
 
 
 /* End of student program */
-
-.product-tab{
+.product-title{
+  color: white;
+  text-align: center;
+  margin: 20px;
+  font-size: 3vw;
+  font-weight: 600;
+}
+.product-container{
   position: relative;
-  background-color: white;
-  height: 400px;
+  /* background-color: white;   */
+  height: fit-content;
   display: grid;
   grid-gap: 5%;
-  grid-template-columns: repeat(2, 45%);
+  grid-template-columns: repeat(2, 40%);
   justify-content: center;
 }
 
 .product-items{
-  margin-top: 5%;
-  background-color: #04a2c2;
+  margin-top: 2%;
+  border-top: 2px solid white;
+  /* background-color: #04a2c2; */
   padding-left: 0%;
+  margin-bottom: 20%;
   height: 85%;
 }
 
 .product-items-title{
-    font-family: 'Bebas Neue', sans-serif;
+  margin-top: 3%;
+  font-family: 'Bebas Neue', sans-serif;
   color: #aff000;
-  font-size: 40px;
+  font-size: 3vw;
   line-height: 50px;
   font-weight: 600;
 }
@@ -748,7 +757,8 @@ input {
   margin-left: 10px;
   font-family: Roboto, sans-serif;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 1.2vw;
+  margin-top: 5px;
   color: rgb(255, 255, 255);
   font-style: normal;
 }
@@ -1499,6 +1509,34 @@ font-weight: 600;
   top: 80%;
   margin: 0% auto; 
   padding: 20px;
+}
+
+.product-tab{
+  margin-bottom: 20px;
+}
+.product-title{
+  font-size: 6vw;
+  font-weight: 600;
+}
+
+.product-container{
+  grid-template-columns: repeat(1, 80%);
+}
+
+.product-items{
+  margin-top: 0%;
+  border-top: 1px solid white;
+  margin-bottom: 10%;
+}
+
+.product-items-title{
+  margin-top: 0%;
+  font-size: 6vw;
+}
+
+.product-item-list{
+  font-size: 4vw;
+  margin-top: 3px;
 }
 
 /* start of results */
