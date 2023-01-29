@@ -690,11 +690,6 @@ input {
 
 .pos-cards .prem-message{
   color: rgb(226, 226, 255);
-  position: absolute;
-  margin: 70px 20px;
-  text-align: center;
-  font-size: xx-large;
-  white-space : normal;
 }
 
 .card button{
@@ -1557,6 +1552,11 @@ font-weight: 600;
   width: 350px;
   height: 300px;
   margin  : 10px 30px;
+}
+
+.prem-message{
+  margin: 30px 20px;
+
 }
 
 /* card personalize end */
