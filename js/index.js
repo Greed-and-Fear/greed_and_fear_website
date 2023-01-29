@@ -53,7 +53,7 @@ async function get_intraday_stock() {
                 `;
             }
             out += `
-            <div class="card">
+            <div class="card finalcard">
                 <div class="prem-message">
                     Checkout our daily, weekly and short term results
                 </div>
@@ -75,14 +75,14 @@ async function get_positional_stock() {
             for (let each_pos_trade of positional_pick) {
                 out_pos +=
                     `
-        <div class="card">
+        <div class="card ">
             <div class="stockname">${each_pos_trade.name_and_tf}</div>
             <div class="image"><img alt =${each_pos_trade.name_and_tf}-chart class="result-img" src="${each_pos_trade.img_path}"></div>
         </div>
                 `;
             }
             out_pos += `
-            <div class="card">
+            <div class="card finalcard">
                 <div class="prem-message">
                     Checkout our daily, weekly and short term results
                 </div>
