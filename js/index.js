@@ -159,5 +159,4 @@ function send_message2() {
   }
 
 
-on_load()
  
