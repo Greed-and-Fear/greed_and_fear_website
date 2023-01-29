@@ -158,4 +158,6 @@ function send_message2() {
     // form-response
   }
 
+
+on_load()
  
