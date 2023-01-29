@@ -1169,8 +1169,10 @@ textarea,input {
   }
 
   .homepage{
-    height: 500px;
-    background-position: 30%;
+    height: 100vh;
+    /* background-attachment: fixed; */
+    background-position: 50% 20%;
+    background-repeat: no-repeat;
   }
 
   .header{
