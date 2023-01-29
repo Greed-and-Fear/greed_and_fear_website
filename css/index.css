@@ -139,7 +139,7 @@ html {
 .homepage{
   top: 100px;
   position: relative;
-  background-image: url(../images/background/homepage.jpg);
+  background-image: url(../images/background/homepage.webp);
   background-position: 100%;
   background-size: cover;
   background-color: #04a2c2;
