@@ -30,6 +30,7 @@ setInterval(cycleArray, 1500);
 async function on_load() {
     get_intraday_stock()
     get_positional_stock()
+    init()
 
 }
 
@@ -158,5 +159,10 @@ function send_message2() {
     // form-response
   }
 
-
+  function init() {
+    var vidDefer = document.getElementsByTagName('iframe');
+    for (var i=0; i<vidDefer.length; i++) {
+    if(vidDefer[i].getAttribute('data-src')) {
+    vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-src'));
+    } } }
  
