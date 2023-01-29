@@ -136,6 +136,52 @@ html {
 
 /* Telegram refrence link start*/
 
+.homepage{
+  top: 100px;
+  position: relative;
+  background-image: url(../images/background/homepage.jpg);
+  background-position: 100%;
+  background-size: cover;
+  background-color: #04a2c2;
+  height:650px;
+}
+
+.header{
+  color:white ;
+  position: relative;
+  left: 0%;
+  top: 30%;
+  text-align: center;
+  width: 35%;
+  /* background-color: #000000; */
+}
+
+.head1{
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 25px;
+}
+
+.head2{
+  font-family: 'Roboto', sans-serif;
+  font-size: 40px;
+  margin-bottom: 25px;
+  font-weight: 050;
+}
+
+.button1{
+  padding: 10px 30px;
+  background-color: #63d6ed;
+  border: none;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  border-radius: 50px;
+}
+
+.button1:hover{
+  background-color: white;
+}
 /* IFRAME  Start*/
 
 .youtube-div{
@@ -393,7 +439,6 @@ input {
 /* WELCOME message */
 
 .welcome{
-  top: 100px;
   position: relative;
   background-color: #c1c0c0;
   height: 750px;
@@ -1114,13 +1159,30 @@ textarea,input {
 @media (max-width: 1000px){
 
   .navbar .nav-links a {
-    padding: 20px 20px;
+    padding: 18px 15px;
   }
 
   .community .youtube-div{
     margin: 60px 30px;
     left: 0%;
     width: 55%;
+  }
+
+  .homepage{
+    height: 500px;
+    background-position: 30%;
+  }
+
+  .header{
+    left: 5%;
+    top: 30%;
+    width: fit-content;
+    /* background-color: #04a2c2; */
+  }
+
+
+  .head2{
+    font-size: 32px;
   }
   
   .community-message{
@@ -1288,6 +1350,25 @@ left: 10%;
 }
 
 @media (max-width:800px) {
+
+  .homepage{
+    height: 100vh;
+    background-position: 50%;
+  }
+  .header{
+    margin: auto;
+    top: 20%;
+  }
+  .head1{
+    font-size: 25px;
+  }
+  .head2{
+    font-size: 28px;
+  }
+
+  .button1{
+    padding: 10px 30px;
+  }
 
   .hidden{
     transform: translateY(+50%);

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/index.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <script src="js/apps.js" async></script>
     <title>Greed Fear</title>
 
@@ -102,30 +103,42 @@
         <a href="https://t.me/menezes725"><img alt="telelogo" src="images/svg/telegram-icon.svg"></a>
     </div>
 
-    <div class="welcome">
-        <div class="welcome-msg">
-            <div class="companyname">WHO ARE WE<br></div>
+    <div class="homepage">
+        <div class="header">
+            <div class="head1">Join the Best</div>
+            <div class="head2">TRADING COMMUNITY</div>
+            <div><button class="button1">JOIN NOW</button></div>
         </div>
-
-        <div class="small-welcome">
-            We are a group of technical analysts whose aim is to educate people about the Importance of Financial
-            Literacy and
-            help them setup their Personal Portfolios. We hold proficiency in Elliott waves, Fibonacci, harmonics and
-            advanced price action. Our primary focus is deviated to stocks, commodities and indices with swing,
-            positional and intraday trade setups. Join our community to gain all the knowledge you need to be the best
-            trader.
-        </div>
-
-        <div class="youtube-div">
-            <iframe width="100%" height="100%"
-                src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
-                title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-        </div>
-
-        <div class="register-btn"><button class="btn" onclick="show_reg()">Join community</button></div>
     </div>
+
+    <section class="hidden">
+        <div class="welcome">
+            <div class="welcome-msg">
+                <div class="companyname">WHO ARE WE<br></div>
+            </div>
+
+            <div class="small-welcome">
+                We are a group of technical analysts whose aim is to educate people about the Importance of Financial
+                Literacy and
+                help them setup their Personal Portfolios. We hold proficiency in Elliott waves, Fibonacci, harmonics
+                and
+                advanced price action. Our primary focus is deviated to stocks, commodities and indices with swing,
+                positional and intraday trade setups. Join our community to gain all the knowledge you need to be the
+                best
+                trader.
+            </div>
+
+            <div class="youtube-div">
+                <iframe width="100%" height="100%" loading="lazy"
+                    src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
+                    title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+
+            <div class="register-btn"><button class="btn" onclick="show_reg()">Join community</button></div>
+        </div>
+    </section>
 
     <section class="hidden">
         <div class="community telegram">
@@ -282,8 +295,8 @@
                         <div class="contact-right-items "><input id="cont-sub" type="text" placeholder="Subject"></div>
                         <div class="contact-right-items "><textarea id="cont-text" name="message" class="form-control"
                                 id="message" rows="4" placeholder="Create a message here"></textarea></div>
-                        <div class="contact-right-items "><button class="contact-btn"
-                                onclick="send_message2()">Send Message</button></div>
+                        <div class="contact-right-items "><button class="contact-btn" onclick="send_message2()">Send
+                                Message</button></div>
                     </div>
                     <div id="responseform" class="contact-right-items response" style="display:none;">Thank you for your
                         valuble suggestion</div>
