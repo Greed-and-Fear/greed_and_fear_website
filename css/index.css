@@ -45,51 +45,6 @@ html {
   }
 }
 
-/* Top icon bar */
-
-
-.top-icon{
-  margin: 0px 10px;
-  height: 20px;
-  vertical-align: middle;
-}
-
-.top-nav{
-  position: relative;
-  font-size: 13px;
-  height: 25px;
-  background-color: #c1c0c0; 
-  font-family: 'Mukta', sans-serif; 
-  font-weight: 500;
-  color: rgb(45, 44, 44);
-}
-
-.top-nav-left{
-  position: absolute;
-  top: 10%;
-  left: 3%;
-  width: fit-content;
-}
-
-.top-nav-right{
-  position: absolute;
-  top: 10%;
-  right: 2%;
-  width: fit-content;
-}
-.top-nav-items{
-  margin-top: 10px;
-  margin-top: 10px;
-  display: inline;  
-}
-
-.top-icon-button{
-  background-color: inherit;
-  border: none;
-  margin: 0px 15px;
-}
-/* Top icon bar */
-
 .navbar {
   height: 100px; ;
   width: 100%;
@@ -763,6 +718,40 @@ input {
 
 /* End of student program */
 
+.product-tab{
+  position: relative;
+  background-color: white;
+  height: 400px;
+  display: grid;
+  grid-gap: 5%;
+  grid-template-columns: repeat(2, 45%);
+  justify-content: center;
+}
+
+.product-items{
+  margin-top: 5%;
+  background-color: #04a2c2;
+  padding-left: 0%;
+  height: 85%;
+}
+
+.product-items-title{
+    font-family: 'Bebas Neue', sans-serif;
+  color: #aff000;
+  font-size: 40px;
+  line-height: 50px;
+  font-weight: 600;
+}
+
+.product-item-list{
+  color: white;
+  margin-left: 10px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  font-style: normal;
+}
 
 /* Commmunity  */
 .community{
@@ -966,15 +955,6 @@ input[type=radio]:checked {
   color: rgb(2, 2, 2);
 }
 
-.moto{
-  width: 100%;
-  text-align: center;
-  font-size: larger;
-  font-weight: bold;
-  color: rgb(0, 247, 82);
-  padding-bottom: 30px;
-}
-
 .contact-background{
   /* border-top: 2px solid  white; */
   background-image: url(../images/background/wallpaper.jpg);
@@ -1037,9 +1017,7 @@ input[type=radio]:checked {
   font-size: 13px;
 }
 
-input::placeholder,textarea::placeholder{
-  color: rgb(255, 255, 255,0.5);
-}
+
 textarea,input{
   color: whitesmoke;
   background-color: transparent;
@@ -1065,8 +1043,6 @@ textarea,input{
   font-size: larger;
   margin-bottom: 10px;
 }
-
-/* End of moto */
 
 /* Footer starts */
 .footer2{
@@ -1116,11 +1092,6 @@ textarea,input{
 
 /* Footer */
 
-/* delete */
-.bitcoin{
-  color: rgb(219, 54, 54);
-}
-/* delete */
 
 
 @media (max-width: 1000px){
