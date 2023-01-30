@@ -1110,30 +1110,19 @@ textarea,input {
 
 
 
-/* Footer starts */
-.footer2{
-  display:flex;
+/* Contact Footer starts */
+
+.contact-footer{
+  display:grid;
+  grid-template-columns: repeat(2, 50%);
+  text-align: center;
   height: fit-content;
   background-color: #3b4656;
-  color:  #647e91;
-  font-size: 30px;
-}
-
-.footer-item-right{
-  margin: auto;
   color: rgb(205, 197, 50);
+  font-size: 2vw;
 }
 
-.footer-item-left{
-  margin: auto;
-}
-
-.contact{
-  color: #f6a623;;
-}
-
-
-
+/* Contact footer end */
 
 /* Footer start */
 
@@ -1145,7 +1134,6 @@ textarea,input {
 }
 
 .footer-main-list{
-  /* background-color: #04a2c2; */
   text-align: center;
   margin: 10px 0px;
 }
@@ -1352,10 +1340,13 @@ left: 10%;
   padding: 25px;
   border-radius: 50px;
 }
+/* Contact footer start */
 
-.footer2{
-  font-size: 25px;
+.contact-footer{
+  font-size: 3vw;
 }
+
+/* Contact footer end */
 
 /* Footer starts */
 
@@ -1737,9 +1728,6 @@ font-weight: 600;
   margin: 0px;
 }
 
-  .footer2{
-    font-size: 13px;
-  }
 
 }
 
@@ -1760,9 +1748,7 @@ font-weight: 600;
   .slogan {
     width: 200px;
   }
-  .footer2{
-    font-size: 10px;
-  }
+
 }
 
 
