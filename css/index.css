@@ -212,7 +212,7 @@ html {
     color: rgb(235, 255, 252);
     font-weight: 400;
     text-align: justify;
-    font-family: 'Merriweather', serif;
+    font-family: 'Merriweather',"Times New Roman", serif;
     font-size: 1.5vw;
     margin: 0px 3%;
     max-width: 40%;
@@ -251,7 +251,7 @@ html {
     font-size: 2vw;
     border-radius: 25px;
     padding: 15px;
-    font-family: 'Merriweather', sans-serif;
+    font-family: 'Merriweather',"Times New Roman", sans-serif;
     background: linear-gradient(to right, #32b517 50%, rgb(234, 228, 228) 50%);
     background-size: 200% 100%;
     background-position: right bottom;
@@ -522,7 +522,7 @@ html {
     font-size: 20px;
     border-radius: 25px;
     padding: 15px;
-    font-family: 'Merriweather', sans-serif;
+    font-family: 'Merriweather',"Times New Roman", sans-serif;
     background: linear-gradient(to right, #f00404 50%, rgb(234, 228, 228) 50%);
     background-size: 200% 100%;
     background-position: right bottom;
