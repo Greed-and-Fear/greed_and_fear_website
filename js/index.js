@@ -28,9 +28,10 @@ setInterval(cycleArray, 1500);
 
 
 async function on_load() {
+    load_yt()
     get_intraday_stock()
     get_positional_stock()
-    init()
+
 
 }
 
@@ -159,14 +160,6 @@ function send_message2() {
     // form-response
 }
 
-function init() {
-    var vidDefer = document.getElementsByTagName('iframe');
-    for (var i = 0; i < vidDefer.length; i++) {
-        if (vidDefer[i].getAttribute('data-src')) {
-            vidDefer[i].setAttribute('src', vidDefer[i].getAttribute('data-src'));
-        }
-    }
-}
 
 function go_to_element(element) {
     window.scroll(0,findPosition(document.getElementById(element))-100);
@@ -181,3 +174,32 @@ function findPosition(obj) {
         return [currenttop];
     }
 }
+
+async function load_yt(){
+    let welcome_yt = document.getElementById("youtube-div");
+    let discord_yt = document.getElementById("discord-div");
+    let yt_yt = document.getElementById("yt-div");
+    
+    welcome_yt.innerHTML = `
+    <iframe width="100%" height="100%" loading="lazy" 
+    src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
+    title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+    `
+
+    discord_yt.innerHTML = `
+    <iframe width="100%" height="100%" loading="lazy" src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
+    title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
+    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+    `
+    
+    yt_yt.innerHTML = `
+    <iframe width="100%" height="100%" loading="lazy"
+    src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
+    title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
+    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+                    `
+                }
