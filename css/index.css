@@ -1277,7 +1277,7 @@ html {
 
   .small-welcome {
     font-size: 4vw;
-    top: 40%;
+    top: 30%;
     text-align: justify;
     display: block;
     max-width: 88%;
@@ -1287,6 +1287,7 @@ html {
   }
 
   .register-btn {
+    position: absolute;
     left: 0px;
     bottom: 5%;
     width: 100%;
@@ -1489,8 +1490,8 @@ html {
   }
 
   .register-btn {
-    top: 0%;
-    position: relative;
+  
+    position: absolute;
     text-align: center;
   }
 
@@ -1756,7 +1757,7 @@ html {
 
 
   .small-welcome {
-    font-size: 2.5vw;
+    font-size: 2.3vh;
   }
 
   .slogan {
@@ -1781,11 +1782,13 @@ html {
   }
 
   .small-welcome {
-    font-size: 4vw;
+    font-size: 2vh;
   }
 
   .register-btn{
-    margin-top: 10%;
+    position: absolute;
+    bottom: 5%;
+  
   }
 
   .welcome-msg {
@@ -1796,7 +1799,7 @@ html {
     font-size: 7vw;
 
   }
-  
+
   .head2 {
     font-size: 8vw;
   }
