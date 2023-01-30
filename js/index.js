@@ -112,7 +112,7 @@ signInButton.addEventListener('click', () => {
 function hide_reg() {
     document.getElementById('register-window').style.display = "none"
 }
-function hide_option(){ 
+function hide_option() {
     document.getElementById('nav-check').checked = false;
 }
 
@@ -127,42 +127,57 @@ function send_message2() {
     var mail = document.getElementById("cont-mail").value;
     var sub = document.getElementById("cont-sub").value;
     var desc = document.getElementById("cont-text").value;
-    var text = "Name:"+name+"\n"+"Phone:"+phone+"\n"+"Email:"+mail+"\n"+"Subject:"+sub+"\n"+"Desc:"+desc+"\n";
-  
+    var text = "Name:" + name + "\n" + "Phone:" + phone + "\n" + "Email:" + mail + "\n" + "Subject:" + sub + "\n" + "Desc:" + desc + "\n";
+
     var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": "https://api.telegram.org/bot5326832976:AAGBiKuCwYo2_9oMF6-50_WKlhDD_nIoI2A/sendMessage",
-      "method": "POST",
-      "headers": {
-        "Content-Type": "application/json",
-        "cache-control": "no-cache"
-      },
-      "data": JSON.stringify({
-        "chat_id": '@tempratureee',
-        "text": text
-      })
+        "async": true,
+        "crossDomain": true,
+        "url": "https://api.telegram.org/bot5326832976:AAGBiKuCwYo2_9oMF6-50_WKlhDD_nIoI2A/sendMessage",
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "cache-control": "no-cache"
+        },
+        "data": JSON.stringify({
+            "chat_id": '@tempratureee',
+            "text": text
+        })
     }
-  
+
     $.ajax(settings).done(function (response) {
-      console.log(response);
+        console.log(response);
     });
-    
+
     document.getElementById("cont-name").value = ''
     document.getElementById("cont-phone").value = ''
     document.getElementById("cont-mail").value = ''
     document.getElementById("cont-sub").value = ''
     document.getElementById("cont-text").value = ''
-  
+
     document.getElementById("form-response").style.display = "none";
     document.getElementById("responseform").style.display = "block";
     // form-response
-  }
+}
 
-  function init() {
+function init() {
     var vidDefer = document.getElementsByTagName('iframe');
-    for (var i=0; i<vidDefer.length; i++) {
-    if(vidDefer[i].getAttribute('data-src')) {
-    vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-src'));
-    } } }
- 
+    for (var i = 0; i < vidDefer.length; i++) {
+        if (vidDefer[i].getAttribute('data-src')) {
+            vidDefer[i].setAttribute('src', vidDefer[i].getAttribute('data-src'));
+        }
+    }
+}
+
+function go_to_element(element) {
+    window.scroll(0,findPosition(document.getElementById(element))-100);
+}
+
+function findPosition(obj) {
+    var currenttop = 0;
+    if (obj.offsetParent) {
+        do {
+            currenttop += obj.offsetTop;
+        } while ((obj = obj.offsetParent));
+        return [currenttop];
+    }
+}

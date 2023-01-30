@@ -11,8 +11,6 @@ body {
   background-size: auto;
   background-attachment: fixed;
   background-image: linear-gradient(40deg, #101a50 0%, #000000 100%);
-  /* background-image: url(../images/background/wallpaper.jpg); */
-  /* background-color: #1e2d9e; */
   background-position: center center;
   overflow-x: hidden;
 }
@@ -22,10 +20,26 @@ html {
   scroll-behavior: smooth;
 }
 
+ .telegram-logo {
+    position: fixed;
+    left: auto;
+    top: auto;
+    right: 0%;
+    bottom: 5%;
+    margin-right: 20px;
+    padding: 7px;
+    width: 80px;
+    z-index: 9;
+  }
+
+
+@media(prefers-reduced-motion) {
+  .hidden {
+    transition: none;
+  }
+}
 
 @media (max-width: 1500px) {
-
-
   .hidden {
     opacity: 0;
     transition: all 1s;
@@ -43,15 +57,9 @@ html {
     transform: translateX(0%);
   }
 
-  @media(prefers-reduced-motion) {
-    .hidden {
-      transition: none;
-    }
-  }
 
   .navbar {
     height: 100px;
-    ;
     width: 100%;
     padding: 14px 5px;
     background-color: #000000;
@@ -125,21 +133,8 @@ html {
     /* Optional: just make scrollbar invisible */
   }
 
-  /* Telegram refrence link start*/
 
-  .telegram-logo {
-    position: fixed;
-    left: auto;
-    top: auto;
-    right: 0%;
-    bottom: 5%;
-    margin-right: 20px;
-    padding: 7px;
-    width: 80px;
-    z-index: 9;
-  }
-
-  /* Telegram refrence link start*/
+  /* Homepage start */
 
   .homepage {
     top: 100px;
@@ -148,9 +143,10 @@ html {
     background-position: 100%;
     background-size: cover;
     background-color: #04a2c2;
-    height: 650px;
+    height: 100vh;
   }
 
+  
   .header {
     color: white;
     position: relative;
@@ -158,23 +154,24 @@ html {
     top: 30%;
     text-align: center;
     width: 35%;
+    font-family: 'Roboto', sans-serif;
     /* background-color: #000000; */
+  }
+  
+  .head1,.head2{
+    margin-bottom: 25px;
   }
 
   .head1 {
-    font-family: 'Roboto', sans-serif;
     font-size: 30px;
     font-weight: 400;
-    margin-bottom: 25px;
   }
-
+  
   .head2 {
-    font-family: 'Roboto', sans-serif;
     font-size: 40px;
-    margin-bottom: 25px;
     font-weight: 650;
   }
-
+  
   .button1 {
     padding: 10px 30px;
     background-color: #63d6ed;
@@ -183,24 +180,95 @@ html {
     color: rgb(0, 0, 0);
     border-radius: 50px;
   }
-
+  
   .button1:hover {
     background-color: white;
   }
+  
+  /* Homepage end */
 
-  /* IFRAME  Start*/
+  /* Welocme page start */
+
+  .welcome {
+    position: relative;
+    background-color: #c1c0c0;
+    height: calc(100vh - 100px);
+    background-image: url("../images/background/wallpaper.jpg");
+    background-size: contain;
+  }
+
+  .welcome-msg {
+    top: 5px;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    font-size: 10vw;
+    margin-top: 0px;
+  }
+
+  .small-welcome {
+    position: relative;
+    color: rgb(235, 255, 252);
+    font-weight: 400;
+    text-align: justify;
+    font-family: 'Merriweather', serif;
+    font-size: 1.5vw;
+    margin: 0px 3%;
+    max-width: 40%;
+  }
+
+  .companyname {
+    background: -webkit-linear-gradient(0deg, rgb(97, 129, 166) 0%, rgb(255, 255, 255) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: auto;
+    width: fit-content;
+  }
 
   .youtube-div {
     position: absolute;
     top: 17%;
     left: 45%;
     width: 50%;
-    height: 450px;
+    height: 400px;
     text-align: center;
     background-color: #ccced2;
     margin-top: 50px;
 
   }
+
+  .register-btn {
+    position: relative;
+    margin-top:30px;
+    width: 40%;
+    text-align: center;
+  }
+
+  .btn {
+    border: none;
+    font-size: 2vw;
+    border-radius: 25px;
+    padding: 15px;
+    font-family: 'Merriweather', sans-serif;
+    background: linear-gradient(to right, #32b517 50%, rgb(234, 228, 228) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
+  }
+
+  .btn:hover {
+    background-position: left bottom;
+    color: white;
+  }
+
+  /* Welocme page end */
+
+
+  /* IFRAME  Start*/
+  
+  
 
   /* IFRAME  ENd*/
 
@@ -445,77 +513,9 @@ html {
 
 
   /* END Register */
-  /* WELCOME message */
+  /*   message */
 
-  .welcome {
-    position: relative;
-    background-color: #c1c0c0;
-    height: 750px;
-    background-image: url("../images/background/ytbackground.jpg");
-    background-size: contain;
-
-  }
-
-  .welcome-msg {
-    top: 10px;
-    margin-left: 20px;
-    font-family: "Times New Roman", Times, serif;
-    font-weight: bold;
-    font-size: 130px;
-    margin-top: 0px;
-  }
-
-  .small-welcome {
-    top: 27%;
-    color: rgb(202, 255, 246);
-    font-weight: 400;
-    text-align: justify;
-    font-family: 'Merriweather', serif;
-    font-size: 22px;
-    margin: 0px;
-    max-width: 460px;
-
-  }
-
-  .welcome-msg,
-  .small-welcome {
-    position: absolute;
-
-  }
-
-  .companyname {
-    background: -webkit-linear-gradient(0deg, rgb(97, 129, 166) 0%, rgb(255, 255, 255) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: auto;
-    width: fit-content;
-  }
-
-
-
-  .register-btn {
-    position: absolute;
-    bottom: 20%;
-    left: 7%;
-  }
-
-  .btn {
-    border: none;
-    font-size: 40px;
-    border-radius: 25px;
-    padding: 15px;
-    font-family: 'Merriweather', sans-serif;
-    background: linear-gradient(to right, #32b517 50%, rgb(234, 228, 228) 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: all .5s ease-out;
-  }
-
-  .btn:hover {
-    background-position: left bottom;
-    color: white;
-  }
+  
 
   .yt-btn {
     border: none;
@@ -1178,7 +1178,7 @@ html {
 
 }
 
-@media (max-width: 1025px) {
+@media (max-width: 1023px) {
 
   .navbar .nav-links a {
     padding: 18px 15px;
@@ -1191,7 +1191,6 @@ html {
   }
 
   .homepage {
-    height: 100vh;
     background-position: 50%;
     text-align: center;
   }
@@ -1200,11 +1199,12 @@ html {
     left: 0%;
     margin: auto;
     top: 20%;
-    width: 80%;
+    width: 100%;
   }
 
   .head1 {
     font-size: 6vw;
+
   }
 
   .head2 {
@@ -1269,12 +1269,6 @@ html {
 
   /* WELCOME message */
 
-  .welcome {
-    position: relative;
-    height: 90vh;
-    background-size: cover;
-    text-align: center;
-  }
 
   .welcome-msg {
     top: 0%;
@@ -1475,29 +1469,28 @@ html {
 
   /* WELCOME message */
 
-  .welcome {
+  .welcome{
     position: relative;
-    height: 90vh;
   }
 
-  .welcome-msg {
-    width: 100%;
-    margin: 0px;
-    font-size: 45px;
+  .youtube-div{
+    top: 0%;  
+    position: relative;
+    height: 40vh;
+    left: 5%;
+    margin: 0px 0px;
   }
 
   .small-welcome {
-    left: 5%;
-    width: 90%;
-    text-align: justify;
-    top: 47%;
-    font-size: 5vw;
+    position: relative;
+    top: 3%;
+    font-size: 1vw;
     margin: auto;
-
   }
 
   .register-btn {
-    bottom: 2%;
+    top: 0%;
+    position: relative;
     text-align: center;
   }
 
@@ -1559,15 +1552,7 @@ html {
 
   /* IFRAME  Start*/
 
-  .youtube-div {
-    left: 5%;
-    top: 70px;
-    width: 90%;
-    height: 300px;
-    margin: 0px 0px;
-
-  }
-
+  
   #slider {
     position: relative;
     width: 50%;
@@ -1769,18 +1754,22 @@ html {
     font-size: 9vw;
   }
 
-  .youtube-div {
-    width: 80%;
-    margin-top: 20px;
-  }
 
   .small-welcome {
-    top: 55%;
-    font-size: 3vw;
+    font-size: 2.5vw;
   }
 
   .slogan {
     width: 200px;
+  }
+
+  .head1 {
+    font-size: 5vw;
+
+  }
+
+  .head2 {
+    font-size: 6vw;
   }
 
 }
@@ -1792,7 +1781,24 @@ html {
   }
 
   .small-welcome {
-    font-size: 5vw;
+    font-size: 4vw;
+  }
+
+  .register-btn{
+    margin-top: 10%;
+  }
+
+  .welcome-msg {
+    font-size: 10vw;
+  }
+
+  .head1 {
+    font-size: 7vw;
+
+  }
+  
+  .head2 {
+    font-size: 8vw;
   }
 
 }
