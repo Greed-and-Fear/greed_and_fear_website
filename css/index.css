@@ -1279,7 +1279,7 @@ html {
 
   .small-welcome {
     position: relative;
-    font-size: 2.7vh;  
+    font-size: 2.6vh;  
     max-width: 90%;
     margin: 20px auto;  
   }
@@ -1553,7 +1553,7 @@ html {
   
 
   .community {
-    height: 550px;
+    height: fit-content;
   }
 
   .telegram {
@@ -1671,18 +1671,20 @@ html {
   .community .discord .youtube-div {
     position: relative;
     left: 0%;
-    padding: 0px;
-    margin: 20px auto;
+    margin: 10px auto;
     width: 90%;
-    height: 250px;
+    height: 350px;
+
   }
 
   .community-message {
-    top: 47%;
     left: 0%;
+    margin: 0%;
+    position: relative;
     width: 100%;
-    height: 330px;
-    margin: 0px;
+    height: fit-content;
+    padding-bottom: 20px;
+    margin-bottom: 0px;
   }
 
   .youtube .community-message {
