@@ -28,46 +28,45 @@ setInterval(cycleArray, 1500);
 
 
 async function on_load() {
-    load_yt()
     get_intraday_stock()
     get_positional_stock()
-
-
+    
+    
 }
 
 async function get_intraday_stock() {
     fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (today_pick) {
-            let stock_cards = document.getElementById("cards");
-            let out = "";
-            for (let single_stock of today_pick) {
-                out +=
-                    `
-        <div class="card">
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (today_pick) {
+        let stock_cards = document.getElementById("cards");
+        let out = "";
+        for (let single_stock of today_pick) {
+            out +=
+            `
+            <div class="card">
             <div class="stockname">${single_stock.stock_name}</div>
             <div class="image"><img loading="lazy" alt =${single_stock.stock_name}-chart class="result-img" src="${single_stock.img_path}"></div>
             <div class="profit per">+${single_stock.percentage}%</div>
             <div class="profit amt">Profit : ${single_stock.profit}₹</div>
-        </div>
-                `;
-            }
-            out += `
-            <div class="card finalcard">
-                <div class="prem-message">
-                    Checkout our daily, weekly and short term results
-                </div>
-                <a href="result.html"><button class="button">View More</button></a>
             </div>
-            `
+            `;
+        }
+        out += `
+        <div class="card finalcard">
+        <div class="prem-message">
+        Checkout our daily, weekly and short term results
+        </div>
+        <a href="result.html"><button class="button">View More</button></a>
+        </div>
+        `
             stock_cards.innerHTML = out;
         })
-}
-
-async function get_positional_stock() {
-    fetch('https://johnson845173.github.io/algotrade/jsondata/positional.json')
+    }
+    
+    async function get_positional_stock() {
+        fetch('https://johnson845173.github.io/algotrade/jsondata/positional.json')
         .then(function (response) {
             return response.json();
         })
@@ -76,23 +75,23 @@ async function get_positional_stock() {
             let out_pos = "";
             for (let each_pos_trade of positional_pick) {
                 out_pos +=
-                    `
-        <div class="card ">
-            <div class="stockname">${each_pos_trade.name_and_tf}</div>
+                `
+                <div class="card ">
+                <div class="stockname">${each_pos_trade.name_and_tf}</div>
             <div class="image"><img loading="lazy" alt =${each_pos_trade.name_and_tf}-chart class="result-img" src="${each_pos_trade.img_path}"></div>
-        </div>
-                `;
-            }
-            out_pos += `
-            <div class="card finalcard">
-                <div class="prem-message">
-                    Checkout our daily, weekly and short term results
-                </div>
-                <a href="result.html"><button class="button">View More</button></a>
             </div>
-            `
-            stock_cards.innerHTML = out_pos;
-        })
+            `;
+        }
+        out_pos += `
+        <div class="card finalcard">
+        <div class="prem-message">
+        Checkout our daily, weekly and short term results
+        </div>
+        <a href="result.html"><button class="button">View More</button></a>
+        </div>
+        `
+        stock_cards.innerHTML = out_pos;
+    })
 }
 
 
@@ -118,7 +117,7 @@ function hide_option() {
 }
 
 function show_reg() {
-
+    
     document.getElementById('register-window').style.display = "block";
 }
 
@@ -129,7 +128,7 @@ function send_message2() {
     var sub = document.getElementById("cont-sub").value;
     var desc = document.getElementById("cont-text").value;
     var text = "Name:" + name + "\n" + "Phone:" + phone + "\n" + "Email:" + mail + "\n" + "Subject:" + sub + "\n" + "Desc:" + desc + "\n";
-
+    
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -144,17 +143,17 @@ function send_message2() {
             "text": text
         })
     }
-
+    
     $.ajax(settings).done(function (response) {
         console.log(response);
     });
-
+    
     document.getElementById("cont-name").value = ''
     document.getElementById("cont-phone").value = ''
     document.getElementById("cont-mail").value = ''
     document.getElementById("cont-sub").value = ''
     document.getElementById("cont-text").value = ''
-
+    
     document.getElementById("form-response").style.display = "none";
     document.getElementById("responseform").style.display = "block";
     // form-response
@@ -184,10 +183,10 @@ async function load_yt(){
     <iframe width="100%" height="100%" loading="lazy" 
     src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
     title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen></iframe>
+    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
     `
-
+    
     discord_yt.innerHTML = `
     <iframe width="100%" height="100%" loading="lazy" src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
     title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
@@ -200,6 +199,8 @@ async function load_yt(){
     src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
     title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen></iframe>
-                    `
-                }
+    allowfullscreen></iframe>
+    `
+}
+
+load_yt()
