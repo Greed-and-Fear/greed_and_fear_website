@@ -1016,35 +1016,38 @@ html {
   }
 
   .contact-background {
+    position: relative;
     background-image: url(../images/background/wallpaper.jpg);
     background-size: cover;
-    height: 90vh;
+    height: calc(100vh - 100px);
   }
 
   .contact-page {
-    margin: 0px auto;
-    width: 60%;
-    height: 600px;
     position: relative;
+    margin: auto auto;
+    top: 0%;
+    width: 60%;
+    height: calc(90vh - 10px);;
   }
 
   .contact-item {
-    display: relative;
     top: 5%;
     width: 50%;
     height: 90%;
+    color: white;
   }
 
-  .left {
+  .contact-left,.contact-right{
     position: absolute;
+  }
+
+  .contact-left {
     margin: 0px;
     background-color: #d0e4cc;
   }
 
-  .right {
-    color: white;
+  .contact-right {
     background-color: #09090e;
-    position: absolute;
     left: 50%;
   }
 
@@ -1574,7 +1577,7 @@ html {
     width: 100%;
   }
 
-  .right {
+  .contact-right {
     left: 0%;
     top: 50%;
   }
