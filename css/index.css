@@ -1551,9 +1551,22 @@ html {
 
   /* End of welcome message */
 
+
+  
   /* IFRAME  Start*/
 
   
+  .contact-page {
+    height: 30vh;
+  }
+
+  .main-head{
+    font-size: 4vh;
+  }
+
+  .sub-head{
+    font-size: 3vw;
+  }
   
 
   .community {
@@ -1582,9 +1595,6 @@ html {
     top: 50%;
   }
 
-  .contact-background {
-    height: 850px;
-  }
 
   .studentprogram {
     align-items: center;
