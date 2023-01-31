@@ -20,17 +20,27 @@ html {
   scroll-behavior: smooth;
 }
 
- .telegram-logo {
-    position: fixed;
-    left: auto;
-    top: auto;
-    right: 0%;
-    bottom: 5%;
-    margin-right: 20px;
-    padding: 7px;
-    width: 80px;
-    z-index: 9;
-  }
+.telegram-logo {
+  position: fixed;
+  left: auto;
+  top: auto;
+  right: 0%;
+  bottom: 5%;
+  margin-right: 20px;
+  padding: 7px;
+  width: 80px;
+  z-index: 9;
+}
+
+input:-webkit-autofill {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: aliceblue;
+}
+
+.register-window input:-webkit-autofill {
+  -webkit-text-fill-color: rgb(0, 0, 0);
+}
+
 
 @media (prefers-reduced-motion) {
   .hidden {
@@ -148,7 +158,7 @@ html {
     height: 100vh;
   }
 
-  
+
   .header {
     color: white;
     position: relative;
@@ -158,8 +168,9 @@ html {
     width: 35%;
     font-family: 'Roboto', sans-serif;
   }
-  
-  .head1,.head2{
+
+  .head1,
+  .head2 {
     margin-bottom: 25px;
   }
 
@@ -167,12 +178,12 @@ html {
     font-size: 30px;
     font-weight: 400;
   }
-  
+
   .head2 {
     font-size: 40px;
     font-weight: 650;
   }
-  
+
   .button1 {
     padding: 10px 30px;
     background-color: #63d6ed;
@@ -181,11 +192,11 @@ html {
     color: rgb(0, 0, 0);
     border-radius: 50px;
   }
-  
+
   .button1:hover {
     background-color: white;
   }
-  
+
   /* Homepage end */
 
   /* Welocme page start */
@@ -213,7 +224,7 @@ html {
     color: rgb(235, 255, 252);
     font-weight: 400;
     text-align: justify;
-    font-family: 'Merriweather',"Times New Roman", serif;
+    font-family: 'Merriweather', "Times New Roman", serif;
     font-size: 4vh;
     margin: 0px 3%;
     max-width: 40%;
@@ -242,7 +253,7 @@ html {
 
   .register-btn {
     position: relative;
-    margin-top:30px;
+    margin-top: 30px;
     width: 40%;
     text-align: center;
   }
@@ -252,7 +263,7 @@ html {
     font-size: 2vw;
     border-radius: 25px;
     padding: 15px;
-    font-family: 'Merriweather',"Times New Roman", sans-serif;
+    font-family: 'Merriweather', "Times New Roman", sans-serif;
     background: linear-gradient(to right, #32b517 50%, rgb(234, 228, 228) 50%);
     background-size: 200% 100%;
     background-position: right bottom;
@@ -268,8 +279,8 @@ html {
 
 
   /* IFRAME  Start*/
-  
-  
+
+
 
   /* IFRAME  ENd*/
 
@@ -516,14 +527,14 @@ html {
   /* END Register */
   /*   message */
 
-  
+
 
   .yt-btn {
     border: none;
     font-size: 20px;
     border-radius: 25px;
     padding: 15px;
-    font-family: 'Merriweather',"Times New Roman", sans-serif;
+    font-family: 'Merriweather', "Times New Roman", sans-serif;
     background: linear-gradient(to right, #f00404 50%, rgb(234, 228, 228) 50%);
     background-size: 200% 100%;
     background-position: right bottom;
@@ -726,7 +737,9 @@ html {
     width: 100%;
   }
 
-  .studentprogram .heading ,.studentprogram .message,.studentprogram .button {
+  .studentprogram .heading,
+  .studentprogram .message,
+  .studentprogram .button {
     font-family: "Montserrat", Sans-serif;
     position: relative;
     font-weight: 300;
@@ -775,6 +788,7 @@ html {
   }
 
   .product-container {
+    margin-top: 5%;
     position: relative;
     /* background-color: white;   */
     height: fit-content;
@@ -782,15 +796,15 @@ html {
     grid-gap: 5%;
     grid-template-columns: repeat(2, 40%);
     justify-content: center;
-    margin-bottom: 100px;
+    margin-bottom: 20px;
   }
 
   .product-items {
-    margin-top: 10%;
+
     border-top: 2px solid white;
     /* background-color: #04a2c2; */
     padding-left: 0%;
-    height: 85%;
+
   }
 
   .product-items-title {
@@ -981,13 +995,13 @@ html {
     font-size: 16px;
   }
 
-  .yt-btn{
-  background: linear-gradient(to right,#ff0000 50%, rgb(234, 228, 228) 50% );
-  background-size: 200% 100%;
-  background-position: right bottom;
-  transition: all .5s ease-out;
-  font-size: 20px;
-}
+  .yt-btn {
+    background: linear-gradient(to right, #ff0000 50%, rgb(234, 228, 228) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
+    font-size: 20px;
+  }
 
   .community-message .items .btn:hover {
     background-position: left bottom;
@@ -1027,7 +1041,8 @@ html {
     margin: auto auto;
     top: 0%;
     width: 60%;
-    height: calc(90vh - 10px);;
+    height: calc(90vh - 10px);
+    ;
   }
 
   .contact-item {
@@ -1037,7 +1052,8 @@ html {
     color: white;
   }
 
-  .contact-left,.contact-right{
+  .contact-left,
+  .contact-right {
     position: absolute;
   }
 
@@ -1065,17 +1081,11 @@ html {
   }
 
 
-
   form textarea,
   form input {
     color: rgb(0, 0, 0);
     border-bottom: 2px solid rgba(0, 0, 0, 0.2);
   }
-
-
-
-
-
 
   .heading {
     width: 100%;
@@ -1115,7 +1125,7 @@ html {
     font-size: 1vw;
   }
 
-  .contact-btn {  
+  .contact-btn {
     color: white;
     font-size: medium;
     background-color: #05c3e9;
@@ -1123,56 +1133,56 @@ html {
     border-radius: 15px;
   }
 
-/* Contact form end */
+  /* Contact form end */
 
-/* Contact Footer starts */
+  /* Contact Footer starts */
 
-.contact-footer {
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
-  text-align: center;
-  height: fit-content;
-  background-color: #3b4656;
-  color: rgb(205, 197, 50);
-  font-size: 2vw;
-}
+  .contact-footer {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    text-align: center;
+    height: fit-content;
+    background-color: #3b4656;
+    color: rgb(205, 197, 50);
+    font-size: 2vw;
+  }
 
-/* Contact footer end */
+  /* Contact footer end */
 
-/* Footer start */
+  /* Footer start */
 
-.footer {
-  display: grid;
-  grid-template-columns: repeat(4, 25%);
-  height: fit-content;
-  background-color: #262626;
-}
+  .footer {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    height: fit-content;
+    background-color: #262626;
+  }
 
-.footer-main-list {
-  text-align: center;
-  margin: 10px 0px;
-}
+  .footer-main-list {
+    text-align: center;
+    margin: 10px 0px;
+  }
 
-.footer-header {
-  color: rgb(196, 187, 187);
-  font-weight: bolder;
-  font-size: 1.7vw;
-}
+  .footer-header {
+    color: rgb(196, 187, 187);
+    font-weight: bolder;
+    font-size: 1.7vw;
+  }
 
-.sub-list {
-  color: rgb(180, 178, 178);
-  margin-top: 8px;
-  font-size: 1.3vw;
-}
+  .sub-list {
+    color: rgb(180, 178, 178);
+    margin-top: 8px;
+    font-size: 1.3vw;
+  }
 
-/* Footer End */
+  /* Footer End */
 
 
 }
 
 @media (max-width: 1641px) {
 
-  .small-welcome{
+  .small-welcome {
     margin-top: 30px;
     font-size: 3.5vh;
   }
@@ -1271,7 +1281,6 @@ html {
 
   /* WELCOME message */
 
-
   .welcome-msg {
     top: 0%;
     font-size: 100px;
@@ -1279,9 +1288,9 @@ html {
 
   .small-welcome {
     position: relative;
-    font-size: 2.6vh;  
+    font-size: 2.6vh;
     max-width: 90%;
-    margin: 20px auto;  
+    margin: 20px auto;
   }
 
   .register-btn {
@@ -1297,21 +1306,38 @@ html {
 
   /* End of welcome message */
 
+
+
+
+  .contact-right-items {
+    margin-top: 3.5vh;
+  }
+
+  .main-head {
+    font-size: 6vh;
+    margin-top: 5px;
+  }
+
+  .sub-head {
+    font-size: 1.7vh;
+    margin-top: 5px;
+
+  }
+
   /* Cards results */
 
   .product-container {
-    grid-template-columns: repeat(2, 45%);
+    grid-template-columns: repeat(2, 42%);
   }
 
 
   .product-items-title {
     margin-top: 0%;
-    font-size: 4vw;
+    font-size: 3.2vw;
   }
 
   .product-item-list {
-    font-size: 2.5vw;
-
+    font-size: 2.3vw;
   }
 
   .results .message,
@@ -1459,14 +1485,14 @@ html {
 
   /* WELCOME message */
 
-  .welcome{
+  .welcome {
     height: 90vh;
     position: relative;
 
   }
 
-  .youtube-div{
-    top: 0%;  
+  .youtube-div {
+    top: 0%;
     position: relative;
     height: 40vh;
     left: 5%;
@@ -1534,23 +1560,14 @@ html {
 
   /* End of welcome message */
 
-
-  
   /* IFRAME  Start*/
 
-  
+
   .contact-page {
     height: 30vh;
   }
 
-  .main-head{
-    font-size: 4vh;
-  }
 
-  .sub-head{
-    font-size: 3vw;
-  }
-  
 
   .community {
     height: fit-content;
@@ -1613,16 +1630,20 @@ html {
 
   .product-container {
     grid-template-columns: repeat(1, 80%);
+    padding-bottom: 5%;
   }
 
   .product-tab {
     margin-bottom: 20px;
   }
 
-
   .product-item-list {
     font-size: 4vw;
     margin-top: 3px;
+  }
+
+  .product-item-list {
+    font-size: 3vw;
   }
 
   /* start of results */
@@ -1688,19 +1709,13 @@ html {
   }
 
   .youtube .community-message {
-    top: 40%;
     left: 0%;
     width: 100%;
-    height: 330px;
     margin: 0px;
   }
 
   .community-message .sub-heading {
     font-size: 50px;
-  }
-
-  .youtube {
-    height: 650px;
   }
 
 
@@ -1773,14 +1788,18 @@ html {
     padding: 12px 10px;
   }
 
-  .register-btn{
+  .register-btn {
     position: absolute;
     bottom: 5%;
-  
+
   }
 
   .welcome-msg {
     font-size: 10vw;
+  }
+
+  .small-welcome{
+    font-size: 2.4vh
   }
 
   .head1 {
@@ -1790,6 +1809,14 @@ html {
 
   .head2 {
     font-size: 8vw;
+  }
+
+  .product-items-title{
+      font-size: 6vw;
+  }
+
+  .product-item-list{
+    font-size: 4vw;
   }
 
 }
