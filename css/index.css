@@ -779,6 +779,11 @@ input:-webkit-autofill {
 
 
   /* End of student program */
+
+  .product-tab {
+    text-align: center;
+  }
+
   .product-title {
     color: white;
     text-align: center;
@@ -788,6 +793,7 @@ input:-webkit-autofill {
   }
 
   .product-container {
+    text-align: left;
     margin-top: 5%;
     position: relative;
     /* background-color: white;   */
@@ -797,10 +803,10 @@ input:-webkit-autofill {
     grid-template-columns: repeat(2, 40%);
     justify-content: center;
     margin-bottom: 20px;
+    
   }
 
   .product-items {
-
     border-top: 2px solid white;
     /* background-color: #04a2c2; */
     padding-left: 0%;
@@ -825,6 +831,17 @@ input:-webkit-autofill {
     margin-top: 5px;
     color: rgb(255, 255, 255);
     font-style: normal;
+  }
+
+  .product-button{
+    font-size: 1.7vw;
+    font-weight: 600;
+    padding: 15px 30px;
+    background-color: #aff000;
+    font-family: 'Bebas Neue', sans-serif;
+    border-radius: 25px;
+    margin: 20px;
+
   }
 
   /* Commmunity  */
@@ -1340,6 +1357,10 @@ input:-webkit-autofill {
     font-size: 2.3vw;
   }
 
+  .product-button{
+    font-size: 2.5vw;
+  }
+
   .results .message,
   .posresults .message {
     font-size: 40px;
@@ -1637,13 +1658,17 @@ input:-webkit-autofill {
     margin-bottom: 20px;
   }
 
-  .product-item-list {
+  .product-items-title {
     font-size: 4vw;
     margin-top: 3px;
   }
 
   .product-item-list {
     font-size: 3vw;
+  }
+
+  .product-button{
+    font-size: 3.2vw;
   }
 
   /* start of results */
@@ -1817,6 +1842,10 @@ input:-webkit-autofill {
 
   .product-item-list{
     font-size: 4vw;
+  }
+
+  .product-button{
+    font-size: 4.2vw;
   }
 
 }
