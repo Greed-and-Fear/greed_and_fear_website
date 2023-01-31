@@ -51,13 +51,11 @@ input:-webkit-autofill {
 @media (max-width: 3000px) {
   .hidden {
     opacity: 0;
-    transition: none;
-    /* transition: all 1s ; */
+    transition: all 1s ;
     transform: translateY(+40%);
   }
 
   .hidden2 {
-    transition: none;
     transform: translateY(0%);
     transform: translateX(+100%);
   }
@@ -75,13 +73,11 @@ input:-webkit-autofill {
     width: 100%;
     padding: 14px 5px;
     background-color: #000000;
-    /* position: relative; */
     opacity: 100%;
     position: fixed;
     top: 0px;
     z-index: 1;
     border-bottom: 1.2px solid white;
-
   }
 
   .navbar .nav-header {
@@ -1431,7 +1427,7 @@ input:-webkit-autofill {
 @media (max-width:850px) {
 
   .hidden {
-    transform: translateY(+40%);
+    transform: translateY(+30%);
   }
 
   .hidden2 {
