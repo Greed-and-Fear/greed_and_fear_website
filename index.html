@@ -41,7 +41,7 @@
         <div class="nav-links" onclick="hide_option()">
             <a onclick="go_to_element('homepage')">Home</a>
             <a onclick="go_to_element('welcome')">About</a>
-            <a onclick="go_to_element('product-tab')">Services</a>
+            <a onclick="go_to_element('product-tab')">Products</a>
             <a onclick="go_to_element('contact-background')">Contact Us</a>
             <a onclick="show_reg()">Sign In</a>
         </div>
@@ -111,13 +111,10 @@
 
             <div class="small-welcome">
                 We are a group of technical analysts whose aim is to educate people about the Importance of Financial
-                Literacy and
-                help them setup their Personal Portfolios. We hold proficiency in Elliott waves, Fibonacci, harmonics
-                and
-                advanced price action. Our primary focus is deviated to stocks, commodities and indices with swing,
-                positional and intraday trade setups. Join our community to gain all the knowledge you need to be the
-                best
-                trader.
+                Literacy and help them setup their Personal Portfolios. We hold proficiency in Elliott waves, Fibonacci,
+                harmonics and advanced price action. Our primary focus is deviated to stocks, commodities and indices
+                with swing, positional and intraday trade setups. Join our community to gain all the knowledge you need
+                to be the best trader.
             </div>
             <div class="register-btn"><button class="btn" onclick="show_reg()">Join community</button></div>
         </div>
@@ -130,10 +127,6 @@
             </div>
         </section>
     </div>
-
-
-
-
 
     <section class="hidden">
         <div class="community discord">
@@ -166,7 +159,7 @@
     <section class="hidden">
         <div id="product-tab" class="product-tab">
             <div class="product-container">
-                <div class="product-items">
+                <div id="product1" class="product-items" onclick="load_product_page(this.id)">
                     <div class="product-items-title">GREED & FEAR DAILY</div>
                     <div class="product-item-list">• Upgrades, Downgrades & Acquisitions</div>
                     <div class="product-item-list">• News Alerts From All Leading Media Handles</div>
@@ -177,7 +170,7 @@
                     <div class="product-item-list">• Corporate Actions, Expansion & Government Policy Change</div>
                     <div class="product-item-list">• International Market & Broker Reports</div>
                 </div>
-                <div class="product-items">
+                <div id="product2" class="product-items" onclick="load_product_page(this.id)">
                     <div class="product-items-title">CARTESIAN WAVESHOTS</div>
                     <div class="product-item-list">• Premium Patented Elliott Wave Intraday/Swing Trading Strategies
                     </div>
@@ -187,7 +180,7 @@
                     <div class="product-item-list">• Swing Trading Strategies</div>
                 </div>
             </div>
-            <button class="product-button">Try Demo</button>
+            <button class="product-button">Explore More</button>
     </section>
 
     <section class="hidden">
@@ -206,17 +199,6 @@
             </div>
         </div>
     </section>
-
-    <!-- <section class="hidden">
-        <div class="studentprogram">
-            <div class="studentprogram-img">
-                <img class="img" loading="lazy" alt="student" src="images/background/studentprogram.png">
-            </div>
-            <div class="heading">STUDENT DISCOUNT PROGRAM</div>
-            <div class="message">IF YOU ARE A STUDENT YOU CAN GET 10% DISCOUNT FOR PREMIUM MEMBERSHIP</div>
-            <button class="button">JOIN PREMIUM</button>
-        </div>
-    </section> -->
 
     <section class="hidden">
         <div id="contact-background" class="contact-background">
@@ -295,11 +277,6 @@
             <div class="form-container sign-up-container">
                 <form action="#">
                     <h1>Create Account</h1>
-                    <!-- <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div> -->
                     <span>or use your email for registration</span>
                     <input type="text" placeholder="Name" />
                     <input type="tel" placeholder="Phone" />
@@ -310,11 +287,6 @@
             <div class="form-container sign-in-container">
                 <form action="#">
                     <h1>Sign in</h1>
-                    <!-- <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div> -->
                     <span>or use your account</span>
                     <input type="tel" placeholder="Phone" />
                     <input type="password" placeholder="Password" />
@@ -348,5 +320,6 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" async></script>
 <script src="js/index.js" defer></script>
+<script src="js/productpage.js" defer></script>
 
 </html>
