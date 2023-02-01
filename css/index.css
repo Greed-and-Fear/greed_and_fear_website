@@ -826,6 +826,7 @@ input:-webkit-autofill {
     font-size: 1.7vw;
     font-weight: 600;
     padding: 15px 30px;
+    color: #000000;
     background-color: #aff000;
     font-family: 'Bebas Neue', sans-serif;
     border-radius: 25px;
