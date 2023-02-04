@@ -100,8 +100,24 @@ input:-webkit-autofill {
   }
 
   .product-details{
+    position: relative;
     color: aliceblue;
+    width: 60%;
+    height: 70%;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
   }
+
+  .product-page-right,.product-page-left{
+    background-color: aquamarine;
+  }
+
+  .product-page-right{
+    background-color: red;
+  }
+
+
 
   /* Contact Footer starts */
 
