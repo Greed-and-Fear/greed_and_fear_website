@@ -9,13 +9,13 @@
 
 let names = ["s1", "s2", "s3", "s4", "s5"];
 let count = 0;
-
+let count2 = 1;
 function cycleArray() {
     let name = names[count];
     document.getElementById(name).checked = true;
     // increment our counter
     count++;
-
+    
     // reset counter if we reach end of array
     if (count === names.length) {
         count = 0;
@@ -23,6 +23,21 @@ function cycleArray() {
 }
 
 setInterval(cycleArray, 1500);
+
+let background_images = ["../images/background/background_bull1.jpg","../images/background/background_bull2.jpg","../images/background/background_bull3.jpg"]
+
+function change_background() {
+    document.getElementById("homepage").style.backgroundImage = "url(" + background_images[count2] + ")";
+    count2 += 1;
+    if (count2 > 2){
+        count2=0
+    }
+
+}
+
+setInterval(change_background,5000)
+
+
 
 // change_card()
 
