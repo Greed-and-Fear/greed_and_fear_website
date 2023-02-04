@@ -13,7 +13,7 @@ document.getElementById('photo').style.display = 'none';
 count = 1;
 
 function change_background(){
-    document.getElementById('photo').style.backgroundImage = "url(../images/roshni/"+count+".jpeg)";
+    document.getElementById('photo').style.backgroundImage = "url(images/roshni/"+count+".jpeg)";
     count +=1 ;
     if (count>19){
         count=1
