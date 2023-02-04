@@ -9,6 +9,7 @@ document.getElementById('switch').className = 'animate';
     document.getElementById('photo').style.display = 'block';
 };
 
+document.getElementById('photo').style.display = 'none';
 count = 1;
 
 function change_background(){
