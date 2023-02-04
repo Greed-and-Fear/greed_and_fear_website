@@ -19,4 +19,4 @@ function change_background(){
         count=1
     }}
 
-setInterval(change_background,1500);
+setInterval(change_background,3000);
