@@ -208,6 +208,7 @@ color:#000;
 .photo{
     width: 80%;
     height: 1000px;
+    background-image: url(images/roshni/1.jpeg);
     background-size: cover;
     margin: auto;
 }
