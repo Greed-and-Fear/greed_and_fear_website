@@ -142,7 +142,7 @@ input:-webkit-autofill {
     top: 100px;
     position: relative;
     background-image: url(../images/background/background_bull1.jpg);
-    background-position: 100%;
+    background-position: 10%;
     background-size: cover;
     background-color: #04a2c2;
     height: 100vh;

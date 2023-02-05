@@ -24,7 +24,7 @@ function cycleArray() {
 
 setInterval(cycleArray, 1500);
 
-let background_images = ["../images/background/background_bull1.jpg","../images/background/background_bull2.jpg","../images/background/background_bull3.jpg"]
+let background_images = ["images/background/background_bull1.jpg","images/background/background_bull2.jpg","images/background/background_bull3.jpg"]
 
 function change_background() {
     document.getElementById("homepage").style.backgroundImage = "url(" + background_images[count2] + ")";
