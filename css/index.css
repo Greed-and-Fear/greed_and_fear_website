@@ -141,11 +141,22 @@ input:-webkit-autofill {
   .homepage {
     top: 100px;
     position: relative;
-    background-image: url(../images/background/background_bull1.jpg);
     background-position: 10%;
     background-size: cover;
     background-color: #04a2c2;
     height: 100vh;
+  }
+  
+  .homepage1{
+    background-image: url(../images/background/background_bull1.jpg);
+  }
+
+  .homepage2{
+    background-image: url(../images/background/background_bull2.jpg);
+  }
+
+  .homepage3{
+    background-image: url(../images/background/background_bull3.jpg);
   }
 
 

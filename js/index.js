@@ -24,14 +24,10 @@ function cycleArray() {
 
 setInterval(cycleArray, 1500);
 
-let background_images = ["images/background/background_bull1.jpg","images/background/background_bull2.jpg","images/background/background_bull3.jpg"]
+let background_images = ["homepage1","homepage2","homepage3"]
 
 function change_background() {
-    document.getElementById("homepage").style.backgroundImage = "url(" + background_images[count2] + ")";
-    count2 += 1;
-    if (count2 > 2){
-        count2=0
-    }
+    
 
 }
 
