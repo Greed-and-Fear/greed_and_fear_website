@@ -1,50 +1,50 @@
 [
     {
         "sl": 1,
-        "stock_name": "CIPLA",
-        "img_path": "images/intraday/CIPLA.webp",
+        "stock_name": "APOLLO TIRES",
+        "img_path": "images/intraday/apollotire.webp",
         "profit": 2800,
         "percentage": 7.6
     },
     {
         "sl": 2,
-        "stock_name": "FORTHIS",
-        "img_path": "images/intraday/FORTHIS.webp",
+        "stock_name": "COFORGE",
+        "img_path": "images/intraday/coforge.webp",
         "profit": 6543,
         "percentage": 6.8
     },
     {
         "sl": 3,
-        "stock_name": "HDFC",
-        "img_path": "images/intraday/HDFC.webp",
+        "stock_name": "CRUDE OIL",
+        "img_path": "images/intraday/crudeoil.webp",
         "profit": 5700,
         "percentage": 12.4
     },
     {
         "sl": 4,
-        "stock_name": "IDFC",
-        "img_path": "images/intraday/IDFC.webp",
+        "stock_name": "ITC",
+        "img_path": "images/intraday/itcltd.webp",
         "profit": 8000,
         "percentage": 15.0
     },
     {
         "sl": 5,
-        "stock_name": "NIFTY BANK",
-        "img_path": "images/intraday/NIFTYBANK.webp",
+        "stock_name": "UNITED BREWERIES",
+        "img_path": "images/intraday/unitedbev.webp",
         "profit": 11000,
         "percentage": 35.0
     },
     {
         "sl": 6,
-        "stock_name": "NMDC",
-        "img_path": "images/intraday/NMDC.webp",
+        "stock_name": "VOLTAS",
+        "img_path": "images/intraday/voltas.webp",
         "profit": 9300,
         "percentage": 6.1
     },
     {
         "sl": 7,
-        "stock_name": "POWER GRID",
-        "img_path": "images/intraday/POWERGRID.webp",
+        "stock_name": "ZEE",
+        "img_path": "images/intraday/zee.webp",
         "profit": 3578,
         "percentage": 4.5
     }

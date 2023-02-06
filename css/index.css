@@ -601,7 +601,7 @@ input:-webkit-autofill {
 
   .results {
     background-image: url(../images/background/background_bull5.jpg);
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgb(1, 1, 26);
