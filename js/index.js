@@ -14,7 +14,7 @@ function cycleArray() {
     document.getElementById(name).checked = true;
     // increment our counter
     count++;
-    
+
     // reset counter if we reach end of array
     if (count === names.length) {
         count = 0;
@@ -24,42 +24,42 @@ function cycleArray() {
 setInterval(cycleArray, 1500);
 
 let count2 = 1;
-let background_images = ["homepage1","homepage2","homepage3"]
+let background_images = ["homepage1", "homepage2", "homepage3"]
 
 function change_background() {
 
-    if(count2 ==0 ){
+    if (count2 == 0) {
         document.getElementById(background_images[2]).classList.add('removebackground');
         document.getElementById(background_images[2]).classList.remove('showbackground');
         document.getElementById(background_images[1]).classList.remove('removebackground');
         document.getElementById(background_images[0]).classList.add('showbackground');
     }
-    else if(count2 == 1){
+    else if (count2 == 1) {
         document.getElementById(background_images[0]).classList.remove('showbackground');
         document.getElementById(background_images[2]).classList.remove('removebackground');
         document.getElementById(background_images[0]).classList.add('removebackground');
         document.getElementById(background_images[1]).classList.add('showbackground');
-        
+
     }
-    else if(count2 ==2){
+    else if (count2 == 2) {
         document.getElementById(background_images[1]).classList.remove('showbackground');
         document.getElementById(background_images[1]).classList.add('removebackground');
-        document.getElementById(background_images[0 ]).classList.remove('removebackground');
+        document.getElementById(background_images[0]).classList.remove('removebackground');
         document.getElementById(background_images[2]).classList.add('showbackground');
     }
-    
-    
 
 
 
 
-    count2 +=1;
-    if(count2>2){
-        count2=0;
+
+
+    count2 += 1;
+    if (count2 > 2) {
+        count2 = 0;
     }
 }
 
-setInterval(change_background,3000)
+setInterval(change_background, 3000)
 
 
 
@@ -69,21 +69,21 @@ setInterval(change_background,3000)
 async function on_load() {
     get_intraday_stock()
     get_positional_stock()
-    
-    
+
+
 }
 
 async function get_intraday_stock() {
     fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (today_pick) {
-        let stock_cards = document.getElementById("cards");
-        let out = "";
-        for (let single_stock of today_pick) {
-            out +=
-            `
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (today_pick) {
+            let stock_cards = document.getElementById("cards");
+            let out = "";
+            for (let single_stock of today_pick) {
+                out +=
+                    `
             <div class="card">
             <div class="stockname">${single_stock.stock_name}</div>
             <div class="image"><img loading="lazy" alt =${single_stock.stock_name}-chart class="result-img" src="${single_stock.img_path}"></div>
@@ -91,8 +91,8 @@ async function get_intraday_stock() {
             <div class="profit amt">Profit : ${single_stock.profit}₹</div>
             </div>
             `;
-        }
-        out += `
+            }
+            out += `
         <div class="card finalcard">
         <div class="prem-message">
         Checkout our daily, weekly and short term results
@@ -102,10 +102,10 @@ async function get_intraday_stock() {
         `
             stock_cards.innerHTML = out;
         })
-    }
-    
-    async function get_positional_stock() {
-        fetch('https://johnson845173.github.io/algotrade/jsondata/positional.json')
+}
+
+async function get_positional_stock() {
+    fetch('https://johnson845173.github.io/algotrade/jsondata/positional.json')
         .then(function (response) {
             return response.json();
         })
@@ -114,23 +114,23 @@ async function get_intraday_stock() {
             let out_pos = "";
             for (let each_pos_trade of positional_pick) {
                 out_pos +=
-                `
-                <div class="card ">
-                <div class="stockname">${each_pos_trade.name_and_tf}</div>
-            <div class="image"><img loading="lazy" alt =${each_pos_trade.name_and_tf}-chart class="result-img" src="${each_pos_trade.img_path}"></div>
-            </div>
-            `;
-        }
-        out_pos += `
-        <div class="card finalcard">
-        <div class="prem-message">
-        Checkout our daily, weekly and short term results
+                    `
+            <div class="card ">
+            <div class="stockname">${each_pos_trade.name_and_tf}</div>
+        <div class="image"><img loading="lazy" alt =${each_pos_trade.name_and_tf}-chart class="result-img" src="${each_pos_trade.img_path}"></div>
         </div>
-        <a href="result.html"><button class="button">View More</button></a>
-        </div>
-        `
-        stock_cards.innerHTML = out_pos;
-    })
+        `;
+            }
+            out_pos += `
+    <div class="card finalcard">
+    <div class="prem-message">
+    Checkout our daily, weekly and short term results
+    </div>
+    <a href="result.html"><button class="button">View More</button></a>
+    </div>
+    `
+            stock_cards.innerHTML = out_pos;
+        })
 }
 
 
@@ -156,7 +156,7 @@ function hide_option() {
 }
 
 function show_reg() {
-    
+
     document.getElementById('register-window').style.display = "block";
 }
 
@@ -167,7 +167,7 @@ function send_message2() {
     var sub = document.getElementById("cont-sub").value;
     var desc = document.getElementById("cont-text").value;
     var text = "Name:" + name + "\n" + "Phone:" + phone + "\n" + "Email:" + mail + "\n" + "Subject:" + sub + "\n" + "Desc:" + desc + "\n";
-    
+
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -182,17 +182,17 @@ function send_message2() {
             "text": text
         })
     }
-    
+
     $.ajax(settings).done(function (response) {
         console.log(response);
     });
-    
+
     document.getElementById("cont-name").value = ''
     document.getElementById("cont-phone").value = ''
     document.getElementById("cont-mail").value = ''
     document.getElementById("cont-sub").value = ''
     document.getElementById("cont-text").value = ''
-    
+
     document.getElementById("form-response").style.display = "none";
     document.getElementById("responseform").style.display = "block";
     // form-response
@@ -200,7 +200,7 @@ function send_message2() {
 
 
 function go_to_element(element) {
-    window.scroll(0,findPosition(document.getElementById(element))-100);
+    window.scroll(0, findPosition(document.getElementById(element)) - 100);
 }
 
 function findPosition(obj) {
@@ -213,11 +213,11 @@ function findPosition(obj) {
     }
 }
 
-async function load_yt(){
+async function load_yt() {
     let welcome_yt = document.getElementById("youtube-div");
     let discord_yt = document.getElementById("discord-div");
     let yt_yt = document.getElementById("yt-div");
-    
+
     welcome_yt.innerHTML = `
     <iframe width="100%" height="100%" loading="lazy" 
     src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
@@ -225,14 +225,14 @@ async function load_yt(){
     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen></iframe>
     `
-    
+
     discord_yt.innerHTML = `
     <iframe width="100%" height="100%" loading="lazy" src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
     title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen></iframe>
     `
-    
+
     yt_yt.innerHTML = `
     <iframe width="100%" height="100%" loading="lazy"
     src="https://www.youtube.com/embed/3uYMFxCAAHU?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
