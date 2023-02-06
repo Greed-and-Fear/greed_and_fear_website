@@ -148,9 +148,9 @@ input:-webkit-autofill {
     top: 100px;
     width: 100%;
     position: absolute;
-    background-position: 10%;
-    background-size: cover;
+    background-size: 120vw 100vh;
     background-color: #04a2c2;
+    /* background-repeat: repeat; */
     opacity: 0;
     height: 100vh;
   }
