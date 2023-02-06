@@ -153,6 +153,9 @@ input:-webkit-autofill {
     /* background-repeat: repeat; */
     opacity: 0;
     height: 100vh;
+    transform: translateX(100%);
+    transition: all 1s;
+
   }
   
   .homepage1{
@@ -169,6 +172,11 @@ input:-webkit-autofill {
 
   .showbackground{
     opacity: 1;
+    transform: translateX(0%);
+  }
+
+  .removebackground{
+    transform: translateX(-100%);
   }
 
 
