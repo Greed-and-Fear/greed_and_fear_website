@@ -9,7 +9,6 @@
 
 let names = ["s1", "s2", "s3", "s4", "s5"];
 let count = 0;
-let count2 = 1;
 function cycleArray() {
     let name = names[count];
     document.getElementById(name).checked = true;
@@ -24,14 +23,23 @@ function cycleArray() {
 
 setInterval(cycleArray, 1500);
 
+let count2 = 1;
 let background_images = ["homepage1","homepage2","homepage3"]
 
 function change_background() {
-    
-
+    if(count2 == 0){
+        document.getElementById(background_images[2]).classList.remove('showbackground');
+    }else{
+        document.getElementById(background_images[count2-1]).classList.remove('showbackground');
+    }
+    document.getElementById(background_images[count2]).classList.add('showbackground');
+    count2 +=1;
+    if(count2>2){
+        count2=0;
+    }
 }
 
-setInterval(change_background,5000)
+setInterval(change_background,1000)
 
 
 

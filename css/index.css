@@ -138,12 +138,20 @@ input:-webkit-autofill {
 
   /* Homepage start */
 
+  .homepage-container{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+  }
+
   .homepage {
     top: 100px;
-    position: relative;
+    width: 100%;
+    position: absolute;
     background-position: 10%;
     background-size: cover;
     background-color: #04a2c2;
+    opacity: 0;
     height: 100vh;
   }
   
@@ -157,6 +165,10 @@ input:-webkit-autofill {
 
   .homepage3{
     background-image: url(../images/background/background_bull3.jpg);
+  }
+
+  .showbackground{
+    opacity: 1;
   }
 
 
