@@ -600,7 +600,7 @@ input:-webkit-autofill {
   }
 
   .results {
-    background-image: url(../images/background/background_bull5.jpg);
+    background-image: url(../images/background/homepage.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -617,10 +617,9 @@ input:-webkit-autofill {
 
   .card {
     position: relative;
-    box-shadow: 0px 0px 2px 4px rgb(0, 0, 0);
     display: inline-block;
     margin: 30px;
-    background-color: rgb(255, 255, 255);
+    background-color: transparent;
     height: 400px;
     width: 400px;
     font-family: Arial, Helvetica, sans-serif;
@@ -642,11 +641,11 @@ input:-webkit-autofill {
   .stockname {
     position: absolute;
     width: 100%;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     top: 0%;
     margin-top: 5px;
-    color: black;
+    color: rgb(255, 255, 255);
     text-align: center;
   }
  
@@ -704,7 +703,7 @@ input:-webkit-autofill {
   }
 
   .prem-message {
-    color: rgb(12, 12, 198);
+    color: rgb(167, 172, 6);
     position: absolute;
     margin: 70px 20px;
     text-align: center;
