@@ -102,12 +102,47 @@ input:-webkit-autofill {
   .product-details{
     position: absolute;
     top: 50%;
-    transform: translate(0, -65%);
+    transform: translate(0, -60%);
     background-color: aqua;
-    height: 50vh;
+    height: 70vh;
     width: 70%;
     margin: 0% 15%;
+    text-align: center;
   }
+
+  .subcards{
+    position: relative;
+    background-color: rgb(0, 255, 89);
+    display: inline-block;
+    width: 30%;
+    margin: 0% 10px;
+    height: 300px;
+    border-radius: 25px;
+  }
+
+  .heading{
+    margin: 2vh;
+    font-size: 5vh;
+  }
+
+  .sub-heading{
+    margin: 0vh 2vh 2vh 2vh;
+    font-size: 2.5vh;
+  }
+
+  .subcard-logo{
+    position: absolute;
+    left: 7%;
+    top:7%;
+    width: 20%;
+    height: 20%;
+    background-color: aliceblue;
+    border-radius: 15px;
+  }
+
+  
+
+
 
 
 
