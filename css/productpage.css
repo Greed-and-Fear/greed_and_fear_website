@@ -100,22 +100,17 @@ input:-webkit-autofill {
   }
 
   .product-details{
-    position: relative;
-    color: aliceblue;
-    width: 60%;
-    height: 70%;
-    margin: 50px auto;
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -65%);
+    background-color: aqua;
+    height: 50vh;
+    width: 70%;
+    margin: 0% 15%;
   }
 
-  .product-page-right,.product-page-left{
-    background-color: aquamarine;
-  }
 
-  .product-page-right{
-    background-color: red;
-  }
+
 
 
 
