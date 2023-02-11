@@ -140,7 +140,12 @@ input:-webkit-autofill {
     border-radius: 15px;
   }
 
-  
+  .sub-name{
+    position: absolute;
+    font-weight: bold;
+    top: 10%;
+    width: 100%;
+  }
 
 
 
