@@ -141,10 +141,23 @@ input:-webkit-autofill {
   }
 
   .sub-name{
-    position: absolute;
+    position: relative;
     font-weight: bold;
-    top: 10%;
+    margin-top: 10%;
     width: 100%;
+  }
+
+  .cost{
+    position: relative;
+    font-weight: bold;
+  }
+
+  .featurebox{
+    margin :10% auto 0px auto;
+    border-top: 1px black solid;
+    height: 60%;
+    width: 80%;
+
   }
 
 
