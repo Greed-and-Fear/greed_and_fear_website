@@ -793,12 +793,11 @@ input:-webkit-autofill {
 
   .product-container {
     text-align: left;
-    margin-top: 5%;
+    margin-top: 5% 5%;
     position: relative;
     /* background-color: white;   */
     height: fit-content;
     display: grid;
-    grid-gap: 5%;
     grid-template-columns: repeat(2, 40%);
     justify-content: center;
     margin-bottom: 20px;
@@ -1495,7 +1494,7 @@ input:-webkit-autofill {
 
   .navbar .nav-links .loginBtn {
     padding: 10px 40px;
-    margin: 20px;
+    margin: 0px;
     font-size: 18px;
     font-weight: bold;
     color: rgb(0, 0, 0);
@@ -1572,7 +1571,7 @@ input:-webkit-autofill {
   }
 
   h1 {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 
 
