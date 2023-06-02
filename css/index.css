@@ -44,6 +44,94 @@ input:-webkit-autofill {
 
 @media (max-width: 3000px) {
 
+  .products{
+    background-color: #eee;
+    margin: auto;
+    width: 80%;
+    height: 450px;
+    overflow-y: hidden;
+    border-radius: 25px;
+
+  }
+
+  .product1{
+    background-image: url(../../images/background/ytbackground.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .product2{
+    background-image: url(../../images/background/homepage2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .product_cover{
+    top:65%;
+    position: relative;
+    z-index: 1;
+    background-color: rgb(22 27 34);
+    height: 75%;
+    width: 100%;
+    transition: all ease-in 0.3s;
+  }
+
+  .product_cover:hover{
+    top: 35%;
+  }
+
+  .product_name{
+    position: relative;
+    padding-top: 10%;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: rgb(208 223 255);
+  }
+  
+  .product_button{
+    position: relative;
+  }
+  
+  .product_features{
+    position: relative;
+    margin: 10px 30px;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    line-height: 2.5vw;
+
+
+  }
+
+  .product_cover:hover{
+    top: 35%;
+  }
+
+  .btn2{
+    background-color: rgb(19, 115, 218);
+    color: white;
+    font-weight: 400;
+    font-size: 15px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+  }
+
+  .product_container_grid{
+    display: grid;
+    margin: 30px 40px;
+    grid-template-columns: repeat(2,50%);
+    grid-row: 1;
+    position: relative;
+  }
+  
+
+  .welcome_msg{
+    font-size: 4vw;
+    font-weight: 700;
+  }
+
 
   .hidden {
     opacity: 0;
@@ -299,6 +387,24 @@ input:-webkit-autofill {
     margin-top: 30px;
     width: 40%;
     text-align: center;
+  }
+
+
+  .product_container{
+    position: relative;
+    height: 600px;
+    text-align: center;
+    color: white;
+    margin: auto;
+    margin-top: 200px;
+  }
+
+  .product_container_grid{
+    display: grid;
+    margin: 30px 40px;
+    grid-template-columns: repeat(2,50%);
+    grid-row: 1;
+    position: relative;
   }
 
   .btn {
@@ -1433,6 +1539,10 @@ input:-webkit-autofill {
 
 @media (max-width:850px) {
 
+  .welcome_msg{
+    font-size: 6vw;
+  }
+
   .hidden {
     transform: translateY(+30%);
   }
@@ -1440,6 +1550,14 @@ input:-webkit-autofill {
   .hidden2 {
     transform: translateX(+100%);
   }
+
+  .product_name{
+    font-size: 2.5vw;
+  }
+  .product_features{
+    font-size: 2vw;
+  }
+
 
   .show {
     transform: translateY(0%);
@@ -1530,6 +1648,11 @@ input:-webkit-autofill {
     text-align: center;
     width: 100%;
   }
+
+  .product_container{
+    height: fit-content;
+  }
+
 
 
   .container {
@@ -1782,6 +1905,32 @@ input:-webkit-autofill {
 
 @media (max-width:480px) {
 
+  .welcome_msg{
+    font-size: 12vw;
+  }
+
+  .product_cover:hover{
+    top: 30%;
+  }
+
+  .product_container_grid{
+    grid-template-columns: repeat(1,100%);
+    position: relative;
+    margin: 0%;
+  }
+
+  .products{
+    margin: 20px auto;
+  }
+
+  .product_name{
+    font-size: 2.5vh;
+  }
+  .product_features{
+    font-size: 2.5vh;
+    line-height: 3.2vh;
+  }
+
   #slider {
     position: relative;
     width: 50%;
@@ -1801,6 +1950,13 @@ input:-webkit-autofill {
     /* display: none; */
     top: 110%;
   }
+
+  .product_container_grid{
+    grid-template-columns: repeat(1,100%);
+    position: relative;
+    margin: 0%;
+  }
+
 
   .overlay-container .container-btn {
     padding: 12px 10px;
