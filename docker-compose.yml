@@ -4,12 +4,12 @@ services:
     image: website
     container_name: website_container
     ports:
-      - "80:80"
+      - "82:80"
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
     expose:
-      - "80"
+      - "82"
     volumes:
       - .:/root/www/
     tty: true
