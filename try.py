@@ -12,13 +12,13 @@ def get_high_voume():
     'scan_clause' : '( {57960} ( latest volume > latest sma( volume,10 ) * 2 and( {cash} ( latest close > 1 day ago close * 1.05 or latest close < 1 day ago close * 0.95 ) ) ) )' 
     }
 
-        with requests.Session() as s:
-            r = s.get('https://chartink.com/screener/stocks-rising-with-increasing-volumes')
-            soup = bs(r.content, 'lxml')
-        s.headers['X-CSRF-TOKEN'] = soup.select_one('[name=csrf-token]')['content']
-        r = s.post('https://chartink.com/screener/process', data=data).json()
-        with open("jsondata/highvolume.json", "w") as fp:
-            json.dump(r['data'],fp) 
+    with requests.Session() as s:
+        r = s.get('https://chartink.com/screener/stocks-rising-with-increasing-volumes')
+        soup = bs(r.content, 'lxml')
+    s.headers['X-CSRF-TOKEN'] = soup.select_one('[name=csrf-token]'['content']
+    r = s.post('https://chartink.com/screener/process', data=data).json()
+    with open("jsondata/highvolume.json", "w") as fp:
+        json.dump(r['data'],fp) 
 
 get_high_voume()
 
