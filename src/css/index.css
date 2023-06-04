@@ -44,6 +44,132 @@ input:-webkit-autofill {
 
 @media (max-width: 3000px) {
 
+    /* || Navbar Section Starts */
+
+    .navbar {
+      height: 100px;
+      width: 100%;
+      padding: 14px 5px;
+      background-color: #000000;
+      opacity: 100%;
+      position: fixed;
+      z-index: 1;
+      border-bottom: 1px solid white;
+    }
+  
+    .navbar .nav-header {
+      display: inline;
+      z-index: 7;
+    }
+  
+    .navbar .nav-header .nav-logo {
+      display: inline-block;
+      margin-top: -7px;
+    }
+  
+    .navbar .nav-links {
+      display: inline;
+      float: right;
+      margin-top: 30px;
+      z-index: 6;
+    }
+  
+    .navbar .nav-links a {
+      padding: 20px 30px;
+      text-decoration: none;
+      font-weight: 400;
+      font-family: Roboto, sans-serif;
+      color: rgb(226, 245, 252);
+      font-size: 18px;
+    }
+  
+    /* Hover effects */
+    .navbar .nav-links a:hover {
+      color: rgb(90, 211, 255);
+  
+    }
+  
+    /* responsive navbar toggle button */
+    .navbar #nav-check,
+    .navbar .nav-btn {
+      display: none;
+    }
+  
+    .slogan {
+      padding: 0px 0px;
+    }
+  
+    ::-webkit-scrollbar {
+      width: 0px;
+      /* Remove scrollbar space */
+      background: transparent;
+      /* Optional: just make scrollbar invisible */
+    }
+
+
+    /* ||Navbar Section Ends*/
+
+
+ 
+  /* Homepage start */
+
+  .homepage{
+    margin-top: 100px;
+    position: relative; 
+    animation: slideinleft ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    top: 0px;
+    height: calc(100vh - 100px);
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-row: 1;
+    padding: 0% 5%;
+    margin: 10px 0px;
+    font-family: 'Poppins', sans-serif;
+    
+  }
+
+  .vision_text{
+    font-size: 10vh;
+    font-weight: 700;
+    line-height: 12vh;
+    color: white;
+  }
+
+  .highlighted_points{
+    background: rgb(19,19,176);
+    background: linear-gradient(90deg, rgb(19, 111, 176) 3%, rgba(89,135,202,1) 40%, rgb(222, 109, 234) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .vision_text_small{
+    font-size: 3.5vh;
+    color: rgb(163 179 188);
+    width: 68%;
+  }
+
+  .vision_button{
+    color: white;
+    background-color: rgb(19, 115, 218);
+    padding: 20px 40px;
+    font-size: 20px;
+    margin: 20px 0px;
+    border-radius:50px;
+    border: none;
+  }
+
+
+  .homepage-container{
+    padding-top: 100px;
+    position: relative;
+    height : calc(100vh - 0px);
+    width: 100vw;
+  }
+
+  /* Homepage end */
+
   .products{
     background-color: #eee;
     margin: auto;
@@ -151,184 +277,6 @@ input:-webkit-autofill {
 
   }
 
-  .homepage{
-    margin-top: 100px;
-    position: relative; 
-    animation: slideinleft ease 1s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    position: relative;
-    top: 0px;
-    height: calc(100vh - 100px);
-    display: grid;
-    grid-template-columns: 60% 40%;
-    grid-row: 1;
-    padding: 0% 5%;
-    margin: 10px 0px;
-    font-family: 'Poppins', sans-serif;
-    
-  }
-
-  .vision_text{
-    font-size: 10vh;
-    font-weight: 700;
-    line-height: 12vh;
-    
-    color: white;
-  }
-
-  .highlighted_points{
-    background: rgb(19,19,176);
-    background: linear-gradient(90deg, rgb(19, 111, 176) 3%, rgba(89,135,202,1) 40%, rgb(222, 109, 234) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .vision_text_small{
-    font-size: 3.5vh;
-    color: rgb(163 179 188);
-    width: 68%;
-  }
-
-  .vision_button{
-    color: white;
-    background-color: rgb(19, 115, 218);
-    padding: 20px 40px;
-    font-size: 20px;
-    margin: 20px 0px;
-    border-radius:50px;
-    border: none;
-  }
-
-
-    .vision_text_small{
-      font-size: 2.5vh;
-      width: 90%;
-    }
-
-
-  .navbar {
-    height: 100px;
-    width: 100%;
-    padding: 14px 5px;
-    background-color: #000000;
-    opacity: 100%;
-    position: fixed;
-    top: 0px;
-    z-index: 1;
-    border-bottom: 1.2px solid white;
-  }
-
-  .navbar .nav-header {
-    display: inline;
-    text-decoration: none;
-    font-size: 20px;
-    color: rgb(255, 255, 255);
-    z-index: 7;
-  }
-
-  .navbar .nav-header .nav-logo {
-    display: inline-block;
-    margin-top: -7px;
-    border-radius: 50px;
-  }
-
-  .navbar .nav-links {
-    display: inline;
-    float: right;
-    margin-top: 30px;
-    z-index: 6;
-  }
-
-  .navbar .nav-links .loginBtn {
-    display: inline-block;
-    padding: 5px 10px;
-    margin-left: 20px;
-    font-size: 17px;
-    color: black;
-  }
-
-  .navbar .nav-links a {
-    padding: 20px 30px;
-    text-decoration: none;
-    font-weight: 400;
-    font-family: Roboto, sans-serif;
-    color: rgb(226, 245, 252);
-    font-size: 18px;
-  }
-
-  /* Hover effects */
-  .navbar .nav-links a:hover {
-    color: rgb(90, 211, 255);
-
-  }
-
-  /* responsive navbar toggle button */
-  .navbar #nav-check,
-  .navbar .nav-btn {
-    display: none;
-  }
-
-  .slogan {
-    padding: 0px 0px;
-  }
-
-  ::-webkit-scrollbar {
-    width: 0px;
-    /* Remove scrollbar space */
-    background: transparent;
-    /* Optional: just make scrollbar invisible */
-  }
-
-
-  /* Homepage start */
-
-  .homepage-container{
-    padding-top: 100px;
-    position: relative;
-    /* top: 100px; */
-    /* position: relative; */
-    /* height: 100vh; */
-    height : calc(100vh - 0px);
-    width: 100vw;
-  }
-
-
-  .showbackground{
-    opacity: 1;
-    transform: translateX(0%);
-  }
-
-  .removebackground{
-    transform: translateX(-100%);
-  }
-
-
-  .header {
-    color: white;
-    position: relative;
-    left: 0%;
-    top: 30%;
-    text-align: center;
-    width: 45%;
-    font-family: 'Roboto', sans-serif;
-  }
-
-
-  .button1 {
-    padding: 10px 30px;
-    background-color: #63d6ed;
-    border: none;
-    font-size: 20px;
-    color: rgb(0, 0, 0);
-    border-radius: 50px;
-  }
-
-  .button1:hover {
-    background-color: white;
-  }
-
-  /* Homepage end */
 
   /* Welocme page start */
 
