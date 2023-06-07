@@ -13,3 +13,11 @@ services:
     volumes:
       - .:/root/www/
     tty: true
+    networks:
+      - greed_net
+
+networks:
+  greed_net:
+    name: greed_net
+    external: true
+
