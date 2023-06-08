@@ -1,7 +1,7 @@
 FROM ubuntu
-RUN apt-get update
-RUN apt-get install nginx -y
+COPY nginx.conf /etc/nginx/nginx.conf
 # COPY index.html /var/www/html/
 COPY . /var/www/html/
 EXPOSE 80
-CMD ["nginx","-g","daemon off;"]
+EXPOSE 443
+CMD ["nginx", "-c", "/data/conf/nginx.conf"]
