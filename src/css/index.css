@@ -282,7 +282,7 @@ input:-webkit-autofill {
 
   .welcome {
     position: relative;
-    background-color: #c1c0c0;
+    background-color: #040425;
     height: calc(100vh - 100px);
     background-image: url("../images/background/wallpaper.jpg");
     background-size: cover;
@@ -668,7 +668,7 @@ input:-webkit-autofill {
   .results,
   .posresults {
     top: 10%;
-    background-color: rgb(69, 167, 232);
+    background-color: rgb(8, 8, 61);
     height: 600px;
   }
 
@@ -1175,6 +1175,8 @@ input:-webkit-autofill {
     width: 80%;
     margin: 15px auto;
     font-family: "Poppins", Arial, sans-serif;
+    margin-top: 3.5vh;
+
   }
 
 
@@ -1235,6 +1237,8 @@ input:-webkit-autofill {
   /* Contact Footer starts */
 
   .contact-footer {
+    margin-top: 10px;
+    position: relative;
     display: grid;
     grid-template-columns: repeat(2, 50%);
     text-align: center;
@@ -1464,7 +1468,7 @@ input:-webkit-autofill {
   /* Contact footer start */
 
   .contact-footer {
-    font-size: 3vw;
+    font-size: 2.4vw;
   }
 
   /* Contact footer end */
@@ -1846,6 +1850,14 @@ input:-webkit-autofill {
 
   .homepage{
     grid-template-columns: repeat(1,100%)
+  }
+
+  .contact-background {
+    height: 100vh;
+  }
+
+  .contact-right-items {
+    margin-top: 1vh;
   }
 
 }
