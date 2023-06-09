@@ -14,7 +14,6 @@ body {
   background-image: url(../../images/background/ytbackground.jpg);;
   background-position:  top;
   overflow-x: hidden;
-  /* filter: blur(2px); */
   backdrop-filter: blur(3px);
   background-blend-mode: multiply;
 }
