@@ -1,10 +1,21 @@
-function load_product_page(product_id){
-    window.open("productpage.html","_self");
-    document.addEventListener("click", load_product)
-}
+function change_price()
+{
+    const switch_button = document.getElementById('switcher');
 
+    const basic = document.getElementById('basic');
+    const prime = document.getElementById('premium');
+    const elite = document.getElementById('elite');
+    
+    if (switch_button.checked == false){
+        basic.innerHTML = "₹299/Week";
+        prime.innerHTML = "₹349/Week";
+        elite.innerHTML = "₹399/Week";
+        
+    } else 
+    {
+          basic.innerHTML = "₹799/Monthly";
+          prime.innerHTML = "₹999/Montly";
+          elite.innerHTML = "₹1099/Montly";
+      }
 
-function load_product(){
-    console.log(product_id)
-    // document.getElementById('product-details').innerHTML = 'hello'
 }
