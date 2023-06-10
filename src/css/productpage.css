@@ -388,7 +388,7 @@ input:checked + .slider:before {
 
   .heading{
     left: 0px;
-    font-size: 7vw;
+    font-size: 6vw;
   }
   .subcards{
     width: 80%
