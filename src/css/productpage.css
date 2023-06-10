@@ -241,6 +241,7 @@ input:checked + .slider:before {
   
   .sub-sub-heading{
     padding: 0px;
+    line-height: 2.7vh;
     font-weight: 600;
     font-size: 2vh;
   }

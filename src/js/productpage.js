@@ -7,9 +7,9 @@ function change_price()
     const elite = document.getElementById('elite');
     
     if (switch_button.checked == false){
-        basic.innerHTML = "₹299/Week";
-        prime.innerHTML = "₹349/Week";
-        elite.innerHTML = "₹399/Week";
+        basic.innerHTML = "₹299/week";
+        prime.innerHTML = "₹349/week";
+        elite.innerHTML = "₹399/week";
         
     } else 
     {
