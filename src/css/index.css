@@ -46,6 +46,42 @@ input:-webkit-autofill {
 
     /* || Navbar Section Starts */
 
+    .cookies-container{
+      z-index: 9;
+      position: fixed;
+      bottom: 0px;
+      display: block;
+      height: 13vh;
+      color: whitesmoke;
+      font-family: 'Courier New', Courier, monospace;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.785);
+      margin: auto;
+      padding: auto;
+      text-align: center;
+
+    }
+
+    .cookie-header{
+      font-weight: 500;
+      font-size: 15px;
+      margin: 10px 30px;
+    }
+
+    .cookie-button{
+      text-align: left;
+      border: 5x solid wheat;
+      padding: 5px 10px;
+    }
+    
+    .cookie-button-container{
+      display: inline-flex;
+      gap: 0px 20px;
+      align-items: center;
+      text-decoration: underline;     
+    
+    }
+
     .navbar {
       height: 100px;
       width: 100%;
