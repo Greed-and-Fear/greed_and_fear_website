@@ -47,10 +47,18 @@ function acceptCookieConsent(){
 
 let cookie_consent = getCookie("user_cookie_consent");
 // if(cookie_consent != ""){
-//     document.getElementById("cookies-container").style.display = "none";
-// }else{
-//     document.getElementById("cookies-container").style.display = "block";
-// }
+    //     document.getElementById("cookies-container").style.display = "none";
+    // }else{
+        //     document.getElementById("cookies-container").style.display = "block";
+        // }
+        
+function hidecookiepolicy(){
+    document.getElementById("cookie-doc-container").style.display = "none";     
+}
+
+function showcookiepolicy(){
+    document.getElementById("cookie-doc-container").style.display = "block";     
+}
 
 
 let names = ["s1", "s2", "s3", "s4", "s5"];

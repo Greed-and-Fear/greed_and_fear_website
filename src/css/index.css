@@ -87,6 +87,7 @@ input:-webkit-autofill {
       }
 
       .cookie-doc-container{
+        display: none;
         width: 80%;
         height: 60vh;
         position:fixed; 
@@ -142,6 +143,13 @@ input:-webkit-autofill {
         position: relative;
         margin: auto;
         color: rgb(255, 255, 255);
+      }
+
+      .cookie-box{
+        text-align: left;
+        padding:5% 5%;
+        margin-top: 20px;
+        border: 2px solid rgba(171, 171, 171, 0.612);
       }
       
     .navbar {
