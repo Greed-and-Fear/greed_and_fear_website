@@ -1901,6 +1901,10 @@ input:-webkit-autofill {
 
 @media (max-width:480px) {
 
+  .cookies-container{
+    height: 18vh;
+  }
+
   .welcome_msg{
     font-size: 12vw;
   }
