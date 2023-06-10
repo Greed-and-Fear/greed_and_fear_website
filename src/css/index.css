@@ -68,12 +68,6 @@ input:-webkit-autofill {
       margin: 10px 30px;
     }
 
-    .cookie-button{
-      text-align: left;
-      border: 5x solid wheat;
-      padding: 5px 10px;
-    }
-    
     .cookie-button-container{
       display: inline-flex;
       gap: 0px 20px;
@@ -82,6 +76,74 @@ input:-webkit-autofill {
     
     }
 
+      .cookie-button{
+        text-align: left;
+        border: none;
+        border: 5x solid wheat;
+        color: beige;
+        background-color: #555555;
+        padding: 5px 10px;
+        text-decoration: none;
+      }
+
+      .cookie-doc-container{
+        width: 80%;
+        height: 60vh;
+        position:fixed; 
+        top: calc(50% - 35vh); 
+        left: calc(10%);
+        background-color: white;
+        z-index: 6;
+        color: red;
+        overflow-y: scroll;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 35px;
+        text-align: justify;
+
+      }
+
+      .cookie-doc-container-header{
+        text-align: center;
+        font-weight: bold;
+        font-size: 3vw;
+        padding-bottom: 10px;
+      }
+
+      .cookie-doc-container-sub-head{
+        text-align: left;
+        font-weight: 700;
+        font-size: 2vw;
+        color: #000000;
+        padding-bottom: 10px;
+        margin: 6vh 0px 1vh 0px;
+      }
+
+      .date-of-policy{
+        font-size: 1.7vw;
+      }
+
+  
+      .cookie-text{
+        color: #000000;
+        font-size: 1vw;
+      }
+
+      .cookie-close{
+        width: 100%;
+        margin: 4vh 0vh;
+        /* align-items: center; */
+        text-align: center;
+      }
+      
+      .cookie-close-btn{
+        padding: 3% 7%;
+        border: none;
+        background-color: #00d5ff;
+        position: relative;
+        margin: auto;
+        color: rgb(255, 255, 255);
+      }
+      
     .navbar {
       height: 100px;
       width: 100%;
@@ -1527,6 +1589,26 @@ input:-webkit-autofill {
 
 @media (max-width:850px) {
 
+  .cookie-doc-container-header{
+    font-size:7vw;
+  }
+
+  .cookie-doc-container-sub-head{
+    font-size: 6vw;
+  }
+
+  .date-of-policy{
+    font-size: 4vw;
+  }
+
+
+  .cookie-text{
+    padding-top: 20px;
+    font-size: 3vw;
+  }
+
+
+
   .welcome_msg{
     font-size: 6vw;
   }
@@ -1894,6 +1976,10 @@ input:-webkit-autofill {
 
   .contact-right-items {
     margin-top: 1vh;
+  }
+
+  .cookies-container{
+    height: 20vh;
   }
 
 }
