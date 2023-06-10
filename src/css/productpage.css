@@ -149,7 +149,7 @@ input:-webkit-autofill {
   position: absolute;
   content: "";
   height: 15px;
-  width: 26px;
+  width: 20px;
   left: 4px;
   bottom: 3px;
   background-color: white;
@@ -166,9 +166,17 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(32px);
+  -ms-transform: translateX(32px);
+  transform: translateX(32px);
+}
+
+.slider.round {
+  border-radius: 25px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 
 
