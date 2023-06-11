@@ -113,7 +113,7 @@ cookie_msg = `<div class="cookie-doc-container-header">COOKIE POLICY</div>
 
 
 function showtcpolicy() {
-    fetch('httpa://api.greedandfear.fun/api/tc/', {
+    fetch('https://api.greedandfear.fun/api/tc/', {
    headers: {
       'Accept': 'application/json',
       'Access-Control-Allow-Origin': '*'
