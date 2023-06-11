@@ -132,16 +132,8 @@ async function showtcpolicy() {
                 `;
             }
             out += `
-            <div class="cookie-box">
-            Name:user_cookie_consent<br>
-            Purpose:This cookie holds wether user accepted the cookies.<br>
-            Provider:.greeandfear.fun<br>
-            Country:India<br>
-            Type:https_cookie<br>
-            Expires in:30 days<br>  
-        </div>
-
-        <div class="cookie-close"><button class="cookie-close-btn" onclick="hidecookiepolicy()">Close</button></div>
+        
+        <div class="cookie-close"><button class="cookie-close-btn" onclick="hidetcpolicy()">Close</button></div>
         `
             document.getElementById("cookie-doc-container-tc").innerHTML = out;
             document.getElementById("cookie-doc-container-tc").style.display = "block";
