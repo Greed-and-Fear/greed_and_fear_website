@@ -109,7 +109,7 @@
     }
 
     .tc{
-        display: none;
+        display: block;
     }
 
 }
