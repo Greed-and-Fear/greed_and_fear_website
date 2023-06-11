@@ -116,7 +116,6 @@ async function showtcpolicy() {
     fetch('https://api.greedandfear.fun/api/tc/', {headers: {'Accept': 'application/json',}})
     .then(function (response) {
             return response.json();})
-
     .then(function (all_tc) {
             let out = `<div class="cookie-doc-container-header">TERMS & CONDITIONS</div>
             <div class="cookie-doc-container-sub-head date-of-policy">Last updated June 10, 2023</div>  
