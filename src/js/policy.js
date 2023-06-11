@@ -112,100 +112,43 @@ cookie_msg = `<div class="cookie-doc-container-header">COOKIE POLICY</div>
 
 
 
-function showtcpolicy() {
-    fetch('https://api.greedandfear.fun/api/tc/', {
-   headers: {
-      'Accept': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-   }    
-})
-   .then(response => response.text())
-   .then(text => console.log(text))
+async function showtcpolicy() {
+    fetch('https://api.greedandfear.fun/api/tc/', {headers: {'Accept': 'application/json',}})
+    .then(function (response) {
+            return response.json();})
+
+    .then(function (all_tc) {
+            let out = `<div class="cookie-doc-container-header">TERMS & CONDITIONS</div>
+            <div class="cookie-doc-container-sub-head date-of-policy">Last updated June 10, 2023</div>  
+            <div class="cookie-text">Welcome to Greed and Fear! These Terms and Conditions ("Terms") govern your use of the Greed and Fear ecommerce website ("Website"). By accessing or using our Website, you agree to be bound by these Terms. If you do not agree with these Terms, please do not use our Website.</div>
+            <div class="cookie-text">In some cases we may use cookies to collect personal information, or that becomespersonal information if we combine it with other information.</div>
+            `;
+            for (let single_tc of all_tc) {
+                out +=
+                    `
+
+                <div class="cookie-doc-container-sub-head">${single_tc.policy_number}. ${single_tc.policy_heading}:</div>
+                <div class="cookie-text">${single_tc.policy_text}</div>
+
+                `;
+            }
+            out += `
+            <div class="cookie-box">
+            Name:user_cookie_consent<br>
+            Purpose:This cookie holds wether user accepted the cookies.<br>
+            Provider:.greeandfear.fun<br>
+            Country:India<br>
+            Type:https_cookie<br>
+            Expires in:30 days<br>  
+        </div>
+
+        <div class="cookie-close"><button class="cookie-close-btn" onclick="hidecookiepolicy()">Close</button></div>
+        `
+            document.getElementById("cookie-doc-container-tc").innerHTML = out;
+            document.getElementById("cookie-doc-container-tc").style.display = "block";
+        })
 }
 
-//     fetch('http://api.greedandfear.fun/api/tc/')  
-//     .then(function (response) {
-//             return response.json();
-//         })
-//         .then(function (all_tc) {
-//             let out = `<div class="cookie-doc-container-header">TERMS & CONDITIONS</div>
-//             <div class="cookie-doc-container-sub-head date-of-policy">Last updated June 10, 2023</div>s
-//             <div class="cookie-text">Welcome to Greed and Fear! These Terms and Conditions ("Terms") govern your use of the Greed and Fear ecommerce website ("Website"). By accessing or using our Website, you agree to be bound by these Terms. If you do not agree with these Terms, please do not use our Website.</div>
-//             <div class="cookie-text">In some cases we may use cookies to collect personal information, or that becomespersonal information if we combine it with other information.</div>
-//             `;
-//             for (let single_tc of all_tc) {
-//                 out +=
-//                 `
-
-//                 <div class="cookie-doc-container-sub-head">${single_tc.policy_number}. ${single_tc.policy_heading}:</div>
-//                 <div class="cookie-text">${single_tc.policy_text}</div>
-
-//                 `;
-//             }
-//             out += `
-//             <div class="cookie-box">
-//             Name:user_cookie_consent<br>
-//             Purpose:This cookie holds wether user accepted the cookies.<br>
-//             Provider:.greeandfear.fun<br>
-//             Country:India<br>
-//             Type:https_cookie<br>
-//             Expires in:30 days<br>
-//         </div>
-
-//         <div class="cookie-close"><button class="cookie-close-btn" onclick="hidecookiepolicy()">Close</button></div>
-//         `
-//         console.log("hello");
-//         document.getElementById("cookie-doc-container-tc").innerHTML = out;     
-//         document.getElementById("cookie-doc-container-tc").style.display = "block"; 
-//     })
-// }
-
-
-// tc_msg = `
-// <div class="cookie-doc-container-header">TERMS & CONDITIONS</div>
-// <div class="cookie-doc-container-sub-head date-of-policy">Last updated June 10, 2023</div>
-
-// <div class="cookie-text">Welcome to Greed and Fear! These Terms and Conditions ("Terms") govern your use of the Greed and Fear ecommerce website ("Website"). By accessing or using our Website, you agree to be bound by these Terms. If you do not agree with these Terms, please do not use our Website.</div>
-// <div class="cookie-text">In some cases we may use cookies to collect personal information, or that becomespersonal information if we combine it with other information.</div>
-
-// <div class="cookie-doc-container-sub-head">1. Acceptance of Terms:</div>
-// <div class="cookie-text">By accessing or using the Website, you acknowledge that you have read, understood, and agreed to these Terms, and you represent and warrant that you are at least 13  years old  to enter into this agreement.</div>
-
-// <div class="cookie-doc-container-sub-head">2. Intellectual Property: </div>
-// <div class="cookie-text">All content on the Website, including but not limited to text, graphics, logos, images, audio clips, video clips, and software, is the property of Greed and Fear or its licensors and is protected by intellectual property laws. You may not use, reproduce, modify, distribute, or display any portion of the Website without prior written consent from Greed and Fear.</div>
-
-// <div class="cookie-doc-container-sub-head">3. User Account: </div>
-// <div class="cookie-text">In order to access certain features of the Website, you may need to create a user account. You agree to provide accurate and complete information when creating your account and to keep your login credentials secure. You are responsible for all activities that occur under your account.</div>
-
-// <div class="cookie-doc-container-sub-head">4. Product Listings: </div>
-// <div class="cookie-text">Greed and Fear makes every effort to provide accurate and up-to-date product information on the Website. However, we do not guarantee the accuracy, completeness, or reliability of any product description, pricing, or availability. We reserve the right to modify, update, or remove any product listing without notice.</div>
-
-// <div class="cookie-doc-container-sub-head">5. Orders and Payments: </div>
-// <div class="cookie-text">By placing an order through the Website, you are offering to purchase products subject to these Terms. All orders are subject to acceptance by Greed and Fear. We reserve the right to refuse or cancel any order at any time for any reason. Prices listed on the Website are in the applicable currency and do not include taxes, shipping, or handling charges unless otherwise stated.</div>
-
-// <div class="cookie-doc-container-sub-head">6. Delivery: </div>
-// <div class="cookie-text">Greed and Fear will make every effort to ensure prompt  delivery of your order. However, we don’t provide any physical delivery of your order ,  Greed and Fear ecommerce website will deliver your order through your valid email address  and phone number.</div>
-
-// <div class="cookie-doc-container-sub-head">7. Returns and Refunds: </div>
-// <div class="cookie-text">Our return and refund policy is outlined on the Website. Please review the policy carefully before making a purchase. Greed and Fear  will not refund your order payment after delivery of the order . However, if the payment made twice by mistake please reach us at greedandfearacademy@gmail.com for refund.</div>
-
-// <div class="cookie-doc-container-sub-head">8. Third-Party Links: </div>
-// <div class="cookie-text">The Website may contain links to third-party websites that are not owned or controlled by Greed and Fear. We do not endorse or assume any responsibility for the content, privacy policies, or practices of these third-party websites. Your interactions with such websites are at your own risk.</div>
-
-// <div class="cookie-doc-container-sub-head">9. Limitation of Liability: </div>
-// <div class="cookie-text">In no event shall Greed and Fear, its directors, officers, employees, or agents be liable to you or any third party for any indirect, consequential, incidental, special, or punitive damages arising out of or in connection with your use of the Website.</div>
-
-// <div class="cookie-doc-container-sub-head">10. Governing Law and Jurisdiction: </div>
-// <div class="cookie-text">These Terms shall be governed by and construed in accordance with the laws of Indian . Any dispute arising out of or relating to these Terms or the use of the Website shall be subject to the exclusive jurisdiction of the courts located in India.</div>
-
-// <div class="cookie-doc-container-sub-head">11. Modifications: </div>
-// <div class="cookie-text">Greed and Fear reserves the right to modify or update these Terms at any time without prior notice. It is your responsibility to review these Terms periodically for any changes. Continued use of the Website after any modifications constitutes your acceptance of the revised Terms.</div>
-
-// <div class="cookie-doc-container-sub-head">12. Severability: </div>
-// <div class="cookie-text">If any provision of these Terms is found to be invalid or unenforceable, that provision shall be deemed severable from the rest of the Terms, and the remaining provisions shall remain in full force and effect.</div>
-
-
-// <div class="cookie-close"><button class="cookie-close-btn" onclick="hidetcpolicy()">Close</button></div>`
 
 let cookie_consent = getCookie("user_cookie_consent");
 if (cookie_consent != "") {

@@ -66,8 +66,7 @@ async function get_positional_stock() {
     fetch('https://johnson845173.github.io/algotrade/jsondata/positional.json')
         .then(function (response) {
             return response.json();
-        })
-        .then(function (positional_pick) {
+        }).then(function (positional_pick) {
             let stock_cards = document.getElementById("pos-cards");
             let out_pos = "";
             for (let each_pos_trade of positional_pick) {
