@@ -41,6 +41,13 @@ input:-webkit-autofill {
   -webkit-text-fill-color: rgb(0, 0, 0);
 }
 
+@media print {
+  body{
+    display: none;
+  }
+  
+}
+
 
 @media (max-width: 3000px) {
 
@@ -667,11 +674,16 @@ input:-webkit-autofill {
     text-decoration: double;
   }
 
-  .results,
-  .posresults {
+  .results {
     top: 10%;
     background-color: rgb(8, 8, 61);
     height: 600px;
+  }
+
+  .posresults{
+    top: 10%;
+    background-color: rgb(8, 8, 61);
+    height: 400px;
   }
 
   .results {
@@ -757,11 +769,22 @@ input:-webkit-autofill {
     color: white;
   }
 
-  .pos-cards .card {
-    background-color: transparent;
+   .card {
+    background-color: rgb(241, 255, 254);
     border: none;
     box-shadow: none;
   }
+
+  .rev-text{
+    white-space: normal;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .rev{
+    height: 200px;
+  }
+
+
 
 
   .result-img {
@@ -1700,6 +1723,13 @@ input:-webkit-autofill {
   }
 
 
+  .pos-cards {
+    margin-top: 30px;
+    height: 15vh;
+  }
+
+
+
 
   /* IFRAME  ENd*/
   .studentprogram {
@@ -1771,12 +1801,14 @@ input:-webkit-autofill {
 
   /* start of results */
 
-  .results,
-  .posresults {
+  .results {
     /* border-top: 2px solid white; */
     height: 450px;
   }
 
+  .posresults{
+    height: 350px;
+  }
 
   .results .message,
   .posresults .message {
@@ -1880,6 +1912,10 @@ input:-webkit-autofill {
 
   .contact-right-items {
     margin-top: 1vh;
+  }
+
+  .pos-cards {
+    overflow-y: hidden;
   }
 
 }

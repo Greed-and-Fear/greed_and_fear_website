@@ -27,10 +27,31 @@ setInterval(cycleArray, 1500);
 
 
 async function on_load() {
-    get_intraday_stock()
-    get_positional_stock()
+    // get_intraday_stock()
+    // get_positional_stock()
+    get_rev()
 
 
+}
+
+async function get_rev() {
+    fetch('https://api.greedandfear.fun/api/rev/', {headers: {'Accept': 'application/json',}})
+    .then(function (response) {
+            return response.json();})
+    .then(function (all_tc) {
+            let out = ``;
+            for (let single_tc of all_tc) {
+                out +=
+                    `
+                <div class="card rev">
+                <div>${single_tc.reviewer_name}</div>
+                <div class="rev-text">${single_tc.review_text}</div>
+                </div>
+                `;
+            }
+            console.log(out);
+            document.getElementById("rev-con").innerHTML = out;
+                })
 }
 
 async function get_intraday_stock() {
