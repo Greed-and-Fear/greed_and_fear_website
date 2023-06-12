@@ -29,12 +29,13 @@ setInterval(cycleArray, 1500);
 async function on_load() {
     // get_intraday_stock()
     // get_positional_stock()
-    get_rev()
+    get_rev()   
 
 
 }
 
 async function get_rev() {
+    console.log("getting rev")
     fetch('https://api.greedandfear.fun/api/rev/', {headers: {'Accept': 'application/json',}})
     .then(function (response) {
             return response.json();})
