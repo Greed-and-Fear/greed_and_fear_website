@@ -1726,6 +1726,7 @@ input:-webkit-autofill {
   .pos-cards {
     margin-top: 30px;
     height: 15vh;
+    display: inline-flex;
   }
 
 
@@ -1914,8 +1915,16 @@ input:-webkit-autofill {
     margin-top: 1vh;
   }
 
+  .rev{
+    top: 0%;
+    height: 15vh;
+  }
+  
   .pos-cards {
-    overflow-y: hidden;
+    
+    height: 100%;
+    margin: 0%;
+    /* overflow-y: hidden; */
   }
 
 }
