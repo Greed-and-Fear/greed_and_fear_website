@@ -140,6 +140,33 @@ async function showtcpolicy() {
         })
 }
 
+async function showpppolicy() {
+    fetch('https://api.greedandfear.fun/api/pp/', {headers: {'Accept': 'application/json',}})
+    .then(function (response) {
+            return response.json();})
+    .then(function (all_tc) {
+            let out = `<div class="cookie-doc-container-header">Privacy Policy</div>
+            <div class="cookie-doc-container-sub-head date-of-policy">Last updated June 10, 2023</div>  
+            <div class="cookie-text">At Greed and Fear, we are committed to protecting the privacy and security of our customers. This Privacy Policy outlines how we collect, use, and protect the information you provide when using our ecommerce website. By accessing or using our website, you agree to the terms and conditions of this Privacy Policy.</div>
+            <div class="cookie-text">In some cases we may use cookies to collect personal information, or that becomespersonal information if we combine it with other information.</div>
+            `;
+            for (let single_tc of all_tc) {
+                out +=
+                    `
+
+                <div class="cookie-doc-container-sub-head">${single_tc.policy_number}. ${single_tc.policy_heading}:</div>
+                <div class="cookie-text">${single_tc.policy_text}</div>
+
+                `;
+            }
+            out += `
+        
+        <div class="cookie-close"><button class="cookie-close-btn" onclick="hidepppolicy()">Close</button></div>
+        `
+            document.getElementById("cookie-doc-container-pp").innerHTML = out;
+            document.getElementById("cookie-doc-container-pp").style.display = "block";
+        })
+}
 
 let cookie_consent = getCookie("user_cookie_consent");
 if (cookie_consent != "") {
@@ -159,6 +186,10 @@ function showcookiepolicy() {
 
 function hidetcpolicy() {
     document.getElementById("cookie-doc-container-tc").style.display = "none";
+}
+
+function hidepppolicy() {
+    document.getElementById("cookie-doc-container-pp").style.display = "none";
 }
 
 
