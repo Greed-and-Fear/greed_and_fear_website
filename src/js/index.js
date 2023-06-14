@@ -29,9 +29,7 @@ setInterval(cycleArray, 1500);
 async function on_load() {
     // get_intraday_stock()
     // get_positional_stock()
-    get_rev()   
-    show_refund_policy()
-
+    get_rev()
 
 }
 
@@ -214,8 +212,8 @@ async function load_yt() {
     `
 
     yt_yt.innerHTML = `
-    <iframe width="100%" height="100%" loading="lazy"
-    src="https://www.youtube.com/embed/crcPugw4Ddk"
+    <iframe width="100%" height="100%" loading="lazy" 
+    src="https://www.youtube.com/embed/crcPugw4Ddk?autoplay=0&fs=0&iv_load_policy=3&showinfo=1&rel=0&cc_load_policy=1&start=0&end=0&origin=https://youtubeembedcode.com"
     title="Why Choose Us? A Day at GREED & FEAR!" frameborder="0"
     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen></iframe>

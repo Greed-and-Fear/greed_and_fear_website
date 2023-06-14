@@ -161,7 +161,7 @@ async function showpppolicy() {
             }
             out += `
         
-        <div class="cookie-close"><button class="cookie-close-btn" onclick="hidepppolicy()">Close</button></div>
+        <div class="cookie-close"><button class="cookie-close-btn" onclick="hide_policy('cookie-doc-container-pp')">Close</button></div>
         `
             document.getElementById("cookie-doc-container-pp").innerHTML = out;
             document.getElementById("cookie-doc-container-pp").style.display = "block";
@@ -192,11 +192,38 @@ Thank you for choosing Greed and Fear. We appreciate your business!<br><br>
 Greed and Fear</br><br>
 www.greedandfear.fun
 
-<div class="cookie-close"><button class="cookie-close-btn" onclick="hide_refund_policy()">Close</button></div>
+<div class="cookie-close"><button class="cookie-close-btn" onclick="hide_policy('cookie-doc-container-refund')">Close</button></div>
     `
-
     document.getElementById("cookie-doc-container-refund").innerHTML = out;
     document.getElementById("cookie-doc-container-refund").style.display = "block";
+}
+
+
+function show_sebi_policy(){
+    out = `
+    <div class="cookie-doc-container-header">SEBI Mandatory Guidelines</div>
+
+    <div class= "ref">Disclaimer/ disclosures</div>
+   
+   <div class="cookie-text ref">This group do not provide any tips/recommendations/advice/paid advisory services.</div>
+   <div class="cookie-text ref">All updates/posts/discussions are only for educational and learning purposes.</div>
+   <div class="cookie-text ref">Consult your financial advisor before taking trading or investing decisions.</div>
+   <div class="cookie-text ref">Futures & Options are risky trading instruments. F&O trading may lead to significant losses.</div>
+   
+   Stock market investments are VERY RISKY and being part of our community, you agree that you understand the Market risks involved.
+   
+   <div class="cookie-doc-container-sub-head">MANDATORY DISCLAIMER AS REQUIRED BY SEBI NORMS</div>
+   
+   
+   <div class="cookie-text ref">Equity Investment are subject to 100% market risks.</div>
+   <div class="cookie-text ref">Kindly refer advice from your financial consultant before Investing. </div>
+   <div class="cookie-text ref">Admins have no responsibility for your intended decision & financial losses.</div>
+
+<div class="cookie-close"><button class="cookie-close-btn" onclick="hide_policy('cookie-doc-container-sebi')">Close</button></div>
+    `
+
+    document.getElementById("cookie-doc-container-sebi").innerHTML = out;
+    document.getElementById("cookie-doc-container-sebi").style.display = "block";
 }
 
 
@@ -220,14 +247,24 @@ function hidetcpolicy() {
     document.getElementById("cookie-doc-container-tc").style.display = "none";
 }
 
-function hidepppolicy() {
-    document.getElementById("cookie-doc-container-pp").style.display = "none";
+
+function showcareer() {
+    carr_msg = `
+    <div class="cookie-doc-container-header">Careers</div>
+    <div class="cookie-doc-container-sub-head">Sorry There are no opening currently</div>
+
+    <div class="cookie-doc-container-sub-head date-of-policy">Last Updated Date: 13-06-2023</div>
+    <div class="cookie-close"><button class="cookie-close-btn" onclick="hide_policy('cookie-doc-container-carrer')">Close</button></div>
+    `
+    document.getElementById("cookie-doc-container-carrer").innerHTML = carr_msg;
+    document.getElementById("cookie-doc-container-carrer").style.display = "block";
 }
 
 
-function hide_refund_policy() {
-    document.getElementById("cookie-doc-container-refund").style.display = "none";
-}
 
 
+    function hide_policy(policy_name){
+        console.log(policy_name)
+        document.getElementById(policy_name).style.display = "none";
 
+    }
