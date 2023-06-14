@@ -166,7 +166,39 @@ async function showpppolicy() {
             document.getElementById("cookie-doc-container-pp").innerHTML = out;
             document.getElementById("cookie-doc-container-pp").style.display = "block";
         })
+    }
+
+    
+function show_refund_policy(){
+    out = `
+    <div class="cookie-doc-container-header">Refund Policy</div>
+    <div class= "ref">Greed and Fear<br></div>
+    <div class= "ref">www.greedandfear.fun<br></div>
+    <div class= "ref">Refund Policy</div>
+<div class="cookie-doc-container-sub-head date-of-policy">Effective Date: 13-06-2023</div>
+Thank you for shopping with Greed and Fear. We value your satisfaction and want to ensure a positive shopping experience. This Refund Policy outlines our guidelines and procedures for requesting and processing refunds for products purchased through our website.
+<div class="cookie-doc-container-sub-head">1.Eligibility for Refunds</div>
+
+<div class="cookie-text ref">1.1	Incorrect or Incomplete Orders: In the event that you receive an incorrect or incomplete order, please notify our customer support team within 3 days of receiving the item. We will work diligently to rectify the issue and ensure that you receive the correct products.</div>
+<div class="cookie-text ref">1.2	 Change of Mind: We understand that sometimes a product may not meet your expectations. If you wish to return a product due to a change of mind, please contact our customer support team within 2 days of receiving the item.</div>
+<div class="cookie-text ref">1.3	Wrong Payment: If the payment has made wrongly or multiple times on the same product Please contact the customer care at greedandfearacademy@gmail.com for payment related issues.</div>
+<div class="cookie-doc-container-sub-head">Refund Process:</div>
+<div class = "cookie-text ref">To initiate a refund request, please contact our customer support team via greedandfearacademy@gmail.com , Provide your order details, reason for the refund, and any supporting documentation or images, if applicable.<br></div>
+<div class = "cookie-text ref">If  you have any questions or concerns regarding our Refund Policy, please contact our customer support team: greedandfearacademy@gmail.com </div>
+<div class = "cookie-text ref">We reserve the right to update or modify this Refund Policy at any time without prior notice. The revised policy will be effective upon posting on our website.</div>
+<br>
+Thank you for choosing Greed and Fear. We appreciate your business!<br><br>
+
+Greed and Fear</br><br>
+www.greedandfear.fun
+
+<div class="cookie-close"><button class="cookie-close-btn" onclick="hide_refund_policy()">Close</button></div>
+    `
+
+    document.getElementById("cookie-doc-container-refund").innerHTML = out;
+    document.getElementById("cookie-doc-container-refund").style.display = "block";
 }
+
 
 let cookie_consent = getCookie("user_cookie_consent");
 if (cookie_consent != "") {
@@ -191,5 +223,11 @@ function hidetcpolicy() {
 function hidepppolicy() {
     document.getElementById("cookie-doc-container-pp").style.display = "none";
 }
+
+
+function hide_refund_policy() {
+    document.getElementById("cookie-doc-container-refund").style.display = "none";
+}
+
 
 

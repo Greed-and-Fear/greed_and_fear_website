@@ -30,6 +30,7 @@ async function on_load() {
     // get_intraday_stock()
     // get_positional_stock()
     get_rev()   
+    show_refund_policy()
 
 
 }

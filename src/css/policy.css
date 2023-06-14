@@ -24,6 +24,8 @@
         margin: 10px 30px;
     }
 
+
+
     .cookie-button-container {
         display: inline-flex;
         gap: 0px 20px;
@@ -112,6 +114,9 @@
         display: none;
     }
 
+    .ref{
+        padding: 10px;
+    }
 }
 
 
