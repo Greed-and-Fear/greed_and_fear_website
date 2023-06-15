@@ -720,6 +720,7 @@ input:-webkit-autofill {
     white-space: nowrap;
   }
 
+
   .pos-cards {
     height: 100%;
   }
@@ -782,6 +783,7 @@ input:-webkit-autofill {
   }
 
   .rev{
+    background-color: wheat;
     height: 200px;
   }
 
