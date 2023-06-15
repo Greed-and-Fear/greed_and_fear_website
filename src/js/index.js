@@ -27,10 +27,15 @@ setInterval(cycleArray, 1500);
 
 
 async function on_load() {
-    // get_intraday_stock()
+    log_user()
+    get_intraday_stock()
     // get_positional_stock()
     get_rev()
 
+}
+
+function log_user(){
+    fetch('https://api.greedandfear.fun/api/log/')
 }
 
 async function get_rev() {
@@ -55,7 +60,7 @@ async function get_rev() {
 }
 
 async function get_intraday_stock() {
-    fetch('https://johnson845173.github.io/algotrade/jsondata/intraday_first.json')
+    fetch('https://api.greedandfear.fun/api/stocks/intra/')
         .then(function (response) {
             return response.json();
         })
@@ -66,7 +71,7 @@ async function get_intraday_stock() {
                 out +=
                     `
             <div class="card">
-            <div class="stockname">${single_stock.stock_name}</div>
+            <div class="stockname">${single_stock.stockname}</div>
             <div class="image"><img loading="lazy" alt =${single_stock.stock_name}-chart class="result-img" src="${single_stock.img_path}"></div>
             </div>
             `;

@@ -354,8 +354,6 @@ input:-webkit-autofill {
     height: 600px;
     text-align: center;
     color: white;
-    margin: auto;
-    margin-top: 200px;
   }
 
   .product_container_grid{
@@ -713,6 +711,7 @@ input:-webkit-autofill {
     width: 400px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 19px;
+
   }
 
   .cards,
@@ -771,11 +770,11 @@ input:-webkit-autofill {
     color: white;
   }
 
-   .card {
+   /* .card {
     background-color: rgb(241, 255, 254);
     border: none;
     box-shadow: none;
-  }
+  } */
 
   .rev-text{
     white-space: normal;
@@ -893,7 +892,7 @@ input:-webkit-autofill {
 
   .product-container {
     text-align: left;
-    margin-top: 5% 5%;
+    margin-top:5%;
     position: relative;
     /* background-color: white;   */
     height: fit-content;
@@ -1541,13 +1540,13 @@ input:-webkit-autofill {
     font-size: 6vw;
   }
 
-  .hidden {
+  /* .hidden {
     transform: translateY(+30%);
   }
 
   .hidden2 {
     transform: translateX(+100%);
-  }
+  } */
 
   .product_name{
     font-size: 2.5vw;
