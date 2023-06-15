@@ -1976,10 +1976,15 @@ input:-webkit-autofill {
     margin-top: 1vh;
   }
 
-  .pos-cards {
-    height: 10vh;
+  .rev-text{
+    text-align: justify;
+    padding-left: 10px;
   }
 
+  .rev{
+    width: 70%;
+    margin: 10px 15px;
+  }
 }
 
 
@@ -2080,4 +2085,12 @@ input:-webkit-autofill {
     width: 90%;
   }
 
+  .rev-name{
+    left: 60px;
+    top : 10px;
+  }
+
+  .rev-text{
+    top: 35%;
+  }
 }
