@@ -49,8 +49,11 @@ async function get_rev() {
                 out +=
                     `
                 <div class="card rev">
-                <div>${single_tc.reviewer_name}</div>
-                <div class="rev-text">${single_tc.review_text}</div>
+                    <div class="rev-profile">
+                        <div class="rev-logo">“</div>
+                        <div class="rev-name">${single_tc.reviewer_name}</div>
+                    </div>
+                    <div class="rev-text">${single_tc.review_text}</div>
                 </div>
                 `;
             }

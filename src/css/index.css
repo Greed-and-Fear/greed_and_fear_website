@@ -771,22 +771,62 @@ input:-webkit-autofill {
     color: white;
   }
 
-   /* .card {
-    background-color: rgb(241, 255, 254);
-    border: none;
-    box-shadow: none;
-  } */
+  
+  .rev{
+    padding: 2%;
+    display: inline-flex;
+    position: relative;
+    border-radius: 10px;
+    background-color: rgb(61, 46, 142);
+    height: 200px;
+    /* box-shadow: 10px 1px 10px white; */
+  }
+
+
+
+  .rev-profile{
+    position: relative;
+    width: 100%;
+    height: 50%;
+    /* display: block; */
+    /* background-color: #356b1c; */
+    font-size: 16px;
+    font-weight: 600;
+  }
 
   .rev-text{
+    position: absolute;
+    width: 85%;
+    top: 50%;
+    display: block;
+    text-align: justify;
+    font-size: 14px;
     white-space: normal;
     font-family: 'Times New Roman', Times, serif;
+    color: rgb(235, 235, 235);
   }
 
-  .rev{
-    background-color: wheat;
-    height: 200px;
+  .rev-name{
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    color: white;
+    font-size: 3ex;
   }
 
+  .rev-logo{
+    border-radius:10px 10px 0px 5px;
+    background-color: rgb(211, 108, 108);
+    justify-content: center;
+    vertical-align: middle;
+    padding: 10px 0;
+    color: white;
+    font-size: 40px;
+    /* align-items: center; */
+    text-align: center;
+    width:50px;
+    height:50px;
+  }
 
 
 
@@ -1727,8 +1767,14 @@ input:-webkit-autofill {
 
   .pos-cards {
     margin-top: 30px;
-    height: 15vh;
+    height: 250px;
   }
+
+
+
+
+
+
 
 
 
@@ -1832,6 +1878,20 @@ input:-webkit-autofill {
   .prem-message {
     margin: 30px 20px;
 
+  }
+
+  
+  .rev{
+    height: 200px;
+  }
+
+  .rev-logo{
+    scale: 0.8;
+  }
+
+  
+  .rev-text{
+    top: 50%;
   }
 
   /* card personalize end */
