@@ -1508,6 +1508,7 @@ input:-webkit-autofill {
 
 @media (max-width:850px) {
 
+
   .cookie-doc-container-header{
     font-size:7vw;
   }
@@ -1855,6 +1856,7 @@ input:-webkit-autofill {
   /* End of moto */
 
 
+
   .community .youtube-div,
   .community .discord .youtube-div {
     position: relative;
@@ -1904,19 +1906,27 @@ input:-webkit-autofill {
     margin: 0px;
   }
 
+  .homepage{
+    grid-template-columns: repeat(1,100%)
+  }
+
+  .vision_text{
+    font-size: 9vh;
+  }
+
 
 }
 
 @media (max-width:770px) {
 
 
+
+
   .slogan {
     width: 200px;
   }
 
-  .homepage{
-    grid-template-columns: repeat(1,100%)
-  }
+ 
 
   .contact-background {
     height: 100vh;
