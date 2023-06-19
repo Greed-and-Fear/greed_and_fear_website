@@ -237,3 +237,31 @@ async function load_yt() {
 
 
 load_yt()   
+
+function login(){
+    console.log("Calling login apoi")
+    let phone_num = document.getElementById("phone_num-signin").value;
+    let pass = document.getElementById("password-signin").value;
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://api.greedandfear.fun/api/login/",
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "cache-control": "no-cache"
+        },
+        "data": JSON.stringify({ 
+            "phone_number":7899404714,
+            "password":12345678
+        })
+    }
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+    })
+
+    // console.log(phone_num)
+
+}

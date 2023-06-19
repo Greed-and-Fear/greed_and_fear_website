@@ -97,7 +97,7 @@ input:-webkit-autofill {
 
   .product-container{
     top: 100px;
-    height: calc(100vh - 0px);
+    height: calc(130vh - 0px);
     position: relative;
   }
 
