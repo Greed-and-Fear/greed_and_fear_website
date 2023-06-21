@@ -44,6 +44,17 @@ input:-webkit-autofill {
 }
 
 
+input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
+  color: rgba(255, 255, 255, 1);
+  /* outline: 1px wheat; */
+  /* border: 1px wheat; */
+  /* width: 50%; */
+  /* background-color: transparent; */
+  /* border: 3px solid rgb(246, 233, 233); */
+  height: 40px;/
+  /* border-radius: 10px; */
+}
+
 @media (max-width: 3000px) {
   .hidden {
     opacity: 0;
