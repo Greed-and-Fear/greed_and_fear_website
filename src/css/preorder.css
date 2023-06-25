@@ -9,7 +9,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-size: cover;
   background-attachment: fixed;
-  background-image: linear-gradient(40deg, #0b154f 0%, #000000 100%);
+  background-image: linear-gradient(40deg, #030827 0%, #000000 100%);
   /* background-image: url(../../images/background/wallpaper.jpg);;  */
   background-position:  top;
   overflow-x: hidden;
@@ -186,12 +186,33 @@ input:checked + .slider:before {
   margin: auto;
 }
 
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+.thank-you{
+  display: block;
+  animation: fadeIn 3s;
+  color: whitesmoke;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+  font-size: 4vw;
+  padding: 10% 0px;
+  line-height: 6vw;
+}
+
+
 .pre-title{
   text-align: center;
   font-family: 'Times New Roman', Times, serif;
   font-size: 30px;
   font-weight: 600;
-  color: rgb(199, 248, 194);
+  /* color: rgb(199, 248, 194); */
+  background: -webkit-linear-gradient(0deg, rgb(81, 155, 239) 0%, rgb(255, 255, 255) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   padding: 20px;
 }
 
@@ -210,6 +231,7 @@ input:checked + .slider:before {
   /* background-color: rgba(12, 12, 12, 0.683); */
   height:calc(100vh - 300px) ;
   width: 49%;
+  scale: 1.2;
 }
 
 .form-box{
@@ -395,7 +417,6 @@ input:checked + .slider:before {
   .option_container{
     /* font-family: inherit; */
     font-family:'Roboto Slab', serif;
-
     text-align: center;
   }
 
@@ -474,6 +495,7 @@ input:checked + .slider:before {
       height: fit-content;
       padding-bottom: 50px;
       width: 100%;
+      
     }
 
     .form-container{
@@ -483,6 +505,13 @@ input:checked + .slider:before {
       width: 80%;
       height: fit-content;
       padding-bottom: 50px;
+
+    }
+
+    .thank-you{
+      font-size: 10vw;
+      line-height: 15vw;
+      margin: 10px;
 
     }
 
