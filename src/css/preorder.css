@@ -475,7 +475,7 @@ input:checked + .slider:before {
     }
 
     .product-container{
-      height: 140vh;
+      height: 100vh;
     }
 
     .contact-footer{    
