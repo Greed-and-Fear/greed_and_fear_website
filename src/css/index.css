@@ -682,7 +682,7 @@ input:-webkit-autofill {
 
   .posresults{
     top: 10%;
-    background-color: rgb(8, 8, 61);
+    background-color: rgb(9, 9, 55);
     height: 400px;
   }
 
@@ -777,7 +777,7 @@ input:-webkit-autofill {
     display: inline-flex;
     position: relative;
     border-radius: 10px;
-    background-color: rgb(61, 46, 142);
+    background-color: rgb(9, 3, 44);
     height: 200px;
     /* box-shadow: 10px 1px 10px white; */
   }
