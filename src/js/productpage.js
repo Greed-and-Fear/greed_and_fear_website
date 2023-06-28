@@ -8,14 +8,14 @@ function change_price()
     
     if (switch_button.checked == false){
         basic.innerHTML = "₹299/week";
-        prime.innerHTML = "₹349/week";
-        elite.innerHTML = "₹399/week";
+        prime.innerHTML = "₹399/week";
+        elite.innerHTML = "₹599/week";
         
     } else 
     {
-          basic.innerHTML = "₹799/Monthly";
-          prime.innerHTML = "₹999/Montly";
-          elite.innerHTML = "₹1099/Montly";
+          basic.innerHTML = "₹897/Monthly";
+          prime.innerHTML = "₹1197/Montly";
+          elite.innerHTML = "₹1797/Montly";
       }
 
 }

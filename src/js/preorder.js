@@ -49,6 +49,15 @@ function send_response()
     const name = document.getElementById('fname').value;
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
+    
+    if (email == "" & phone ==""){
+        const user_message = document.getElementById('user_message');
+        user_message.innerHTML = "Enter Email or Phone Number"
+    }
+    else{
+
+    
+    // Please enter Email or Phone number
 
 fetch('https://api.greedandfear.fun/api/preorder/', {
     method: 'POST',
@@ -81,4 +90,5 @@ fetch('https://api.greedandfear.fun/api/preorder/', {
 
    document.getElementById('reg-container').innerHTML = out;
 
+}
 }

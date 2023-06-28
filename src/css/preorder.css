@@ -193,7 +193,7 @@ input:checked + .slider:before {
 
 
 .thank-you{
-  display: block;
+  display: block; 
   animation: fadeIn 3s;
   color: whitesmoke;
   font-family: 'Times New Roman', Times, serif;
@@ -299,6 +299,14 @@ input:checked + .slider:before {
     font-size: 5vh;
   }
   
+  .user_message{
+    color: rgb(205, 205, 205);
+    text-align: center;
+    margin-bottom: 20px;
+    /* background-color: red; */
+    top: 0px;
+  }
+
   .sub-heading,.sub-sub-heading{
     font-family:'Roboto Slab', serif;
     padding-top: 2vh;
@@ -497,6 +505,8 @@ input:checked + .slider:before {
       width: 100%;
       
     }
+
+    
 
     .form-container{
       position: relative;
