@@ -12,7 +12,7 @@ services:
 
     volumes:
       - .:/root/www/
-      - /root/shared_pdf:/shared_pdf
+      - /root/shared_pdf:/var/www/html/shared_pdf
     tty: true
     networks:
       - greed_net
