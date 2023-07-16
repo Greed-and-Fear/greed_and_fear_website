@@ -74,7 +74,7 @@ async function get_intraday_stock() {
                 out +=
                     `
             <div class="card">
-            <div class="stockname">${single_stock.stockname}</div>
+            
             <div class="image"><img loading="lazy" alt =${single_stock.stock_name}-chart class="result-img" src="${single_stock.img_path}"></div>
             </div>
             `;
