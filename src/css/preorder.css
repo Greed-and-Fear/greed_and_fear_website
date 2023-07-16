@@ -344,7 +344,7 @@ input:checked + .slider:before {
     color: wheat;
     width: 100%;
   }
-  
+
   .cost{
     color: rgb(236, 178, 71);
     margin-top: 10px;
@@ -369,6 +369,7 @@ input:checked + .slider:before {
     margin: 5% 0%;
     text-align: left;
   }
+
 
 
   /* Contact Footer starts */

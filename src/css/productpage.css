@@ -264,6 +264,23 @@ input:checked + .slider:before {
     color: wheat;
     width: 100%;
   }
+
+  .book-img{
+    width: 100%;
+    height: 50%;
+  }
+  
+  
+  .sub-name-book{
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+    font-weight: bold;
+    margin-top: 15%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    color: wheat;
+    width: 100%;
+  }
   
   .cost{
     color: rgb(236, 178, 71);
