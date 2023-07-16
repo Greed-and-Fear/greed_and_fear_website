@@ -29,6 +29,7 @@ setInterval(cycleArray, 1500);
 async function on_load() {
     log_user()
     get_intraday_stock()
+    get_index_stock()
     // get_positional_stock()
     get_rev()
 
@@ -69,6 +70,35 @@ async function get_intraday_stock() {
         })
         .then(function (today_pick) {
             let stock_cards = document.getElementById("cards");
+            let out = "";
+            for (let single_stock of today_pick) {
+                out +=
+                    `
+            <div class="card">
+            
+            <div class="image"><img loading="lazy" alt =${single_stock.stock_name}-chart class="result-img" src="${single_stock.img_path}"></div>
+            </div>
+            `;
+            }
+            out += `
+        <div class="card finalcard">
+        <div class="prem-message">
+        Checkout our daily, weekly and short term results
+        </div>
+        <a href="result.html"><button class="button">View More</button></a>
+        </div>
+        `
+            stock_cards.innerHTML = out;
+        })
+}
+
+async function get_index_stock() {
+    fetch('https://api.greedandfear.fun/api/stocks/indices/')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (today_pick) {
+            let stock_cards = document.getElementById("indcards");
             let out = "";
             for (let single_stock of today_pick) {
                 out +=
