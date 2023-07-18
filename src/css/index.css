@@ -208,7 +208,7 @@ input:-webkit-autofill {
     position: relative;
     z-index: 1;
     background-color: rgb(22 27 34);
-    height: 75%;
+    height: 90%;
     width: 100%;
     transition: all ease-in 0.3s;
   }
@@ -1957,7 +1957,7 @@ input:-webkit-autofill {
   }
 
   .product_cover:hover{
-    top: 30%;
+    top: 10%;
   }
 
   .product_container_grid{
