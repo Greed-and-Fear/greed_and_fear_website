@@ -1227,6 +1227,7 @@ input:-webkit-autofill {
     resize: horizontal;
     border: none;
     outline: none;
+    
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   }
 
