@@ -24,7 +24,7 @@ function change_price()
           elite.innerHTML = "₹1797/Montly";
           baisclink.innerHTML = '<a href="orderpages/basicmonth.html"><button class="features-btn">Buy Now</button></a>';
           premiumlink.innerHTML = '<a href="orderpages/premiummonth.html"><button class="features-btn">Buy Now</button></a>';
-          elitelink.innerHTML = '<a href="orderpages/elitewonthlu.html"><button class="features-btn">Buy Now</button></a>';
+          elitelink.innerHTML = '<a href="orderpages/elitemonthly.html"><button class="features-btn">Buy Now</button></a>';
       }
 
 }
