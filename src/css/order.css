@@ -107,7 +107,7 @@ input:-webkit-autofill {
   .barcode_and_desc{
     
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 63% 37%;
     /* background-color: #04a2c2; */
   }
 
@@ -141,7 +141,7 @@ input:-webkit-autofill {
   
   .barcode_image{
     /* position: relative; */
-    height: 15vh;
+    height: 25vh;
     aspect-ratio: 1;
     /* margin: 0px 44%; */
   }
@@ -360,6 +360,13 @@ input:-webkit-autofill {
 
   .product-container{
    margin-top: 10%;
+  }
+
+  .barcode_image{
+    /* position: relative; */
+    height: 15vh;
+    aspect-ratio: 1;
+    /* margin: 0px 44%; */
   }
 
   
