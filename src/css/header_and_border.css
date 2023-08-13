@@ -1,116 +1,117 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-size: cover;
-    background-attachment: fixed;
-    background-image: linear-gradient(40deg, #030827 0%, #000000 100%);
-    /* background-image: url(../../images/background/wallpaper.jpg);;  */
-    background-position:  top;
-    overflow-x: hidden;
-    backdrop-filter: blur(3px);
-    background-blend-mode: multiply;
-  }
-  
-  html {
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-  }
-  
-  .telegram-logo {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(40deg, #030827 0%, #000000 100%);
+  /* background-image: url(../../images/background/wallpaper.jpg);;  */
+  background-position: top;
+  overflow-x: hidden;
+  backdrop-filter: blur(3px);
+  background-blend-mode: multiply;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.telegram-logo {
+  position: fixed;
+  left: auto;
+  top: auto;
+  right: 0%;
+  bottom: 5%;
+  margin-right: 20px;
+  padding: 7px;
+  width: 80px;
+  z-index: 9;
+}
+
+input:-webkit-autofill {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: aliceblue;
+}
+
+.register-window input:-webkit-autofill {
+  -webkit-text-fill-color: rgb(0, 0, 0);
+}
+
+@media (max-width: 3000px) {
+
+  .navbar {
+    height: 100px;
+    width: 100%;
+    padding: 14px 5px;
+    background-color: #000000;
+    opacity: 100%;
     position: fixed;
-    left: auto;
-    top: auto;
-    right: 0%;
-    bottom: 5%;
-    margin-right: 20px;
-    padding: 7px;
-    width: 80px;
-    z-index: 9;
+    z-index: 1;
+    border-bottom: 1px solid white;
   }
-  
-  input:-webkit-autofill {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: aliceblue;
+
+  .navbar .nav-header {
+    display: inline;
+    z-index: 7;
   }
-  
-  .register-window input:-webkit-autofill {
-    -webkit-text-fill-color: rgb(0, 0, 0);
+
+  .navbar .nav-header .nav-logo {
+    display: inline-block;
+    margin-top: -7px;
   }
- 
-  @media (max-width: 3000px) {
 
-    .navbar {
-      height: 100px;
-      width: 100%;
-      padding: 14px 5px;
-      background-color: #000000;
-      opacity: 100%;
-      position: fixed;
-      z-index: 1;
-      border-bottom: 1px solid white;
-    }
-  
-    .navbar .nav-header {
-      display: inline;
-      z-index: 7;
-    }
-  
-    .navbar .nav-header .nav-logo {
-      display: inline-block;
-      margin-top: -7px;
-    }
-  
-    .navbar .nav-links {
-      display: inline;
-      float: right;
-      margin-top: 30px;
-      z-index: 6;
-    }
-  
-    .navbar .nav-links a {
-      padding: 20px 30px;
-      text-decoration: none;
-      font-weight: 400;
-      font-family: Roboto, sans-serif;
-      color: rgb(226, 245, 252);
-      font-size: 18px;
-    }
-  
-    /* Hover effects */
-    .navbar .nav-links a:hover {
-      color: rgb(90, 211, 255);
-  
-    }
-  
-    /* responsive navbar toggle button */
-    .navbar #nav-check,
-    .navbar .nav-btn {
-      display: none;
-    }
-  
-    .slogan {
-      padding: 0px 0px;
-    }
-  
-    ::-webkit-scrollbar {
-      width: 0px;
-      /* Remove scrollbar space */
-      background: transparent;
-      /* Optional: just make scrollbar invisible */
-    }
+  .navbar .nav-links {
+    display: inline;
+    float: right;
+    margin-top: 30px;
+    z-index: 6;
+  }
+
+  .navbar .nav-links a {
+    padding: 20px 30px;
+    text-decoration: none;
+    font-weight: 400;
+    font-family: Roboto, sans-serif;
+    color: rgb(226, 245, 252);
+    font-size: 18px;
+  }
+
+  /* Hover effects */
+  .navbar .nav-links a:hover {
+    color: rgb(90, 211, 255);
+
+  }
+
+  /* responsive navbar toggle button */
+  .navbar #nav-check,
+  .navbar .nav-btn {
+    display: none;
+  }
+
+  .slogan {
+    padding: 0px 0px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    /* Remove scrollbar space */
+    background: transparent;
+    /* Optional: just make scrollbar invisible */
+  }
 
 
 
-      
+
   /* Contact Footer starts */
 
   .contact-footer {
+    margin-top: 10px;
+    position: relative;
     display: grid;
     grid-template-columns: repeat(2, 50%);
     text-align: center;
@@ -119,6 +120,7 @@
     color: rgb(205, 197, 50);
     font-size: 2vw;
   }
+
 
   /* Contact footer end */
 
@@ -148,56 +150,139 @@
     font-size: 1.3vw;
   }
 
+  /* Footer End */
+
+}
+
+@media (max-width: 1024px) {
+  .contact-right-items {
+    margin-top: 3.5vh;
   }
 
-  @media (max-width: 1024px) {
-    .contact-right-items {
-        margin-top: 3.5vh;
-      }
-    
-      .footer-item {
-        font-size: 27px;
-        margin: 10px;
-      }
-    
-      .contact-footer {
-        font-size: 3vw;
-      }
 
-      .navbar .nav-links a {
-        padding: 18px 15px;
-      }
-    
+  .footer-item {
+    font-size: 27px;
+    margin: 10px;
   }
 
-  @media (max-width:850px) {
+  /* Contact footer start */
 
-    .footer-item {
-        font-size: 13px;
-        margin: 0px;
-      }
-      
-    
+  .contact-footer {
+    font-size: 2.4vw;
   }
 
-  @media (max-width:770px) {
+  /* Contact footer end */
 
-    .contact-footer{    
-      position: relative;
-      bottom: 0px;
+  /* Footer starts */
 
-    }
+  .footer-header {
+    font-size: 3vw;
   }
 
-  @media (max-width:480px) {  
-    
-  .footer{
+  .sub-list {
+    font-size: 2.5vw;
+  }
+
+  /* Footer ends */
+
+
+  .navbar .nav-links a {
+    padding: 18px 15px;
+  }
+
+
+}
+
+@media (max-width:850px) {
+
+  .navbar .nav-btn {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 0px;
+  }
+
+  .navbar .nav-btn label {
+    display: inline-block;
+    width: 80px;
+    height: 70px;
+    padding: 25px;
+  }
+
+  .navbar .nav-btn label span {
+    display: block;
+    height: 10px;
+    width: 25px;
+    border-top: 3px solid #eee;
+  }
+
+  .navbar .nav-btn label:hover,
+  .navbar #nav-check:checked~.nav-btn label {
+    background-color: rgb(0, 0, 0);
+  }
+
+  .navbar .nav-links {
+    position: absolute;
+    display: block;
+    text-align: center;
+    width: 40%;
+    background-color: rgb(0, 0, 0);
+    transition: all 0.3s ease-in;
+    overflow-y: hidden;
+    top: 50px;
+    right: 0px;
+  }
+
+  .navbar .nav-links a {
+    display: block;
+  }
+
+  /* when nav toggle button not checked */
+  .navbar #nav-check:not(:checked)~.nav-links {
+    height: 0px;
+  }
+
+  /* when nav toggle button is checked */
+  .navbar #nav-check:checked~.nav-links {
+    height: calc(100vh - 0px);
+    overflow-y: auto;
+  }
+
+  .navbar .nav-links .loginBtn {
+    padding: 10px 40px;
+    margin: 0px;
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+  }
+
+
+  .footer-item {
+    font-size: 13px;
+    margin: 0px;
+  }
+
+
+}
+
+@media (max-width:770px) {
+
+  .contact-footer {
+    position: relative;
+    bottom: 0px;
+
+  }
+}
+
+@media (max-width:480px) {
+
+  .footer {
     grid-template-columns: repeat(2, 50%);
 
   }
 
   .footer-header {
-  
+
     font-size: 3.7vw;
   }
 
@@ -205,4 +290,4 @@
 
     font-size: 2.5vw;
   }
-  }
+}
