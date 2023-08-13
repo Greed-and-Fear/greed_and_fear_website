@@ -98,7 +98,7 @@ input:-webkit-autofill {
 
   .product-container{
     top: 100px;
-    margin-top: 10%;
+    margin-top: 2%;
     height: calc(110vh - 10px);
     position: relative;
     width: 100%;
@@ -107,7 +107,7 @@ input:-webkit-autofill {
   .barcode_and_desc{
     
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 70% 30%;
     /* background-color: #04a2c2; */
   }
 
@@ -121,12 +121,21 @@ input:-webkit-autofill {
     transform: translateY(-50%);
     /* background-color: red; */
     vertical-align: bottom;
+    /* background-color: red; */
+    align-items: center;
+    /* display: grid; */
     
+  }
+  
+  .barcode-container{
+    display: inline-flex;
   }
 
   .barimage{
-    display: flex;
-  justify-content: center;
+    padding: 10px 50px;
+    /* display: flex; */
+    justify-content: center;
+
   }
   
   
@@ -138,7 +147,7 @@ input:-webkit-autofill {
   }
 
   .features{
-    padding-left: 25px;
+    padding-left: 15%;
     font-size: 3ex;
     background: -webkit-linear-gradient(0deg, rgb(81, 155, 239) 0%, rgb(255, 255, 255) 100%);
     -webkit-background-clip: text;
@@ -238,6 +247,7 @@ input:-webkit-autofill {
     background-color: rgb(48, 103, 192);
     padding: 8px;
     font-weight: 600;
+    font-size: 3ex;
     border-radius: 25px;
   }
 
@@ -308,6 +318,14 @@ input:-webkit-autofill {
 
 @media (max-width: 1024px) {
 
+  .barcode-container{
+    display: block;
+  }
+
+  .monthlybarcode{
+    display:none;
+  }
+
   .contact-right-items {
     margin-top: 3.5vh;
   }
@@ -329,6 +347,19 @@ input:-webkit-autofill {
   .footer-item {
     font-size: 13px;
     margin: 0px;
+  }
+
+  .features{
+    padding-left: 25px;
+  }
+
+  .barcode_and_desc{
+    
+    grid-template-columns: 60% 40%;
+  }
+
+  .product-container{
+   margin-top: 10%;
   }
 
   
@@ -385,5 +416,14 @@ input:-webkit-autofill {
     letter-spacing: 1px;
     line-height: 2.5ex;
     word-spacing: 0.1ex;
+  }
+
+  .features-btn{
+    font-size: 1.5ex;
+  }
+
+  .barimage{
+    padding: 10px 25px;
+ 
   }
 }
