@@ -121,9 +121,15 @@ input:-webkit-autofill {
     transform: translateY(-50%);
     /* background-color: red; */
     vertical-align: bottom;
+    
   }
 
- 
+  .barimage{
+    display: flex;
+  justify-content: center;
+  }
+  
+  
   .barcode_image{
     /* position: relative; */
     height: 15vh;
@@ -354,11 +360,7 @@ input:-webkit-autofill {
 
 @media (max-width:480px) {  
 
-  .barcode_image{
-   
-    margin: 0px 15%;
-  }
-
+ 
 
   .product-container{
     height: 100vh;
