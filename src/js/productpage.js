@@ -19,12 +19,13 @@ function change_price()
         
     } else 
     {
-          basic.innerHTML = "₹897/Monthly";
-          prime.innerHTML = "₹1197/Montly";
-          elite.innerHTML = "₹1797/Montly";
-          baisclink.innerHTML = '<a href="orderpages/basicmonth.html"><button class="features-btn">Buy Now</button></a>';
-          premiumlink.innerHTML = '<a href="orderpages/premiummonth.html"><button class="features-btn">Buy Now</button></a>';
-          elitelink.innerHTML = '<a href="orderpages/elitemonthly.html"><button class="features-btn">Buy Now</button></a>';
+        basic.innerHTML = "₹897/Monthly";
+        prime.innerHTML = "₹1197/Montly";
+        elite.innerHTML = "₹1797/Montly";
+        baisclink.innerHTML = '<a href="orderpages/basicweek.html"><button class="features-btn">Buy Now</button></a>';
+        premiumlink.innerHTML = '<a href="orderpages/premiumweek.html"><button class="features-btn">Buy Now</button></a>';
+        elitelink.innerHTML = '<a href="orderpages/eliteweek.html"><button class="features-btn">Buy Now</button></a>';
+        
       }
 
 }

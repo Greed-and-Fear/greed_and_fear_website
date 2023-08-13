@@ -108,25 +108,64 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
 
   .product-container{
     top: 100px;
+    margin-top: 10%;
     height: calc(110vh - 10px);
     position: relative;
+    width: 100%;
+  }
+  
+  .barcode_and_desc{
     
-    /* align-items: center; */
+    display: grid;
+    grid-template-columns: 60% 40%;
+    /* background-color: #04a2c2; */
+  }
+
+  .reg-container{
+    margin: 0;
+    position: absolute;
+    position: relative;
+
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    /* background-color: red; */
+    vertical-align: bottom;
   }
 
  
   .barcode_image{
-    position: relative;
-    height: 25vh;
+    /* position: relative; */
+    height: 15vh;
     aspect-ratio: 1;
-    margin: 0px 44%;
+    /* margin: 0px 44%; */
+  }
+
+  .features{
+    padding-left: 25px;
+    font-size: 1.7ex;
+    background: -webkit-linear-gradient(0deg, rgb(81, 155, 239) 0%, rgb(255, 255, 255) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .help_message{
     margin-top: 5px;
     padding-top: 2px;
+    font-size: 1.2ex;
     color: whitesmoke;
     text-align: center;
+  }
+
+  .upi{
+    padding: 5%;
+    text-align: justify;
+    font-size: 1.7ex;
+    text-decoration: none;
+    color: white;
+    letter-spacing: 1px;
+    line-height: 2.5ex;
+    word-spacing: 0.1ex;
   }
 
   .yt-btn {
@@ -157,12 +196,20 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
     margin: 0px;
   }
 
-  
+  .pay_button{
+    color: white;
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 2ex;
+  }
 
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
+  .con{
+    margin: 10px;
+    padding: 5x;
+  }
+  .paymode{
+    grid-template-columns: repeat(2,50%);
+  }
 
 
 .thank-you{
@@ -181,43 +228,14 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
   text-align: center;
   font-family: 'Times New Roman', Times, serif;
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 500;
   /* color: rgb(199, 248, 194); */
-  background: -webkit-linear-gradient(0deg, rgb(81, 155, 239) 0%, rgb(255, 255, 255) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  padding: 20px;
+  color: whitesmoke;
+  /* padding: 20px; */
   line-height: 6vh;
 }
 
-.form-container{
-  position: relative;
-  background-color: #2196F3;
-  height:calc(100vh - 300px) ;
-  width: 30%;
-  left: 60%;
-  background-color: transparent;
-  color: white;
-}
 
-.img-container{
-  position: absolute;
-  /* background-color: rgba(12, 12, 12, 0.683); */
-  height:calc(100vh - 300px) ;
-  width: 49%;
-  scale: 1.2;
-}
-
-.form-box{
-  margin: 10px 0px;
-  padding:  5px 0px;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  border-bottom: 1px solid rgb(255, 255, 255);
-  display: inline-block;
-  width: 100%;
-}
 
 .btn{
   border: none;
@@ -320,14 +338,13 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
   }
 
   .cost{
-    color: rgb(236, 178, 71);
+    color: rgb(143, 242, 235);
     margin-top: 10px;
     margin-bottom: 0px;
     margin-bottom: 0px;
     position: relative;
-    font-size: 25px;
-    margin-left: 10%;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 400;
   }
   
   .featurebox{
@@ -339,10 +356,7 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
    
   }
   
-  .features{
-    margin: 5% 0%;
-    text-align: left;
-  }
+  
 
 
 
@@ -449,12 +463,13 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
     margin: 0px;
   }
 
+  
 }
 
 @media (max-width:770px) {
 
   .barcode_image{
-    margin: 0px 34%;
+    /* margin: 0px 34%; */
   }
 
     .slogan {
@@ -463,6 +478,7 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
 
     .product-container{
       height: 100vh;
+      width: 80%;
     }
 
     .contact-footer{    
@@ -473,7 +489,6 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
 
 
     .reg-container{
-      position: relative;
       height: fit-content;
 
     }
@@ -512,7 +527,7 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
 
   .barcode_image{
    
-    margin: 0px 25%;
+    margin: 0px 15%;
   }
 
   .heading{
@@ -525,6 +540,7 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
   }
 
   .product-container{
-    height: 90vh;
+    height: 100vh;
+    width: 100%;
   }
 }
