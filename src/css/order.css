@@ -44,16 +44,6 @@ input:-webkit-autofill {
 }
 
 
-input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
-  color: rgba(255, 255, 255, 1);
-  /* outline: 1px wheat; */
-  /* border: 1px wheat; */
-  /* width: 50%; */
-  /* background-color: transparent; */
-  /* border: 3px solid rgb(246, 233, 233); */
-  height: 40px;/
-  /* border-radius: 10px; */
-}
 
 @media (max-width: 3000px) {
   .hidden {
@@ -218,18 +208,6 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
   }
 
 
-.thank-you{
-  display: block; 
-  animation: fadeIn 3s;
-  color: whitesmoke;
-  font-family: 'Times New Roman', Times, serif;
-  text-align: center;
-  font-size: 4vw;
-  padding: 10% 0px;
-  line-height: 6vw;
-}
-
-
 .pre-title{
   text-align: center;
   font-family: 'Times New Roman', Times, serif;
@@ -260,88 +238,9 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
     border-radius: 25px;
   }
 
-  .product-holder{
-    padding:0;
-    white-space: nowrap;
-    height: 200px;
-  }
 
-  .subcards{
+ 
 
-    position: relative;
-    display: inline-flex;
-    flex-direction: column;
-
-    height: 350px;
-    width: 30%;
-    font-family:'Roboto Slab', serif;
-    font-size: 2ex;
-    border-radius: 5px;
-    /* background-color: #d4d4ffad; */
-    color: aliceblue;
-    background-color: rgba(38, 38, 38, 0.751);
-    filter: brightness(110%)
-    /* filter: blur(2px); */
-    
-    /* z-index: 3; */
-  }
-  
-  .heading{
-    position: relative;
-    color: rgb(212, 226, 245);
-    font-family: 'Roboto Slab', serif;
-    font-weight: 600;
-    scale: 1.5;
-    /* left: -20%; */
-    margin: 2vh;
-    font-size: 5vh;
-  }
-  
-  .user_message{
-    color: rgb(205, 205, 205);
-    text-align: center;
-    margin-bottom: 20px;
-    /* background-color: red; */
-    top: 0px;
-  }
-
-  .sub-heading,.sub-sub-heading{
-    font-family:'Roboto Slab', serif;
-    padding-top: 2vh;
-    color: whitesmoke;
-    font-weight: 500;
-    margin: 0vh 2vh 2vh 2vh;
-    font-size: 2.5vh;
-  }
-
-
-  
-  .sub-sub-heading{
-    padding: 0px;
-    line-height: 2.7vh;
-    font-weight: 600;
-    font-size: 2vh;
-  }
-  
-  .subcard-logo{
-    position: absolute;
-    left: 7%;
-    top:7%;
-    width: 50px;
-    height: 50px;
-    background-color: rgb(51, 150, 212);
-    border-radius: 15px;
-  }
-  
-  .sub-name{
-    font-family: Arial, Helvetica, sans-serif;
-    position: relative;
-    font-weight: bold;
-    margin-top: 10%;
-    margin-left: 5%;
-    color: wheat;
-    width: 100%;
-  }
 
   .cost{
     color: rgb(143, 242, 235);
@@ -352,16 +251,7 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
     font-size: 15px;
     font-weight: 400;
   }
-  
-  .featurebox{
-    margin :5% auto 10px auto;
-    border-top: 1px rgb(164, 164, 164) solid;
-    height: 60%;
-    font-weight:700;
-    width: 80%;
-   
-  }
-  
+
   
 
 
@@ -406,37 +296,6 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
     font-size: 1.3vw;
   }
 
-  
-  .btn{
-    border-radius: 10px;
-    margin: 10px auto;
-    display: block;
-    text-align: center;
-    background-color: rgb(49, 152, 178);
-    color: white;
-    width: 50%;
-  }
-
-  .option_container{
-    /* font-family: inherit; */
-    font-family:'Roboto Slab', serif;
-    text-align: center;
-  }
-
-  .sub_menu{
-    color: whitesmoke;
-    margin: 10px;
-  }
-
-  .option_item{
-    display: inline-flex;
-  }
-
-  .option_header{
-    font-family: inherit;
-    margin: 30px 0px 10px 0px;
-    color: rgb(255, 255, 255);
-  }
 }
 
 @media (max-width: 1641px) {
@@ -474,9 +333,6 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
 
 @media (max-width:770px) {
 
-  .barcode_image{
-    /* margin: 0px 34%; */
-  }
 
     .slogan {
         width: 200px;
@@ -499,33 +355,8 @@ input[type=text],input[type=number],input[type=email],input[type=tel],textarea {
 
     }
 
-    .img-container{
-      position: relative;
-      height: fit-content;
-      padding-bottom: 50px;
-      width: 100%;
-      
-    }
-
-    
-
-    .form-container{
-      position: relative;
-      left: 10%;
-      top: 0%;
-      width: 80%;
-      height: fit-content;
-      padding-bottom: 50px;
-
-    }
-
-    .thank-you{
-      font-size: 10vw;
-      line-height: 15vw;
-      margin: 10px;
-
-    }
-
+  
+ 
 }
 
 
