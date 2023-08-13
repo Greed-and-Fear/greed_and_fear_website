@@ -64,28 +64,8 @@ input:-webkit-autofill {
   }
 
 
-  .navbar {
-    height: 100px;
-    width: 100%;
-    padding: 14px 5px;
-    background-color: #000000;
-    opacity: 100%;
-    position: fixed;
-    top: 0px;
-    z-index: 1;
-    border-bottom: 1.2px solid white;
-  }
-
-
-  .navbar .nav-header .nav-logo {
-    display: inline-block;
-    margin-top: -7px;
-    border-radius: 50px;
-  }
-
-  .slogan {
-    padding: 0px 0px;
-  }
+  
+  
 
   ::-webkit-scrollbar {
     width: 0px;
@@ -307,49 +287,6 @@ input:checked + .slider:before {
     text-align: left;
   }
   
-
-
-
-
-
-
-
-
-
-  /* Contact Footer starts */
-
-  .contact-footer {
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
-    text-align: center;
-    height: fit-content;
-    background-color: #3b4656;
-    color: rgb(205, 197, 50);
-    font-size: 2vw;
-  }
-
-  /* Contact footer end */
-
-  /* Footer start */
-
-  .footer {
-    display: grid;
-    grid-template-columns: repeat(4, 25%);
-    height: fit-content;
-    background-color: #262626;
-  }
-
-  .footer-main-list {
-    text-align: center;
-    margin: 10px 0px;
-  }
-
-  .footer-header {
-    color: rgb(196, 187, 187);
-    font-weight: bolder;
-    font-size: 1.7vw;
-  }
-
   .sub-list {
     color: rgb(180, 178, 178);
     margin-top: 8px;
@@ -366,36 +303,15 @@ input:checked + .slider:before {
 
 @media (max-width: 1024px) {
 
-  .contact-right-items {
-    margin-top: 3.5vh;
-  }
-
-  .footer-item {
-    font-size: 27px;
-    margin: 10px;
-  }
-
-  .contact-footer {
-    font-size: 3vw;
-  }
 
 
 }
 
 @media (max-width:850px) {
 
-  .footer-item {
-    font-size: 13px;
-    margin: 0px;
-  }
 
 }
-
 @media (max-width:770px) {
-
-    .slogan {
-        width: 200px;
-    }
 
 
 }
