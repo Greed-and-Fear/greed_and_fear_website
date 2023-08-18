@@ -10,18 +10,18 @@ function change_price()
     const elitelink = document.getElementById('elitelink');
     
     if (switch_button.checked == false){
-        basic.innerHTML = "₹399/week";
-        prime.innerHTML = "₹599/week";
-        elite.innerHTML = "₹799/week";
+        basic.innerHTML = "₹199/week";
+        prime.innerHTML = "₹399/week";
+        elite.innerHTML = "₹699/week";
         baisclink.innerHTML = '<a href="orderpages/basicweek.html"><button class="features-btn">Buy Now</button></a>';
         premiumlink.innerHTML = '<a href="orderpages/premiumweek.html"><button class="features-btn">Buy Now</button></a>';
         elitelink.innerHTML = '<a href="orderpages/eliteweek.html"><button class="features-btn">Buy Now</button></a>';
         
     } else 
     {
-        basic.innerHTML = "₹1399/Monthly";
-        prime.innerHTML = "₹2099/Montly";
-        elite.innerHTML = "₹2899/Montly";
+        basic.innerHTML = "₹799/Monthly";
+        prime.innerHTML = "₹1399/Montly";
+        elite.innerHTML = "₹2499/Montly";
         baisclink.innerHTML = '<a href="orderpages/basicweek.html"><button class="features-btn">Buy Now</button></a>';
         premiumlink.innerHTML = '<a href="orderpages/premiumweek.html"><button class="features-btn">Buy Now</button></a>';
         elitelink.innerHTML = '<a href="orderpages/eliteweek.html"><button class="features-btn">Buy Now</button></a>';
