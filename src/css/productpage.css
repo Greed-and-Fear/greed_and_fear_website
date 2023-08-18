@@ -173,6 +173,7 @@ input:checked + .slider:before {
   }
 
   .product-holder{
+    
     padding:0;
     white-space: nowrap;
     height: 200px;
@@ -184,7 +185,7 @@ input:checked + .slider:before {
     display: inline-flex;
     flex-direction: column;
 
-    height: 350px;
+    height: 500px;
     width: 30%;
     font-family:'Roboto Slab', serif;
     font-size: 2ex;
@@ -283,7 +284,7 @@ input:checked + .slider:before {
   }
   
   .features{
-    margin: 5% 0%;
+    margin: 5% 5%;
     text-align: left;
   }
   
