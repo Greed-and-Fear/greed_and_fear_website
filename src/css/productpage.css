@@ -76,8 +76,8 @@ input:-webkit-autofill {
 
 
   .product-container{
-    top: 100px;
-    height: calc(130vh - 0px);
+    top: 10px;
+    height: calc(150vh - 0px);
     position: relative;
   }
 
@@ -86,7 +86,7 @@ input:-webkit-autofill {
     top: 45%;
     transform: translate(0, -60%);
     /* background-color: rgba(185, 253, 253, 0.144); */
-    height: 70vh;
+    height: 90vh;
     width: 90%;
     margin: 0% 5%;
     text-align: center;
@@ -211,20 +211,16 @@ input:checked + .slider:before {
   }
   
   .sub-heading,.sub-sub-heading{
+    display: block;
     font-family:'Roboto Slab', serif;
     padding-top: 2vh;
     color: whitesmoke;
     font-weight: 500;
-    margin: 0vh 2vh 2vh 2vh;
-    font-size: 2.5vh;
+    padding: 5vh 2vh 2vh 2vh;
+    /* font-size: 2.5vh; */
   }
   
-  .sub-sub-heading{
-    padding: 0px;
-    line-height: 2.7vh;
-    font-weight: 600;
-    font-size: 2vh;
-  }
+  
   
   .subcard-logo{
     position: absolute;
@@ -294,6 +290,13 @@ input:checked + .slider:before {
     font-size: 1.3vw;
   }
 
+  .sub-sub-heading{
+    padding: 0px;
+    line-height: 7vh;
+    font-weight: 600;
+    /* font-size: 2vh; */
+    padding: 30px 10px;
+  }
 
 }
 
@@ -310,15 +313,26 @@ input:checked + .slider:before {
 
 @media (max-width:850px) {
 
+  .product-container{
+    height: calc(100vh - 0px);
+  }
+
+  .product-details{
+    transform: translate(0,0);
+    top: 10%;
+  }
 
 }
 @media (max-width:770px) {
 
+  
 
 }
 
 
 @media (max-width:480px) {  
+
+  
 
   .heading{
     left: 0px;
@@ -331,7 +345,7 @@ input:checked + .slider:before {
   
   .product-holder{
     overflow-y: scroll;
-    height: 60vh;
+    height: 70vh;
   }
 
 }
