@@ -161,8 +161,10 @@ input:checked + .slider:before {
 
 
   .features-btn{
+    position: absolute;
+    bottom: 20px;
     text-align: center;
-    margin: 10px 15%;
+    margin: auto;
     width: 70%;
     border: none;
     color: rgb(255, 255, 255);
@@ -185,7 +187,7 @@ input:checked + .slider:before {
     display: inline-flex;
     flex-direction: column;
 
-    height: 500px;
+    height: 450px;
     width: 30%;
     font-family:'Roboto Slab', serif;
     font-size: 2ex;
@@ -213,12 +215,14 @@ input:checked + .slider:before {
   .sub-heading,.sub-sub-heading{
     display: block;
     font-family:'Roboto Slab', serif;
-    padding-top: 2vh;
+    padding-top: 3vh;
     color: whitesmoke;
     font-weight: 500;
     padding: 5vh 2vh 2vh 2vh;
-    /* font-size: 2.5vh; */
+    font-size: 2.5vh;
   }
+
+
   
   
   
@@ -298,6 +302,18 @@ input:checked + .slider:before {
     padding: 30px 10px;
   }
 
+  .sub-sub-heading{
+    font-size: 4ex;
+    color: #c1e3ea;
+    background-color: #00000091;
+    width: fit-content;
+    text-align: center;
+    margin:  5px auto;
+  }
+
+  .sub-heading{
+  font-size: 3ex;
+  }
 }
 
 @media (max-width: 1641px) {
@@ -332,6 +348,16 @@ input:checked + .slider:before {
 
 @media (max-width:480px) {  
 
+  .product-holder{
+    display: grid;
+    margin: 0%;
+    padding: 0%;
+    grid-template-columns: repeat(1, 100%);
+    justify-content: center;
+  }
+
+
+
   
 
   .heading{
@@ -339,13 +365,18 @@ input:checked + .slider:before {
     font-size: 6vw;
   }
   .subcards{
-    width: 80%
-    /* height: 60vh; */
+    width: 100%;
+    margin: 20px 10px;
   }
   
   .product-holder{
     overflow-y: scroll;
     height: 70vh;
   }
+
+  .sub-sub-heading{
+    font-size: 2ex;
+  }
+
 
 }

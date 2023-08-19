@@ -212,9 +212,7 @@ html {
 
 @media (max-width: 1024px) {
 
-  .barcode-container{
-    display: block;
-  }
+
 
   .monthlybarcode{
     display:none;
