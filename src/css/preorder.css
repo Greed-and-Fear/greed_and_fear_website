@@ -207,7 +207,7 @@ input:checked + .slider:before {
 .pre-title{
   text-align: center;
   font-family: 'Times New Roman', Times, serif;
-  font-size: 30px;
+  font-size: 6ex;
   font-weight: 600;
   /* color: rgb(199, 248, 194); */
   background: -webkit-linear-gradient(0deg, rgb(81, 155, 239) 0%, rgb(255, 255, 255) 100%);
@@ -230,7 +230,7 @@ input:checked + .slider:before {
   position: absolute;
   /* background-color: rgba(12, 12, 12, 0.683); */
   height:calc(100vh - 300px) ;
-  width: 49%;
+  width: 100%;
   scale: 1.2;
 }
 
@@ -423,6 +423,46 @@ input:checked + .slider:before {
     width: 50%;
   }
 
+  .yt-btn {
+    color: #000000;
+    border: none;
+    font-size: 20px;
+    border-radius: 25px;
+    padding: 15px;
+    font-family: 'Merriweather', "Times New Roman", sans-serif;
+    background: linear-gradient(to right, #04a2c2 50%, rgb(234, 228, 228) 50%);
+    width: 20%;
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
+  }
+
+  .yt-btn:hover {
+    background-position: left bottom;
+    color: white;
+  }
+
+  .whatsapp-btn {
+    color: black;
+    border: none;
+    font-size: 20px;
+    border-radius: 25px;
+    padding: 15px;
+    font-family: 'Merriweather', "Times New Roman", sans-serif;
+    background: linear-gradient(to right, #01c51f 50%, rgb(234, 228, 228) 50%);
+    width: 20%;
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
+
+
+  }
+
+  .whatsapp-btn:hover {
+    background-position: left bottom;
+    color: white;
+  }
+
   .option_container{
     /* font-family: inherit; */
     font-family:'Roboto Slab', serif;
@@ -475,9 +515,26 @@ input:checked + .slider:before {
     margin: 0px;
   }
 
+  .yt-btn,.whatsapp-btn{
+    width: 40%;
+  }
+
+  .pre-title{
+    padding-bottom: 90px;
+  }
+
 }
 
 @media (max-width:770px) {
+
+  .yt-btn,.whatsapp-btn{
+    width: 80%;
+  }
+
+  .pre-title{
+    padding-bottom: 40px;
+  }
+
 
     .slogan {
         width: 200px;
@@ -511,7 +568,7 @@ input:checked + .slider:before {
 
     .form-container{
       position: relative;
-      left: 10%;
+      /* left: 10%; */
       top: 0%;
       width: 80%;
       height: fit-content;

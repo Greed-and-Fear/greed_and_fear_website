@@ -582,7 +582,6 @@ input:-webkit-autofill {
 
   .telegram .yt-btn {
     padding: 15px 60px;
-    background: linear-gradient(to right, #04a2c2 50%, rgb(234, 228, 228) 50%);
     background-size: 200% 100%;
     background-position: right bottom;
     transition: all .5s ease-out;
