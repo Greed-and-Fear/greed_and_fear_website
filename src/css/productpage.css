@@ -301,12 +301,13 @@ input:checked + .slider:before {
     /* font-size: 2vh; */
     padding: 30px 10px;
     width: 90%;
+    border-radius: 10px;
   }
 
   .sub-sub-heading{
     font-size: 4ex;
     color: #c1e3ea;
-    background-color: #a5a5a531;
+    background-color: #a5a5a51c;
     /* width: fit-content; */
     text-align: center;
     margin:  5px auto;
