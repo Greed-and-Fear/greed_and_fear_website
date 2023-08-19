@@ -20,8 +20,8 @@ function change_price()
     } else 
     {
         basic.innerHTML = "₹799/Monthly";
-        prime.innerHTML = "₹1399/Montly";
-        elite.innerHTML = "₹2499/Montly";
+        prime.innerHTML = "₹1399/Monthly";
+        elite.innerHTML = "₹2499/Monthly";
         baisclink.innerHTML = '<a href="orderpages/basicweek.html"><button class="features-btn">Buy Now</button></a>';
         premiumlink.innerHTML = '<a href="orderpages/premiumweek.html"><button class="features-btn">Buy Now</button></a>';
         elitelink.innerHTML = '<a href="orderpages/eliteweek.html"><button class="features-btn">Buy Now</button></a>';
@@ -46,8 +46,8 @@ function change_price_book()
     } else 
     {
           basic.innerHTML = "₹897/Monthly";
-          prime.innerHTML = "₹1297/Montly";
-          elite.innerHTML = "₹1797/Montly";
+          prime.innerHTML = "₹1297/Monthly";
+          elite.innerHTML = "₹1797/Monthly";
       }
 
 }
