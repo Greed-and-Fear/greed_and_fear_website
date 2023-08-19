@@ -300,13 +300,14 @@ input:checked + .slider:before {
     font-weight: 600;
     /* font-size: 2vh; */
     padding: 30px 10px;
+    width: 90%;
   }
 
   .sub-sub-heading{
     font-size: 4ex;
     color: #c1e3ea;
-    background-color: #00000091;
-    width: fit-content;
+    background-color: #a5a5a531;
+    /* width: fit-content; */
     text-align: center;
     margin:  5px auto;
   }
