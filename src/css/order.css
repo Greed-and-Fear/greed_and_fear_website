@@ -39,7 +39,8 @@ html {
   .barcode_and_desc{
     
     display: grid;
-    grid-template-columns: 63% 37%;
+    text-align: left;
+    /* grid-template-columns: 63% 37%; */
     /* background-color: #04a2c2; */
   }
 
@@ -80,11 +81,21 @@ html {
   }
 
   .features{
-    padding-left: 15%;
+    margin:  auto 35%;
+    padding-left: 1%;
     font-size: 3ex;
     background: -webkit-linear-gradient(0deg, rgb(81, 155, 239) 0%, rgb(255, 255, 255) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .el{
+    margin:  auto 15%;
+
+  }
+
+  .eln{
+    display: none;
   }
 
   .help_message{
@@ -157,9 +168,11 @@ html {
 
 
 .pre-title{
+  position: relative;
+  margin-bottom: 40px;
   text-align: center;
   font-family: 'Times New Roman', Times, serif;
-  font-size: 30px;
+  font-size: 8ex;
   font-weight: 500;
   /* color: rgb(199, 248, 194); */
   color: whitesmoke;
@@ -219,13 +232,25 @@ html {
   }
 
   
+  .el{
+    display: none;
+  }
+
+  .eln{
+    display: block;
+    /* margin: 0%; */
+  }
+
+  .features{
+    margin: 5%;
+  }
 
 
 }
 
 @media (max-width:850px) {
 
- 
+  
 
   .features{
     padding-left: 25px;
@@ -233,7 +258,7 @@ html {
 
   .barcode_and_desc{
     
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 100%;
   }
 
   .product-container{
@@ -269,6 +294,8 @@ html {
     }
 
 
+
+
   
  
 }
@@ -279,17 +306,17 @@ html {
  
 
   .product-container{
-    height: 100vh;
+    height: 110vh;
     width: 100%;
   }
 
   .cost{
-    font-size: 2ex;
+    font-size: 2.3ex;
 
   }
 
   .features{
-    font-size: 1.7ex;
+    font-size: 2.8ex;
   }
 
   .help_message{
