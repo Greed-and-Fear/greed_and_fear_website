@@ -308,7 +308,7 @@ input:checked + .slider:before {
     font-size: 4ex;
     color: #c1e3ea;
     background-color: rgba(38, 38, 38, 0.751);
-    filter: brightness(110%)
+    filter: brightness(110%);
     /* width: fit-content; */
     text-align: center;
     margin:  5px auto;
