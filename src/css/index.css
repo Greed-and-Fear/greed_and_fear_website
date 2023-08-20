@@ -721,7 +721,7 @@ input:-webkit-autofill {
     border-radius: 25px;
     background-color: rgb(13, 12, 28);
     width: 100%;
-    height: 370px;
+    height: 350px;
     /* box-shadow: 10px 1px 10px white; */
   }
 
@@ -733,8 +733,10 @@ input:-webkit-autofill {
     height: 50%;
     /* display: block; */
     /* background-color: #356b1c; */
-    font-size: 16px;
+    font-size: 2.5ex;
     font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+
   }
 
   .rev-text{
@@ -743,7 +745,7 @@ input:-webkit-autofill {
     top: 40%;
     display: block;
     text-align: justify;
-    font-size: 3ex;
+    font-size: 2.5ex;
     white-space: normal;
     font-family: 'Poppins', sans-serif;
 
@@ -756,7 +758,7 @@ input:-webkit-autofill {
     top: 25%;
     left: 20%;
     color: white;
-    font-size: 5ex;
+    font-size: 4ex;
   }
 
   .rev-logo{
@@ -1539,6 +1541,7 @@ input:-webkit-autofill {
   }
 
   .rev-profile{
+    font-size: 2ex;
     height: fit-content;
     position: relative;
   }
@@ -1546,7 +1549,7 @@ input:-webkit-autofill {
   .rev-text{
     position: relative;
     top: 0%;
-    font-size: 2.5ex;
+    font-size: 2ex;
     height: fit-content;
   }
 
@@ -1779,6 +1782,7 @@ input:-webkit-autofill {
     width: 70%;
     margin: 10px 15px;
   }
+
 }
 
 
