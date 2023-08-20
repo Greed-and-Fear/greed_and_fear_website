@@ -32,6 +32,7 @@ async function on_load() {
     get_index_stock()
     // get_positional_stock()
     get_rev()
+    load_yt()  
 
 }
 
@@ -266,7 +267,7 @@ async function load_yt() {
 }
 
 
-load_yt()   
+ 
 
 function login(){
     console.log("Calling login apoi")
