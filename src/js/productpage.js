@@ -51,3 +51,15 @@ function change_price_book()
       }
 
 }
+
+document.addEventListener('mouseup', function(e) {
+    var container = document.getElementById('edu-img');
+    if (!container.contains(e.target)) {
+        container.style.display = 'none';
+    }
+});
+
+function show_edu(){
+    const box = document.getElementById('edu-img');
+    box.style.display = 'block'
+}

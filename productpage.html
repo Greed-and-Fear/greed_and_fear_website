@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/productpage.css">
+    <link rel="stylesheet" href="src/css/policy.css">
     <link rel="stylesheet" href="src/css/header_and_border.css">
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -32,7 +33,7 @@
         </div>
 
     </div>
-    
+
     <div class="product-container">
         <div id="product-details" class="product-details">
             <div class="heading">Greed And Fear Daily</div>
@@ -40,10 +41,11 @@
                 <label class="switch">
                     <input id="switcher" type="checkbox" onclick="change_price()">
                     <span class="slider round"></span>
-                  </label>
-                Monthly</div>
-                <div class="product-holder">
-                    <div class="subcards">
+                </label>
+                Monthly
+            </div>
+            <div class="product-holder">
+                <div class="subcards">
                     <div class="subcard-logo"></div>
                     <div class="sub-name">BASIC</div>
                     <div class="cost" id="basic">₹199/Week</div>
@@ -51,12 +53,13 @@
                         <div class="features">✓ 1 Index Setup - Daily </div>
                         <div class="features">✓ 2 Intraday Setups - Daily</div>
                         <div class="features">✓ 3 Positional setups - Weekly </div>
-                        <div id="baisclink" class="features"><a href="orderpages/basicweek.html"><button class="features-btn">Buy Now</button></a></div>
+                        <div id="baisclink" class="features"><a href="orderpages/basicweek.html"><button
+                                    class="features-btn">Buy Now</button></a></div>
                     </div>
                 </div>
                 <div class="subcards pro">
                     <div class="subcard-logo"></div>
-                    <div class="sub-name" >PREMIUM</div>
+                    <div class="sub-name">PREMIUM</div>
                     <div class="cost" id="premium">₹399/Week</div>
                     <div class="featurebox">
                         <div class="features">✓ 1 Index Setup - Daily </div>
@@ -65,12 +68,13 @@
                         <div class="features">✓ 3 Swing Setups - Weekly</div>
                         <div class="features">✓ 2 Positional Commodity - Weekly</div>
                         <!-- <div class="features">✓ EW And Fib Magazines</div> -->
-                        <div id="premiumlink" class="features"><a href="orderpages/premiumweek.html"><button class="features-btn">Buy Now</button></a></div>
+                        <div id="premiumlink" class="features"><a href="orderpages/premiumweek.html"><button
+                                    class="features-btn">Buy Now</button></a></div>
                     </div>
                 </div>
                 <div class="subcards">
                     <div class="subcard-logo"></div>
-                    <div class="sub-name" >ELITE</div>
+                    <div class="sub-name">ELITE</div>
                     <div class="cost" id="elite">₹699/Week</div>
                     <div class="featurebox">
                         <div class="features">✓ 2 Indices Setups - Daily </div>
@@ -80,14 +84,18 @@
                         <div class="features">✓ 5 Swing Setups - Weekly</div>
                         <div class="features">✓ 2 Positional Commodity - Weekly</div>
                         <div class="features">✓ Discusson Group</div>
-                        <div id="elitelink" class="features"><a href="orderpages/eliteweek.html"><button class="features-btn">Buy Now</button></a></div>
+                        <div id="elitelink" class="features"><a href="orderpages/eliteweek.html"><button
+                                    class="features-btn">Buy Now</button></a></div>
                     </div>
                 </div>
-                <div class="sub-sub-heading">Educational Content at ₹99/Week</div>
+                <div class="sub-sub-heading-container">
+                    <div class="sub-sub-heading">Educational Content at ₹99/Week <br><span onclick="show_edu()">Explore More </span></div>
+                </div>
             </div>
         </div>
     </div>
-
+    
+    <img class="edu-img" id="edu-img" src="https://s3.greedandfear.fun/products/educational_content.jpg">
 
     <div class="contact-footer">
         <div class="footer-item-left">START YOUR JOURNEY TODAY</div>
@@ -182,9 +190,20 @@
     <div id="cookie-doc-container-pp" class="cookie-doc-container tc">
     </div>
 
+    <div id="cookie-doc-container-refund" class="cookie-doc-container">
+    </div>
+
+    <div id="cookie-doc-container-sebi" class="cookie-doc-container">
+    </div>
+
+    <div id="cookie-doc-container-carrer" class="cookie-doc-container">
+    </div>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" async></script>
 <script src="src/js/productpage.js"></script>
+<script src="src/js/policy.js"></script>
 
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap">
+
 </html>
