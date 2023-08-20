@@ -10,7 +10,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-size: auto;
   background-attachment: fixed;
-  background-image: linear-gradient(40deg, #080c26 0%, #000000 100%);
+  /* background-image: linear-gradient(40deg, #0a0e2b 0%, #000000 100%); */
+  background-image: linear-gradient(40deg, #101a50 0%, #000000 100%);
+
   background-position: center center;
   overflow-x: hidden;
 }
@@ -226,7 +228,8 @@ input:-webkit-autofill {
     position: relative;
     background-color: #040425;
     height: calc(100vh - 100px);
-    background-image: url("../images/background/wallpaper.jpg");
+    /* background-image: url("../images/background/wallpaper.jpg"); */
+    background-color: transparent;
     background-size: cover;
   }
 
@@ -610,22 +613,22 @@ input:-webkit-autofill {
 
   .results {
     top: 10%;
-    background-color: rgb(8, 8, 61);
+    /* background-color: rgb(8, 8, 61); */
     height: 600px;
   }
 
   .posresults{
     top: 10%;
-    background-color: rgb(9, 9, 55);
+    /* background-color: rgb(9, 9, 55); */
     height: 400px;
   }
 
   .results {
-    background-image: url(../images/background/homepage.jpg);
+    /* background-image: url(../images/background/homepage.jpg); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: rgb(1, 1, 26);
+    /* background-color: rgb(1, 1, 26); */
     /* border-bottom: 2px solid  white; */
 
     /* background-image: linear-gradient(320deg, rgb(37, 18, 90) 0%, #082654 100%); */
@@ -886,7 +889,8 @@ input:-webkit-autofill {
     width: 100%;
     background-color: #ccced2;
     height: 450px;
-    background-image: linear-gradient(40deg, #101a50 0%, #000000 100%);
+    /* background-image: linear-gradient(40deg, #101a50 0%, #000000 100%); */
+    background-color: transparent;
     color: rgb(252, 252, 252);
   }
 
