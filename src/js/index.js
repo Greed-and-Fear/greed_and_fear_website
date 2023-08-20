@@ -50,9 +50,9 @@ async function get_rev() {
             for (let single_tc of all_tc) {
                 out +=
                     `
-                <div class="card rev">
+                <div class="rev-card">
                     <div class="rev-profile">
-                        <div class="rev-logo">“</div>
+                        <div ><img class="rev-logo" src="${single_tc.logo_path}"></div>
                         <div class="rev-name">${single_tc.reviewer_name}</div>
                     </div>
                     <div class="rev-text">${single_tc.review_text}</div>

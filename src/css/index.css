@@ -11,7 +11,7 @@ body {
   background-size: auto;
   background-attachment: fixed;
   /* background-image: linear-gradient(40deg, #0a0e2b 0%, #000000 100%); */
-  background-image: linear-gradient(155deg,#000000 0%,#080c21 60%, #101a50 100%);
+  background-image: linear-gradient(155deg,#000000 0%,#080c21 60%, #040924 100%);
 
   background-position: center center;
   overflow-x: hidden;
@@ -197,27 +197,28 @@ input:-webkit-autofill {
   }
   
 
-  .welcome_msg{
-    font-size: 4vw;
+  .welcome_msg,.message{
+    font-family: 'Poppins', sans-serif;
+    font-size: 5vw;
     font-weight: 700;
   }
 
 
   .hidden {
     opacity: 0;
-    transition: all 1s ;
-    transform: translateY(+40%);
+    /* transition: all 1s ; */
+    /* transform: translateY(+40%); */
   }
 
   .hidden2 {
     transform: translateY(0%);
-    transform: translateX(+100%);
+    /* transform: translateX(+100%); */
   }
 
   .show {
     opacity: 1;
-    transform: translateY(0%);
-    transform: translateX(0%);
+    /* transform: translateY(0%);
+    transform: translateX(0%); */
 
   }
 
@@ -603,8 +604,7 @@ input:-webkit-autofill {
 
   /* start of results */
 
-  .results .message,
-  .posresults .message {
+  .results .message {
     color: #fcfdff;
     font-family: 'Roboto Slab', serif;
     font-weight: 600;
@@ -617,11 +617,7 @@ input:-webkit-autofill {
     height: 600px;
   }
 
-  .posresults{
-    top: 10%;
-    /* background-color: rgb(9, 9, 55); */
-    height: 400px;
-  }
+  
 
   .results {
     /* background-image: url(../images/background/homepage.jpg); */
@@ -632,11 +628,6 @@ input:-webkit-autofill {
     /* border-bottom: 2px solid  white; */
 
     /* background-image: linear-gradient(320deg, rgb(37, 18, 90) 0%, #082654 100%); */
-  }
-
-  .posresults {
-    background-image: url(../images/background/wallpaper.jpg);
-    background-size: cover;
   }
 
   .card {
@@ -651,16 +642,12 @@ input:-webkit-autofill {
 
   }
 
-  .cards,
-  .pos-cards {
+  .cards
+   {
     overflow-y: scroll;
     white-space: nowrap;
   }
 
-
-  .pos-cards {
-    height: 100%;
-  }
 
   /* CARD personalation */
 
@@ -684,7 +671,24 @@ input:-webkit-autofill {
     width: 100%;
   }
 
-  .pos-cards .image {
+  .posresults{
+    top: 10%;
+    width: 85%;
+    margin: auto;
+    /* background-color: wheat; */
+    /* background-color: rgb(9, 9, 55); */
+  }
+  
+  .rev-container {
+    display: grid;
+    grid-template-columns: 50%  50%  ;
+    grid-gap: 10px 30px;
+
+
+  }
+
+
+  .rev-container .image {
     top: 30px;
     bottom: 15px;
     height: 95%;
@@ -693,7 +697,7 @@ input:-webkit-autofill {
     width: 100%;
   }
 
-  .pos-cards .stockname {
+  .rev-container .stockname {
     position: absolute;
     width: 100%;
     font-size: 25px;
@@ -704,18 +708,20 @@ input:-webkit-autofill {
   }
 
 
-  .pos-cards .stockname {
+  .rev-container .stockname {
     color: white;
   }
 
   
-  .rev{
+  .rev-card{
     padding: 2%;
-    display: inline-flex;
+    display: block;
+    margin: 10px auto;
     position: relative;
-    border-radius: 10px;
-    background-color: rgb(9, 3, 44);
-    height: 200px;
+    border-radius: 25px;
+    background-color: rgb(13, 12, 28);
+    width: 100%;
+    height: 370px;
     /* box-shadow: 10px 1px 10px white; */
   }
 
@@ -733,13 +739,15 @@ input:-webkit-autofill {
 
   .rev-text{
     position: absolute;
-    width: 85%;
-    top: 50%;
+    width: 95%;
+    top: 40%;
     display: block;
     text-align: justify;
-    font-size: 14px;
+    font-size: 3ex;
     white-space: normal;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Poppins', sans-serif;
+
+    padding: 0px 5%;
     color: rgb(235, 235, 235);
   }
 
@@ -748,22 +756,20 @@ input:-webkit-autofill {
     top: 25%;
     left: 20%;
     color: white;
-    font-size: 3ex;
+    font-size: 5ex;
   }
 
   .rev-logo{
-    border-radius:10px 10px 0px 5px;
+    border-radius:100%;
     background-color: rgb(211, 108, 108);
-    justify-content: center;
-    vertical-align: middle;
-    padding: 10px 0;
+    margin: 20px;
     color: white;
-    font-size: 40px;
-    /* align-items: center; */
-    text-align: center;
-    width:50px;
-    height:50px;
+    width:90px;
+    aspect-ratio: 1;
+    /* height:100px; */
   }
+
+
 
 
 
@@ -789,7 +795,7 @@ input:-webkit-autofill {
     white-space: normal;
   }
 
-  .pos-cards .prem-message {
+  .rev-container .prem-message {
     color: rgb(226, 226, 255);
   }
 
@@ -1078,10 +1084,8 @@ input:-webkit-autofill {
     margin: auto;
     text-align: center;
     width: 100%;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 40pt;
     padding: 10px;
-    color: rgb(2, 2, 2);
+    color: rgb(255, 255, 255);
   }
 
   .contact-background {
@@ -1202,6 +1206,10 @@ input:-webkit-autofill {
     margin-top: 30px;
     font-size: 3.5vh;
   }
+
+  .rev-name{
+    left: 25%;
+  }
 }
 
 
@@ -1244,6 +1252,7 @@ input:-webkit-autofill {
     align-items: center;
   }
 
+  
 
   /* IFRAME  Start*/
 
@@ -1520,17 +1529,26 @@ input:-webkit-autofill {
     height: fit-content;
   }
 
+  .rev-card{
+    height: fit-content;
+  }
 
-  .pos-cards {
+  .rev-container {
     margin-top: 30px;
     height: 250px;
   }
 
+  .rev-profile{
+    height: fit-content;
+    position: relative;
+  }
 
-
-
-
-
+  .rev-text{
+    position: relative;
+    top: 0%;
+    font-size: 2.5ex;
+    height: fit-content;
+  }
 
 
 
@@ -1546,7 +1564,8 @@ input:-webkit-autofill {
 
   .contact-right {
     left: 0%;
-    top: 50%;
+    top: 100%;
+    background-color: transparent;
   }
 
 
@@ -1610,8 +1629,21 @@ input:-webkit-autofill {
     height: 450px;
   }
 
+
   .posresults{
-    height: 350px;
+    display: block;
+    height: fit-content;
+
+  }
+
+  .rev-container{
+    height: fit-content;
+    grid-template-columns: 100%;
+  }
+
+  .rev-name{
+    font-size: 4ex;
+    left: 35%;
   }
 
   .results .message,
@@ -1645,10 +1677,7 @@ input:-webkit-autofill {
     scale: 0.8;
   }
 
-  
-  .rev-text{
-    top: 50%;
-  }
+
 
   /* card personalize end */
 
@@ -1715,6 +1744,8 @@ input:-webkit-autofill {
   .vision_text{
     font-size: 9vh;
   }
+
+  
 
 
 }
@@ -1848,12 +1879,6 @@ input:-webkit-autofill {
     width: 90%;
   }
 
-  .rev-name{
-    left: 60px;
-    top : 10px;
-  }
 
-  .rev-text{
-    top: 35%;
-  }
+ 
 }
