@@ -1237,9 +1237,7 @@ input:-webkit-autofill {
 @media (max-width: 1641px) {
 
   
-  .vision_image{
-    padding:25% 5%;
-  }
+
 
   .small-welcome {
     margin-top: 30px;
@@ -1274,6 +1272,11 @@ input:-webkit-autofill {
 
 
 @media (max-width: 1024px) {
+
+
+  .vision_image{
+    padding:25% 5%;
+  }
 
 
   .community .youtube-div {
