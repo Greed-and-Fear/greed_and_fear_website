@@ -66,7 +66,7 @@ input:-webkit-autofill {
     top: 0px;
     height: calc(100vh - 100px);
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 50% 50%;
     grid-row: 1;
     padding: 0% 5%;
     margin: 10px 0px;
@@ -93,6 +93,12 @@ input:-webkit-autofill {
     color: rgb(163 179 188);
     width: 68%;
   }
+
+  .vision_image{
+    width: 100%;
+    padding: 5%;
+  }
+
 
   .vision_button{
     color: white;
@@ -1230,6 +1236,11 @@ input:-webkit-autofill {
 
 @media (max-width: 1641px) {
 
+  
+  .vision_image{
+    padding:25% 5%;
+  }
+
   .small-welcome {
     margin-top: 30px;
     font-size: 3.5vh;
@@ -1429,6 +1440,10 @@ input:-webkit-autofill {
 }
 
 @media (max-width:850px) {
+
+  .vision_image{
+    display: none;
+  }
   
   .revp{
     padding-left: 10px;
