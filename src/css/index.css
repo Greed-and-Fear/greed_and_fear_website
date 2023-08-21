@@ -155,7 +155,7 @@ input:-webkit-autofill {
     padding-top: 10%;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 4ex;
     color: rgb(208 223 255);
   }
   
@@ -606,7 +606,9 @@ input:-webkit-autofill {
 
   .results .message {
     color: #fcfdff;
-    font-family: 'Roboto Slab', serif;
+    /* font-family: 'Roboto Slab', serif; */
+    font-family: 'Poppins', sans-serif;
+
     font-weight: 600;
     text-decoration: double;
   }

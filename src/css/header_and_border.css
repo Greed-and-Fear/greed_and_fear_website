@@ -116,8 +116,8 @@ input:-webkit-autofill {
     grid-template-columns: repeat(2, 50%);
     text-align: center;
     height: fit-content;
-    background-color: #3b4656;
-    color: rgb(205, 197, 50);
+    background-color: #040d11;
+    color: rgb(150, 156, 177);
     font-size: 2vw;
   }
 
@@ -130,7 +130,7 @@ input:-webkit-autofill {
     display: grid;
     grid-template-columns: repeat(4, 25%);
     height: fit-content;
-    background-color: #262626;
+    background-color: #0d0d0dbd;
   }
 
   .footer-main-list {
