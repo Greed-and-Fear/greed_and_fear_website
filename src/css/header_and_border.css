@@ -270,6 +270,7 @@ input:-webkit-autofill {
   .contact-footer {
     position: relative;
     bottom: 0px;
+    font-size: 3vw;
 
   }
 }

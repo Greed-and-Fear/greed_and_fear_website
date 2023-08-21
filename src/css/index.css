@@ -137,7 +137,7 @@ input:-webkit-autofill {
   }
 
   .product_cover{
-    top:65%;
+    top:60%;
     position: relative;
     z-index: 1;
     background-color: rgb(22 27 34);
@@ -146,13 +146,10 @@ input:-webkit-autofill {
     transition: all ease-in 0.3s;
   }
 
-  .product_cover:hover{
-    top: 35%;
-  }
 
   .product_name{
     position: relative;
-    padding-top: 10%;
+    padding-top: 5%;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 4ex;
@@ -161,6 +158,45 @@ input:-webkit-autofill {
   
   .product_button{
     position: relative;
+    display: block;
+    vertical-align: middle;
+    /* background-color: #05c3e9; */
+    margin: auto;
+    width: 90%;
+  }
+
+  
+  .star{
+    position: relative;
+    margin: 10px 10px;
+    font-size: 2.3ex;
+    font-weight: 700;
+    display: inline-flex;
+  }
+  
+  .soon{
+    display: block;
+    font-size: 2.7ex;
+  }
+  .sub-star{
+    scale: 1.3;
+    padding: 5px;
+  }
+  
+  .revp{
+    padding-left: 30px;
+    width: 100%;
+  }
+
+  .btn2{
+    position: relative;
+    background-color: rgb(19, 115, 218);
+    color: white;
+    font-weight: 400;
+    font-size: 15px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
   }
   
   .product_features{
@@ -174,19 +210,7 @@ input:-webkit-autofill {
 
   }
 
-  .product_cover:hover{
-    top: 35%;
-  }
-
-  .btn2{
-    background-color: rgb(19, 115, 218);
-    color: white;
-    font-weight: 400;
-    font-size: 15px;
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: none;
-  }
+  
 
   .product_container_grid{
     display: grid;
@@ -880,7 +904,7 @@ input:-webkit-autofill {
     font-weight: 600;
     padding: 15px 30px;
     color: #000000;
-    background-color: #aff000;
+    /* background-color: #586534; */
     font-family: 'Bebas Neue', sans-serif;
     border-radius: 25px;
     margin: 20px;
@@ -1211,8 +1235,29 @@ input:-webkit-autofill {
     font-size: 3.5vh;
   }
 
+  .product_button{
+    width: 100%;
+  }
+
   .rev-name{
     left: 25%;
+  }
+
+  .revp{
+    padding-left: 10px;
+    font-size: 2.3ex;
+  }
+
+  .soon{
+    font-size: 2.8ex;
+  }
+
+  
+
+
+
+  .sub-star{
+    padding: 2px;
   }
 }
 
@@ -1379,13 +1424,15 @@ input:-webkit-autofill {
   }
 
   
-
-
-
+  
+  
 }
 
 @media (max-width:850px) {
-
+  
+  .revp{
+    padding-left: 10px;
+  }
 
   .cookie-doc-container-header{
     font-size:7vw;
@@ -1750,13 +1797,16 @@ input:-webkit-autofill {
     font-size: 9vh;
   }
 
+  .star{
+    display: block;
+  }
+
   
 
 
 }
 
 @media (max-width:770px) {
-
 
 
 
