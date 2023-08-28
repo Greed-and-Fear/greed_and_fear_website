@@ -81,14 +81,7 @@ async function get_intraday_stock() {
             </div>
             `;
             }
-            out += `
-        <div class="card finalcard">
-        <div class="prem-message">
-        Checkout our daily, weekly and short term results
-        </div>
-        <a href="result.html"><button class="button">View More</button></a>
-        </div>
-        `
+          
             stock_cards.innerHTML = out;
         })
 }
@@ -110,14 +103,7 @@ async function get_index_stock() {
             </div>
             `;
             }
-            out += `
-        <div class="card finalcard">
-        <div class="prem-message">
-        Checkout our daily, weekly and short term results
-        </div>
-        <a href="result.html"><button class="button">View More</button></a>
-        </div>
-        `
+            
             stock_cards.innerHTML = out;
         })
 }
@@ -138,14 +124,7 @@ async function get_positional_stock() {
         </div>
         `;
             }
-            out_pos += `
-    <div class="card finalcard">
-    <div class="prem-message">
-    Checkout our daily, weekly and short term results
-    </div>
-    <a href="result.html"><button class="button">View More</button></a>
-    </div>
-    `
+           
             stock_cards.innerHTML = out_pos;
         })
 }
