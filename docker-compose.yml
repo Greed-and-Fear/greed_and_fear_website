@@ -17,22 +17,7 @@ services:
     networks:
       - greed_net
 
-    testwebsite:
-    image: testwebsite
-    container_name: website_container_testing
-    ports:
-      - "83:80"
-      - "446:443"
-    restart: always
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
-    volumes:
-      - .:/root/www/
-      - /root/shared_pdf:/var/www/html/shared_pdf
-    tty: true
-    networks:
-      - greed_net
 
 networks:
   greed_net:
