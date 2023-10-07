@@ -18,7 +18,7 @@ services:
       - greed_net
 
 
-
+server
 networks:
   greed_net:
     name: greed_net

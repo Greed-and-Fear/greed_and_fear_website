@@ -1,0 +1,31 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # - uses: actions/checkout@v1
+
+    - name: Install SSH key and configure known_hosts
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSHKEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan $HOST >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+      env:
+        HOST: ${{ secrets.HOST }}
+        SSHKEY: ${{ secrets.SSHKEY }}
+
+    - name: SSH into VPS and run commands
+      run: |
+        ssh -tt $USERNAME@$HOST 'cd website && git pull && docker build --tag "website" . && docker compose up -d'
+      env:
+        SSHKEY: ${{ secrets.SSHKEY }}
+        HOST: ${{ secrets.HOST }}
+        PORT: ${{ secrets.PORT }}
+        USERNAME: ${{ secrets.USERNAME }}
