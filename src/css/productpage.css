@@ -387,7 +387,7 @@ input:checked + .slider:before {
 
 
   .features{
-    margin: 5% 0%;
+    margin: 7% 0%;
   }
 
   .product-holder{
@@ -399,11 +399,12 @@ input:checked + .slider:before {
 
   .heading{
     left: 0px;
-    font-size: 6vw;
+    font-size: 5.5vw;
   }
   .subcards{
-    width: 100%;
-    margin: 20px 10px;
+    width: 90%;
+    margin: 5%;
+    height: 400px;
   }
   
   .product-holder{
@@ -413,7 +414,13 @@ input:checked + .slider:before {
 
   .sub-sub-heading{
     font-size: 2ex;
+    word-wrap: break-word;
+    line-height: 3ex;
+    white-space: pre-wrap;
+    /* text-overflow: ellipsis; */
   }
+
+
 
 
 }
