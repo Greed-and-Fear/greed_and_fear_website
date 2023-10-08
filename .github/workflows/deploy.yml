@@ -18,7 +18,7 @@ jobs:
         ssh-keyscan $HOST >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
       env:
-        HOST: ${{ secrets.HOST }}
+        HOST: ${{secrets.HOST}}
         SSHKEY: ${{ secrets.SSHKEY }}
 
     - name: SSH into VPS and run commands
