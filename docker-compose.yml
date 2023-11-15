@@ -11,8 +11,8 @@ services:
       - "host.docker.internal:host-gateway"
 
     volumes:
-      - .:/root/www/
-      - /root/shared_pdf:/var/www/html/shared_pdf
+      - greed-website:/root/www/
+    
     tty: true
     networks:
       - greed_net
@@ -23,3 +23,6 @@ networks:
     name: greed_net
     external: true
 
+volumes:
+  greed-website:
+    name: greed-website
