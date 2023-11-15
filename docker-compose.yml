@@ -1,6 +1,6 @@
 version: '3.6'
 services:
-  website:
+  greed-website:
     image: website
     container_name: website_container
     ports:
