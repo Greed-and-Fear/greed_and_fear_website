@@ -31,7 +31,7 @@ async function on_load() {
     // get_intraday_stock()
     get_index_stock()
     get_positional_stock();
-    // get_rev()
+    get_rev()
     load_yt()  
 
 }
@@ -42,7 +42,7 @@ function log_user(){
 
 async function get_rev() {
     console.log("getting rev")
-    fetch('https://api.greedandfear.fun/api/rev/', {headers: {'Accept': 'application/json',}})
+    fetch('jsondata/review.json', {headers: {'Accept': 'application/json',}})
     .then(function (response) {
             return response.json();})
     .then(function (all_tc) {
