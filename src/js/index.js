@@ -27,11 +27,11 @@ setInterval(cycleArray, 1500);
 
 
 async function on_load() {
-    log_user()
-    get_intraday_stock()
+    // log_user()
+    // get_intraday_stock()
     get_index_stock()
-    // get_positional_stock()
-    get_rev()
+    get_positional_stock();
+    // get_rev()
     load_yt()  
 
 }
@@ -64,30 +64,33 @@ async function get_rev() {
                 })
 }
 
-async function get_intraday_stock() {
-    fetch('https://api.greedandfear.fun/api/stocks/intra/')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (today_pick) {
-            let stock_cards = document.getElementById("cards");
-            let out = "";
-            for (let single_stock of today_pick) {
-                out +=
-                    `
-            <div class="card">
+// function get_intraday_stock() {
+//     fetch('https://api.greedandfear.fun/api/stocks/intra/')
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (today_pick) {
+//             let stock_cards = document.getElementById("cards");
+//             let out = "";
+//             for (let single_stock of today_pick) {
+//                 out +=
+//                     `
+//             <div class="card">
             
-            <div class="image"><img loading="lazy" alt =${single_stock.stock_name}-chart class="result-img" src="${single_stock.img_path}"></div>
-            </div>
-            `;
-            }
+//             <div class="image"><img loading="lazy" alt =${single_stock.stock_name}-chart class="result-img" src="${single_stock.img_path}"></div>
+//             </div>
+//             `;
+//             }
           
-            stock_cards.innerHTML = out;
-        })
-}
+//             stock_cards.innerHTML = out;
+//         })
+// }
 
-async function get_index_stock() {
-    fetch('https://api.greedandfear.fun/api/stocks/indices/')
+
+
+
+function get_index_stock() {
+    fetch('jsondata/intraday_first.json')
         .then(function (response) {
             return response.json();
         })
@@ -95,6 +98,8 @@ async function get_index_stock() {
             let stock_cards = document.getElementById("indcards");
             let out = "";
             for (let single_stock of today_pick) {
+
+                console.log(single_stock);
                 out +=
                     `
             <div class="card">
@@ -108,12 +113,12 @@ async function get_index_stock() {
         })
 }
 
-async function get_positional_stock() {
-    fetch('https://johnson845173.github.io/algotrade/jsondata/positional.json')
+function get_positional_stock() {
+    fetch('jsondata/positional.json')
         .then(function (response) {
             return response.json();
         }).then(function (positional_pick) {
-            let stock_cards = document.getElementById("pos-cards");
+            let stock_cards = document.getElementById("cards");
             let out_pos = "";
             for (let each_pos_trade of positional_pick) {
                 out_pos +=
