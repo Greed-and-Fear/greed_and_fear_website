@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup as bs
 
 
 def get_high_voume():
-    URL = 'https://chartink.com/screenerstocks-rising-with-increasing-volumes'
+    URL = 'https://chartink.com/screenerstocks-rising-with-increasing-volumes '
     page = requests.get(URL)
     soup = bs(page.content, 'html.parser')
     data = {
