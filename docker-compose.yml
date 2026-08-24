@@ -1,28 +1,14 @@
-version: '3.6'
 services:
   greed-website:
     image: website
     container_name: website_container
     ports:
       - "82:80"
-      - "445:443"
     restart: always
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-    volumes:
-      - greed-website:/root/www/
-    
-    tty: true
     networks:
       - greed_net
-
 
 networks:
   greed_net:
     name: greed_net
     external: true
-
-volumes:
-  greed-website:
-    name: greed-website

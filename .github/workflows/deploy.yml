@@ -1,14 +1,21 @@
-name: Deploy
+name: Build and deploy
 
-on: [push]
+on:
+  push:
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    # - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run build
 
     - name: Install SSH key and configure known_hosts
       run: |

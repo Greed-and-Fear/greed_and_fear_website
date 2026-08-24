@@ -1,8 +1,9 @@
+import os
+
 import requests
 
-url = "https://api.telegram.org/bot6236663076:AAGct2VT2I3j9rsY9ja-KANqJbbSLhEHWB0/sendPhoto"
-
-count_url = "https://api.telegram.org/bot6236663076:AAGct2VT2I3j9rsY9ja-KANqJbbSLhEHWB0/getChatMembersCount"
+token = os.environ["TELEGRAM_BOT_TOKEN"]
+count_url = f"https://api.telegram.org/bot{token}/getChatMemberCount"
 
 data_to_send = {
     "chat_id": "@weather845173",
