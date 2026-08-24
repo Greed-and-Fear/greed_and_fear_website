@@ -1,7 +1,8 @@
 import { FormEvent, ReactNode, useEffect, useState } from 'react'
 import { Link, Navigate, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { courses, plans, testimonials, type PlanId } from './data'
-import { getNews, login, submitContact, type DemoUser, type NewsArticle } from './services/mockApi'
+import { getNews, submitContact, type NewsArticle } from './services/mockApi'
+import MemberPortal, { ThemeToggle, type Theme } from './MemberPortal'
 import logo from '../images/logo/logo.jpg'
 import heroImage from '../images/background/software.png'
 import contactImage from '../images/background/contactbackground.jpg'
@@ -35,8 +36,19 @@ const policyContent: Record<Policy, { title: string; body: string[] }> = {
 }
 
 function App() {
+  const location = useLocation()
+  const [theme, setTheme] = useState<Theme>(() => localStorage.getItem('theme') === 'light' ? 'light' : 'dark')
   const [policy, setPolicy] = useState<Policy | null>(null)
   const [cookieVisible, setCookieVisible] = useState(() => localStorage.getItem('cookie-consent') === null)
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  if (['/login', '/dashboard', '/sentiment'].some((path) => location.pathname.startsWith(path))) {
+    return <MemberPortal theme={theme} onThemeChange={setTheme} />
+  }
 
   const setConsent = (value: 'accepted' | 'rejected') => {
     localStorage.setItem('cookie-consent', value)
@@ -47,7 +59,7 @@ function App() {
     <div className="app-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <ScrollManager />
-      <Header />
+      <Header theme={theme} onThemeChange={setTheme} />
       <main id="main-content">
         <Routes>
           <Route path="/" element={<HomePage onPolicy={setPolicy} />} />
@@ -59,7 +71,7 @@ function App() {
           <Route path="/news" element={<NewsPage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/join" element={<JoinPage />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route path="/account" element={<Navigate to="/login" replace />} />
           <Route path="/internal/chat" element={<UnavailablePage title="Community chat" />} />
           <Route path="/index.html" element={<Navigate to="/" replace />} />
           <Route path="/productpage.html" element={<Navigate to="/products/daily" replace />} />
@@ -81,7 +93,7 @@ function App() {
   )
 }
 
-function Header() {
+function Header({ theme, onThemeChange }: { theme: Theme; onThemeChange: (theme: Theme) => void }) {
   const [open, setOpen] = useState(false)
   const navClass = ({ isActive }: { isActive: boolean }) => isActive ? 'active' : undefined
   return (
@@ -89,7 +101,7 @@ function Header() {
       <Link to="/" className="brand"><img src={logo} alt="Greed and Fear" /></Link>
       <button className="menu-button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label="Toggle navigation"><span /><span /><span /></button>
       <nav className={open ? 'site-nav open' : 'site-nav'} onClick={() => setOpen(false)}>
-        <NavLink to="/" end className={navClass}>Home</NavLink><NavLink to="/courses" className={navClass}>Learn</NavLink><NavLink to="/products" className={navClass}>Membership</NavLink><NavLink to="/results" className={navClass}>Results</NavLink><NavLink to="/news" className={navClass}>News</NavLink><Link className="nav-cta" to="/#contact">Get in touch</Link>
+        <NavLink to="/" end className={navClass}>Home</NavLink><NavLink to="/courses" className={navClass}>Learn</NavLink><NavLink to="/products" className={navClass}>Membership</NavLink><NavLink to="/results" className={navClass}>Results</NavLink><NavLink to="/news" className={navClass}>News</NavLink><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="nav-cta" to="/login">Member login</Link>
       </nav>
     </header>
   )
@@ -112,7 +124,7 @@ function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
   const positions = [abbIndia, hul, tataCom]
   return <>
     <section className="hero section-pad">
-      <div><p className="eyebrow">Learn. Practise. Trade with a plan.</p><h1>Understand the market with <span>confidence.</span></h1><p className="lead">Clear chart breakdowns and practical lessons in market structure, Elliott Waves, Fibonacci and price action.</p><div className="button-row"><ExternalButton href={TELEGRAM_URL}>Join the free community</ExternalButton><Link className="button secondary" to="/courses">Start learning</Link></div><div className="trust-row"><span>Education first</span><span>Beginner friendly</span><span>Real chart examples</span></div></div>
+      <div><p className="eyebrow">Learn. Practise. Trade with a plan.</p><h1>Understand the market with <span>confidence.</span></h1><p className="lead">Clear chart breakdowns and practical lessons in market structure, Elliott Waves, Fibonacci and price action.</p><div className="button-row"><ExternalButton href={TELEGRAM_URL}>Join the free community</ExternalButton><Link className="button secondary" to="/courses">Start learning</Link><Link className="button login-button" to="/login">Member login →</Link></div><div className="trust-row"><span>Education first</span><span>Beginner friendly</span><span>Real chart examples</span></div></div>
       <div className="hero-art"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><img src={heroImage} alt="Trading analysis workspace" /></div>
     </section>
     <Stats />
@@ -220,21 +232,8 @@ function ContactSection() {
   return <section id="contact" className="contact-section section-pad"><img src={contactImage} alt="Analyst working at a desk" loading="lazy" /><form onSubmit={submit}><p className="eyebrow">We’re here to help</p><h2>What would you like to know?</h2><p>Send your question and keep the reference number for follow-up.</p><label>Name <span>Required</span><input name="name" autoComplete="name" placeholder="Your name" required /></label><label>Phone <span>Optional</span><input name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="Your phone number" /></label><label>Subject <span>Required</span><input name="subject" placeholder="How can we help?" required /></label><label>Message <span>Required</span><textarea name="message" rows={4} placeholder="Tell us a little more..." required /></label><button className="button" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending your enquiry...' : 'Send enquiry'}</button>{status === 'sent' && <p className="form-success" role="status">Thanks, your enquiry is saved. Reference: <strong>{reference}</strong></p>}<small className="preview-note">Preview mode: enquiries are saved only in this browser.</small></form></section>
 }
 
-function AccountPage() {
-  const [user, setUser] = useState<DemoUser | null>(() => JSON.parse(localStorage.getItem('mock-session') ?? 'null') as DemoUser | null)
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); setError(''); setLoading(true)
-    const data = new FormData(event.currentTarget)
-    try { setUser(await login(String(data.get('phone')), String(data.get('password')))) } catch (reason) { setError(reason instanceof Error ? reason.message : 'Demo login failed.') } finally { setLoading(false) }
-  }
-  if (user) return <Page><PageHero eyebrow="Local demo session" title={`Welcome, ${user.name}.`} copy="This session is stored only in your browser and does not represent a real account." /><div className="account-card"><span>Plan</span><strong>{user.plan}</strong><span>Phone</span><strong>{user.phone}</strong><button className="button secondary" onClick={() => { localStorage.removeItem('mock-session'); setUser(null) }}>Clear demo session</button></div></Page>
-  return <Page><PageHero eyebrow="Account preview" title="Try the member experience." copy="Use any 10-digit phone number and a password with at least 6 characters. Your details stay in this browser." /><form className="account-form" onSubmit={submit}><label>Phone number<input name="phone" type="tel" inputMode="numeric" autoComplete="tel" placeholder="9876543210" required /></label><label>Password<input name="password" type="password" autoComplete="current-password" minLength={6} required /></label><button className="button" disabled={loading}>{loading ? 'Signing in...' : 'Open preview account'}</button>{error && <p className="form-error" role="alert">{error}</p>}</form></Page>
-}
-
 function Footer({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
-  return <footer><div className="footer-contact"><a href="mailto:greedandfearacademy@gmail.com">greedandfearacademy@gmail.com</a><a href="tel:+917899404714">+91 78994 04714</a></div><div className="footer-grid"><div><img src={logo} alt="Greed and Fear" /><p>Technical analysis education for thoughtful market participants.</p></div><div><h3>Explore</h3><Link to="/products">Memberships</Link><Link to="/courses">Courses</Link><Link to="/results">Results</Link><Link to="/news">News</Link></div><div><h3>Community</h3><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Telegram</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp</a><Link to="/account">Account preview</Link><button onClick={() => onPolicy('careers')}>Careers</button></div><div><h3>Policies</h3>{(['terms', 'privacy', 'refund', 'cookies', 'disclaimer'] as Policy[]).map((item) => <button onClick={() => onPolicy(item)} key={item}>{policyContent[item].title}</button>)}</div></div><div className="copyright">© {new Date().getFullYear()} Greed & Fear. Educational content only.</div></footer>
+  return <footer><div className="footer-contact"><a href="mailto:greedandfearacademy@gmail.com">greedandfearacademy@gmail.com</a><a href="tel:+917899404714">+91 78994 04714</a></div><div className="footer-grid"><div><img src={logo} alt="Greed and Fear" /><p>Technical analysis education for thoughtful market participants.</p></div><div><h3>Explore</h3><Link to="/products">Memberships</Link><Link to="/courses">Courses</Link><Link to="/results">Results</Link><Link to="/news">News</Link></div><div><h3>Community</h3><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Telegram</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp</a><Link to="/login">Member login</Link><button onClick={() => onPolicy('careers')}>Careers</button></div><div><h3>Policies</h3>{(['terms', 'privacy', 'refund', 'cookies', 'disclaimer'] as Policy[]).map((item) => <button onClick={() => onPolicy(item)} key={item}>{policyContent[item].title}</button>)}</div></div><div className="copyright">© {new Date().getFullYear()} Greed & Fear. Educational content only.</div></footer>
 }
 
 function CookieBanner({ onChoice, onRead }: { onChoice: (choice: 'accepted' | 'rejected') => void; onRead: () => void }) {

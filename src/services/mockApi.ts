@@ -52,8 +52,8 @@ export async function submitContact(request: ContactRequest): Promise<ContactRes
 
 export async function login(phone: string, password: string): Promise<DemoUser> {
   await delay(600)
-  if (phone.replace(/\D/g, '').length < 10 || password.length < 6) throw new Error('Use a 10-digit phone number and a password of at least 6 characters.')
-  const user = { id: 'demo-user', name: 'Demo Member', phone, plan: 'demo' as const }
+  if (phone !== 'admin' || password !== 'admin') throw new Error('Incorrect demo credentials. Use admin for both username and password.')
+  const user = { id: 'demo-admin', name: 'Admin', phone, plan: 'demo' as const }
   localStorage.setItem('mock-session', JSON.stringify(user))
   return user
 }
