@@ -2,6 +2,7 @@ import { FormEvent, type ReactNode, useState } from 'react'
 import { Link, NavLink, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { alerts, heatmap, marketCards, opportunities } from './memberData'
 import { login } from './services/mockApi'
+import StockBoard from './StockBoard'
 import logo from '../images/logo/logo.jpg'
 import './member.css'
 
@@ -21,6 +22,7 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
     <Route path="/login" element={<LoginPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/dashboard" element={<DashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/sentiment" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/stocks" element={<StockBoardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
   </Routes>
 }
@@ -55,13 +57,13 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
 }
 
 const navigation = [
-  ['Dashboard', '/dashboard', 'DB'], ['Pre-market', '/sentiment', 'PM'], ['Top opportunities', '/dashboard#opportunities', 'OP'], ['Ban watch', '/dashboard#ban-watch', 'BW'], ['Long builders', '/dashboard#opportunities', 'LB'], ['Short builders', '/dashboard#opportunities', 'SB'], ['Heatmap', '/dashboard#heatmap', 'HM'], ['Alerts', '/dashboard#alerts', 'AL'],
+  ['Dashboard', '/dashboard', 'DB'], ['Stock board', '/stocks', 'ST'], ['Pre-market', '/sentiment', 'PM'], ['Top opportunities', '/dashboard#opportunities', 'OP'], ['Ban watch', '/dashboard#ban-watch', 'BW'], ['Long builders', '/dashboard#opportunities', 'LB'], ['Short builders', '/dashboard#opportunities', 'SB'], ['Heatmap', '/dashboard#heatmap', 'HM'], ['Alerts', '/dashboard#alerts', 'AL'],
 ] as const
 
 function PortalLayout({ children, theme, onThemeChange, title }: PortalProps & { children: ReactNode; title: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
   return <div className="portal-shell">
-    <aside className={menuOpen ? 'portal-sidebar open' : 'portal-sidebar'}><Link className="portal-logo" to="/"><img src={logo} alt="Greed and Fear" /></Link><nav>{navigation.map(([label, href, icon]) => <NavLink to={href} className={({ isActive }) => isActive && href === '/dashboard' ? 'active' : undefined} key={label} onClick={() => setMenuOpen(false)}><span>{icon}</span>{label}</NavLink>)}</nav><div className="upgrade-card"><p>Greed & Fear Pro</p><small>Unlock advanced analytics, alerts and market tools.</small><Link to="/products">View plans</Link></div></aside>
+    <aside className={menuOpen ? 'portal-sidebar open' : 'portal-sidebar'}><Link className="portal-logo" to="/"><img src={logo} alt="Greed and Fear" /></Link><nav>{navigation.map(([label, href, icon]) => <NavLink to={href} className={({ isActive }) => isActive && !href.includes('#') ? 'active' : undefined} key={label} onClick={() => setMenuOpen(false)}><span>{icon}</span>{label}</NavLink>)}</nav><div className="upgrade-card"><p>Greed & Fear Pro</p><small>Unlock advanced analytics, alerts and market tools.</small><Link to="/products">View plans</Link></div></aside>
     <div className="portal-workspace"><header className="portal-header"><button className="portal-menu" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle member navigation">Menu</button><div><span className="market-time">Market data: 22 Aug 2026, 06:35 PM IST</span><span className="live-pill">Live</span><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="run-button" to="/dashboard">Run now</Link><span className="member-avatar">S</span></div></header><div className="portal-content"><div className="portal-page-title"><div><p>Member intelligence</p><h1>{title}</h1></div><Link to="/login">Sign out</Link></div>{children}</div></div>
   </div>
 }
@@ -87,6 +89,13 @@ function SentimentPage(props: PortalProps) {
     <section className="sentiment-hero"><div className="sentiment-ring"><span>↘</span></div><div><p>Combined outlook</p><h2>Bearish & stable</h2><span><b>1 bullish</b> · <em>3 bearish</em> · 0 neutral</span><div className="stability-pill">Stable · VIX 11.70</div></div><Sparkline tone="negative" large /></section>
     <section className="market-card-grid">{marketCards.map((card, index) => <article className={index === 4 ? 'wide' : ''} key={card.name}><div className={`market-card-icon ${card.tone}`}>{card.name.slice(0, 2)}</div><div className="market-copy"><h3>{card.name}</h3><strong className={card.tone}>{card.value}</strong><p>{card.detail}</p></div><Sparkline tone={card.tone} /></article>)}</section>
     <div className="portal-disclaimer sentiment"><strong>Information, not advice</strong><span>Market sentiment indicators are for educational purposes only and should not be considered financial advice.</span><small>Source: Preview market data</small></div>
+  </PortalLayout>
+}
+
+function StockBoardPage(props: PortalProps) {
+  return <PortalLayout {...props} title="Internal stock status board">
+    <p className="portal-subtitle">Track each stock from watchlist through trade completion. Drag cards between columns or use the status menu.</p>
+    <StockBoard />
   </PortalLayout>
 }
 
