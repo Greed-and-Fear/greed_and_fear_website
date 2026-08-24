@@ -60,6 +60,7 @@ function App() {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <ScrollManager />
       <Header theme={theme} onThemeChange={setTheme} />
+      <MarketTicker />
       <main id="main-content">
         <Routes>
           <Route path="/" element={<HomePage onPolicy={setPolicy} />} />
@@ -119,13 +120,23 @@ function ScrollManager() {
   return null
 }
 
+function MarketTicker() {
+  const items = [
+    ['NIFTY 50', '24,811.45', '+0.48%', 'up'],
+    ['BANK NIFTY', '53,214.80', '-0.22%', 'down'],
+    ['SENSEX', '81,406.12', '+0.31%', 'up'],
+    ['INDIA VIX', '11.70', '+4.51%', 'warning'],
+  ]
+  return <div className="market-ticker" aria-label="Preview market ticker"><div className="ticker-status"><i /> Market open</div>{items.map(([name, value, change, tone]) => <div className="ticker-item" key={name}><span>{name}</span><strong>{value}</strong><em className={tone}>{change}</em></div>)}<small>Preview data</small></div>
+}
+
 function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
   const charts = [apollo, coforge, crudeOil]
   const positions = [abbIndia, hul, tataCom]
   return <>
     <section className="hero section-pad">
-      <div><p className="eyebrow">Learn. Practise. Trade with a plan.</p><h1>Understand the market with <span>confidence.</span></h1><p className="lead">Clear chart breakdowns and practical lessons in market structure, Elliott Waves, Fibonacci and price action.</p><div className="button-row"><ExternalButton href={TELEGRAM_URL}>Join the free community</ExternalButton><Link className="button secondary" to="/courses">Start learning</Link><Link className="button login-button" to="/login">Member login →</Link></div><div className="trust-row"><span>Education first</span><span>Beginner friendly</span><span>Real chart examples</span></div></div>
-      <div className="hero-art"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><img src={heroImage} alt="Trading analysis workspace" /></div>
+      <div><p className="eyebrow">Read the setup. Manage the risk. Execute the plan.</p><h1>Trade the market with <span>clarity.</span></h1><p className="lead">Actionable chart education built around market structure, Elliott Waves, Fibonacci, price action and disciplined risk management.</p><div className="button-row"><ExternalButton href={TELEGRAM_URL}>Join the trading desk</ExternalButton><Link className="button secondary" to="/courses">Learn the strategy</Link><Link className="button login-button" to="/login">Open terminal →</Link></div><div className="trust-row"><span>Risk-first approach</span><span>Multi-timeframe analysis</span><span>Real chart studies</span></div></div>
+      <div className="hero-art"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><img src={heroImage} alt="Trading analysis workspace" /><div className="market-pulse-card"><div><span>Market pulse</span><i>Live preview</i></div><strong>NIFTY 50 <em>+0.48%</em></strong><div className="candle-strip"><b /><b /><b /><b /><b /><b /><b /><b /></div><small>Momentum: bullish · Volatility: stable</small></div></div>
     </section>
     <Stats />
     <section className="community-section section-pad">
