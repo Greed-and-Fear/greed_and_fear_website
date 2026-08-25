@@ -87,7 +87,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 :root[data-theme='light'] .market-ticker { color: #435b4e; background: rgba(245, 249, 246, .96); }
 :root[data-theme='light'] .ticker-item strong { color: #152b20; }
 .hero { min-height: calc(100vh - 117px); display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: 60px; padding-block: 72px; }
-.hero h1, .page-hero h1, .launch-page h1 { max-width: 850px; margin-bottom: 24px; font-size: clamp(3rem, 5vw, 6.2rem); line-height: 1.01; font-family: 'Space Grotesk'; }
+.hero h1, .page-hero h1, .launch-page h1 { max-width: 850px; margin-bottom: 24px; font-size: clamp(3rem, 5vw, 6.2rem); line-height: 1.01; }
 .hero h1 span { color: #9B5DE5; }
 .lead { max-width: 650px; font-size: clamp(1.1rem, 1.8vw, 1.35rem); }
 .eyebrow { margin-bottom: 14px; color: var(--accent); font-size: .76rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
