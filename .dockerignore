@@ -3,6 +3,7 @@ dist
 .git
 .github
 .vscode
+.kilo
 __pycache__
 *.pyc
 .env

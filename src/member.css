@@ -272,10 +272,15 @@
 .raw-stock-table-wrap { max-width: calc(100vw - 260px); max-height: calc(100vh - 270px); overflow: auto; border: 1px solid var(--portal-border); border-radius: 8px 8px 0 0; background: var(--portal-surface); box-shadow: var(--portal-shadow); }
 .raw-stock-table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; font-size: .66rem; }
 .raw-stock-table th { position: sticky; top: 0; z-index: 2; min-width: 94px; padding: 11px 10px; color: var(--portal-muted); border-right: 1px solid var(--portal-border); border-bottom: 1px solid var(--portal-border); background: var(--portal-surface-2); text-align: left; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
-.raw-stock-table th:nth-child(2), .raw-stock-table th:nth-child(12) { min-width: 110px; }
-.raw-stock-table th:nth-child(13) { min-width: 230px; }
+.raw-stock-table th:first-child { left: 0; z-index: 4; min-width: 94px; }
+.raw-stock-table th:nth-child(2) { left: 94px; z-index: 4; min-width: 110px; }
+.raw-stock-table th:nth-child(3) { left: 204px; z-index: 3; min-width: 230px; }
 .raw-stock-table td { height: 39px; padding: 8px 10px; color: var(--portal-text); border-right: 1px solid var(--portal-border); border-bottom: 1px solid var(--portal-border); white-space: nowrap; }
+.raw-stock-table td:first-child { position: sticky; left: 0; z-index: 2; background: var(--portal-surface); }
+.raw-stock-table td:nth-child(2) { position: sticky; left: 94px; z-index: 2; background: var(--portal-surface); font-weight: 700; }
+.raw-stock-table td:nth-child(3) { position: sticky; left: 204px; z-index: 1; background: var(--portal-surface); font-weight: 700; }
 .raw-stock-table tr:nth-child(even) td { background: color-mix(in srgb, var(--portal-surface-2) 55%, transparent); }
+.raw-stock-table tr:nth-child(even) td:first-child, .raw-stock-table tr:nth-child(even) td:nth-child(2), .raw-stock-table tr:nth-child(even) td:nth-child(3) { background: var(--portal-surface-2); }
 .raw-stock-table tr:hover td { background: color-mix(in srgb, var(--portal-green) 7%, var(--portal-surface)); }
 .raw-stock-table td.positive { color: var(--portal-green); font-weight: 700; }
 .raw-stock-table td.negative { color: var(--portal-red); font-weight: 700; }

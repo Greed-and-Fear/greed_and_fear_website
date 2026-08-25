@@ -33,7 +33,7 @@ export default function AllStocksPage() {
   }, [page, retry])
 
   const totalPages = data ? Math.ceil(data.count / PAGE_SIZE) : 1
-  const columns = data?.results[0] ? Object.keys(data.results[0]) : []
+  const columns = data?.results[0] ? orderColumns(Object.keys(data.results[0])) : []
   const goToPage = (nextPage: number) => {
     setLoading(true)
     setPage(Math.max(1, Math.min(nextPage, totalPages)))
@@ -69,4 +69,9 @@ function renderValue(value: unknown) {
   if (value === null || value === undefined) return ''
   if (typeof value === 'object') return JSON.stringify(value)
   return String(value)
+}
+
+function orderColumns(columns: string[]) {
+  const middle = columns.filter((column) => !['id', 'symbol', 'company', 'close', 'company_id'].includes(column))
+  return ['id', 'symbol', 'company', 'close', ...middle, 'company_id'].filter((column) => columns.includes(column))
 }
