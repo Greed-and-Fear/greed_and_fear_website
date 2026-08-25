@@ -2,8 +2,8 @@ services:
   greed-website:
     image: website
     container_name: website-container
-    # ports:
-    #   - "82:80"
+    ports:
+      - "82:80"
     restart: always
     networks:
       - greed_net
