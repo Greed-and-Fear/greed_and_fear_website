@@ -1,4 +1,4 @@
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'https://api.greedandfear.fun').replace(/\/$/, '')
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'https://api.greedandfear.in').replace(/\/$/, '')
 
 export interface ValidationIssue {
   type: string
