@@ -249,6 +249,21 @@
 .stock-modal > header h2 { margin: 3px 0 0; font-size: 1.2rem; letter-spacing: -.02em; }
 .stock-modal > header button { color: var(--portal-muted); border: 0; background: transparent; cursor: pointer; font-size: 1.5rem; }
 .stock-modal form { padding: 20px 22px 0; }
+.catalog-picker { margin-bottom: 16px; padding: 14px; border: 1px solid var(--portal-border); border-radius: 7px; background: var(--portal-surface-2); }
+.catalog-picker > label { display: block; margin-bottom: 7px; color: var(--portal-muted); font-size: .68rem; font-weight: 700; }
+.catalog-picker > div:first-of-type { display: flex; gap: 7px; }
+.catalog-picker input { min-width: 0; height: 39px; flex: 1; padding: 0 10px; color: var(--portal-text); border: 1px solid var(--portal-border); border-radius: 6px; background: var(--portal-surface); outline: 0; }
+.catalog-picker input:focus { border-color: var(--portal-green); }
+.catalog-picker > div > button { padding: 0 12px; color: white; border: 0; border-radius: 6px; background: var(--portal-green); cursor: pointer; font-size: .67rem; font-weight: 700; }
+.catalog-results { max-height: 220px; margin-top: 8px; overflow-y: auto; border: 1px solid var(--portal-border); border-radius: 6px; }
+.catalog-results button { width: 100%; min-height: 51px; padding: 8px 10px !important; display: grid; grid-template-columns: 85px 1fr auto; align-items: center; gap: 8px; color: var(--portal-text) !important; border: 0 !important; border-bottom: 1px solid var(--portal-border) !important; border-radius: 0 !important; background: var(--portal-surface) !important; text-align: left; }
+.catalog-results button:last-child { border-bottom: 0 !important; }
+.catalog-results button:hover { background: var(--portal-green-soft) !important; }
+.catalog-results span { color: var(--portal-muted); font-size: .65rem; }
+.catalog-results em { color: var(--portal-green); font-style: normal; font-size: .68rem; }
+.selected-stock-summary { margin-bottom: 15px; padding: 12px; display: grid; grid-template-columns: 100px 1fr auto; align-items: center; gap: 9px; border-left: 3px solid var(--portal-green); background: var(--portal-green-soft); }
+.selected-stock-summary span { color: var(--portal-muted); font-size: .7rem; }
+.selected-stock-summary em { color: var(--portal-green); font-style: normal; font-size: .65rem; }
 .stock-form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 .stock-form-grid label { color: var(--portal-muted); font-size: .68rem; font-weight: 700; }
 .stock-form-grid input, .stock-form-grid select, .stock-form-grid textarea { width: 100%; margin-top: 6px; padding: 10px; color: var(--portal-text); border: 1px solid var(--portal-border); border-radius: 6px; background: var(--portal-surface-2); outline: 0; resize: vertical; }

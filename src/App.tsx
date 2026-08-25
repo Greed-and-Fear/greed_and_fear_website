@@ -1,7 +1,7 @@
 import { FormEvent, ReactNode, useEffect, useState } from 'react'
 import { Link, Navigate, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { courses, plans, testimonials, type PlanId } from './data'
-import { getNews, submitContact, type NewsArticle } from './services/mockApi'
+import { api, getApiErrorMessage, type NewsArticle } from './api/client'
 import MemberPortal, { ThemeToggle, type Theme } from './MemberPortal'
 import logo from '../images/logo/logo.jpg'
 import heroImage from '../images/background/software.png'
@@ -197,10 +197,11 @@ function NewsPage() {
   const [query, setQuery] = useState('')
   const [articles, setArticles] = useState<NewsArticle[]>([])
   const [loading, setLoading] = useState(true)
-  const loadNews = async (search = '') => { setLoading(true); setArticles(await getNews(search)); setLoading(false) }
-  useEffect(() => { void getNews().then((data) => { setArticles(data); setLoading(false) }) }, [])
+  const [error, setError] = useState('')
+  const loadNews = async (search = '') => { setLoading(true); setError(''); try { setArticles(await api.news(search)) } catch (reason) { setError(getApiErrorMessage(reason, 'Unable to load news.')) } finally { setLoading(false) } }
+  useEffect(() => { void api.news().then(setArticles).catch((reason) => setError(getApiErrorMessage(reason, 'Unable to load news.'))).finally(() => setLoading(false)) }, [])
   const search = (event: FormEvent) => { event.preventDefault(); void loadNews(query) }
-  return <Page><PageHero eyebrow="Market brief preview" title="Find the context behind the move." copy="Browse sample market updates while our live data service is being prepared." /><form className="news-search" onSubmit={search}><label htmlFor="news-query">What would you like to read about?</label><div><input id="news-query" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try crude, Nifty, or earnings" /><button className="button" type="submit">Search updates</button></div></form>{loading ? <p className="data-state" aria-live="polite">Loading market updates...</p> : articles.length ? <div className="topic-grid">{articles.map((article) => <article className="news-card" key={article.id}><span>{article.category}</span><h2>{article.title}</h2><p>{article.summary}</p><small>{article.source} · {new Date(article.publishedAt).toLocaleDateString('en-IN')}</small></article>)}</div> : <div className="data-state"><p>No updates match “{query}”.</p><button className="text-button" onClick={() => { setQuery(''); void loadNews() }}>Show all updates</button></div>}</Page>
+  return <Page><PageHero eyebrow="Market brief" title="Find the context behind the move." copy="Browse current market updates from the Greed & Fear data service." /><form className="news-search" onSubmit={search}><label htmlFor="news-query">What would you like to read about?</label><div><input id="news-query" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try crude, Nifty, or earnings" maxLength={100} /><button className="button" type="submit">Search updates</button></div></form>{loading ? <p className="data-state" aria-live="polite">Loading market updates...</p> : error ? <div className="data-state"><p>{error}</p><button className="text-button" onClick={() => void loadNews(query)}>Try again</button></div> : articles.length ? <div className="topic-grid">{articles.map((article) => <article className="news-card" key={article.id}><span>{article.category}</span><h2>{article.title}</h2><p>{article.summary}</p><small>{article.source} · {new Date(article.published_at).toLocaleDateString('en-IN')}</small></article>)}</div> : <div className="data-state"><p>No updates match “{query}”.</p><button className="text-button" onClick={() => { setQuery(''); void loadNews() }}>Show all updates</button></div>}</Page>
 }
 
 function LaunchPage() {
@@ -212,19 +213,21 @@ function JoinPage() {
 }
 
 function ContactSection() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [reference, setReference] = useState('')
+  const [error, setError] = useState('')
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const form = event.currentTarget
     const data = new FormData(form)
     setStatus('sending')
-    const response = await submitContact({ name: String(data.get('name')), phone: String(data.get('phone')), subject: String(data.get('subject')), message: String(data.get('message')) })
-    setReference(response.reference)
-    setStatus('sent')
-    form.reset()
+    setError('')
+    try {
+      const response = await api.contact({ name: String(data.get('name')), phone: String(data.get('phone')), subject: String(data.get('subject')), message: String(data.get('message')) })
+      setReference(response.reference); setStatus('sent'); form.reset()
+    } catch (reason) { setError(getApiErrorMessage(reason, 'Unable to send your enquiry.')); setStatus('error') }
   }
-  return <section id="contact" className="contact-section section-pad"><img src={contactImage} alt="Analyst working at a desk" loading="lazy" /><form onSubmit={submit}><p className="eyebrow">We’re here to help</p><h2>What would you like to know?</h2><p>Send your question and keep the reference number for follow-up.</p><label>Name <span>Required</span><input name="name" autoComplete="name" placeholder="Your name" required /></label><label>Phone <span>Optional</span><input name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="Your phone number" /></label><label>Subject <span>Required</span><input name="subject" placeholder="How can we help?" required /></label><label>Message <span>Required</span><textarea name="message" rows={4} placeholder="Tell us a little more..." required /></label><button className="button" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending your enquiry...' : 'Send enquiry'}</button>{status === 'sent' && <p className="form-success" role="status">Thanks, your enquiry is saved. Reference: <strong>{reference}</strong></p>}<small className="preview-note">Preview mode: enquiries are saved only in this browser.</small></form></section>
+  return <section id="contact" className="contact-section section-pad"><img src={contactImage} alt="Analyst working at a desk" loading="lazy" /><form onSubmit={submit}><p className="eyebrow">We’re here to help</p><h2>What would you like to know?</h2><p>Send your question and keep the reference number for follow-up.</p><label>Name <span>Required</span><input name="name" autoComplete="name" placeholder="Your name" maxLength={120} required /></label><label>Phone <span>Required</span><input name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="Your phone number" maxLength={30} required /></label><label>Subject <span>Required</span><input name="subject" placeholder="How can we help?" maxLength={160} required /></label><label>Message <span>Required</span><textarea name="message" rows={4} placeholder="Tell us a little more..." maxLength={5000} required /></label><button className="button" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending your enquiry...' : 'Send enquiry'}</button>{status === 'sent' && <p className="form-success" role="status">Thanks, your enquiry was received. Reference: <strong>{reference}</strong></p>}{status === 'error' && <p className="form-error" role="alert">{error}</p>}</form></section>
 }
 
 function Footer({ onPolicy }: { onPolicy: (policy: Policy) => void }) {

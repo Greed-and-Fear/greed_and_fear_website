@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-
-interface StocksResponse {
-  count: number
-  next: string | null
-  previous: string | null
-  results: Array<Record<string, unknown>>
-}
+import { API_BASE_URL, api, getApiErrorMessage, type PaginatedAllStocks } from './api/client'
 
 const PAGE_SIZE = 100
 
@@ -14,7 +8,7 @@ export default function AllStocksPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const requestedPage = Number(searchParams.get('page') ?? '1')
   const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1
-  const [data, setData] = useState<StocksResponse | null>(null)
+  const [data, setData] = useState<PaginatedAllStocks | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [retry, setRetry] = useState(0)
@@ -22,15 +16,11 @@ export default function AllStocksPage() {
 
   useEffect(() => {
     const controller = new AbortController()
-    fetch(`/tradebrains-api/?ascending=true&by=company&format=json&page=${page}&per_page=${PAGE_SIZE}`, { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error(`Request failed with status ${response.status}`)
-        return response.json() as Promise<StocksResponse>
-      })
+    api.allStocks(page, PAGE_SIZE, controller.signal)
       .then((response) => { setData(response); setError(''); setLoading(false) })
       .catch((reason: unknown) => {
         if (reason instanceof DOMException && reason.name === 'AbortError') return
-        setError(reason instanceof Error ? reason.message : 'Unable to load stock data.')
+        setError(getApiErrorMessage(reason, 'Unable to load stock data.'))
         setLoading(false)
       })
     return () => controller.abort()
@@ -57,7 +47,7 @@ export default function AllStocksPage() {
       <div><span>Source records</span><strong>{data?.count.toLocaleString('en-IN') ?? '—'}</strong></div>
       <div><span>Rows per page</span><strong>{PAGE_SIZE}</strong></div>
       <div><span>Current page</span><strong>{page} / {totalPages}</strong></div>
-      <div className="all-stocks-links"><button onClick={() => void copyPageLink()}>{linkCopied ? 'Link copied' : 'Copy page link'}</button><a href={`https://portal.tradebrains.in/api/company/sector-data/all-stocks/?ascending=true&by=company&format=json&page=${page}&per_page=100`} target="_blank" rel="noreferrer">Open source API ↗</a></div>
+      <div className="all-stocks-links"><button onClick={() => void copyPageLink()}>{linkCopied ? 'Link copied' : 'Copy page link'}</button><a href={`${API_BASE_URL}/api/market/all-stocks?ascending=true&by=company&page=${page}&per_page=100`} target="_blank" rel="noreferrer">Open API ↗</a></div>
     </div>
 
     {loading && <div className="stocks-loading" aria-live="polite"><span /><p>Loading page {page} with {PAGE_SIZE} records...</p></div>}
