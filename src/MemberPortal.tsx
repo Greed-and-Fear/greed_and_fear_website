@@ -3,6 +3,7 @@ import { Link, NavLink, Navigate, Route, Routes, useNavigate } from 'react-route
 import { alerts, heatmap, marketCards, opportunities } from './memberData'
 import { login } from './services/mockApi'
 import StockBoard from './StockBoard'
+import AllStocksPage from './AllStocksPage'
 import logo from '../images/logo/logo.jpg'
 import './member.css'
 
@@ -23,6 +24,7 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
     <Route path="/dashboard" element={<DashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/sentiment" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/stocks" element={<StockBoardPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/market-data" element={<MarketDataPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
   </Routes>
 }
@@ -57,7 +59,7 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
 }
 
 const navigation = [
-  ['Dashboard', '/dashboard', 'DB'], ['Stock board', '/stocks', 'ST'], ['Pre-market', '/sentiment', 'PM'], ['Top opportunities', '/dashboard#opportunities', 'OP'], ['Ban watch', '/dashboard#ban-watch', 'BW'], ['Long builders', '/dashboard#opportunities', 'LB'], ['Short builders', '/dashboard#opportunities', 'SB'], ['Heatmap', '/dashboard#heatmap', 'HM'], ['Alerts', '/dashboard#alerts', 'AL'],
+  ['Dashboard', '/dashboard', 'DB'], ['Stock board', '/stocks', 'ST'], ['All stocks', '/market-data', 'AS'], ['Pre-market', '/sentiment', 'PM'], ['Top opportunities', '/dashboard#opportunities', 'OP'], ['Ban watch', '/dashboard#ban-watch', 'BW'], ['Long builders', '/dashboard#opportunities', 'LB'], ['Short builders', '/dashboard#opportunities', 'SB'], ['Heatmap', '/dashboard#heatmap', 'HM'], ['Alerts', '/dashboard#alerts', 'AL'],
 ] as const
 
 function PortalLayout({ children, theme, onThemeChange, title }: PortalProps & { children: ReactNode; title: string }) {
@@ -96,6 +98,13 @@ function StockBoardPage(props: PortalProps) {
   return <PortalLayout {...props} title="Internal stock status board">
     <p className="portal-subtitle">Track each stock from watchlist through trade completion. Drag cards between columns or use the status menu.</p>
     <StockBoard />
+  </PortalLayout>
+}
+
+function MarketDataPage(props: PortalProps) {
+  return <PortalLayout {...props} title="All stocks market data">
+    <p className="portal-subtitle">Raw Trade Brains company and market fields, displayed as returned by the source API with 100 records per page.</p>
+    <AllStocksPage />
   </PortalLayout>
 }
 
