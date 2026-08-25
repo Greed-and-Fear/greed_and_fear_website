@@ -268,7 +268,8 @@
 .all-stocks-toolbar span, .all-stocks-toolbar strong { display: block; }
 .all-stocks-toolbar span { color: var(--portal-muted); font-size: .57rem; text-transform: uppercase; letter-spacing: .07em; }
 .all-stocks-toolbar strong { margin-top: 3px; font: 700 .9rem 'Manrope'; }
-.all-stocks-toolbar > a { margin-left: auto; padding: 9px 12px; color: var(--portal-green); border: 1px solid color-mix(in srgb, var(--portal-green) 35%, var(--portal-border)); border-radius: 6px; font-size: .67rem; font-weight: 700; }
+.all-stocks-links { margin-left: auto; display: flex; gap: 7px; }
+.all-stocks-links a, .all-stocks-links button { padding: 9px 12px; color: var(--portal-green); border: 1px solid color-mix(in srgb, var(--portal-green) 35%, var(--portal-border)); border-radius: 6px; background: transparent; cursor: pointer; font-size: .67rem; font-weight: 700; }
 .raw-stock-table-wrap { max-width: calc(100vw - 260px); max-height: calc(100vh - 270px); overflow: auto; border: 1px solid var(--portal-border); border-radius: 8px 8px 0 0; background: var(--portal-surface); box-shadow: var(--portal-shadow); }
 .raw-stock-table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; font-size: .66rem; }
 .raw-stock-table th { position: sticky; top: 0; z-index: 2; min-width: 94px; padding: 11px 10px; color: var(--portal-muted); border-right: 1px solid var(--portal-border); border-bottom: 1px solid var(--portal-border); background: var(--portal-surface-2); text-align: left; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
@@ -337,7 +338,8 @@
   .stock-kanban { grid-template-columns: repeat(6, min(82vw, 300px)); }
   .all-stocks-toolbar { align-items: stretch; flex-wrap: wrap; gap: 10px 0; }
   .all-stocks-toolbar > div { min-width: 33.33%; }
-  .all-stocks-toolbar > a { width: 100%; margin: 0; justify-content: center; text-align: center; }
+  .all-stocks-links { width: 100%; margin: 0; }
+  .all-stocks-links > * { flex: 1; justify-content: center; text-align: center; }
   .raw-stock-table-wrap { max-width: calc(100vw - 28px); }
   .stocks-pagination { align-items: stretch; flex-direction: column; gap: 10px; }
   .stocks-pagination > div { overflow-x: auto; }

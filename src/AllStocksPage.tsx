@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 interface StocksResponse {
   count: number
@@ -10,11 +11,14 @@ interface StocksResponse {
 const PAGE_SIZE = 100
 
 export default function AllStocksPage() {
-  const [page, setPage] = useState(1)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const requestedPage = Number(searchParams.get('page') ?? '1')
+  const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1
   const [data, setData] = useState<StocksResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [retry, setRetry] = useState(0)
+  const [linkCopied, setLinkCopied] = useState(false)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -36,8 +40,16 @@ export default function AllStocksPage() {
   const columns = data?.results[0] ? orderColumns(Object.keys(data.results[0])) : []
   const goToPage = (nextPage: number) => {
     setLoading(true)
-    setPage(Math.max(1, Math.min(nextPage, totalPages)))
+    const nextParams = new URLSearchParams(searchParams)
+    nextParams.set('page', String(Math.max(1, Math.min(nextPage, totalPages))))
+    setSearchParams(nextParams)
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  const copyPageLink = async () => {
+    if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(window.location.href)
+    else window.prompt('Copy this page link:', window.location.href)
+    setLinkCopied(true)
+    window.setTimeout(() => setLinkCopied(false), 1800)
   }
 
   return <section className="all-stocks-page">
@@ -45,7 +57,7 @@ export default function AllStocksPage() {
       <div><span>Source records</span><strong>{data?.count.toLocaleString('en-IN') ?? '—'}</strong></div>
       <div><span>Rows per page</span><strong>{PAGE_SIZE}</strong></div>
       <div><span>Current page</span><strong>{page} / {totalPages}</strong></div>
-      <a href="https://portal.tradebrains.in/api/company/sector-data/all-stocks/?ascending=true&by=company&format=json&page=1&per_page=100" target="_blank" rel="noreferrer">Open source API ↗</a>
+      <div className="all-stocks-links"><button onClick={() => void copyPageLink()}>{linkCopied ? 'Link copied' : 'Copy page link'}</button><a href={`https://portal.tradebrains.in/api/company/sector-data/all-stocks/?ascending=true&by=company&format=json&page=${page}&per_page=100`} target="_blank" rel="noreferrer">Open source API ↗</a></div>
     </div>
 
     {loading && <div className="stocks-loading" aria-live="polite"><span /><p>Loading page {page} with {PAGE_SIZE} records...</p></div>}
