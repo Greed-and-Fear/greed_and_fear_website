@@ -60,7 +60,6 @@ function App() {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <ScrollManager />
       <Header theme={theme} onThemeChange={setTheme} />
-      <MarketTicker />
       <main id="main-content">
         <Routes>
           <Route path="/" element={<HomePage onPolicy={setPolicy} />} />
@@ -120,31 +119,20 @@ function ScrollManager() {
   return null
 }
 
-function MarketTicker() {
-  const items = [
-    ['NIFTY 50', '24,811.45', '+0.48%', 'up'],
-    ['BANK NIFTY', '53,214.80', '-0.22%', 'down'],
-    ['SENSEX', '81,406.12', '+0.31%', 'up'],
-    ['INDIA VIX', '11.70', '+4.51%', 'warning'],
-  ]
-  return <div className="market-ticker" aria-label="Preview market ticker"><div className="ticker-status"><i /> Market open</div>{items.map(([name, value, change, tone]) => <div className="ticker-item" key={name}><span>{name}</span><strong>{value}</strong><em className={tone}>{change}</em></div>)}<small>Preview data</small></div>
-}
-
 function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
   const charts = [apollo, coforge, crudeOil]
   const positions = [abbIndia, hul, tataCom]
   return <>
     <section className="hero section-pad">
-      <div><p className="eyebrow">Read the setup. Manage the risk. Execute the plan.</p><h1>Trade the market with <span>clarity.</span></h1><p className="lead">Actionable chart education built around market structure, Elliott Waves, Fibonacci, price action and disciplined risk management.</p><div className="button-row"><ExternalButton href={TELEGRAM_URL}>Join the trading desk</ExternalButton><Link className="button secondary" to="/courses">Learn the strategy</Link><Link className="button login-button" to="/login">Open terminal →</Link></div><div className="trust-row"><span>Risk-first approach</span><span>Multi-timeframe analysis</span><span>Real chart studies</span></div></div>
-      <div className="hero-art"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><img src={heroImage} alt="Trading analysis workspace" /><div className="market-pulse-card"><div><span>Market pulse</span><i>Live preview</i></div><strong>NIFTY 50 <em>+0.48%</em></strong><div className="candle-strip"><b /><b /><b /><b /><b /><b /><b /><b /></div><small>Momentum: bullish · Volatility: stable</small></div></div>
+      <div><h1>Start your trading journey by understanding the <span>market structure</span></h1><p className="lead">Advanced technical analysis built around Eliott Wave Theory, Fibonacci and price action.</p><div className="button-row"><ExternalButton href={TELEGRAM_URL}>Join the trading desk</ExternalButton><Link className="button secondary" to="/courses">Learn the strategy</Link><Link className="button login-button" to="/login">Open terminal →</Link></div><div className="trust-row"><span>Risk-first approach</span><span>Multi-timeframe analysis</span><span>Real chart studies</span></div></div>
+      <div className="hero-art"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><img src={heroImage} alt="Trading analysis workspace" /></div>
     </section>
-    <Stats />
     <section className="community-section section-pad">
       <TelegramGallery />
       <div><p className="eyebrow">Telegram community</p><h2>Market thinking, shared openly.</h2><p>Follow free Elliott Wave trade setups, market observations and educational chart breakdowns.</p><ExternalButton href={TELEGRAM_URL}>Open Telegram</ExternalButton></div>
     </section>
     <section id="about" className="about section-pad">
-      <div><p className="eyebrow">About us</p><h2>Analysis that teaches you how to think.</h2><p>We are technical analysts focused on financial literacy and personal portfolio education. Our work covers stocks, commodities and indices across swing, positional and intraday timeframes.</p><button className="text-button" onClick={() => onPolicy('disclaimer')}>Read our market disclaimer</button></div>
+      <div><p className="eyebrow">About us</p><h2>Built on Structure, Driven by Analysis.</h2><p>GREED & FEAR is a technical analysis platform focused on understanding markets through structure, cycles and price behaviour. Our methodology combines Eliott Wave Theory, Fibonacci relationships and price action to study market trends and potential scenarios across equities, indices and other financial markets. We don't aim to predict every move. We aim to understand what the market is telling us.</p><button className="text-button" onClick={() => onPolicy('disclaimer')}>Read our market disclaimer</button></div>
       <div className="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/crcPugw4Ddk" title="Why choose Greed and Fear" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen /></div>
     </section>
     <ChartStrip title="Recent intraday charts" charts={charts} />
@@ -153,10 +141,6 @@ function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
     <section className="testimonials section-pad"><SectionTitle eyebrow="Community" title="What our students say" /><div className="testimonial-grid">{testimonials.map((item) => <article className="quote-card" key={item.name}><p>“{item.text}”</p><strong>{item.name}</strong></article>)}</div></section>
     <ContactSection />
   </>
-}
-
-function Stats() {
-  return <section className="stats" aria-label="Community highlights"><div><strong>3</strong><span>market disciplines</span></div><div><strong>5+</strong><span>setup categories</span></div><div><strong>100%</strong><span>education focused</span></div></section>
 }
 
 function TelegramGallery() {
