@@ -156,9 +156,9 @@ function ChartStrip({ title, charts }: { title: string; charts: string[] }) {
   return <section className="chart-section section-pad"><SectionTitle eyebrow="Track record" title={title} /><div className="chart-strip">{charts.map((chart) => <img src={chart} alt="Technical analysis chart" loading="lazy" key={chart} />)}</div></section>
 }
 
-function PlanPreview() {
-  return <section className="plans-section section-pad"><SectionTitle eyebrow="Membership" title="Choose the depth you need" /><div className="plan-grid">{plans.map((plan) => <PlanCard planId={plan.id} key={plan.id} />)}</div></section>
-}
+// function PlanPreview() {
+//   return <section className="plans-section section-pad"><SectionTitle eyebrow="Membership" title="Choose the depth you need" /><div className="plan-grid">{plans.map((plan) => <PlanCard planId={plan.id} key={plan.id} />)}</div></section>
+// }
 
 function PlanCard({ planId }: { planId: PlanId }) {
   const plan = plans.find((item) => item.id === planId)!
