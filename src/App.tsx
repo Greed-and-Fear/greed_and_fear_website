@@ -101,7 +101,9 @@ function Header({ theme, onThemeChange }: { theme: Theme; onThemeChange: (theme:
       <Link to="/" className="brand"><img src={logo} alt="Greed and Fear" /></Link>
       <button className="menu-button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label="Toggle navigation"><span /><span /><span /></button>
       <nav className={open ? 'site-nav open' : 'site-nav'} onClick={() => setOpen(false)}>
-        <NavLink to="/" end className={navClass}>Home</NavLink><NavLink to="/courses" className={navClass}>Learn</NavLink><NavLink to="/products" className={navClass}>Membership</NavLink><NavLink to="/results" className={navClass}>Results</NavLink><NavLink to="/news" className={navClass}>News</NavLink><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="nav-cta" to="/login">Member login</Link>
+        <NavLink to="/" end className={navClass}>Home</NavLink><NavLink to="/courses" className={navClass}>Learn</NavLink>
+        {/* <NavLink to="/products" className={navClass}>Membership</NavLink> */}
+        <NavLink to="/results" className={navClass}>Results</NavLink><NavLink to="/news" className={navClass}>News</NavLink><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="button login-button" to="/login">Member login</Link>
       </nav>
     </header>
   )
@@ -124,7 +126,7 @@ function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
   const positions = [abbIndia, hul, tataCom]
   return <>
     <section className="hero section-pad">
-      <div><h1>Start your trading journey by understanding the <span>market structure</span></h1><p className="lead">Advanced technical analysis built around Eliott Wave Theory, Fibonacci and price action.</p><div className="button-row"><ExternalButton href={TELEGRAM_URL}>Join the trading desk</ExternalButton><Link className="button secondary" to="/courses">Learn the strategy</Link><Link className="button login-button" to="/login">Open terminal →</Link></div><div className="trust-row"><span>Risk-first approach</span><span>Multi-timeframe analysis</span><span>Real chart studies</span></div></div>
+      <div><h1>Start your trading journey by understanding the <span>market structure</span></h1><p className="lead">Advanced technical analysis built around Eliott Wave Theory, Fibonacci and price action.</p><div className="button-row"><ExternalButton href={TELEGRAM_URL}>Join the trading desk</ExternalButton><Link className="button login-button" to="/courses">Learn the strategy</Link><Link className="button login-button" to="/login">Open terminal →</Link></div><div className="trust-row"><span>Risk-first approach</span><span>Multi-timeframe analysis</span><span>Real chart studies</span></div></div>
       <div className="hero-art"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><img src={heroImage} alt="Trading analysis workspace" /></div>
     </section>
     <section className="community-section section-pad">
@@ -137,7 +139,7 @@ function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
     </section>
     <ChartStrip title="Recent intraday charts" charts={charts} />
     <ChartStrip title="Positional market studies" charts={positions} />
-    <PlanPreview />
+    {/* <PlanPreview /> */}
     <section className="testimonials section-pad"><SectionTitle eyebrow="Community" title="What our students say" /><div className="testimonial-grid">{testimonials.map((item) => <article className="quote-card" key={item.name}><p>“{item.text}”</p><strong>{item.name}</strong></article>)}</div></section>
     <ContactSection />
   </>
@@ -204,7 +206,7 @@ function NewsPage() {
 }
 
 function LaunchPage() {
-  return <section className="launch-page" style={{ backgroundImage: `linear-gradient(90deg, rgba(3,5,16,.94), rgba(3,5,16,.45)), url(${launchImage})` }}><p className="eyebrow">Cartesian Waveshots</p><h1>A new market experience is taking shape.</h1><p>Launch timing will be announced to our community.</p><ExternalButton href={TELEGRAM_URL}>Get launch updates</ExternalButton></section>
+  return <section className="launch-page" style={{ backgroundImage: `linear-gradient(90deg, rgba(0,0,0,.94), rgba(0,0,0,.45)), url(${launchImage})` }}><p className="eyebrow">Cartesian Waveshots</p><h1>A new market experience is taking shape.</h1><p>Launch timing will be announced to our community.</p><ExternalButton href={TELEGRAM_URL}>Get launch updates</ExternalButton></section>
 }
 
 function JoinPage() {
@@ -244,7 +246,7 @@ function PolicyModal({ policy, onClose }: { policy: Policy; onClose: () => void 
 function Page({ children }: { children: ReactNode }) { return <div className="page section-pad">{children}</div> }
 function PageHero({ eyebrow, title, copy }: { eyebrow: string; title: string; copy: string }) { return <header className="page-hero"><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p>{copy}</p></header> }
 function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) { return <header className="section-title"><p className="eyebrow">{eyebrow}</p><h2>{title}</h2></header> }
-function ExternalButton({ href, children, secondary = false }: { href: string; children: ReactNode; secondary?: boolean }) { return <a className={secondary ? 'button secondary' : 'button'} href={href} target="_blank" rel="noreferrer">{children}</a> }
+function ExternalButton({ href, children, secondary = false }: { href: string; children: ReactNode; secondary?: boolean }) { return <a className={secondary ? 'button secondary' : 'button login-button'} href={href} target="_blank" rel="noreferrer">{children}</a> }
 function UnavailablePage({ title }: { title: string }) { return <Page><PageHero eyebrow="In development" title={title} copy="This prototype did not have a working backend in the legacy site. It has been retained as a route but is not available yet." /><Link className="button" to="/">Return home</Link></Page> }
 function NotFoundPage() { return <Page><PageHero eyebrow="404" title="This page has moved." copy="Use the navigation to find the current page." /><Link className="button" to="/">Return home</Link></Page> }
 
