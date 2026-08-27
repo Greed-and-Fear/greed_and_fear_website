@@ -9,11 +9,10 @@ import heroImage from '../images/background/software.png'
 import contactImage from '../images/background/contactbackground.jpg'
 import launchImage from '../images/background/launch_day.webp'
 import telegramIcon from '../images/svg/telegram-icon.svg'
-import tele1 from '../images/telegram/tele1.jpg'
-import tele2 from '../images/telegram/tele2.jpg'
-import tele3 from '../images/telegram/tele3.jpg'
-import tele4 from '../images/telegram/tele4.jpg'
-import tele5 from '../images/telegram/tele5.jpg'
+import tele1 from '../images/telegram/telegram1.jpg'
+import tele2 from '../images/telegram/telegram2.jpg'
+import tele3 from '../images/telegram/telegram3.jpg'
+import tele4 from '../images/telegram/telegram4.jpg'
 import apollo from '../images/intraday/apollotire.webp'
 import coforge from '../images/intraday/coforge.webp'
 import crudeOil from '../images/intraday/crudeoil.webp'
@@ -148,7 +147,7 @@ function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
 }
 
 function TelegramGallery() {
-  const images = [tele1, tele2, tele3, tele4, tele5]
+  const images = [tele1, tele2, tele3, tele4]
   const [active, setActive] = useState(0)
   useEffect(() => { const timer = window.setInterval(() => setActive((value) => (value + 1) % images.length), 2500); return () => window.clearInterval(timer) }, [images.length])
   return <div className="gallery"><img src={images[active]} alt={`Telegram community result ${active + 1}`} /><div className="gallery-dots">{images.map((_, index) => <button className={index === active ? 'active' : ''} onClick={() => setActive(index)} key={index} aria-label={`Show image ${index + 1}`} />)}</div></div>
