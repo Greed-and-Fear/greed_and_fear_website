@@ -3,7 +3,8 @@ import { Link, Navigate, NavLink, Route, Routes, useLocation, useParams } from '
 import { courses, plans, testimonials, type PlanId } from './data'
 import { api, getApiErrorMessage, type NewsArticle } from './api/client'
 import MemberPortal, { ThemeToggle, type Theme } from './MemberPortal'
-import logo from '../images/logo/logo.jpg'
+import logo from '../images/logo/logos.jpeg'
+import whiteLogo from '../images/logo/namedWhiteLogo.png'
 import heroImage from '../images/background/software.png'
 import contactImage from '../images/background/contactbackground.jpg'
 import launchImage from '../images/background/launch_day.webp'
@@ -19,6 +20,7 @@ import crudeOil from '../images/intraday/crudeoil.webp'
 import abbIndia from '../images/positional/abbindia.jpg'
 import hul from '../images/positional/hul.jpg'
 import tataCom from '../images/positional/tatacom.jpg'
+import normalLogo from '../images/logo/normalLogo.png'
 
 const TELEGRAM_URL = 'https://t.me/menezes725'
 const TELEGRAM_GROUP_URL = 'https://t.me/+RqumyUtpnyZiY2Jl'
@@ -98,7 +100,7 @@ function Header({ theme, onThemeChange }: { theme: Theme; onThemeChange: (theme:
   const navClass = ({ isActive }: { isActive: boolean }) => isActive ? 'active' : undefined
   return (
     <header className="site-header">
-      <Link to="/" className="brand"><img src={logo} alt="Greed and Fear" /></Link>
+      <Link to="/" className="brand"><img src={theme === 'dark' ? logo : whiteLogo} alt="Greed and Fear" /></Link>
       <button className="menu-button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label="Toggle navigation"><span /><span /><span /></button>
       <nav className={open ? 'site-nav open' : 'site-nav'} onClick={() => setOpen(false)}>
         <NavLink to="/" end className={navClass}>Home</NavLink><NavLink to="/courses" className={navClass}>Learn</NavLink>
@@ -233,7 +235,7 @@ function ContactSection() {
 }
 
 function Footer({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
-  return <footer><div className="footer-contact"><a href="mailto:greedandfearacademy@gmail.com">greedandfearacademy@gmail.com</a><a href="tel:+917899404714">+91 78994 04714</a></div><div className="footer-grid"><div><img src={logo} alt="Greed and Fear" /><p>Technical analysis education for thoughtful market participants.</p></div><div><h3>Explore</h3><Link to="/products">Memberships</Link><Link to="/courses">Courses</Link><Link to="/results">Results</Link><Link to="/news">News</Link></div><div><h3>Community</h3><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Telegram</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp</a><Link to="/login">Member login</Link><button onClick={() => onPolicy('careers')}>Careers</button></div><div><h3>Policies</h3>{(['terms', 'privacy', 'refund', 'cookies', 'disclaimer'] as Policy[]).map((item) => <button onClick={() => onPolicy(item)} key={item}>{policyContent[item].title}</button>)}</div></div><div className="copyright">© {new Date().getFullYear()} Greed & Fear. Educational content only.</div></footer>
+  return <footer><div className="footer-contact"><a href="mailto:greedandfearacademy@gmail.com">greedandfearacademy@gmail.com</a><a href="tel:+917899404714">+91 78994 04714</a></div><div className="footer-grid"><div><img src={normalLogo} alt="Greed and Fear" /><p>Technical analysis education for thoughtful market participants.</p></div><div><h3>Explore</h3><Link to="/products">Memberships</Link><Link to="/courses">Courses</Link><Link to="/results">Results</Link><Link to="/news">News</Link></div><div><h3>Community</h3><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Telegram</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp</a><Link to="/login">Member login</Link><button onClick={() => onPolicy('careers')}>Careers</button></div><div><h3>Policies</h3>{(['terms', 'privacy', 'refund', 'cookies', 'disclaimer'] as Policy[]).map((item) => <button onClick={() => onPolicy(item)} key={item}>{policyContent[item].title}</button>)}</div></div><div className="copyright">© {new Date().getFullYear()} Greed & Fear. Educational content only.</div></footer>
 }
 
 function CookieBanner({ onChoice, onRead }: { onChoice: (choice: 'accepted' | 'rejected') => void; onRead: () => void }) {
