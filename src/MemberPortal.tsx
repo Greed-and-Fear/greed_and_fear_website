@@ -4,9 +4,11 @@ import { alerts, heatmap, marketCards, opportunities } from './memberData'
 import { login } from './services/mockApi'
 import StockBoard from './StockBoard'
 import AllStocksPage from './AllStocksPage'
-import logo from '../images/logo/logo.jpg'
+import logo from '../images/logo/logos.jpeg'
 import './member.css'
-
+import whiteLogo from '../images/logo/namedWhiteLogo.png'
+import normalWhiteLogo from '../images/logo/whiteLogo.png'
+import normalLogo from '../images/logo/normalLogo.png'
 export type Theme = 'light' | 'dark'
 
 interface PortalProps {
@@ -40,11 +42,11 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
     try { await login(String(data.get('email')), String(data.get('password'))); navigate('/dashboard') } catch (reason) { setError(reason instanceof Error ? reason.message : 'Unable to sign in.') } finally { setLoading(false) }
   }
   return <main className="login-page">
-    <header className="login-topbar"><Link to="/"><img src={logo} alt="Greed and Fear" /></Link><div><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link to="/" className="back-link">Back to home</Link></div></header>
+    <header className="login-topbar"><Link to="/"><img src={theme === 'dark' ? logo : whiteLogo} alt="Greed and Fear" /></Link><div><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link to="/" className="back-link">Back to home</Link></div></header>
     <section className="login-card">
-      <img className="login-mark" src={logo} alt="" />
+      <img className="login-mark" src={theme === 'dark' ? normalLogo : normalWhiteLogo} alt="" />
       <p className="portal-kicker">Member access</p><h1>Welcome back</h1><p>Sign in to open your market intelligence dashboard.</p>
-      <div className="demo-credentials"><span>Demo username</span><strong>admin</strong><span>Demo password</span><strong>admin</strong></div>
+      {/* <div className="demo-credentials"><span>Demo username</span><strong>admin</strong><span>Demo password</span><strong>admin</strong></div> */}
       <form onSubmit={submit}>
         <label>Username<input name="email" type="text" autoComplete="username" placeholder="Enter admin" required /></label>
         <label>Password<div className="password-field"><input name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Enter admin" required /><button type="button" onClick={() => setShowPassword((value) => !value)}>{showPassword ? 'Hide' : 'Show'}</button></div></label>
