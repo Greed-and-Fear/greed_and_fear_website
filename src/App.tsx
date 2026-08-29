@@ -6,7 +6,6 @@ import MemberPortal, { ThemeToggle, type Theme } from './MemberPortal'
 import logo from '../images/logo/logos.jpeg'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
 import heroImage from '../images/background/software.png'
-import contactImage from '../images/background/contactbackground.jpg'
 import launchImage from '../images/background/launch_day.webp'
 import telegramIcon from '../images/svg/telegram-icon.svg'
 import tele1 from '../images/telegram/telegram1.jpg'
@@ -70,6 +69,7 @@ function App() {
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/checkout/:planId" element={<CheckoutPage />} />
           <Route path="/news" element={<NewsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/join" element={<JoinPage />} />
           <Route path="/account" element={<Navigate to="/login" replace />} />
@@ -104,7 +104,7 @@ function Header({ theme, onThemeChange }: { theme: Theme; onThemeChange: (theme:
       <nav className={open ? 'site-nav open' : 'site-nav'} onClick={() => setOpen(false)}>
         <NavLink to="/" end className={navClass}>Home</NavLink><NavLink to="/courses" className={navClass}>Learn</NavLink>
         {/* <NavLink to="/products" className={navClass}>Membership</NavLink> */}
-        <NavLink to="/results" className={navClass}>Results</NavLink><NavLink to="/news" className={navClass}>News</NavLink><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="button login-button" to="/login">Member login</Link>
+        <NavLink to="/results" className={navClass}>Results</NavLink><NavLink to="/news" className={navClass}>News</NavLink><NavLink to="/contact" className={navClass}>Contact</NavLink><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="button login-button" to="/login">Member login</Link>
       </nav>
     </header>
   )
@@ -142,7 +142,6 @@ function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
     <ChartStrip title="Positional market studies" charts={positions} />
     {/* <PlanPreview /> */}
     <section className="testimonials section-pad"><SectionTitle eyebrow="Community" title="What our students say" /><div className="testimonial-grid">{testimonials.map((item) => <article className="quote-card" key={item.name}><p>“{item.text}”</p><strong>{item.name}</strong></article>)}</div></section>
-    <ContactSection />
   </>
 }
 
@@ -215,7 +214,7 @@ function JoinPage() {
   return <Page><PageHero eyebrow="Join us" title="Continue the conversation." copy="Choose the channel that works for you. Telegram carries community updates, while WhatsApp is best for direct support." /><div className="join-grid"><article><img src={telegramIcon} alt="" /><h2>Telegram community</h2><p>Educational setups, charts and market discussions.</p><ExternalButton href={TELEGRAM_GROUP_URL}>Join Telegram</ExternalButton></article><article><span className="whatsapp-mark">W</span><h2>WhatsApp support</h2><p>Ask a direct question about membership or access.</p><ExternalButton href={WHATSAPP_URL}>Open WhatsApp</ExternalButton></article></div></Page>
 }
 
-function ContactSection() {
+function ContactPage() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [reference, setReference] = useState('')
   const [error, setError] = useState('')
@@ -230,11 +229,27 @@ function ContactSection() {
       setReference(response.reference); setStatus('sent'); form.reset()
     } catch (reason) { setError(getApiErrorMessage(reason, 'Unable to send your enquiry.')); setStatus('error') }
   }
-  return <section id="contact" className="contact-section section-pad"><img src={contactImage} alt="Analyst working at a desk" loading="lazy" /><form onSubmit={submit}><p className="eyebrow">We’re here to help</p><h2>What would you like to know?</h2><p>Send your question and keep the reference number for follow-up.</p><label>Name <span>Required</span><input name="name" autoComplete="name" placeholder="Your name" maxLength={120} required /></label><label>Phone <span>Required</span><input name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="Your phone number" maxLength={30} required /></label><label>Subject <span>Required</span><input name="subject" placeholder="How can we help?" maxLength={160} required /></label><label>Message <span>Required</span><textarea name="message" rows={4} placeholder="Tell us a little more..." maxLength={5000} required /></label><button className="button" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending your enquiry...' : 'Send enquiry'}</button>{status === 'sent' && <p className="form-success" role="status">Thanks, your enquiry was received. Reference: <strong>{reference}</strong></p>}{status === 'error' && <p className="form-error" role="alert">{error}</p>}</form></section>
+  return <div className="contact-page">
+    <section className="contact-main section-pad">
+      <div className="contact-intro"><p className="contact-kicker">Get in touch</p><h1>Let’s connect and <span><b>grow</b><b>together</b></span></h1><p className="contact-lead">Have a question, suggestion, or just want to say hello? Our team is here to assist you on your trading journey.</p><div className="contact-options">
+        <article><i><ContactIcon type="chat" /></i><h2>Chat with us</h2><p>Join our Telegram community for quick support and market updates.</p><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Join Telegram ↗</a></article>
+        <article><i><ContactIcon type="email" /></i><h2>Email us</h2><p>Drop us an email and we’ll get back to you as soon as possible.</p><a href="mailto:greedandfearacademy@gmail.com" title="greedandfearacademy@gmail.com">Email our team ↗</a></article>
+        <article><i><ContactIcon type="clock" /></i><h2>Response time</h2><p>We aim to respond within 24 hours on business days.</p><strong>Mon – Sat: 10 AM – 7 PM</strong></article>
+      </div></div>
+      <form className="contact-message-card" onSubmit={submit}><p className="contact-kicker">Direct message</p><h2>Send us a message</h2><div className="contact-form-row"><label><span className="sr-only">Your name</span><input name="name" autoComplete="name" placeholder="Your name" maxLength={120} required /></label><label><span className="sr-only">Phone or email</span><input name="phone" autoComplete="tel" placeholder="Phone or email" maxLength={30} required /></label></div><label><span className="sr-only">Subject</span><input name="subject" placeholder="Subject" maxLength={160} required /></label><label><span className="sr-only">Your message</span><textarea name="message" rows={7} placeholder="Your message" maxLength={5000} required /></label><button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending...' : 'Send message'} <span>↗</span></button>{status === 'sent' && <p className="contact-success" role="status">Message received. Your reference is <strong>{reference}</strong>.</p>}{status === 'error' && <p className="form-error" role="alert">{error}</p>}</form>
+    </section>
+    <section className="contact-market-banner section-pad"><div className="banner-candles"><i /><i /><i /><i /></div><div><h2>Together, we navigate the markets</h2><p>Knowledge, discipline, and community create stronger traders. Let’s build a better trading future together.</p></div><img src={normalLogo} alt="" /></section>
+  </div>
+}
+
+function ContactIcon({ type }: { type: 'chat' | 'email' | 'clock' }) {
+  if (type === 'chat') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16v11H9l-5 3v-14Z" /><path d="M8 10.8h.01M12 10.8h.01M16 10.8h.01" /></svg>
+  if (type === 'email') return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" /></svg>
 }
 
 function Footer({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
-  return <footer><div className="footer-contact"><a href="mailto:greedandfearacademy@gmail.com">greedandfearacademy@gmail.com</a><a href="tel:+917899404714">+91 78994 04714</a></div><div className="footer-grid"><div><img src={normalLogo} alt="Greed and Fear" /><p>Technical analysis education for thoughtful market participants.</p></div><div><h3>Explore</h3><Link to="/products">Memberships</Link><Link to="/courses">Courses</Link><Link to="/results">Results</Link><Link to="/news">News</Link></div><div><h3>Community</h3><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Telegram</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp</a><Link to="/login">Member login</Link><button onClick={() => onPolicy('careers')}>Careers</button></div><div><h3>Policies</h3>{(['terms', 'privacy', 'refund', 'cookies', 'disclaimer'] as Policy[]).map((item) => <button onClick={() => onPolicy(item)} key={item}>{policyContent[item].title}</button>)}</div></div><div className="copyright">© {new Date().getFullYear()} Greed & Fear. Educational content only.</div></footer>
+  return <footer><div className="footer-contact"><a href="mailto:greedandfearacademy@gmail.com">greedandfearacademy@gmail.com</a><a href="tel:+917899404714">+91 78994 04714</a></div><div className="footer-grid"><div><img src={normalLogo} alt="Greed and Fear" /><p>Technical analysis education for thoughtful market participants.</p></div><div><h3>Explore</h3><Link to="/products">Memberships</Link><Link to="/courses">Courses</Link><Link to="/results">Results</Link><Link to="/news">News</Link><Link to="/contact">Contact</Link></div><div><h3>Community</h3><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Telegram</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp</a><Link to="/login">Member login</Link><button onClick={() => onPolicy('careers')}>Careers</button></div><div><h3>Policies</h3>{(['terms', 'privacy', 'refund', 'cookies', 'disclaimer'] as Policy[]).map((item) => <button onClick={() => onPolicy(item)} key={item}>{policyContent[item].title}</button>)}</div></div><div className="copyright">© {new Date().getFullYear()} Greed & Fear. Educational content only.</div></footer>
 }
 
 function CookieBanner({ onChoice, onRead }: { onChoice: (choice: 'accepted' | 'rejected') => void; onRead: () => void }) {
