@@ -93,10 +93,17 @@
 .negative { color: var(--portal-red); }
 .meter { width: 42px; height: 5px; margin-left: 5px; display: inline-block; overflow: hidden; vertical-align: middle; border-radius: 99px; background: var(--portal-border); }
 .meter i { height: 100%; display: block; border-radius: inherit; background: var(--portal-red); }
-.signal { padding: 4px 6px; border-radius: 4px; font-size: .58rem; }
+.signal { padding: 4px 6px; border-radius: 4px; font-size: .58rem; font-weight: 600; white-space: nowrap; }
 .long-build-up { color: var(--portal-green); background: var(--portal-green-soft); }
 .short-build-up { color: var(--portal-red); background: var(--portal-red-soft); }
 .short-covering { color: var(--portal-blue); background: color-mix(in srgb, var(--portal-blue) 12%, transparent); }
+.long-unwinding { color: var(--portal-orange); background: color-mix(in srgb, var(--portal-orange) 15%, transparent); }
+.neutral---weak, .neutral-weak { color: var(--portal-muted); background: color-mix(in srgb, var(--portal-muted) 15%, transparent); }
+.risk-badge { padding: 3px 7px; border-radius: 4px; font-size: .58rem; font-weight: 700; text-transform: uppercase; white-space: nowrap; display: inline-block; }
+.risk-ban-zone { color: var(--portal-red); background: var(--portal-red-soft); border: 1px solid color-mix(in srgb, var(--portal-red) 30%, transparent); }
+.risk-high-risk { color: #f97316; background: rgba(249, 115, 22, .15); border: 1px solid rgba(249, 115, 22, .3); }
+.risk-elevated { color: var(--portal-orange); background: rgba(233, 133, 22, .15); }
+.risk-normal { color: var(--portal-green); background: var(--portal-green-soft); }
 .score { padding: 4px 6px; color: var(--portal-green); border-radius: 4px; background: var(--portal-green-soft); }
 .ban-list { padding: 0 14px; }
 .ban-list > div { min-height: 45px; display: grid; grid-template-columns: 1fr .5fr .8fr .9fr .5fr; align-items: center; gap: 8px; border-bottom: 1px solid var(--portal-border); font-size: .69rem; }

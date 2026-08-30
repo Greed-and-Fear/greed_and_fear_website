@@ -30,7 +30,7 @@ jobs:
 
     - name: SSH into VPS and run commands
       run: |
-        ssh -tt $USERNAME@$HOST 'cd web-projects && git pull && docker build --tag "website" . && docker compose up -d'
+        ssh -tt $USERNAME@$HOST 'cd web-projects && git pull && docker build --tag "website" . && docker build --tag "greed-backend-image" ./python && docker compose up -d'
       env:
         SSHKEY: ${{ secrets.SSHKEY }}
         HOST: ${{ secrets.HOST }}
