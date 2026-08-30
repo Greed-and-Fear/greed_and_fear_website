@@ -173,7 +173,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .contact-page::before { position: absolute; inset: 0; pointer-events: none; content: ''; opacity: .18; background-image: linear-gradient(rgba(59, 130, 246, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(168, 85, 247, .06) 1px, transparent 1px); background-size: 55px 55px; mask-image: linear-gradient(to bottom, transparent, black 25%, transparent 78%); }
 .contact-main { position: relative; z-index: 1; padding-block: clamp(70px, 9vw, 125px) 60px; display: grid; grid-template-columns: 1.08fr .92fr; gap: clamp(38px, 6vw, 85px); align-items: center; }
 .contact-kicker { margin-bottom: 17px; color: #5da0ff; font-size: .76rem; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
-.contact-intro h1 { max-width: 670px; margin-bottom: 18px; font-size: clamp(3.2rem, 5.8vw, 6.2rem); line-height: .97; text-transform: capitalize; }
+.contact-intro h1 { max-width: 670px; margin-bottom: 18px; font-size: clamp(3.2rem, 5.8vw, 6.2rem); line-height: 1.21; text-transform: capitalize; }
 .contact-intro h1 span { display: flex; flex-wrap: wrap; column-gap: .18em; background: linear-gradient(90deg, #2588ff, #b039f1); background-clip: text; color: transparent; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .contact-intro h1 span b { font: inherit; letter-spacing: inherit; }
 .contact-lead { max-width: 610px; margin-bottom: 30px; font-size: 1.05rem; }
