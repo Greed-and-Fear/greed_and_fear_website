@@ -1,6 +1,7 @@
 import { FormEvent, type ReactNode, useEffect, useState } from 'react'
-import { Link, NavLink, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
-import { api, getApiErrorMessage, type MarketAlert, type MarketSnapshot, type StockMetric, type User } from './api/client'
+import { Link, NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { api, getApiErrorMessage, type MarketAlert, type MarketSnapshot, type StockMetric } from './api/client'
+import { useAuth } from './auth/auth-context'
 import StockBoard from './StockBoard'
 import AllStocksPage from './AllStocksPage'
 import logo from '../images/logo/logos.jpeg'
@@ -20,8 +21,15 @@ export function ThemeToggle({ theme, onChange, compact = false }: { theme: Theme
 }
 
 export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
+  const { status } = useAuth()
+  const location = useLocation()
+  if (status === 'loading') return <MemberAuthLoading theme={theme} />
+  if (location.pathname === '/login') {
+    if (status === 'authenticated') return <Navigate to={getReturnPath(location.state)} replace />
+    return <LoginPage theme={theme} onThemeChange={onThemeChange} />
+  }
+  if (status === 'anonymous') return <Navigate to="/login" replace state={{ from: `${location.pathname}${location.search}${location.hash}` }} />
   return <Routes>
-    <Route path="/login" element={<LoginPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/dashboard" element={<DashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/sentiment" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/stocks" element={<StockBoardPage theme={theme} onThemeChange={onThemeChange} />} />
@@ -32,30 +40,32 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
 
 function LoginPage({ theme, onThemeChange }: PortalProps) {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { login } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); setLoading(true); setError('')
     const data = new FormData(event.currentTarget)
-    try { const user = await api.login(String(data.get('email')), String(data.get('password'))); localStorage.setItem('api-user', JSON.stringify(user)); navigate('/dashboard') } catch (reason) { setError(getApiErrorMessage(reason, 'Unable to sign in.')) } finally { setLoading(false) }
+    try { await login(String(data.get('email')), String(data.get('password'))); navigate(getReturnPath(location.state), { replace: true }) } catch (reason) { setError(getApiErrorMessage(reason, 'Unable to sign in.')) } finally { setLoading(false) }
   }
   return <main className="login-page">
     <header className="login-topbar"><Link to="/"><img src={theme === 'dark' ? logo : whiteLogo} alt="Greed and Fear" /></Link><div><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link to="/" className="back-link">Back to home</Link></div></header>
     <section className="login-card">
       <img className="login-mark" src={theme === 'dark' ? normalLogo : normalWhiteLogo} alt="" />
       <p className="portal-kicker">Member access</p><h1>Welcome back</h1><p>Sign in to open your market intelligence dashboard.</p>
-      {/* <div className="demo-credentials"><span>Demo username</span><strong>admin</strong><span>Demo password</span><strong>admin</strong></div> */}
+      <div className="demo-credentials"><span>Temporary username</span><strong>testinguser</strong><span>Temporary password</span><strong>testinguser</strong></div>
       <form onSubmit={submit}>
-        <label>Username<input name="email" type="text" autoComplete="username" placeholder="Enter admin" required /></label>
-        <label>Password<div className="password-field"><input name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Enter admin" required /><button type="button" onClick={() => setShowPassword((value) => !value)}>{showPassword ? 'Hide' : 'Show'}</button></div></label>
-        <div className="form-options"><label><input type="checkbox" name="remember" defaultChecked /> Remember me</label><a href="mailto:greedandfearacademy@gmail.com?subject=Password help">Forgot password?</a></div>
+        <label>Username<input name="email" type="text" autoComplete="username" placeholder="Enter testinguser" required /></label>
+        <label>Password<div className="password-field"><input name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Enter testinguser" required /><button type="button" onClick={() => setShowPassword((value) => !value)}>{showPassword ? 'Hide' : 'Show'}</button></div></label>
+        <div className="form-options"><span>Secure 12-hour session</span><a href="mailto:greedandfearacademy@gmail.com?subject=Password help">Forgot password?</a></div>
         <button className="portal-primary" disabled={loading}>{loading ? 'Signing in...' : 'Sign in'}<span>→</span></button>
         {error && <p className="portal-error" role="alert">{error}</p>}
       </form>
       <p className="admin-link">Not a member yet? <a href="mailto:greedandfearacademy@gmail.com">Contact admin</a></p>
     </section>
-    <div className="login-benefits"><div><i>S</i><span><strong>Secure experience</strong><small>Your preview stays in this browser.</small></span></div><div><i>A</i><span><strong>Expert analysis</strong><small>Clear, professional market insights.</small></span></div><div><i>M</i><span><strong>Member exclusive</strong><small>Focused tools without the noise.</small></span></div></div>
+    <div className="login-benefits"><div><i>S</i><span><strong>Secure experience</strong><small>Your session cookie is HttpOnly.</small></span></div><div><i>A</i><span><strong>Expert analysis</strong><small>Clear, professional market insights.</small></span></div><div><i>M</i><span><strong>Member exclusive</strong><small>Focused tools without the noise.</small></span></div></div>
   </main>
 }
 
@@ -65,10 +75,10 @@ const navigation = [
 
 function PortalLayout({ children, theme, onThemeChange, title }: PortalProps & { children: ReactNode; title: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const user = getStoredUser()
+  const { user, logout } = useAuth()
   return <div className="portal-shell">
     <aside className={menuOpen ? 'portal-sidebar open' : 'portal-sidebar'}><Link className="portal-logo" to="/"><img src={logo} alt="Greed and Fear" /></Link><nav>{navigation.map(([label, href, icon]) => <NavLink to={href} className={({ isActive }) => isActive && !href.includes('#') ? 'active' : undefined} key={label} onClick={() => setMenuOpen(false)}><span>{icon}</span>{label}</NavLink>)}</nav><div className="upgrade-card"><p>Greed & Fear Pro</p><small>Unlock advanced analytics, alerts and market tools.</small><Link to="/products">View plans</Link></div></aside>
-    <div className="portal-workspace"><header className="portal-header"><button className="portal-menu" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle member navigation">Menu</button><div><span className="market-time">Greed & Fear market API</span><span className="live-pill">Connected</span><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="run-button" to="/dashboard">Refresh view</Link><span className="member-avatar">{user?.name.slice(0, 1).toUpperCase() ?? 'M'}</span></div></header><div className="portal-content"><div className="portal-page-title"><div><p>Member intelligence</p><h1>{title}</h1></div><Link to="/login" onClick={() => localStorage.removeItem('api-user')}>Sign out</Link></div>{children}</div></div>
+    <div className="portal-workspace"><header className="portal-header"><button className="portal-menu" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle member navigation">Menu</button><div><span className="market-time">Greed & Fear market API</span><span className="live-pill">Connected</span><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="run-button" to="/dashboard">Refresh view</Link><span className="member-avatar">{user?.name.slice(0, 1).toUpperCase() ?? 'M'}</span></div></header><div className="portal-content"><div className="portal-page-title"><div><p>Member intelligence</p><h1>{title}</h1></div><button className="portal-signout" onClick={() => void logout()}>Sign out</button></div>{children}</div></div>
   </div>
 }
 
@@ -134,6 +144,11 @@ function Sparkline({ tone, large = false }: { tone: string; large?: boolean }) {
   return <svg className={large ? `sparkline ${tone} large` : `sparkline ${tone}`} viewBox="0 0 220 64" aria-hidden="true"><polyline points={points} fill="none" vectorEffect="non-scaling-stroke" /><polygon points={`2,64 ${points} 218,64`} /></svg>
 }
 
-function getStoredUser(): User | null {
-  try { return JSON.parse(localStorage.getItem('api-user') ?? 'null') as User | null } catch { return null }
+function MemberAuthLoading({ theme }: { theme: Theme }) {
+  return <main className="member-auth-loading"><img src={theme === 'dark' ? normalLogo : normalWhiteLogo} alt="Greed and Fear" /><span /><p>Restoring your secure session...</p></main>
+}
+
+function getReturnPath(state: unknown) {
+  const from = state && typeof state === 'object' && 'from' in state ? (state as { from?: unknown }).from : null
+  return typeof from === 'string' && from.startsWith('/') && !from.startsWith('/login') ? from : '/dashboard'
 }
