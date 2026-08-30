@@ -6,8 +6,6 @@ import {
   calculateMWPLUtilization,
   getMwplRiskZone,
   classifyPosition,
-  calculateSignalStrength,
-  generateReasons,
   evaluateDataQuality,
   processStockHistory,
   scanStockUniverse,
