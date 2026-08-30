@@ -14,6 +14,9 @@ services:
 
   # Backend API service holding the Hasura Secret (keeping frontend env clean)
   greed-backend:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
     image: greed-backend-image
     container_name: backend-container
     environment:
