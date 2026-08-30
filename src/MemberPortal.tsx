@@ -1,6 +1,6 @@
 import { FormEvent, type ReactNode, useEffect, useState } from 'react'
 import { Link, NavLink, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
-import { api, getApiErrorMessage, getScannedStockData, type ProcessedStockData, type MarketAlert, type MarketSnapshot, type User } from './api/client'
+import { api, getApiErrorMessage, getScannedStockData, type PositionSignal, type ProcessedStockData, type MarketAlert, type MarketSnapshot, type User } from './api/client'
 import StockBoard from './StockBoard'
 import AllStocksPage from './AllStocksPage'
 import logo from '../images/logo/logos.jpeg'
@@ -79,8 +79,6 @@ function DashboardPage(props: PortalProps) {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    setLoading(true)
-    setError('')
     Promise.all([
       getScannedStockData().catch(async () => {
         const legacy = await api.stockMetrics(100)
@@ -111,7 +109,7 @@ function DashboardPage(props: PortalProps) {
           oi1DayChangePercent: Number(m.oi_change || 0),
           oi2DayChange: 0,
           oi2DayChangePercent: 0,
-          signal: (m.signal || 'Neutral / Weak') as any,
+          signal: (m.signal || 'Neutral / Weak') as PositionSignal,
           signalStrength: 'Moderate',
           reasons: [],
           dataQuality: 'GOOD',
@@ -287,7 +285,9 @@ function getStoredUser(): User | null {
   try {
     const user = JSON.parse(localStorage.getItem('api-user') ?? 'null') as User | null
     if (user) return user
-  } catch { }
+  } catch {
+    // Ignore JSON parsing errors
+  }
   return { id: 1, name: 'Trader', phone: '9999999999', plan: 'elite' }
 }
 
