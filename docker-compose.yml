@@ -12,6 +12,20 @@ services:
     networks:
       - greed_net
 
+  # Backend API service holding the Hasura Secret (keeping frontend env clean)
+  greed-backend:
+    image: greed-backend-image
+    container_name: backend-container
+    environment:
+      - HASURA_ADMIN_SECRET=f3gup2fRk7ssEb7MOp3sPFZ2XFZjpmZf
+      - HASURA_GRAPHQL_ENDPOINT=https://gql.greedandfear.in/v1/graphql
+      - PORT=8000
+    ports:
+      - "8000:8000"
+    restart: always
+    networks:
+      - greed_net
+
 networks:
   greed_net:
     name: greed_net
