@@ -60,7 +60,7 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
 }
 
 const navigation = [
-  ['Dashboard', '/dashboard', 'DB'], ['Stock board', '/stocks', 'ST'], ['All stocks', '/market-data', 'AS'], ['Pre-market', '/sentiment', 'PM'], ['Top opportunities', '/dashboard#opportunities', 'OP'], ['Ban watch', '/dashboard#ban-watch', 'BW'], ['Long builders', '/dashboard#opportunities', 'LB'], ['Short builders', '/dashboard#opportunities', 'SB'], ['Heatmap', '/dashboard#heatmap', 'HM'], ['Alerts', '/dashboard#alerts', 'AL'],
+  ['Dashboard', '/dashboard', 'DB'], ['Stock board', '/stocks', 'ST'], ['All stocks', '/market-data', 'AS'], ['Pre-market', '/sentiment', 'PM'],
 ] as const
 
 function PortalLayout({ children, theme, onThemeChange, title }: PortalProps & { children: ReactNode; title: string }) {
