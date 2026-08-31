@@ -46,7 +46,7 @@ function App() {
     localStorage.setItem('theme', theme)
   }, [theme])
 
-  if (['/login', '/dashboard', '/sentiment', '/stocks', '/market-data'].some((path) => location.pathname.startsWith(path))) {
+  if (['/login', '/dashboard', '/sentiment', '/stocks', '/market-data', '/global-indices'].some((path) => location.pathname.startsWith(path))) {
     return <MemberPortal theme={theme} onThemeChange={setTheme} />
   }
 

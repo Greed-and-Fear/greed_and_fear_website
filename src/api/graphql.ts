@@ -1,10 +1,9 @@
-import { scanStockUniverse, type RawStockMWPLRecord, type ProcessedStockData } from '../services/greedFearScanner.ts';
-
-export const GRAPHQL_ENDPOINT = (import.meta.env.VITE_GRAPHQL_ENDPOINT as string | undefined) ?? 'https://gql.greedandfear.in/v1/graphql';
+import { graphqlRequest } from './client'
+import { scanStockUniverse, type ProcessedStockData, type RawStockMWPLRecord } from '../services/greedFearScanner'
 
 export const STOCK_MWPL_QUERY = `
   query StockMWPLQuery {
-    stock_mwpl_history(order_by: [{scrip_name: asc}, {trade_date: desc}]) {
+    stock_mwpl_history(order_by: [{ scrip_name: asc }, { trade_date: desc }]) {
       id
       stock_id
       trade_date
@@ -18,9 +17,7 @@ export const STOCK_MWPL_QUERY = `
         id
         symbol
         company_name
-        exchange {
-          name
-        }
+        exchange { name }
         stock_current_price {
           close
           previous_close
@@ -32,61 +29,146 @@ export const STOCK_MWPL_QUERY = `
       }
     }
   }
-`;
+`
 
-export interface GraphQLResponse<T> {
-  data?: T;
-  errors?: Array<{ message: string }>;
+interface StockMWPLHistoryQueryResult {
+  stock_mwpl_history: RawStockMWPLRecord[]
 }
 
-export interface StockMWPLHistoryQueryResult {
-  stock_mwpl_history: RawStockMWPLRecord[];
+export async function fetchStockMWPLHistory(): Promise<RawStockMWPLRecord[]> {
+  const result = await graphqlRequest<StockMWPLHistoryQueryResult>(STOCK_MWPL_QUERY, {}, 'StockMWPLQuery')
+  return result.stock_mwpl_history
 }
 
-/**
- * Fetch raw stock MWPL and Open Interest history from Hasura GraphQL backend.
- * If no local credentials are found, it queries the backend proxy endpoint to hide the secret.
- */
-export async function fetchStockMWPLHistory(adminSecret?: string): Promise<RawStockMWPLRecord[]> {
-  const secret = adminSecret || (import.meta.env.VITE_HASURA_ADMIN_SECRET as string | undefined);
-  if (secret) {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'x-hasura-admin-secret': secret,
-    };
+export async function getScannedStockData(): Promise<ProcessedStockData[]> {
+  return scanStockUniverse(await fetchStockMWPLHistory())
+}
 
-    const response = await fetch(GRAPHQL_ENDPOINT, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        operationName: 'StockMWPLQuery',
-        query: STOCK_MWPL_QUERY,
-        variables: {},
-      }),
-    });
+export interface GlobalIndexDefinition {
+  global_index_id: number | string
+  source_symbol: string
+  name: string
+  market_region: string
+  flag_url: string | null
+  detail_available: boolean
+  is_derived: boolean
+  is_active: boolean
+}
 
-    if (!response.ok) {
-      throw new Error(`GraphQL request failed with HTTP status ${response.status}`);
+export interface GlobalIndexPrice {
+  global_index_id: number | string
+  price: number | string | null
+  net_change: number | string | null
+  percent_change: number | string | null
+  open: number | string | null
+  high: number | string | null
+  low: number | string | null
+  previous_close: number | string | null
+  week_52_high: number | string | null
+  week_52_low: number | string | null
+  weekly_percent_change: number | string | null
+  monthly_percent_change: number | string | null
+  three_month_percent_change: number | string | null
+  six_month_percent_change: number | string | null
+  ytd_percent_change: number | string | null
+  yearly_percent_change: number | string | null
+  technical_rating: string | null
+  market_state: string | null
+  source_message: string | null
+  source_updated_at: string
+  fetched_at: string
+}
+
+export interface GlobalIndexLive extends GlobalIndexDefinition {
+  current: GlobalIndexPrice | null
+}
+
+export interface GlobalIndexHistoryRow extends GlobalIndexPrice {
+  global_index_history_id: number | string
+}
+
+const GLOBAL_INDEX_LIVE_QUERY = `
+  query GlobalIndexLive {
+    global_indices(where: { is_active: { _eq: true } }, order_by: [{ market_region: asc }, { name: asc }]) {
+      global_index_id
+      source_symbol
+      name
+      market_region
+      flag_url
+      detail_available
+      is_derived
+      is_active
     }
-
-    const result = (await response.json()) as GraphQLResponse<StockMWPLHistoryQueryResult>;
-    if (result.errors && result.errors.length > 0) {
-      throw new Error(`GraphQL Error: ${result.errors.map((e) => e.message).join(', ')}`);
+    global_index_current(order_by: { source_updated_at: desc }) {
+      global_index_id
+      price
+      net_change
+      percent_change
+      open
+      high
+      low
+      previous_close
+      week_52_high
+      week_52_low
+      weekly_percent_change
+      monthly_percent_change
+      three_month_percent_change
+      six_month_percent_change
+      ytd_percent_change
+      yearly_percent_change
+      technical_rating
+      market_state
+      source_message
+      source_updated_at
+      fetched_at
     }
-
-    return result.data?.stock_mwpl_history || [];
   }
+`
 
-  // Proxy call to backend to fetch raw data
-  return apiRequest<RawStockMWPLRecord[]>('/api/market/raw-mwpl-history');
+export async function getGlobalIndicesLive(): Promise<GlobalIndexLive[]> {
+  const result = await graphqlRequest<{ global_indices: GlobalIndexDefinition[]; global_index_current: GlobalIndexPrice[] }>(GLOBAL_INDEX_LIVE_QUERY, {}, 'GlobalIndexLive')
+  const currentById = new Map(result.global_index_current.map((current) => [String(current.global_index_id), current]))
+  return result.global_indices.map((index) => ({ ...index, current: currentById.get(String(index.global_index_id)) ?? null }))
 }
 
-import { apiRequest } from './client.ts';
+const GLOBAL_INDEX_HISTORY_QUERY = `
+  query GlobalIndexHistory($indexId: bigint!, $from: timestamptz!, $limit: Int!) {
+    global_index_history(
+      where: { global_index_id: { _eq: $indexId }, source_updated_at: { _gte: $from } }
+      order_by: { source_updated_at: asc }
+      limit: $limit
+    ) {
+      global_index_history_id
+      global_index_id
+      price
+      net_change
+      percent_change
+      open
+      high
+      low
+      previous_close
+      week_52_high
+      week_52_low
+      weekly_percent_change
+      monthly_percent_change
+      three_month_percent_change
+      six_month_percent_change
+      ytd_percent_change
+      yearly_percent_change
+      technical_rating
+      market_state
+      source_message
+      source_updated_at
+      fetched_at
+    }
+  }
+`
 
-/**
- * Fetches data and processes it through the Greed & Fear scanner engine
- */
-export async function getScannedStockData(adminSecret?: string): Promise<ProcessedStockData[]> {
-  const rawRecords = await fetchStockMWPLHistory(adminSecret);
-  return scanStockUniverse(rawRecords);
+export async function getGlobalIndexHistory(indexId: number | string, from: string, limit = 1000): Promise<GlobalIndexHistoryRow[]> {
+  const result = await graphqlRequest<{ global_index_history: GlobalIndexHistoryRow[] }, { indexId: number | string; from: string; limit: number }>(
+    GLOBAL_INDEX_HISTORY_QUERY,
+    { indexId, from, limit },
+    'GlobalIndexHistory',
+  )
+  return result.global_index_history
 }

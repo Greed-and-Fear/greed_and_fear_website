@@ -256,6 +256,5 @@ export const api = {
   deleteBoardPosition: (id: number) => apiRequest<void>(`/api/board/positions/${id}`, { method: 'DELETE' }),
 }
 
-export * from './graphql.ts'
 export * from '../services/greedFearScanner.ts'
 

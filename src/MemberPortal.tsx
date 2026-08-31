@@ -2,11 +2,13 @@ import { FormEvent, type ReactNode, useEffect, useState } from 'react'
 
 import { Link, NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
-import {api, getApiErrorMessage, getScannedStockData, type PositionSignal, type ProcessedStockData, type MarketAlert, type MarketSnapshot } from './api/client'
+import {api, getApiErrorMessage, type PositionSignal, type ProcessedStockData, type MarketAlert, type MarketSnapshot } from './api/client'
+import { getScannedStockData } from './api/graphql'
 
 import { useAuth } from './auth/auth-context'
 import StockBoard from './StockBoard'
 import AllStocksPage from './AllStocksPage'
+import GlobalIndicesPage from './GlobalIndicesPage'
 import logo from '../images/logo/logos.jpeg'
 import './member.css'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
@@ -37,6 +39,7 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
     <Route path="/sentiment" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/stocks" element={<StockBoardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/market-data" element={<MarketDataPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/global-indices" element={<GlobalIndicesAdminPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
   </Routes>
 }
@@ -73,15 +76,15 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
 }
 
 const navigation = [
-  ['Dashboard', '/dashboard', 'DB'], ['Stock board', '/stocks', 'ST'], ['All stocks', '/market-data', 'AS'], ['Pre-market', '/sentiment', 'PM'], ['Top opportunities', '/dashboard#opportunities', 'OP'], ['Ban watch', '/dashboard#ban-watch', 'BW'], ['Long builders', '/dashboard#opportunities', 'LB'], ['Short builders', '/dashboard#opportunities', 'SB'], ['Heatmap', '/dashboard#heatmap', 'HM'], ['Alerts', '/dashboard#alerts', 'AL'],
+  ['Dashboard', '/dashboard', 'DB'], ['Global indices', '/global-indices', 'GI'], ['Stock board', '/stocks', 'ST'], ['All stocks', '/market-data', 'AS'], ['Pre-market', '/sentiment', 'PM'], ['Top opportunities', '/dashboard#opportunities', 'OP'], ['Ban watch', '/dashboard#ban-watch', 'BW'], ['Long builders', '/dashboard#opportunities', 'LB'], ['Short builders', '/dashboard#opportunities', 'SB'], ['Heatmap', '/dashboard#heatmap', 'HM'], ['Alerts', '/dashboard#alerts', 'AL'],
 ] as const
 
-function PortalLayout({ children, theme, onThemeChange, title }: PortalProps & { children: ReactNode; title: string }) {
+function PortalLayout({ children, theme, onThemeChange, title, eyebrow = 'Member intelligence' }: PortalProps & { children: ReactNode; title: string; eyebrow?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   return <div className="portal-shell">
     <aside className={menuOpen ? 'portal-sidebar open' : 'portal-sidebar'}><Link className="portal-logo" to="/"><img src={logo} alt="Greed and Fear" /></Link><nav>{navigation.map(([label, href, icon]) => <NavLink to={href} className={({ isActive }) => isActive && !href.includes('#') ? 'active' : undefined} key={label} onClick={() => setMenuOpen(false)}><span>{icon}</span>{label}</NavLink>)}</nav><div className="upgrade-card"><p>Greed & Fear Pro</p><small>Unlock advanced analytics, alerts and market tools.</small><Link to="/products">View plans</Link></div></aside>
-    <div className="portal-workspace"><header className="portal-header"><button className="portal-menu" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle member navigation">Menu</button><div><span className="market-time">Greed & Fear market API</span><span className="live-pill">Connected</span><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="run-button" to="/dashboard">Refresh view</Link><span className="member-avatar">{user?.name.slice(0, 1).toUpperCase() ?? 'M'}</span></div></header><div className="portal-content"><div className="portal-page-title"><div><p>Member intelligence</p><h1>{title}</h1></div><button className="portal-signout" onClick={() => void logout()}>Sign out</button></div>{children}</div></div>
+    <div className="portal-workspace"><header className="portal-header"><button className="portal-menu" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle member navigation">Menu</button><div><span className="market-time">Greed & Fear market API</span><span className="live-pill">Connected</span><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="run-button" to="/dashboard">Refresh view</Link><span className="member-avatar">{user?.name.slice(0, 1).toUpperCase() ?? 'M'}</span></div></header><div className="portal-content"><div className="portal-page-title"><div><p>{eyebrow}</p><h1>{title}</h1></div><button className="portal-signout" onClick={() => void logout()}>Sign out</button></div>{children}</div></div>
   </div>
 }
 
@@ -283,6 +286,13 @@ function MarketDataPage(props: PortalProps) {
   return <PortalLayout {...props} title="All stocks market data">
     <p className="portal-subtitle">Company and market fields served by the Greed & Fear API with 100 records per page.</p>
     <AllStocksPage />
+  </PortalLayout>
+}
+
+function GlobalIndicesAdminPage(props: PortalProps) {
+  return <PortalLayout {...props} title="Global index command center" eyebrow="Admin market intelligence">
+    <p className="portal-subtitle">Monitor synchronized global index prices and authenticated historical observations in real time.</p>
+    <GlobalIndicesPage />
   </PortalLayout>
 }
 
