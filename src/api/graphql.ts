@@ -4,7 +4,7 @@ import { scanStockUniverse, type ProcessedStockData, type RawStockMWPLRecord } f
 export const STOCK_MWPL_QUERY = `
   query StockMWPLQuery {
     stock_mwpl_history(order_by: [{ scrip_name: asc }, { trade_date: desc }]) {
-      id
+      stock_mwpl_history_id
       stock_id
       trade_date
       isin
@@ -14,7 +14,7 @@ export const STOCK_MWPL_QUERY = `
       open_interest
       recorded_at
       stock {
-        id
+        stock_id
         symbol
         company_name
         exchange { name }
