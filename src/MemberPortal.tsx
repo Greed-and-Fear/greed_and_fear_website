@@ -61,7 +61,6 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
     <section className="login-card">
       <img className="login-mark" src={theme === 'dark' ? normalLogo : normalWhiteLogo} alt="" />
       <p className="portal-kicker">Member access</p><h1>Welcome back</h1><p>Sign in to open your market intelligence dashboard.</p>
-      <div className="demo-credentials"><span>Temporary username</span><strong>testinguser</strong><span>Temporary password</span><strong>testinguser</strong></div>
       <form onSubmit={submit}>
         <label>Username<input name="email" type="text" autoComplete="username" placeholder="Enter testinguser" required /></label>
         <label>Password<div className="password-field"><input name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Enter testinguser" required /><button type="button" onClick={() => setShowPassword((value) => !value)}>{showPassword ? 'Hide' : 'Show'}</button></div></label>
@@ -76,7 +75,7 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
 }
 
 const navigation = [
-  ['Dashboard', '/dashboard', 'DB'], ['Global indices', '/global-indices', 'GI'], ['Stock board', '/stocks', 'ST'], ['All stocks', '/market-data', 'AS'], ['Pre-market', '/sentiment', 'PM'], ['Top opportunities', '/dashboard#opportunities', 'OP'], ['Ban watch', '/dashboard#ban-watch', 'BW'], ['Long builders', '/dashboard#opportunities', 'LB'], ['Short builders', '/dashboard#opportunities', 'SB'], ['Heatmap', '/dashboard#heatmap', 'HM'], ['Alerts', '/dashboard#alerts', 'AL'],
+  ['Dashboard', '/dashboard', 'DB'], ['Global indices', '/global-indices', 'GI'], ['Stock board', '/stocks', 'ST'], ['All stocks', '/market-data', 'AS'], ['Pre-market', '/sentiment', 'PM'],
 ] as const
 
 function PortalLayout({ children, theme, onThemeChange, title, eyebrow = 'Member intelligence' }: PortalProps & { children: ReactNode; title: string; eyebrow?: string }) {
