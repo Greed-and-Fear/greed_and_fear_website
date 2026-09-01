@@ -1,4 +1,4 @@
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'https://api.greedandfear.in').replace(/\/$/, '')
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'https://greedandfear.in').replace(/\/$/, '')
 
 export interface ValidationIssue {
   type: string
@@ -7,23 +7,41 @@ export interface ValidationIssue {
   input?: unknown
 }
 
+export interface ApiErrorBody {
+  detail: string | ValidationIssue[]
+}
+
+type UnauthorizedHandler = () => void
+let unauthorizedHandler: UnauthorizedHandler | null = null
+
+export function setUnauthorizedHandler(handler: UnauthorizedHandler | null) {
+  unauthorizedHandler = handler
+}
+
 export class ApiRequestError extends Error {
-  constructor(public readonly status: number, public readonly body: unknown) {
+  constructor(public readonly status: number, public readonly body: ApiErrorBody | null) {
     super(getApiErrorMessage(body, `API request failed with status ${status}`))
   }
 }
 
-export async function apiRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
+interface ApiRequestInit extends RequestInit {
+  handleUnauthorized?: boolean
+}
+
+export async function apiRequest<T>(path: string, init: ApiRequestInit = {}): Promise<T> {
+  const { handleUnauthorized = true, ...requestInit } = init
   const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...init,
+    ...requestInit,
+    credentials: 'include',
     headers: {
       Accept: 'application/json',
-      ...(init.body ? { 'Content-Type': 'application/json' } : {}),
-      ...init.headers,
+      ...(requestInit.body ? { 'Content-Type': 'application/json' } : {}),
+      ...requestInit.headers,
     },
   })
   if (!response.ok) {
-    const body = await response.json().catch(() => null) as unknown
+    const body = await response.json().catch(() => null) as ApiErrorBody | null
+    if (response.status === 401 && handleUnauthorized) unauthorizedHandler?.()
     throw new ApiRequestError(response.status, body)
   }
   if (response.status === 204) return undefined as T
@@ -46,6 +64,60 @@ export interface User {
   name: string
   phone: string
   plan: string
+}
+
+export interface GraphQLError {
+  message: string
+  path?: Array<string | number>
+  extensions?: Record<string, unknown>
+}
+
+interface GraphQLResponse<T> {
+  data?: T
+  errors?: GraphQLError[]
+}
+
+export class GraphQLRequestError extends Error {
+  constructor(public readonly errors: GraphQLError[]) {
+    super(errors.map((error) => error.message).join(', '))
+  }
+}
+
+export async function graphqlRequest<TData, TVariables extends Record<string, unknown> = Record<string, unknown>>(query: string, variables?: TVariables, operationName?: string): Promise<TData> {
+  const response = await apiRequest<GraphQLResponse<TData>>('/api/graphql', {
+    method: 'POST',
+    body: JSON.stringify({ query, variables: variables ?? {}, operationName }),
+  })
+  if (response.errors?.length) throw new GraphQLRequestError(response.errors)
+  if (response.data === undefined) throw new Error('GraphQL response did not contain data')
+  return response.data
+}
+
+export interface MwplHistoryRow {
+  trade_date: string
+  isin: string
+  scrip_code: number
+  scrip_name: string
+  mwpl: number
+  open_interest: number | string
+  recorded_at: string
+}
+
+export async function getLatestMwpl(): Promise<MwplHistoryRow[]> {
+  const result = await graphqlRequest<{ stock_mwpl_history: MwplHistoryRow[] }>(`
+    query LatestMwpl {
+      stock_mwpl_history(order_by: [{ trade_date: desc }, { scrip_name: asc }], limit: 500) {
+        trade_date
+        isin
+        scrip_code
+        scrip_name
+        mwpl
+        open_interest
+        recorded_at
+      }
+    }
+  `, {}, 'LatestMwpl')
+  return result.stock_mwpl_history
 }
 
 export interface MarketSnapshot {
@@ -153,6 +225,11 @@ export interface BoardPositionInput {
 
 export const api = {
   login: (phone: string, password: string) => apiRequest<User>('/api/auth/login', { method: 'POST', body: JSON.stringify({ phone, password }) }),
+  currentUser: async () => {
+    try { return await apiRequest<User>('/api/auth/me', { handleUnauthorized: false }) }
+    catch (error) { if (error instanceof ApiRequestError && error.status === 401) return null; throw error }
+  },
+  logout: () => apiRequest<void>('/api/auth/logout', { method: 'POST' }),
   snapshots: () => apiRequest<MarketSnapshot[]>('/api/market/snapshots'),
   stockMetrics: (limit = 100) => apiRequest<StockMetric[]>(`/api/stocks?${new URLSearchParams({ limit: String(limit) })}`),
   alerts: (limit = 50) => apiRequest<MarketAlert[]>(`/api/alerts?${new URLSearchParams({ limit: String(limit) })}`),
@@ -179,6 +256,5 @@ export const api = {
   deleteBoardPosition: (id: number) => apiRequest<void>(`/api/board/positions/${id}`, { method: 'DELETE' }),
 }
 
-export * from './graphql.ts'
 export * from '../services/greedFearScanner.ts'
 

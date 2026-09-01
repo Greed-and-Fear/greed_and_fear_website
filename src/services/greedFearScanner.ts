@@ -12,7 +12,7 @@
  */
 
 export interface RawStockMWPLRecord {
-  id?: number | string | null;
+  stock_mwpl_history_id?: number | string | null;
   stock_id?: number | string | null;
   trade_date?: string | null;
   isin?: string | null;
@@ -22,7 +22,7 @@ export interface RawStockMWPLRecord {
   open_interest: number | string | null;
   recorded_at?: string | null;
   stock?: {
-    id?: number | string | null;
+    stock_id?: number | string | null;
     symbol?: string | null;
     company_name?: string | null;
     exchange?: {
@@ -300,7 +300,7 @@ export function processStockHistory(
   const exchange = day0.stock?.exchange?.name || 'NSE';
   const isin = day0.isin || '';
   const scripCode = String(day0.scrip_code || '');
-  const stockId = typeof day0.stock_id === 'number' ? day0.stock_id : (typeof day0.stock?.id === 'number' ? day0.stock.id : null);
+  const stockId = typeof day0.stock_id === 'number' ? day0.stock_id : (typeof day0.stock?.stock_id === 'number' ? day0.stock.stock_id : null);
 
   // Price calculations
   const priceObj = day0.stock?.stock_current_price;

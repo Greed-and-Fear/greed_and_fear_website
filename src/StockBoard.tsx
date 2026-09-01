@@ -1,5 +1,6 @@
 import { DragEvent, FormEvent, useEffect, useState } from 'react'
 import { api, getApiErrorMessage, type BoardPosition, type BoardPositionInput, type BoardStatus, type StockSearchResult, type User } from './api/client'
+import { useAuth } from './auth/auth-context'
 
 const stockStatuses: Array<{ id: BoardStatus; label: string }> = [
   { id: 'under_watch', label: 'Under watch' },
@@ -10,14 +11,15 @@ const stockStatuses: Array<{ id: BoardStatus; label: string }> = [
   { id: 'exited_loss', label: 'Exited with loss' },
 ]
 
-const emptyPosition = (): BoardPosition => ({
-  id: 0, reference: 'New position', stock_id: 0, symbol: '', company_name: '', exchange: '', owner_user_id: getStoredUser()?.id ?? null,
-  owner_name: getStoredUser()?.name ?? null, status: 'under_watch', buy_price: null, current_price: null, pnl_percent: null,
+const emptyPosition = (user: User | null): BoardPosition => ({
+  id: 0, reference: 'New position', stock_id: 0, symbol: '', company_name: '', exchange: '', owner_user_id: user?.id ?? null,
+  owner_name: user?.name ?? null, status: 'under_watch', buy_price: null, current_price: null, pnl_percent: null,
   quantity: null, target_price: null, stop_loss: null, notes: null, opened_at: null, closed_at: null,
   created_at: new Date().toISOString(), updated_at: new Date().toISOString(),
 })
 
 export default function StockBoard() {
+  const { user } = useAuth()
   const [stocks, setStocks] = useState<BoardPosition[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -28,11 +30,10 @@ export default function StockBoard() {
   const [catalogResults, setCatalogResults] = useState<StockSearchResult[]>([])
   const [catalogLoading, setCatalogLoading] = useState(false)
   const [saving, setSaving] = useState(false)
-  const user = getStoredUser()
 
   useEffect(() => { void api.board().then(setStocks).catch((reason) => setError(getApiErrorMessage(reason, 'Unable to load the stock board.'))).finally(() => setLoading(false)) }, [])
 
-  const openCreate = () => { setDraft(emptyPosition()); setOriginalStatus(null); setCatalogQuery(''); setCatalogResults([]); setError('') }
+  const openCreate = () => { setDraft(emptyPosition(user)); setOriginalStatus(null); setCatalogQuery(''); setCatalogResults([]); setError('') }
   const openEdit = (stock: BoardPosition) => { setDraft(stock); setOriginalStatus(stock.status); setCatalogResults([]); setError('') }
   const moveStock = async (id: number, status: BoardStatus) => {
     const previous = stocks
@@ -80,6 +81,7 @@ export default function StockBoard() {
   }
   const remove = async () => {
     if (!draft?.id) return
+    if (!window.confirm(`Permanently delete ${draft.symbol} (${draft.reference})? This cannot be undone.`)) return
     setSaving(true); setError('')
     try { await api.deleteBoardPosition(draft.id); setStocks((current) => current.filter((stock) => stock.id !== draft.id)); setDraft(null) } catch (reason) { setError(getApiErrorMessage(reason, 'Unable to delete this stock.')); setSaving(false) }
   }
@@ -128,4 +130,3 @@ function StockCard({ stock, onEdit, onMove }: { stock: BoardPosition; onEdit: ()
 
 function nullableDecimal(value: string | null) { return value?.trim() ? value : null }
 function formatMoney(value: string | null) { return value === null ? '—' : Number(value).toLocaleString('en-IN', { maximumFractionDigits: 2 }) }
-function getStoredUser(): User | null { try { return JSON.parse(localStorage.getItem('api-user') ?? 'null') as User | null } catch { return null } }

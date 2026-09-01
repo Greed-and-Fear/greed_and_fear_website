@@ -3,7 +3,7 @@ services:
     build:
       context: .
       args:
-        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://127.0.0.1:8000}
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:82}
     image: website
     container_name: website-container
     ports:
@@ -12,22 +12,6 @@ services:
     networks:
       - greed_net
 
-  # Backend API service holding the Hasura Secret (keeping frontend env clean)
-  greed-backend:
-    build:
-      context: ./python
-      dockerfile: Dockerfile
-    image: greed-backend-image
-    container_name: backend-container
-    environment:
-      - HASURA_ADMIN_SECRET=f3gup2fRk7ssEb7MOp3sPFZ2XFZjpmZf
-      - HASURA_GRAPHQL_ENDPOINT=https://gql.greedandfear.in/v1/graphql
-      - PORT=8000
-    ports:
-      - "8000:8000"
-    restart: always
-    networks:
-      - greed_net
 
 networks:
   greed_net:
