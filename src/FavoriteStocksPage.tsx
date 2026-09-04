@@ -12,44 +12,48 @@ export default function FavoriteStocksPage() {
   const { user } = useAuth()
   const userId = user?.id ?? getSessionUserId()
   const [favorites, setFavorites] = useState<UserStockFavoriteRecord[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(Boolean(userId))
   const [error, setError] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [togglingStockId, setTogglingStockId] = useState<number | null>(null)
-
-  const loadFavorites = async (quiet = false) => {
-    if (!userId) {
-      setLoading(false)
-      return
-    }
-    if (!quiet) setLoading(true)
-    setError('')
-    try {
-      const records = await getUserFavoriteStocks(userId)
-      // Only show stocks that are active and marked as favourite
-      const activeFavorites = records.filter(
-        (rec) => rec.is_favourite && (rec.stock.is_active !== false),
-      )
-      setFavorites(activeFavorites)
-    } catch (reason: unknown) {
-      setError(getApiErrorMessage(reason, 'Unable to load favorite stocks.'))
-    } finally {
-      setLoading(false)
-    }
-  }
+  const [refreshKey, setRefreshKey] = useState(0)
 
   useEffect(() => {
-    void loadFavorites()
-  }, [userId])
+    if (!userId) return
+    let active = true
+    getUserFavoriteStocks(userId)
+      .then((records) => {
+        if (!active) return
+        const activeFavorites = records.filter(
+          (rec) => rec.is_favourite && rec.stock.is_active !== false,
+        )
+        setFavorites(activeFavorites)
+        setError('')
+        setLoading(false)
+      })
+      .catch((reason: unknown) => {
+        if (!active) return
+        setError(getApiErrorMessage(reason, 'Unable to load favorite stocks.'))
+        setLoading(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [userId, refreshKey])
 
   // Real-time synchronization when favorites change from AllStocksPage or other tabs
   useEffect(() => {
     const handleSync = () => {
-      void loadFavorites(true)
+      setRefreshKey((k) => k + 1)
     }
     window.addEventListener('gf:favorites_updated', handleSync)
     return () => window.removeEventListener('gf:favorites_updated', handleSync)
-  }, [userId])
+  }, [])
+
+  const reloadFavorites = () => {
+    setLoading(true)
+    setRefreshKey((k) => k + 1)
+  }
 
   const handleToggleFavorite = async (stockId: number, symbol: string) => {
     if (!userId) return
@@ -139,7 +143,7 @@ export default function FavoriteStocksPage() {
           />
         </div>
         <div className="all-stocks-links">
-          <button onClick={() => void loadFavorites(false)}>↻ Refresh</button>
+          <button onClick={() => reloadFavorites()}>↻ Refresh</button>
           <Link to="/market-data" className="browse-stocks-link">Browse all stocks →</Link>
         </div>
       </div>
@@ -155,7 +159,7 @@ export default function FavoriteStocksPage() {
         <div className="stocks-error" role="alert">
           <strong>Favorite stocks could not be loaded</strong>
           <p>{error}</p>
-          <button onClick={() => void loadFavorites(false)}>Try again</button>
+          <button onClick={() => reloadFavorites()}>Try again</button>
         </div>
       )}
 
