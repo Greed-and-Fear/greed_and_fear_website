@@ -15,11 +15,17 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       .then((currentUser) => {
         if (!active) return
         setUser(currentUser)
+        if (currentUser?.id) {
+          sessionStorage.setItem('user_id', String(currentUser.id))
+        } else {
+          sessionStorage.removeItem('user_id')
+        }
         setStatus(currentUser ? 'authenticated' : 'anonymous')
       })
       .catch(() => {
         if (!active) return
         setUser(null)
+        sessionStorage.removeItem('user_id')
         setStatus('anonymous')
       })
     return () => { active = false }
@@ -28,6 +34,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setUnauthorizedHandler(() => {
       setUser(null)
+      sessionStorage.removeItem('user_id')
       setStatus('anonymous')
       if (location.pathname !== '/login') {
         navigate('/login', { replace: true, state: { from: `${location.pathname}${location.search}${location.hash}` } })
@@ -39,6 +46,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (phone: string, password: string) => {
     const authenticatedUser = await api.login(phone, password)
     setUser(authenticatedUser)
+    if (authenticatedUser?.id) {
+      sessionStorage.setItem('user_id', String(authenticatedUser.id))
+    }
     setStatus('authenticated')
     return authenticatedUser
   }
@@ -46,6 +56,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     try { await api.logout() } finally {
       setUser(null)
+      sessionStorage.removeItem('user_id')
       setStatus('anonymous')
       navigate('/login', { replace: true })
     }

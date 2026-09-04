@@ -172,3 +172,236 @@ export async function getGlobalIndexHistory(indexId: number | string, from: stri
   )
   return result.global_index_history
 }
+
+// User Stock Favorites
+export interface StockDetailFromGraphQL {
+  stock_id: number
+  symbol: string
+  company_name: string
+  exchange?: { name: string } | null
+  isin?: string | null
+  scripcode?: number | null
+  co_code?: number | null
+  fincode?: number | null
+  source_stock_id?: number | null
+  source_company_id?: number | null
+  pe?: number | null
+  roe?: number | null
+  market_cap?: number | null
+  is_active?: boolean | null
+  stock_current_price?: {
+    close: number | null
+    open: number | null
+    high: number | null
+    low: number | null
+    change: number | null
+    change_percent: number | null
+    previous_close: number | null
+    volume: number | null
+    price_at: string | null
+  } | null
+}
+
+export interface UserStockFavoriteRecord {
+  user_stock_favourite_id: number | string
+  user_id: number | string
+  stock_id: number | string
+  is_favourite: boolean
+  created_at: string
+  stock: StockDetailFromGraphQL
+}
+
+const GET_USER_FAVORITE_IDS_QUERY = `
+  query GetUserFavoriteStockIds($userId: bigint!) {
+    user_stock_favourite(
+      where: { user_id: { _eq: $userId }, is_favourite: { _eq: true } }
+    ) {
+      stock_id
+      is_favourite
+    }
+  }
+`
+
+export async function getUserFavoriteStockIds(userId: number | string): Promise<Set<number>> {
+  try {
+    const result = await graphqlRequest<{ user_stock_favourite: Array<{ stock_id: number | string; is_favourite: boolean }> }, { userId: number | string }>(
+      GET_USER_FAVORITE_IDS_QUERY,
+      { userId },
+      'GetUserFavoriteStockIds',
+    )
+    const set = new Set<number>()
+    result.user_stock_favourite.forEach((row) => {
+      if (row.is_favourite) set.add(Number(row.stock_id))
+    })
+    return set
+  } catch (error) {
+    console.error('Failed to load user favorite IDs:', error)
+    return new Set<number>()
+  }
+}
+
+const GET_USER_FAVORITES_FULL_QUERY = `
+  query GetUserFavoritesFull($userId: bigint!) {
+    user_stock_favourite(
+      where: {
+        user_id: { _eq: $userId },
+        is_favourite: { _eq: true },
+        stock: { is_active: { _eq: true } }
+      }
+      order_by: { created_at: desc }
+    ) {
+      user_stock_favourite_id
+      user_id
+      stock_id
+      is_favourite
+      created_at
+      stock {
+        stock_id
+        symbol
+        company_name
+        exchange { name }
+        isin
+        scripcode
+        co_code
+        fincode
+        source_stock_id
+        source_company_id
+        pe
+        roe
+        market_cap
+        is_active
+        stock_current_price {
+          close
+          open
+          high
+          low
+          change
+          change_percent
+          previous_close
+          volume
+          price_at
+        }
+      }
+    }
+  }
+`
+
+export async function getUserFavoriteStocks(userId: number | string): Promise<UserStockFavoriteRecord[]> {
+  const result = await graphqlRequest<{ user_stock_favourite: UserStockFavoriteRecord[] }, { userId: number | string }>(
+    GET_USER_FAVORITES_FULL_QUERY,
+    { userId },
+    'GetUserFavoritesFull',
+  )
+  return result.user_stock_favourite
+}
+
+const LOOKUP_STOCKS_BY_SYMBOLS_QUERY = `
+  query LookupStocksBySymbols($symbols: [String!]) {
+    stocks(where: { symbol: { _in: $symbols } }) {
+      stock_id
+      symbol
+      source_stock_id
+      is_active
+    }
+  }
+`
+
+export interface StockLookupInfo {
+  stock_id: number
+  symbol: string
+  source_stock_id: number | null
+  is_active: boolean
+}
+
+export async function lookupStocksBySymbols(symbols: string[]): Promise<Map<string, StockLookupInfo>> {
+  if (!symbols.length) return new Map()
+  try {
+    const result = await graphqlRequest<{ stocks: StockLookupInfo[] }, { symbols: string[] }>(
+      LOOKUP_STOCKS_BY_SYMBOLS_QUERY,
+      { symbols },
+      'LookupStocksBySymbols',
+    )
+    const map = new Map<string, StockLookupInfo>()
+    result.stocks.forEach((s) => map.set(s.symbol.toUpperCase(), s))
+    return map
+  } catch (error) {
+    console.error('Failed to lookup stocks by symbols:', error)
+    return new Map()
+  }
+}
+
+const UPDATE_USER_FAVOURITE_MUTATION = `
+  mutation UpdateUserFavourite($userId: bigint!, $stockId: bigint!, $isFavorite: Boolean!) {
+    update_user_stock_favourite(
+      where: { user_id: { _eq: $userId }, stock_id: { _eq: $stockId } }
+      _set: { is_favourite: $isFavorite }
+    ) {
+      affected_rows
+      returning {
+        user_stock_favourite_id
+        user_id
+        stock_id
+        is_favourite
+      }
+    }
+  }
+`
+
+const INSERT_USER_FAVOURITE_MUTATION = `
+  mutation InsertUserFavourite($userId: bigint!, $stockId: bigint!, $isFavorite: Boolean!) {
+    insert_user_stock_favourite_one(
+      object: {
+        user_id: $userId
+        stock_id: $stockId
+        is_favourite: $isFavorite
+      }
+    ) {
+      user_stock_favourite_id
+      user_id
+      stock_id
+      is_favourite
+    }
+  }
+`
+
+export async function toggleStockFavorite(
+  userId: number | string,
+  stockId: number | string,
+  isFavorite: boolean,
+): Promise<boolean> {
+  const numericUserId = Number(userId)
+  const numericStockId = Number(stockId)
+
+  // 1. Try updating existing record
+  const updateResult = await graphqlRequest<{
+    update_user_stock_favourite: {
+      affected_rows: number
+      returning: Array<{ user_stock_favourite_id: number; is_favourite: boolean }>
+    }
+  }>(
+    UPDATE_USER_FAVOURITE_MUTATION,
+    { userId: numericUserId, stockId: numericStockId, isFavorite },
+    'UpdateUserFavourite',
+  )
+
+  if (updateResult.update_user_stock_favourite.affected_rows === 0) {
+    // 2. If row does not exist, insert
+    await graphqlRequest(
+      INSERT_USER_FAVOURITE_MUTATION,
+      { userId: numericUserId, stockId: numericStockId, isFavorite },
+      'InsertUserFavourite',
+    )
+  }
+
+  // Notify listeners across components for real-time synchronization
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(
+      new CustomEvent('gf:favorites_updated', {
+        detail: { stockId: numericStockId, isFavorite },
+      }),
+    )
+  }
+
+  return isFavorite
+}
+
