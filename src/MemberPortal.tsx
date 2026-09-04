@@ -10,6 +10,7 @@ import StockBoard from './StockBoard'
 import AllStocksPage from './AllStocksPage'
 import GlobalIndicesPage from './GlobalIndicesPage'
 import FavoriteStocksPage from './FavoriteStocksPage'
+import MwplSaturationPage from './MwplSaturationPage'
 import logo from '../images/logo/logos.jpeg'
 import './member.css'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
@@ -39,6 +40,7 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
     <Route path="/dashboard" element={<DashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/sentiment" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/stocks" element={<StockBoardPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/mwpl-saturation" element={<MwplSaturationDashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/market-data" element={<MarketDataPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/favorites" element={<FavoritesDashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/global-indices" element={<GlobalIndicesAdminPage theme={theme} onThemeChange={onThemeChange} />} />
@@ -78,6 +80,7 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
 
 const navigation = [
   ['Dashboard', '/dashboard', 'DB'],
+  ['MWPL Saturation', '/mwpl-saturation', 'MS'],
   ['Global indices', '/global-indices', 'GI'],
   ['Stock board', '/stocks', 'ST'],
   ['All stocks', '/market-data', 'AS'],
@@ -299,6 +302,13 @@ function FavoritesDashboardPage(props: PortalProps) {
   return <PortalLayout {...props} title="Favorite stocks dashboard" eyebrow="Personal watchlist">
     <p className="portal-subtitle">Your personal watchlist synchronized in real time with Hasura GraphQL. Only active favorites are displayed.</p>
     <FavoriteStocksPage />
+  </PortalLayout>
+}
+
+function MwplSaturationDashboardPage(props: PortalProps) {
+  return <PortalLayout {...props} title="MWPL Saturation & Ban Radar" eyebrow="Institutional Position Limits">
+    <p className="portal-subtitle">Track stocks approaching or exceeding exchange-defined 95% MWPL saturation from live BSE MWPL snapshots.</p>
+    <MwplSaturationPage />
   </PortalLayout>
 }
 
