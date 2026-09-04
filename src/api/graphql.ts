@@ -405,3 +405,142 @@ export async function toggleStockFavorite(
   return isFavorite
 }
 
+// BSE MWPL Snapshots & Saturation Dashboard
+export interface BseMwplSnapshotRow {
+  bse_mwpl_snapshot_id: number | string
+  scrip_code: number | string
+  scrip_name: string
+  isin: string
+  mwpl: number | string
+  open_interest: number | string
+  permit_limit: number | string
+  estimated_mwpl: number | string
+  nse_exposure: number | string
+  flag_80: string | null
+  flag_95: string | null
+  source_updated_at: string
+  fetched_at: string
+  stock: {
+    stock_id: number
+    symbol: string
+    company_name: string
+    exchange?: { name: string } | null
+    stock_current_price?: {
+      close: number | null
+      change: number | null
+      change_percent: number | null
+      volume: number | null
+      previous_close: number | null
+      price_at: string | null
+    } | null
+  } | null
+}
+
+export type MwplRiskZone = 'In Ban' | 'Critical' | 'Elevated' | 'Moderate' | 'Normal'
+
+export interface MwplSaturationStock {
+  snapshotId: number
+  stockId: number | null
+  symbol: string
+  companyName: string
+  exchange: string
+  isin: string
+  scripCode: number
+  mwpl: number
+  openInterest: number
+  permitLimit: number
+  estimatedMwpl: number
+  utilizationPercent: number
+  remainingToBanPercent: number
+  riskZone: MwplRiskZone
+  currentPrice: number | null
+  priceChange: number | null
+  priceChangePercent: number | null
+  volume: number | null
+  sourceUpdatedAt: string
+}
+
+const LATEST_BSE_MWPL_SNAPSHOTS_QUERY = `
+  query LatestBseMwplSnapshots {
+    bse_mwpl_snapshots(
+      distinct_on: [scrip_name]
+      order_by: [{ scrip_name: asc }, { source_updated_at: desc }]
+    ) {
+      bse_mwpl_snapshot_id
+      scrip_code
+      scrip_name
+      isin
+      mwpl
+      open_interest
+      permit_limit
+      estimated_mwpl
+      nse_exposure
+      flag_80
+      flag_95
+      source_updated_at
+      fetched_at
+      stock {
+        stock_id
+        symbol
+        company_name
+        exchange { name }
+        stock_current_price {
+          close
+          change
+          change_percent
+          volume
+          previous_close
+          price_at
+        }
+      }
+    }
+  }
+`
+
+export async function getBseMwplSaturationData(): Promise<MwplSaturationStock[]> {
+  const result = await graphqlRequest<{ bse_mwpl_snapshots: BseMwplSnapshotRow[] }>(
+    LATEST_BSE_MWPL_SNAPSHOTS_QUERY,
+    {},
+    'LatestBseMwplSnapshots',
+  )
+
+  return result.bse_mwpl_snapshots
+    .map((row) => {
+      const mwpl = Number(row.mwpl) || 0
+      const oi = Number(row.open_interest) || 0
+      const util = mwpl > 0 ? (oi / mwpl) * 100 : 0
+      const remaining = Math.max(0, 95 - util)
+
+      let riskZone: MwplRiskZone = 'Normal'
+      if (util >= 95) riskZone = 'In Ban'
+      else if (util >= 85) riskZone = 'Critical'
+      else if (util >= 75) riskZone = 'Elevated'
+      else if (util >= 50) riskZone = 'Moderate'
+
+      const p = row.stock?.stock_current_price
+      return {
+        snapshotId: Number(row.bse_mwpl_snapshot_id),
+        stockId: row.stock?.stock_id ? Number(row.stock.stock_id) : null,
+        symbol: row.scrip_name || row.stock?.symbol || '—',
+        companyName: row.stock?.company_name || row.scrip_name || '—',
+        exchange: row.stock?.exchange?.name || 'NSE',
+        isin: row.isin || '—',
+        scripCode: Number(row.scrip_code) || 0,
+        mwpl,
+        openInterest: oi,
+        permitLimit: Number(row.permit_limit) || 0,
+        estimatedMwpl: Number(row.estimated_mwpl) || 0,
+        utilizationPercent: util,
+        remainingToBanPercent: remaining,
+        riskZone,
+        currentPrice: p?.close != null ? Number(p.close) : null,
+        priceChange: p?.change != null ? Number(p.change) : null,
+        priceChangePercent: p?.change_percent != null ? Number(p.change_percent) : null,
+        volume: p?.volume != null ? Number(p.volume) : null,
+        sourceUpdatedAt: row.source_updated_at || row.fetched_at,
+      }
+    })
+    .sort((a, b) => b.utilizationPercent - a.utilizationPercent)
+}
+
+
