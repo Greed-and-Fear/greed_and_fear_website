@@ -17,3 +17,13 @@ export function useAuth() {
   if (!context) throw new Error('useAuth must be used inside AuthProvider')
   return context
 }
+
+export function getSessionUserId(): number | null {
+  if (typeof window === 'undefined') return null
+  const stored = sessionStorage.getItem('user_id')
+  if (stored) {
+    const parsed = Number(stored)
+    if (!isNaN(parsed) && parsed > 0) return parsed
+  }
+  return null
+}

@@ -2,13 +2,14 @@ import { FormEvent, type ReactNode, useEffect, useState } from 'react'
 
 import { Link, NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
-import {api, getApiErrorMessage, type PositionSignal, type ProcessedStockData, type MarketAlert, type MarketSnapshot } from './api/client'
+import { api, getApiErrorMessage, type PositionSignal, type ProcessedStockData, type MarketAlert, type MarketSnapshot } from './api/client'
 import { getScannedStockData } from './api/graphql'
 
 import { useAuth } from './auth/auth-context'
 import StockBoard from './StockBoard'
 import AllStocksPage from './AllStocksPage'
 import GlobalIndicesPage from './GlobalIndicesPage'
+import FavoriteStocksPage from './FavoriteStocksPage'
 import logo from '../images/logo/logos.jpeg'
 import './member.css'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
@@ -39,6 +40,7 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
     <Route path="/sentiment" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/stocks" element={<StockBoardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/market-data" element={<MarketDataPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/favorites" element={<FavoritesDashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/global-indices" element={<GlobalIndicesAdminPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
   </Routes>
@@ -75,7 +77,12 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
 }
 
 const navigation = [
-  ['Dashboard', '/dashboard', 'DB'], ['Global indices', '/global-indices', 'GI'], ['Stock board', '/stocks', 'ST'], ['All stocks', '/market-data', 'AS'], ['Pre-market', '/sentiment', 'PM'],
+  ['Dashboard', '/dashboard', 'DB'],
+  ['Global indices', '/global-indices', 'GI'],
+  ['Stock board', '/stocks', 'ST'],
+  ['All stocks', '/market-data', 'AS'],
+  ['Favorite stocks', '/favorites', '★'],
+  ['Pre-market', '/sentiment', 'PM'],
 ] as const
 
 function PortalLayout({ children, theme, onThemeChange, title, eyebrow = 'Member intelligence' }: PortalProps & { children: ReactNode; title: string; eyebrow?: string }) {
@@ -285,6 +292,13 @@ function MarketDataPage(props: PortalProps) {
   return <PortalLayout {...props} title="All stocks market data">
     <p className="portal-subtitle">Company and market fields served by the Greed & Fear API with 100 records per page.</p>
     <AllStocksPage />
+  </PortalLayout>
+}
+
+function FavoritesDashboardPage(props: PortalProps) {
+  return <PortalLayout {...props} title="Favorite stocks dashboard" eyebrow="Personal watchlist">
+    <p className="portal-subtitle">Your personal watchlist synchronized in real time with Hasura GraphQL. Only active favorites are displayed.</p>
+    <FavoriteStocksPage />
   </PortalLayout>
 }
 
