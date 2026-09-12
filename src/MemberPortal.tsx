@@ -171,18 +171,22 @@ function DashboardPage(props: PortalProps) {
       <section className="portal-panel opportunities-panel" id="opportunities">
         <PanelHeading title="Top MWPL opportunities" />
         <div className="table-scroll">
-          <table>
+          <table className="appsmith-styled-table">
             <thead>
               <tr>
                 <th>#</th>
                 <th>Stock</th>
                 <th>Price %</th>
-                <th>MWPL Util</th>
-                <th>1D MWPL</th>
-                <th>2D MWPL</th>
-                <th>OI</th>
-                <th>1D OI</th>
-                <th>2D OI</th>
+                <th>Day 0 MWPL</th>
+                <th>Day 1 MWPL</th>
+                <th>Day 2 MWPL</th>
+                <th>day_1_change</th>
+                <th>day_2_change</th>
+                <th>Day 0 OI</th>
+                <th>Day 1 OI</th>
+                <th>Day 2 OI</th>
+                <th>1D OI Change</th>
+                <th>2D OI Change</th>
                 <th>Signal</th>
                 <th>Risk</th>
               </tr>
@@ -191,12 +195,30 @@ function DashboardPage(props: PortalProps) {
               {stocks.map((row, index) => (
                 <tr key={row.symbol} title={row.reasons.join(' | ')}>
                   <td>{index + 1}</td>
-                  <td><strong>{row.symbol}</strong></td>
+                  <td>
+                    <div className="stock-info-inline">
+                      <strong>{row.symbol}</strong>
+                      <span className={`exchange-pill ${(row.exchange || 'NSE').toLowerCase()}`}>{row.exchange || 'NSE'}</span>
+                    </div>
+                  </td>
                   <Delta value={row.priceChangePercent} />
-                  <td>{row.mwplUtilizationPercent.toFixed(1)}% <Meter value={row.mwplUtilizationPercent} /></td>
-                  <Delta value={row.mwpl1DayChangePercent} />
-                  <Delta value={row.mwpl2DayChangePercent} />
-                  <td title={`Open Interest: ${row.currentOI.toLocaleString('en-IN')}`}><strong>{formatCompactNumber(row.currentOI)}</strong></td>
+                  <td>
+                    <span className="mwpl-val-bold">{row.day0Mwpl.toFixed(1)}%</span>
+                    <Meter value={row.day0Mwpl} />
+                  </td>
+                  <td>{row.day1Mwpl != null ? `${row.day1Mwpl.toFixed(1)}%` : '—'}</td>
+                  <td>{row.day2Mwpl != null ? `${row.day2Mwpl.toFixed(1)}%` : '—'}</td>
+                  <ChangeBadge value={row.day1MwplChange} />
+                  <ChangeBadge value={row.day2MwplChange} />
+                  <td title={`Day 0 OI: ${row.day0OI.toLocaleString('en-IN')}`}>
+                    <strong>{formatCompactNumber(row.day0OI)}</strong>
+                  </td>
+                  <td title={row.day1OI != null ? `Day 1 OI: ${row.day1OI.toLocaleString('en-IN')}` : undefined}>
+                    {row.day1OI != null ? formatCompactNumber(row.day1OI) : '—'}
+                  </td>
+                  <td title={row.day2OI != null ? `Day 2 OI: ${row.day2OI.toLocaleString('en-IN')}` : undefined}>
+                    {row.day2OI != null ? formatCompactNumber(row.day2OI) : '—'}
+                  </td>
                   <Delta value={row.oi1DayChangePercent} />
                   <Delta value={row.oi2DayChangePercent} />
                   <td><span className={`signal ${row.signal.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>{row.signal}</span></td>
@@ -205,7 +227,7 @@ function DashboardPage(props: PortalProps) {
               ))}
               {stocks.length === 0 && (
                 <tr>
-                  <td colSpan={11} style={{ textAlign: 'center', padding: '24px' }}>
+                  <td colSpan={15} style={{ textAlign: 'center', padding: '24px' }}>
                     {loading ? 'Loading live stock data...' : 'No stock records found.'}
                   </td>
                 </tr>
@@ -321,6 +343,14 @@ function GlobalIndicesAdminPage(props: PortalProps) {
 
 function PanelHeading({ title, action }: { title: string; action?: string }) { return <header className="panel-heading"><h2>{title}</h2>{action && <button>{action} →</button>}</header> }
 function Delta({ value }: { value: number }) { return <td className={value >= 0 ? 'positive' : 'negative'}>{value >= 0 ? '+' : ''}{value}%</td> }
+function ChangeBadge({ value }: { value: number | null | undefined }) {
+  if (value == null || isNaN(value)) return <td>—</td>
+  return (
+    <td className={value >= 0 ? 'positive' : 'negative'}>
+      {value >= 0 ? '+' : ''}{value.toFixed(2)}
+    </td>
+  )
+}
 function Meter({ value }: { value: number }) { return <span className="meter"><i style={{ width: `${Math.min(value, 100)}%` }} /></span> }
 function Sparkline({ tone, large = false }: { tone: string; large?: boolean }) {
   const points = tone === 'positive' ? '2,48 25,40 45,46 66,31 90,38 113,22 138,30 164,14 190,24 218,8' : tone === 'warning' ? '2,50 25,41 48,42 70,28 95,35 120,20 145,26 170,8 195,22 218,4' : '2,14 25,26 48,34 70,31 94,44 118,38 143,48 168,41 193,52 218,56'
