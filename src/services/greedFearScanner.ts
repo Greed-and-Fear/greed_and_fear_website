@@ -76,10 +76,18 @@ export interface ProcessedStockData {
   mwpl2DayChangePercent: number;
   mwplUtilizationPercent: number;
   mwplRiskZone: MwplRiskZone;
+  day0Mwpl: number;
+  day1Mwpl: number | null;
+  day2Mwpl: number | null;
+  day1MwplChange: number | null;
+  day2MwplChange: number | null;
 
   // Open Interest
   currentOI: number;
   previousOI: number | null;
+  day2OI: number | null;
+  day0OI: number;
+  day1OI: number | null;
   day2OI: number | null;
   oi1DayChange: number;
   oi1DayChangePercent: number;
@@ -344,6 +352,16 @@ export function processStockHistory(
   const mwplUtilizationPercent = calculateMWPLUtilization(currentOI, currentMWPL);
   const mwplRiskZone = getMwplRiskZone(mwplUtilizationPercent, config);
 
+  const day0Mwpl = mwplUtilizationPercent;
+  const day1Mwpl = previousMWPL != null && previousOI != null && previousMWPL > 0 ? calculateMWPLUtilization(previousOI, previousMWPL) : null;
+  const day2Mwpl = day2MWPL != null && day2OI != null && day2MWPL > 0 ? calculateMWPLUtilization(day2OI, day2MWPL) : null;
+
+  const day1MwplChange = day1Mwpl != null ? Number((day0Mwpl - day1Mwpl).toFixed(2)) : null;
+  const day2MwplChange = day1Mwpl != null && day2Mwpl != null ? Number((day1Mwpl - day2Mwpl).toFixed(2)) : null;
+
+  const day0OI = currentOI;
+  const day1OI = previousOI;
+
   // Classification & Strength
   const signal = classifyPosition(priceChangePercent, oi1DayChangePercent, config);
   const signalStrength = calculateSignalStrength(oi1DayChangePercent, config);
@@ -381,8 +399,16 @@ export function processStockHistory(
     mwpl2DayChangePercent,
     mwplUtilizationPercent,
     mwplRiskZone,
+    day0Mwpl,
+    day1Mwpl,
+    day2Mwpl,
+    day1MwplChange,
+    day2MwplChange,
     currentOI,
     previousOI,
+    day2OI,
+    day0OI,
+    day1OI,
     day2OI,
     oi1DayChange,
     oi1DayChangePercent,

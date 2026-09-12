@@ -453,6 +453,23 @@ export interface MwplSaturationStock {
   utilizationPercent: number
   remainingToBanPercent: number
   riskZone: MwplRiskZone
+
+  // Multi-day MWPL Saturation %
+  day0Mwpl: number
+  day1Mwpl: number | null
+  day2Mwpl: number | null
+  day1MwplChange: number | null
+  day2MwplChange: number | null
+
+  // Multi-day Open Interest
+  day0OI: number
+  day1OI: number | null
+  day2OI: number | null
+  day1OIChange: number | null
+  day2OIChange: number | null
+  day1OIChangePercent: number | null
+  day2OIChangePercent: number | null
+
   currentPrice: number | null
   priceChange: number | null
   priceChangePercent: number | null
@@ -460,11 +477,11 @@ export interface MwplSaturationStock {
   sourceUpdatedAt: string
 }
 
-const LATEST_BSE_MWPL_SNAPSHOTS_QUERY = `
-  query LatestBseMwplSnapshots {
+export const BSE_MWPL_MULTI_DAY_SNAPSHOTS_QUERY = `
+  query BseMwplMultiDaySnapshots {
     bse_mwpl_snapshots(
-      distinct_on: [scrip_name]
-      order_by: [{ scrip_name: asc }, { source_updated_at: desc }]
+      order_by: [{ source_updated_at: desc }, { scrip_name: asc }]
+      limit: 3000
     ) {
       bse_mwpl_snapshot_id
       scrip_code
@@ -499,48 +516,141 @@ const LATEST_BSE_MWPL_SNAPSHOTS_QUERY = `
 
 export async function getBseMwplSaturationData(): Promise<MwplSaturationStock[]> {
   const result = await graphqlRequest<{ bse_mwpl_snapshots: BseMwplSnapshotRow[] }>(
-    LATEST_BSE_MWPL_SNAPSHOTS_QUERY,
+    BSE_MWPL_MULTI_DAY_SNAPSHOTS_QUERY,
     {},
-    'LatestBseMwplSnapshots',
+    'BseMwplMultiDaySnapshots',
   )
 
-  return result.bse_mwpl_snapshots
-    .map((row) => {
-      const mwpl = Number(row.mwpl) || 0
-      const oi = Number(row.open_interest) || 0
-      const util = mwpl > 0 ? (oi / mwpl) * 100 : 0
-      const remaining = Math.max(0, 95 - util)
+  // Group snapshots by normalized scrip_name -> date -> best record
+  const stockDaysMap = new Map<string, Map<string, BseMwplSnapshotRow>>()
 
-      let riskZone: MwplRiskZone = 'Normal'
-      if (util >= 95) riskZone = 'In Ban'
-      else if (util >= 85) riskZone = 'Critical'
-      else if (util >= 75) riskZone = 'Elevated'
-      else if (util >= 50) riskZone = 'Moderate'
+  for (const row of result.bse_mwpl_snapshots) {
+    const rawName = row.scrip_name || row.stock?.symbol
+    if (!rawName) continue
+    const key = rawName.trim().toUpperCase()
 
-      const p = row.stock?.stock_current_price
-      return {
-        snapshotId: Number(row.bse_mwpl_snapshot_id),
-        stockId: row.stock?.stock_id ? Number(row.stock.stock_id) : null,
-        symbol: row.scrip_name || row.stock?.symbol || '—',
-        companyName: row.stock?.company_name || row.scrip_name || '—',
-        exchange: row.stock?.exchange?.name || 'NSE',
-        isin: row.isin || '—',
-        scripCode: Number(row.scrip_code) || 0,
-        mwpl,
-        openInterest: oi,
-        permitLimit: Number(row.permit_limit) || 0,
-        estimatedMwpl: Number(row.estimated_mwpl) || 0,
-        utilizationPercent: util,
-        remainingToBanPercent: remaining,
-        riskZone,
-        currentPrice: p?.close != null ? Number(p.close) : null,
-        priceChange: p?.change != null ? Number(p.change) : null,
-        priceChangePercent: p?.change_percent != null ? Number(p.change_percent) : null,
-        volume: p?.volume != null ? Number(p.volume) : null,
-        sourceUpdatedAt: row.source_updated_at || row.fetched_at,
+    const dateStr = (row.source_updated_at || row.fetched_at || '').split('T')[0]
+    if (!dateStr) continue
+
+    if (!stockDaysMap.has(key)) {
+      stockDaysMap.set(key, new Map())
+    }
+    const dayMap = stockDaysMap.get(key)!
+
+    const existing = dayMap.get(dateStr)
+    if (!existing) {
+      dayMap.set(dateStr, row)
+    } else {
+      const curOI = Number(row.open_interest) || 0
+      const exOI = Number(existing.open_interest) || 0
+      // Prefer record with positive open_interest, or latest source_updated_at
+      if (curOI > 0 && exOI === 0) {
+        dayMap.set(dateStr, row)
+      } else if (curOI > 0 && exOI > 0) {
+        if ((row.source_updated_at || '') > (existing.source_updated_at || '')) {
+          dayMap.set(dateStr, row)
+        }
+      } else if ((row.source_updated_at || '') > (existing.source_updated_at || '') && exOI === 0) {
+        dayMap.set(dateStr, row)
       }
+    }
+  }
+
+  const output: MwplSaturationStock[] = []
+
+  for (const [, dayMap] of stockDaysMap.entries()) {
+    // Sort dates descending: Day 0 = most recent trading date, Day 1 = 1 trading day ago, Day 2 = 2 trading days ago
+    const sortedDates = Array.from(dayMap.keys()).sort().reverse()
+    if (sortedDates.length === 0) continue
+
+    const day0Row = dayMap.get(sortedDates[0])!
+    const day1Row = sortedDates[1] ? dayMap.get(sortedDates[1]) : null
+    const day2Row = sortedDates[2] ? dayMap.get(sortedDates[2]) : null
+
+    // Day 0
+    const day0MwplShares = Number(day0Row.mwpl) || 0
+    const day0OI = Number(day0Row.open_interest) || 0
+    const day0Mwpl = day0MwplShares > 0 ? Number(((day0OI / day0MwplShares) * 100).toFixed(2)) : 0
+
+    // Day 1
+    const day1MwplShares = day1Row ? Number(day1Row.mwpl) || 0 : 0
+    const day1OI = day1Row ? Number(day1Row.open_interest) || 0 : null
+    const day1Mwpl = day1Row && day1MwplShares > 0 && day1OI != null
+      ? Number(((day1OI / day1MwplShares) * 100).toFixed(2))
+      : null
+
+    // Day 2
+    const day2MwplShares = day2Row ? Number(day2Row.mwpl) || 0 : 0
+    const day2OI = day2Row ? Number(day2Row.open_interest) || 0 : null
+    const day2Mwpl = day2Row && day2MwplShares > 0 && day2OI != null
+      ? Number(((day2OI / day2MwplShares) * 100).toFixed(2))
+      : null
+
+    // Changes
+    // day_1_change = Day 0 MWPL - Day 1 MWPL
+    const day1MwplChange = day1Mwpl != null ? Number((day0Mwpl - day1Mwpl).toFixed(2)) : null
+    // day_2_change = Day 1 MWPL - Day 2 MWPL
+    const day2MwplChange = day1Mwpl != null && day2Mwpl != null ? Number((day1Mwpl - day2Mwpl).toFixed(2)) : null
+
+    // OI Changes
+    const day1OIChange = day1OI != null ? day0OI - day1OI : null
+    const day2OIChange = day1OI != null && day2OI != null ? day1OI - day2OI : null
+    const day1OIChangePercent = day1OI != null && day1OI > 0
+      ? Number((((day0OI - day1OI) / Math.abs(day1OI)) * 100).toFixed(2))
+      : null
+    const day2OIChangePercent = day1OI != null && day2OI != null && day2OI > 0
+      ? Number((((day1OI - day2OI) / Math.abs(day2OI)) * 100).toFixed(2))
+      : null
+
+    const remaining = Math.max(0, Number((95 - day0Mwpl).toFixed(2)))
+
+    let riskZone: MwplRiskZone = 'Normal'
+    if (day0Mwpl >= 95) riskZone = 'In Ban'
+    else if (day0Mwpl >= 85) riskZone = 'Critical'
+    else if (day0Mwpl >= 75) riskZone = 'Elevated'
+    else if (day0Mwpl >= 50) riskZone = 'Moderate'
+
+    const p = day0Row.stock?.stock_current_price
+
+    output.push({
+      snapshotId: Number(day0Row.bse_mwpl_snapshot_id),
+      stockId: day0Row.stock?.stock_id ? Number(day0Row.stock.stock_id) : null,
+      symbol: (day0Row.scrip_name || day0Row.stock?.symbol || '—').trim(),
+      companyName: day0Row.stock?.company_name || day0Row.scrip_name || '—',
+      exchange: 'BSE',
+      isin: day0Row.isin || '—',
+      scripCode: Number(day0Row.scrip_code) || 0,
+      mwpl: day0MwplShares,
+      openInterest: day0OI,
+      permitLimit: Number(day0Row.permit_limit) || 0,
+      estimatedMwpl: Number(day0Row.estimated_mwpl) || 0,
+      utilizationPercent: day0Mwpl,
+      remainingToBanPercent: remaining,
+      riskZone,
+
+      day0Mwpl,
+      day1Mwpl,
+      day2Mwpl,
+      day1MwplChange,
+      day2MwplChange,
+
+      day0OI,
+      day1OI,
+      day2OI,
+      day1OIChange,
+      day2OIChange,
+      day1OIChangePercent,
+      day2OIChangePercent,
+
+      currentPrice: p?.close != null ? Number(p.close) : null,
+      priceChange: p?.change != null ? Number(p.change) : null,
+      priceChangePercent: p?.change_percent != null ? Number(p.change_percent) : null,
+      volume: p?.volume != null ? Number(p.volume) : null,
+      sourceUpdatedAt: day0Row.source_updated_at || day0Row.fetched_at,
     })
-    .sort((a, b) => b.utilizationPercent - a.utilizationPercent)
+  }
+
+  return output.sort((a, b) => b.day0Mwpl - a.day0Mwpl)
 }
 
 
