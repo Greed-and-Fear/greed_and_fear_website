@@ -85,7 +85,6 @@ export interface ProcessedStockData {
   // Open Interest
   currentOI: number;
   previousOI: number | null;
-  day2OI: number | null;
   day0OI: number;
   day1OI: number | null;
   day2OI: number | null;
@@ -406,7 +405,6 @@ export function processStockHistory(
     day2MwplChange,
     currentOI,
     previousOI,
-    day2OI,
     day0OI,
     day1OI,
     day2OI,
