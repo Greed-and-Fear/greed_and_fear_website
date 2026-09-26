@@ -5,7 +5,8 @@ import path from 'path'
 import { exec, type ExecException } from 'child_process'
 import type { IncomingMessage, ServerResponse } from 'http'
 
-const REPO_PATH = 'E:/greed_and_fear'
+const LOCAL_INDICATOR = path.join(import.meta.dirname ?? process.cwd(), 'market-indicator')
+const REPO_PATH = fs.existsSync(LOCAL_INDICATOR) ? LOCAL_INDICATOR : 'E:/greed_and_fear'
 const LOG_FILE = path.join(REPO_PATH, 'data', 'history.jsonl')
 const RUNNER_FILE = path.join(REPO_PATH, 'src', 'runIndicator.js')
 
