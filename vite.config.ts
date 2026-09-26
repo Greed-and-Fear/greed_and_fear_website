@@ -33,14 +33,14 @@ function preMarketApiPlugin(): Plugin {
         if (!req.url) return next()
         const parsedUrl = new URL(req.url, 'http://localhost')
 
-        if (parsedUrl.pathname === '/api/premarket/latest') {
+        if (parsedUrl.pathname === '/api/premarket/latest' || parsedUrl.pathname === '/api/latest') {
           res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
           const history = readHistory(1)
           return res.end(JSON.stringify(history[0] || null))
         }
 
-        if (parsedUrl.pathname === '/api/premarket/history') {
+        if (parsedUrl.pathname === '/api/premarket/history' || parsedUrl.pathname === '/api/history') {
           res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
           const limit = Number(parsedUrl.searchParams.get('limit')) || 60
@@ -48,7 +48,7 @@ function preMarketApiPlugin(): Plugin {
           return res.end(JSON.stringify(history))
         }
 
-        if (req.method === 'POST' && parsedUrl.pathname === '/api/premarket/run-now') {
+        if (req.method === 'POST' && (parsedUrl.pathname === '/api/premarket/run-now' || parsedUrl.pathname === '/api/run-now')) {
           res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
           exec(`node "${RUNNER_FILE}"`, { cwd: REPO_PATH }, (error: ExecException | null, stdout: string | Buffer, stderr: string | Buffer) => {
