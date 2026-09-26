@@ -256,17 +256,11 @@ export const api = {
   deleteBoardPosition: (id: number) => apiRequest<void>(`/api/board/positions/${id}`, { method: 'DELETE' }),
   getPreMarketLatest: async (): Promise<PreMarketIndicatorRun | null> => {
     try {
-      const res = await fetch('/api/premarket/latest')
+      const res = await fetch('/api/latest')
       if (res.ok) {
         const data = await res.json()
         if (data && data.signals) return data
       }
-    } catch {
-      // fallback to proxy
-    }
-    try {
-      const res2 = await fetch('http://localhost:4173/api/latest')
-      if (res2.ok) return await res2.json()
     } catch {
       // ignore
     }
@@ -274,17 +268,11 @@ export const api = {
   },
   getPreMarketHistory: async (limit = 60): Promise<PreMarketIndicatorRun[]> => {
     try {
-      const res = await fetch(`/api/premarket/history?limit=${limit}`)
+      const res = await fetch(`/api/history?limit=${limit}`)
       if (res.ok) {
         const data = await res.json()
-        if (Array.isArray(data)) return data
+        if (Array.isArray(data) && data.length > 0) return data
       }
-    } catch {
-      // fallback to proxy
-    }
-    try {
-      const res2 = await fetch(`http://localhost:4173/api/history?limit=${limit}`)
-      if (res2.ok) return await res2.json()
     } catch {
       // ignore
     }
@@ -292,14 +280,11 @@ export const api = {
   },
   runPreMarketNow: async (): Promise<PreMarketIndicatorRun | null> => {
     try {
-      const res = await fetch('/api/premarket/run-now', { method: 'POST' })
-      if (res.ok) return await res.json()
-    } catch {
-      // fallback to proxy
-    }
-    try {
-      const res2 = await fetch('http://localhost:4173/api/run-now', { method: 'POST' })
-      if (res2.ok) return await res2.json()
+      const res = await fetch('/api/run-now', { method: 'POST' })
+      if (res.ok) {
+        const data = await res.json()
+        if (data && data.signals) return data
+      }
     } catch {
       // ignore
     }

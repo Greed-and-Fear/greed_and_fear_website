@@ -11,6 +11,19 @@ services:
     restart: always
     networks:
       - greed_net
+    depends_on:
+      - market-indicator
+
+  market-indicator:
+    build:
+      context: ./market-indicator
+    image: market-indicator-image
+    container_name: market-indicator-container
+    restart: always
+    volumes:
+      - ./market-indicator/data:/app/data
+    networks:
+      - greed_net
 
 
 networks:
