@@ -7,18 +7,21 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "indicator:start": "node E:/greed_and_fear/src/server.js",
+    "indicator:run": "node E:/greed_and_fear/src/runIndicator.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-router-dom": "latest"
+    "react-router-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest"
   },
   "devDependencies": {
     "@eslint/js": "latest",
+    "@types/node": "^26.6.3",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "eslint": "latest",

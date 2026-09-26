@@ -2,7 +2,7 @@ import { FormEvent, type ReactNode, useEffect, useState } from 'react'
 
 import { Link, NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
-import { api, getApiErrorMessage, type PositionSignal, type ProcessedStockData, type MarketAlert, type MarketSnapshot } from './api/client'
+import { api, getApiErrorMessage, type PositionSignal, type ProcessedStockData, type MarketAlert } from './api/client'
 import { getScannedStockData } from './api/graphql'
 
 import { useAuth } from './auth/auth-context'
@@ -11,6 +11,7 @@ import AllStocksPage from './AllStocksPage'
 import GlobalIndicesPage from './GlobalIndicesPage'
 import FavoriteStocksPage from './FavoriteStocksPage'
 import MwplSaturationPage from './MwplSaturationPage'
+import PreMarketPage from './PreMarketPage'
 import logo from '../images/logo/logos.jpeg'
 import './member.css'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
@@ -39,6 +40,8 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
   return <Routes>
     <Route path="/dashboard" element={<DashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/sentiment" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/pre-market" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/premarket" element={<SentimentPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/stocks" element={<StockBoardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/mwpl-saturation" element={<MwplSaturationDashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/market-data" element={<MarketDataPage theme={theme} onThemeChange={onThemeChange} />} />
@@ -296,21 +299,11 @@ function DashboardPage(props: PortalProps) {
 }
 
 function SentimentPage(props: PortalProps) {
-  const [marketCards, setMarketCards] = useState<MarketSnapshot[]>([])
-  const [error, setError] = useState('')
-  useEffect(() => { void api.snapshots().then(setMarketCards).catch((reason) => setError(getApiErrorMessage(reason, 'Unable to load market snapshots.'))) }, [])
-  const changes = marketCards.map((card) => Number(card.change_percent ?? 0))
-  const bullish = changes.filter((change) => change > 0).length
-  const bearish = changes.filter((change) => change < 0).length
-  const outlook = bearish > bullish ? 'Bearish' : bullish > bearish ? 'Bullish' : 'Neutral'
-  const lastRun = marketCards[0]?.captured_at
-  return <PortalLayout {...props} title="Pre-market sentiment indicator">
-    <div className="sentiment-meta"><span>Direction: {marketCards.map((card) => card.name).join(' · ') || 'Loading market snapshots'}</span>{lastRun && <time>Last run: {new Date(lastRun).toLocaleString('en-IN')}</time>}</div>
-    {error && <p className="portal-error" role="alert">{error}</p>}
-    <section className="sentiment-hero"><div className="sentiment-ring"><span>{bearish > bullish ? '↘' : '↗'}</span></div><div><p>Combined outlook</p><h2>{outlook} & stable</h2><span><b>{bullish} bullish</b> · <em>{bearish} bearish</em> · {changes.length - bullish - bearish} neutral</span><div className="stability-pill">Live market snapshots</div></div><Sparkline tone={bearish > bullish ? 'negative' : 'positive'} large /></section>
-    <section className="market-card-grid">{marketCards.map((card, index) => { const change = Number(card.change_percent ?? 0); const tone = card.tone ?? (change < 0 ? 'negative' : 'positive'); return <article className={index === marketCards.length - 1 && index % 2 === 0 ? 'wide' : ''} key={card.name}><div className={`market-card-icon ${tone}`}>{card.name.slice(0, 2)}</div><div className="market-copy"><h3>{card.name}</h3><strong className={tone}>{card.value}</strong><p>{card.change_percent === null ? card.detail : `${change >= 0 ? '+' : ''}${change}% · ${card.detail ?? ''}`}</p></div><Sparkline tone={tone} /></article> })}</section>
-    <div className="portal-disclaimer sentiment"><strong>Information, not advice</strong><span>Market sentiment indicators are for educational purposes only and should not be considered financial advice.</span><small>Source: Greed & Fear API</small></div>
-  </PortalLayout>
+  return (
+    <PortalLayout {...props} title="Pre-market sentiment indicator" eyebrow="Institutional Pre-Market Model">
+      <PreMarketPage />
+    </PortalLayout>
+  )
 }
 
 function StockBoardPage(props: PortalProps) {
@@ -359,10 +352,6 @@ function ChangeBadge({ value }: { value: number | null | undefined }) {
   )
 }
 function Meter({ value }: { value: number }) { return <span className="meter"><i style={{ width: `${Math.min(value, 100)}%` }} /></span> }
-function Sparkline({ tone, large = false }: { tone: string; large?: boolean }) {
-  const points = tone === 'positive' ? '2,48 25,40 45,46 66,31 90,38 113,22 138,30 164,14 190,24 218,8' : tone === 'warning' ? '2,50 25,41 48,42 70,28 95,35 120,20 145,26 170,8 195,22 218,4' : '2,14 25,26 48,34 70,31 94,44 118,38 143,48 168,41 193,52 218,56'
-  return <svg className={large ? `sparkline ${tone} large` : `sparkline ${tone}`} viewBox="0 0 220 64" aria-hidden="true"><polyline points={points} fill="none" vectorEffect="non-scaling-stroke" /><polygon points={`2,64 ${points} 218,64`} /></svg>
-}
 
 function MemberAuthLoading({ theme }: { theme: Theme }) {
   return <main className="member-auth-loading"><img src={theme === 'dark' ? normalLogo : normalWhiteLogo} alt="Greed and Fear" /><span /><p>Restoring your secure session...</p></main>

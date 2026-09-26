@@ -153,4 +153,31 @@ describe('Greed & Fear Indian F&O Stock Market Scanner Engine', () => {
     assert.strictEqual(lichsgfin.mwplUtilizationPercent, 94.1);
     assert.strictEqual(lichsgfin.mwplRiskZone, 'High risk');
   });
+
+  // Test 16: Multi-day MWPL Saturation % and changes
+  it('16. should accurately compute Day 0, Day 1, Day 2 MWPL saturation % and day 1/2 changes', () => {
+    const mockRecords = [
+      { trade_date: '2026-08-28', open_interest: 210771595, mwpl: 200000000, scrip_name: 'BALRAMCHIN' },
+      { trade_date: '2026-08-27', open_interest: 244940000, mwpl: 200000000, scrip_name: 'BALRAMCHIN' },
+      { trade_date: '2026-08-26', open_interest: 156680000, mwpl: 200000000, scrip_name: 'BALRAMCHIN' },
+    ];
+
+    const result = processStockHistory(mockRecords);
+    // Day 0 = 210771595 / 200000000 * 100 = 105.39%
+    assert.strictEqual(result.day0Mwpl, 105.39);
+    // Day 1 = 244940000 / 200000000 * 100 = 122.47%
+    assert.strictEqual(result.day1Mwpl, 122.47);
+    // Day 2 = 156680000 / 200000000 * 100 = 78.34%
+    assert.strictEqual(result.day2Mwpl, 78.34);
+
+    // day_1_change = Day 0 - Day 1 = 105.39 - 122.47 = -17.08
+    assert.strictEqual(result.day1MwplChange, -17.08);
+    // day_2_change = Day 1 - Day 2 = 122.47 - 78.34 = 44.13
+    assert.strictEqual(result.day2MwplChange, 44.13);
+
+    // Multi-day OI
+    assert.strictEqual(result.day0OI, 210771595);
+    assert.strictEqual(result.day1OI, 244940000);
+    assert.strictEqual(result.day2OI, 156680000);
+  });
 });

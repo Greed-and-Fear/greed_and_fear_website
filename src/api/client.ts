@@ -1,4 +1,4 @@
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'https://api.greedandfear.in').replace(/\/$/, '')
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://api.greedandfear.in').replace(/\/$/, '')
 
 export interface ValidationIssue {
   type: string
@@ -254,7 +254,111 @@ export const api = {
   updateBoardPosition: (id: number, input: BoardPositionInput) => apiRequest<BoardPosition>(`/api/board/positions/${id}`, { method: 'PATCH', body: JSON.stringify(input) }),
   moveBoardPosition: (id: number, status: BoardStatus, userId?: number) => apiRequest<BoardPosition>(`/api/board/positions/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, changed_by_user_id: userId ?? null }) }),
   deleteBoardPosition: (id: number) => apiRequest<void>(`/api/board/positions/${id}`, { method: 'DELETE' }),
+  getPreMarketLatest: async (): Promise<PreMarketIndicatorRun | null> => {
+    try {
+      const res = await fetch('/api/premarket/latest')
+      if (res.ok) {
+        const data = await res.json()
+        if (data && data.signals) return data
+      }
+    } catch {
+      // fallback to proxy
+    }
+    try {
+      const res2 = await fetch('http://localhost:4173/api/latest')
+      if (res2.ok) return await res2.json()
+    } catch {
+      // ignore
+    }
+    return null
+  },
+  getPreMarketHistory: async (limit = 60): Promise<PreMarketIndicatorRun[]> => {
+    try {
+      const res = await fetch(`/api/premarket/history?limit=${limit}`)
+      if (res.ok) {
+        const data = await res.json()
+        if (Array.isArray(data)) return data
+      }
+    } catch {
+      // fallback to proxy
+    }
+    try {
+      const res2 = await fetch(`http://localhost:4173/api/history?limit=${limit}`)
+      if (res2.ok) return await res2.json()
+    } catch {
+      // ignore
+    }
+    return []
+  },
+  runPreMarketNow: async (): Promise<PreMarketIndicatorRun | null> => {
+    try {
+      const res = await fetch('/api/premarket/run-now', { method: 'POST' })
+      if (res.ok) return await res.json()
+    } catch {
+      // fallback to proxy
+    }
+    try {
+      const res2 = await fetch('http://localhost:4173/api/run-now', { method: 'POST' })
+      if (res2.ok) return await res2.json()
+    } catch {
+      // ignore
+    }
+    return null
+  },
+}
+
+export interface PreMarketCounts {
+  bullish: number
+  bearish: number
+  neutral: number
+}
+
+export interface PreMarketDirection {
+  call: 'BULLISH' | 'BEARISH' | 'NEUTRAL' | string
+  icon?: string
+  counts: PreMarketCounts
+}
+
+export interface PreMarketVolatility {
+  state: 'STABLE' | 'VOLATILE' | 'UNKNOWN' | string
+  label: string
+  value: number | null
+}
+
+export interface PreMarketCombined {
+  label: string
+  icon?: string
+}
+
+export interface PreMarketSignalRaw {
+  close?: number
+  previousClose?: number
+  percentChange?: number
+  lastPrice?: number
+  advances?: number
+  declines?: number
+  value?: number
+}
+
+export interface PreMarketSignal {
+  key: string
+  label: string
+  raw: PreMarketSignalRaw | null
+  vote?: number
+  ok: boolean
+  error?: string | null
+  voteLabel?: string
+  volatility?: string
+}
+
+export interface PreMarketIndicatorRun {
+  timestamp: string
+  direction: PreMarketDirection
+  volatility: PreMarketVolatility
+  combined: PreMarketCombined
+  signals: PreMarketSignal[]
 }
 
 export * from '../services/greedFearScanner.ts'
+
 
