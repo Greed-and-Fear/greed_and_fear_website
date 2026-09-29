@@ -116,22 +116,24 @@ function tileSpec(signal) {
         sub: signal.raw.close != null ? `Close ${signal.raw.close.toLocaleString("en-IN")}` : ""
       };
     }
-    case "breadth":
+    case "breadth": {
+      const cls = voteClass(signal.vote);
       return {
         ...base,
-        iconClass: "amber",
+        iconClass: cls,
         icon: ICONS.barChart,
         value: `${signal.raw.advances} / ${signal.raw.declines}`,
         valueClass: "neutral",
-        sub: "Advances / Declines"
+        sub: `${signal.raw.advances} Adv · ${signal.raw.declines} Dec`
       };
+    }
     case "vix":
       return {
         ...base,
-        iconClass: "purple",
+        iconClass: "neutral",
         icon: ICONS.activity,
         value: signal.raw.value.toFixed(2),
-        valueClass: "purple",
+        valueClass: "neutral",
         sub: `${formatPercent(signal.raw.percentChange)} vs prev close`
       };
     default:
@@ -169,11 +171,12 @@ function renderHistory(history) {
   for (const run of history) {
     const byKey = Object.fromEntries(run.signals.map((s) => [s.key, s]));
     const dirCls = DIRECTION_CLASS[run.direction.call];
+    const volCls = VOLATILITY_CLASS[run.volatility.state] || 'neutral';
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${formatTime(run.timestamp)}</td>
       <td><span class="row-direction ${dirCls}"><span class="dot"></span>${DIRECTION_TEXT[run.direction.call]}</span></td>
-      <td><span class="row-volatility"><span class="dot"></span>${VOLATILITY_TEXT[run.volatility.state]}</span></td>
+      <td><span class="row-volatility"><span class="dot ${volCls}"></span>${VOLATILITY_TEXT[run.volatility.state]}</span></td>
       ${directionOrder
         .map((key) => {
           const s = byKey[key];
@@ -188,16 +191,40 @@ function renderHistory(history) {
   }
 }
 
-// ---------- Load ----------
+// ---------- API Helpers & Load ----------
+async function fetchIndicatorApi(path, options) {
+  try {
+    let res = await fetch(`/indicator-api${path}`, options);
+    if (res.ok) return res;
+  } catch {}
+  return fetch(`/api${path}`, options);
+}
+
 async function loadLatest() {
-  const run = await fetch("/api/latest").then((r) => r.json());
-  renderHero(run);
-  renderTiles(run);
+  try {
+    const res = await fetchIndicatorApi("/latest");
+    if (res.ok) {
+      const run = await res.json();
+      renderHero(run);
+      renderTiles(run);
+    }
+  } catch (err) {
+    console.error("Failed to load latest run:", err);
+  }
 }
+
 async function loadHistory() {
-  const history = await fetch("/api/history?limit=30").then((r) => r.json());
-  renderHistory(history);
+  try {
+    const res = await fetchIndicatorApi("/history?limit=30");
+    if (res.ok) {
+      const history = await res.json();
+      renderHistory(history);
+    }
+  } catch (err) {
+    console.error("Failed to load history:", err);
+  }
 }
+
 async function refreshAll() {
   await Promise.all([loadLatest(), loadHistory()]);
 }
@@ -208,8 +235,10 @@ document.getElementById("refresh").addEventListener("click", async () => {
   const original = btn.innerHTML;
   btn.innerHTML = "Running&hellip;";
   try {
-    await fetch("/api/run-now", { method: "POST" });
+    await fetchIndicatorApi("/run-now", { method: "POST" });
     await refreshAll();
+  } catch (err) {
+    console.error("Run now failed:", err);
   } finally {
     btn.disabled = false;
     btn.innerHTML = original;
