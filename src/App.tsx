@@ -1,6 +1,6 @@
 import { FormEvent, ReactNode, useEffect, useState } from 'react'
 import { Link, Navigate, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { courses, plans, testimonials, type PlanId } from './data'
+import { courses, plans, testimonials } from './data'
 import { api, getApiErrorMessage, type NewsArticle } from './api/client'
 import MemberPortal, { ThemeToggle, type Theme } from './MemberPortal'
 import logo from '../images/logo/logos.jpeg'
@@ -160,14 +160,14 @@ function ChartStrip({ title, charts }: { title: string; charts: string[] }) {
 //   return <section className="plans-section section-pad"><SectionTitle eyebrow="Membership" title="Choose the depth you need" /><div className="plan-grid">{plans.map((plan) => <PlanCard planId={plan.id} key={plan.id} />)}</div></section>
 // }
 
-function PlanCard({ planId }: { planId: PlanId }) {
-  const plan = plans.find((item) => item.id === planId)!
-  return <article className={plan.id === 'premium' ? 'plan-card featured' : 'plan-card'}>{plan.id === 'premium' && <span className="popular-badge">Most popular</span>}<p className="eyebrow">{plan.name}</p><h3>₹{plan.weeklyPrice}<small>/week</small></h3><p className="monthly-price">or ₹{plan.monthlyPrice} monthly</p><ul>{plan.features.map((feature) => <li key={feature}>{feature}</li>)}</ul><Link className="button" to={`/checkout/${plan.id}`}>See {plan.name.toLowerCase()} details</Link></article>
-}
+// function PlanCard({ planId }: { planId: PlanId }) {
+//   const plan = plans.find((item) => item.id === planId)!
+//   return <article className={plan.id === 'premium' ? 'plan-card featured' : 'plan-card'}>{plan.id === 'premium' && <span className="popular-badge">Most popular</span>}<p className="eyebrow">{plan.name}</p><h3>₹{plan.weeklyPrice}<small>/week</small></h3><p className="monthly-price">or ₹{plan.monthlyPrice} monthly</p><ul>{plan.features.map((feature) => <li key={feature}>{feature}</li>)}</ul><Link className="button" to={`/checkout/${plan.id}`}>See {plan.name.toLowerCase()} details</Link></article>
+// }
 
-function ProductsPage() {
-  return <Page><PageHero eyebrow="Greed & Fear Daily" title="A plan for every stage of your process." copy="Every membership is built around educational setups and transparent chart analysis. Choose the cadence and market coverage that suits you." /><div className="plan-grid wide">{plans.map((plan) => <PlanCard planId={plan.id} key={plan.id} />)}</div><p className="page-note">After successful payment, the checkout provider will share access instructions for the relevant community.</p></Page>
-}
+// function ProductsPage() {
+//   return <Page><PageHero eyebrow="Greed & Fear Daily" title="A plan for every stage of your process." copy="Every membership is built around educational setups and transparent chart analysis. Choose the cadence and market coverage that suits you." /><div className="plan-grid wide">{plans.map((plan) => <PlanCard planId={plan.id} key={plan.id} />)}</div><p className="page-note">After successful payment, the checkout provider will share access instructions for the relevant community.</p></Page>
+// }
 
 function CoursesPage() {
   return <Page><PageHero eyebrow="Market education" title="Learn the logic behind the chart." copy="Structured learning paths for traders who want to move beyond signals and build independent analysis skills." /><div className="course-grid">{courses.map((course, index) => <article className="course-card" key={course.name}><span>0{index + 1}</span><h2>{course.name}</h2><p>{course.description}</p><ExternalButton href={WHATSAPP_URL}>Register interest</ExternalButton></article>)}</div></Page>
