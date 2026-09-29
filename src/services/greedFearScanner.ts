@@ -426,8 +426,7 @@ export function processStockHistory(
  */
 export function scanStockUniverse(
   rawRecords: RawStockMWPLRecord[],
-  config = DEFAULT_SCANNER_CONFIG,
-  options?: { latestDateOnly?: boolean }
+  config = DEFAULT_SCANNER_CONFIG
 ): ProcessedStockData[] {
   if (!Array.isArray(rawRecords) || rawRecords.length === 0) {
     return [];
@@ -444,21 +443,9 @@ export function scanStockUniverse(
     grouped.get(key)!.push(record);
   }
 
-  let results: ProcessedStockData[] = [];
+  const results: ProcessedStockData[] = [];
   for (const records of grouped.values()) {
     results.push(processStockHistory(records, config));
-  }
-
-  if (options?.latestDateOnly && results.length > 0) {
-    let latestDate = '';
-    for (const item of results) {
-      if (item.latestTradeDate && item.latestTradeDate > latestDate) {
-        latestDate = item.latestTradeDate;
-      }
-    }
-    if (latestDate) {
-      results = results.filter((item) => item.latestTradeDate === latestDate);
-    }
   }
 
   return results;
