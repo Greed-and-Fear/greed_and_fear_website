@@ -22,21 +22,21 @@
   --neutral: #334155;
   --neutral-track: #cbd5e1;
 
-  --icon-green-bg: #ecfdf5;
-  --icon-green-fg: #10b981;
-  --icon-red-bg: #fef2f2;
-  --icon-red-fg: #ef4444;
-  --icon-neutral-bg: #f1f5f9;
-  --icon-neutral-fg: #64748b;
-  --icon-amber-bg: #fffbeb;
+  --icon-green-bg: #dcfce7;
+  --icon-green-fg: #16a34a;
+  --icon-red-bg: #fee2e2;
+  --icon-red-fg: #dc2626;
+  --icon-neutral-bg: #e2e8f0;
+  --icon-neutral-fg: #475569;
+  --icon-amber-bg: #fef3c7;
   --icon-amber-fg: #d97706;
-  --icon-purple-bg: #f0f9ff;
-  --icon-purple-fg: #0284c7;
+  --icon-purple-bg: #f3e8ff;
+  --icon-purple-fg: #7c3aed;
 
-  --volatile-bg: #fef2f2;
-  --volatile-fg: #ef4444;
-  --stable-bg: #f0f9ff;
-  --stable-fg: #0284c7;
+  --volatile-bg: #f3e8ff;
+  --volatile-fg: #7c3aed;
+  --stable-bg: #f3e8ff;
+  --stable-fg: #7c3aed;
 }
 @media (prefers-color-scheme: dark) {
   :root:where(:not([data-theme="light"])) .viz-root {
@@ -50,34 +50,34 @@
     --border: rgba(255, 255, 255, 0.08);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.3);
 
-    --brand-green: #10b981;
-    --run-btn-bg: #0f172a;
-    --run-btn-bg-hover: #1e293b;
+    --brand-green: #22c55e;
+    --run-btn-bg: #16a34a;
+    --run-btn-bg-hover: #15803d;
 
-    --bullish: #10b981;
-    --bullish-strong: #34d399;
-    --bullish-track: rgba(16, 185, 129, 0.15);
-    --bearish: #ef4444;
-    --bearish-strong: #f87171;
-    --bearish-track: rgba(239, 68, 68, 0.15);
-    --neutral: #94a3b8;
-    --neutral-track: rgba(148, 163, 184, 0.15);
+    --bullish: #4ade80;
+    --bullish-strong: #86efac;
+    --bullish-track: rgba(74, 222, 128, 0.18);
+    --bearish: #f87171;
+    --bearish-strong: #fca5a5;
+    --bearish-track: rgba(248, 113, 113, 0.18);
+    --neutral: #cbd5e1;
+    --neutral-track: rgba(203, 213, 225, 0.18);
 
-    --icon-green-bg: rgba(16, 185, 129, 0.1);
-    --icon-green-fg: #34d399;
-    --icon-red-bg: rgba(239, 68, 68, 0.1);
+    --icon-green-bg: rgba(74, 222, 128, 0.16);
+    --icon-green-fg: #4ade80;
+    --icon-red-bg: rgba(248, 113, 113, 0.16);
     --icon-red-fg: #f87171;
-    --icon-neutral-bg: rgba(148, 163, 184, 0.1);
+    --icon-neutral-bg: rgba(203, 213, 225, 0.16);
     --icon-neutral-fg: #cbd5e1;
-    --icon-amber-bg: rgba(245, 158, 11, 0.1);
+    --icon-amber-bg: rgba(251, 191, 36, 0.16);
     --icon-amber-fg: #fbbf24;
-    --icon-purple-bg: rgba(56, 189, 248, 0.1);
-    --icon-purple-fg: #38bdf8;
+    --icon-purple-bg: rgba(167, 139, 250, 0.18);
+    --icon-purple-fg: #a78bfa;
 
-    --volatile-bg: rgba(239, 68, 68, 0.1);
-    --volatile-fg: #f87171;
-    --stable-bg: rgba(56, 189, 248, 0.1);
-    --stable-fg: #38bdf8;
+    --volatile-bg: rgba(167, 139, 250, 0.18);
+    --volatile-fg: #a78bfa;
+    --stable-bg: rgba(167, 139, 250, 0.18);
+    --stable-fg: #a78bfa;
   }
 }
 :root[data-theme="dark"] .viz-root {
@@ -91,34 +91,34 @@
   --border: rgba(255, 255, 255, 0.08);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.3);
 
-  --brand-green: #10b981;
-  --run-btn-bg: #0f172a;
-  --run-btn-bg-hover: #1e293b;
+  --brand-green: #22c55e;
+  --run-btn-bg: #16a34a;
+  --run-btn-bg-hover: #15803d;
 
-  --bullish: #10b981;
-  --bullish-strong: #34d399;
-  --bullish-track: rgba(16, 185, 129, 0.15);
-  --bearish: #ef4444;
-  --bearish-strong: #f87171;
-  --bearish-track: rgba(239, 68, 68, 0.15);
-  --neutral: #94a3b8;
-  --neutral-track: rgba(148, 163, 184, 0.15);
+  --bullish: #4ade80;
+  --bullish-strong: #86efac;
+  --bullish-track: rgba(74, 222, 128, 0.18);
+  --bearish: #f87171;
+  --bearish-strong: #fca5a5;
+  --bearish-track: rgba(248, 113, 113, 0.18);
+  --neutral: #cbd5e1;
+  --neutral-track: rgba(203, 213, 225, 0.18);
 
-  --icon-green-bg: rgba(16, 185, 129, 0.1);
-  --icon-green-fg: #34d399;
-  --icon-red-bg: rgba(239, 68, 68, 0.1);
+  --icon-green-bg: rgba(74, 222, 128, 0.16);
+  --icon-green-fg: #4ade80;
+  --icon-red-bg: rgba(248, 113, 113, 0.16);
   --icon-red-fg: #f87171;
-  --icon-neutral-bg: rgba(148, 163, 184, 0.1);
+  --icon-neutral-bg: rgba(203, 213, 225, 0.16);
   --icon-neutral-fg: #cbd5e1;
-  --icon-amber-bg: rgba(245, 158, 11, 0.1);
+  --icon-amber-bg: rgba(251, 191, 36, 0.16);
   --icon-amber-fg: #fbbf24;
-  --icon-purple-bg: rgba(56, 189, 248, 0.1);
-  --icon-purple-fg: #38bdf8;
+  --icon-purple-bg: rgba(167, 139, 250, 0.18);
+  --icon-purple-fg: #a78bfa;
 
-  --volatile-bg: rgba(239, 68, 68, 0.1);
-  --volatile-fg: #f87171;
-  --stable-bg: rgba(56, 189, 248, 0.1);
-  --stable-fg: #38bdf8;
+  --volatile-bg: rgba(167, 139, 250, 0.18);
+  --volatile-fg: #a78bfa;
+  --stable-bg: rgba(167, 139, 250, 0.18);
+  --stable-fg: #a78bfa;
 }
 
 * { box-sizing: border-box; }
@@ -420,9 +420,7 @@ td.num { font-variant-numeric: tabular-nums; }
 .row-direction.neutral .dot { background: var(--neutral); }
 
 .row-volatility { display: inline-flex; align-items: center; gap: 8px; color: var(--text-primary); }
-.row-volatility .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--stable-fg); flex-shrink: 0; }
-.row-volatility .dot.volatile { background: var(--volatile-fg); }
-.row-volatility .dot.stable { background: var(--stable-fg); }
+.row-volatility .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--volatile-fg); flex-shrink: 0; }
 
 .vote-icon {
   width: 24px;

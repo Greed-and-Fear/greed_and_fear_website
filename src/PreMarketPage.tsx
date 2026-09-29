@@ -350,9 +350,9 @@ export default function PreMarketPage() {
         <SignalCard
           label="NSE Advances/Declines"
           icon="bar-chart"
-          tone={getSignalTone(breadth)}
+          tone="amber"
           value={breadth?.raw ? `${breadth.raw.advances} / ${breadth.raw.declines}` : '23 / 26'}
-          subtitle={breadth?.raw ? `${breadth.raw.advances} Adv · ${breadth.raw.declines} Dec` : 'Advances / Declines'}
+          subtitle="Advances / Declines"
           historyRuns={history}
           signalKey="breadth"
           currentVal={(breadth?.raw?.advances ?? 23) - (breadth?.raw?.declines ?? 26)}
@@ -372,9 +372,9 @@ export default function PreMarketPage() {
       </div>
 
       {/* Volatility Full-Width Card: India VIX */}
-      <div className="pm-card pm-volatility-card">
+      <div className="pm-card pm-volatility-card purple">
         <div className="pm-vol-left">
-          <div className={`pm-card-icon ${isVolatile ? 'bearish' : 'neutral'}`}>
+          <div className="pm-card-icon purple">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
             </svg>
@@ -392,11 +392,11 @@ export default function PreMarketPage() {
 
         <div className="pm-vol-graph-wrap">
           <SparklineGlow
-            tone={isVolatile ? 'bearish' : 'neutral'}
+            tone="purple"
             historyRuns={history}
             signalKey="vix"
             currentVal={vix?.raw?.value ?? 11.7}
-            height={50}
+            height={56}
             width={480}
           />
         </div>
@@ -768,15 +768,15 @@ function SparklineGlow({
 
   // Colors based on tone
   const colors = {
-    bearish: { stroke: '#ef4444', fillStart: 'rgba(239, 68, 68, 0.12)', fillEnd: 'rgba(239, 68, 68, 0.0)' },
-    bullish: { stroke: '#10b981', fillStart: 'rgba(16, 185, 129, 0.12)', fillEnd: 'rgba(16, 185, 129, 0.0)' },
-    amber: { stroke: '#f59e0b', fillStart: 'rgba(245, 158, 11, 0.10)', fillEnd: 'rgba(245, 158, 11, 0.0)' },
-    purple: { stroke: '#38bdf8', fillStart: 'rgba(56, 189, 248, 0.10)', fillEnd: 'rgba(56, 189, 248, 0.0)' },
-    neutral: { stroke: '#94a3b8', fillStart: 'rgba(148, 163, 184, 0.08)', fillEnd: 'rgba(148, 163, 184, 0.0)' },
-  }[tone] || { stroke: '#94a3b8', fillStart: 'rgba(148, 163, 184, 0.08)', fillEnd: 'rgba(148, 163, 184, 0.0)' }
+    bearish: { stroke: '#ff3b69', fillStart: 'rgba(255, 59, 105, 0.35)', fillEnd: 'rgba(255, 59, 105, 0.0)' },
+    bullish: { stroke: '#22c55e', fillStart: 'rgba(34, 197, 94, 0.35)', fillEnd: 'rgba(34, 197, 94, 0.0)' },
+    amber: { stroke: '#fbbf24', fillStart: 'rgba(251, 191, 36, 0.35)', fillEnd: 'rgba(251, 191, 36, 0.0)' },
+    purple: { stroke: '#c084fc', fillStart: 'rgba(192, 132, 252, 0.35)', fillEnd: 'rgba(192, 132, 252, 0.0)' },
+    neutral: { stroke: '#94a3b8', fillStart: 'rgba(148, 163, 184, 0.25)', fillEnd: 'rgba(148, 163, 184, 0.0)' },
+  }[tone] || { stroke: '#94a3b8', fillStart: 'rgba(148, 163, 184, 0.25)', fillEnd: 'rgba(148, 163, 184, 0.0)' }
 
   const gradId = `pm-grad-${signalKey}-${tone}`
-  const lastCoord = coords[coords.length - 1]
+  const filterId = `pm-glow-${signalKey}-${tone}`
 
   return (
     <svg className={isHero ? 'pm-hero-chart-svg' : 'pm-card-graph-svg'} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
@@ -785,39 +785,41 @@ function SparklineGlow({
           <stop offset="0%" stopColor={colors.fillStart} />
           <stop offset="100%" stopColor={colors.fillEnd} />
         </linearGradient>
+        <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3.5" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </defs>
 
       {/* Area gradient under the line */}
       <path d={areaPath} fill={`url(#${gradId})`} />
 
-      {/* Crisp financial trendline */}
+      {/* Neon glowing line */}
       <path
         d={linePath}
         fill="none"
         stroke={colors.stroke}
-        strokeWidth={isHero ? '2.0' : '1.8'}
+        strokeWidth={isHero ? '2.4' : '2.0'}
         strokeLinecap="round"
         strokeLinejoin="round"
+        filter={`url(#${filterId})`}
       />
 
-      {/* Single clean endpoint pulse indicator */}
-      {lastCoord && (
-        <>
-          <circle
-            cx={lastCoord.x}
-            cy={lastCoord.y}
-            r={isHero ? 4.5 : 3.5}
-            fill={colors.stroke}
-            opacity="0.25"
-          />
-          <circle
-            cx={lastCoord.x}
-            cy={lastCoord.y}
-            r={isHero ? 2.5 : 2.0}
-            fill={colors.stroke}
-          />
-        </>
-      )}
+      {/* Vertex dots */}
+      {coords.map((c, i) => (
+        <circle
+          key={i}
+          cx={c.x}
+          cy={c.y}
+          r={isHero ? 3.0 : 2.2}
+          fill="#ffffff"
+          stroke={colors.stroke}
+          strokeWidth="1.8"
+        />
+      ))}
     </svg>
   )
 }

@@ -19,8 +19,6 @@ services:
       context: ./market-indicator
     image: market-indicator-image
     container_name: market-indicator-container
-    ports:
-      - "4173:4173"
     restart: always
     volumes:
       - ./market-indicator/data:/app/data

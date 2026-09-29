@@ -26,7 +26,7 @@ app.get(["/api/history", "/api/premarket/history"], (req, res) => {
   res.json(readHistory(limit));
 });
 
-app.all(["/api/run-now", "/api/premarket/run-now"], async (req, res) => {
+app.post(["/api/run-now", "/api/premarket/run-now"], async (req, res) => {
   try {
     const run = await runIndicator();
     res.json(run);

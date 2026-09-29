@@ -256,8 +256,7 @@ export const api = {
   deleteBoardPosition: (id: number) => apiRequest<void>(`/api/board/positions/${id}`, { method: 'DELETE' }),
   getPreMarketLatest: async (): Promise<PreMarketIndicatorRun | null> => {
     try {
-      let res = await fetch('/indicator-api/latest')
-      if (!res.ok) res = await fetch('/api/latest')
+      const res = await fetch('/api/latest')
       if (res.ok) {
         const data = await res.json()
         if (data && data.signals) return data
@@ -269,8 +268,7 @@ export const api = {
   },
   getPreMarketHistory: async (limit = 60): Promise<PreMarketIndicatorRun[]> => {
     try {
-      let res = await fetch(`/indicator-api/history?limit=${limit}`)
-      if (!res.ok) res = await fetch(`/api/history?limit=${limit}`)
+      const res = await fetch(`/api/history?limit=${limit}`)
       if (res.ok) {
         const data = await res.json()
         if (Array.isArray(data) && data.length > 0) return data
@@ -282,9 +280,7 @@ export const api = {
   },
   runPreMarketNow: async (): Promise<PreMarketIndicatorRun | null> => {
     try {
-      let res = await fetch('/indicator-api/run-now', { method: 'POST' })
-      if (!res.ok) res = await fetch('/api/run-now', { method: 'POST' })
-      if (!res.ok) res = await fetch('/api/run-now', { method: 'GET' })
+      const res = await fetch('/api/run-now', { method: 'POST' })
       if (res.ok) {
         const data = await res.json()
         if (data && data.signals) return data
