@@ -71,27 +71,12 @@ export async function fetchStockMWPLHistory(tradeDate?: string): Promise<RawStoc
 }
 
 export async function getScannedStockData(tradeDate?: string): Promise<ProcessedStockData[]> {
-  // If tradeDate not provided, fetch the latest available trade_date (or today's latest date in DB)
-  const targetDate = tradeDate ?? (await fetchLatestMWPLTradeDate())
-
-  if (targetDate) {
-    // 1. Fetch active stocks present on the target/latest trade date
-    const targetDayRecords = await fetchStockMWPLHistory(targetDate)
-    const activeScripNames = [...new Set(targetDayRecords.map((r) => r.stock?.symbol || r.scrip_name).filter(Boolean))] as string[]
-
-    if (activeScripNames.length > 0) {
-      // 2. Fetch multi-day records for only these active stocks to compute Day 0, Day 1, Day 2 comparisons
-      const multiDayResult = await graphqlRequest<StockMWPLHistoryQueryResult>(
-        STOCK_MWPL_QUERY,
-        { where: { scrip_name: { _in: activeScripNames } } },
-        'StockMWPLQuery',
-      )
-      return scanStockUniverse(multiDayResult.stock_mwpl_history, undefined, { latestDateOnly: true })
-    }
+  if (tradeDate) {
+    const records = await fetchStockMWPLHistory(tradeDate)
+    return scanStockUniverse(records)
   }
-
-  // Fallback: fetch universe and filter to latest date
-  return scanStockUniverse(await fetchStockMWPLHistory(), undefined, { latestDateOnly: true })
+  // Default: load all universe records for Top MWPL opportunities table
+  return scanStockUniverse(await fetchStockMWPLHistory())
 }
 
 export interface GlobalIndexDefinition {

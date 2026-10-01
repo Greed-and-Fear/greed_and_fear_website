@@ -162,7 +162,19 @@ function DashboardPage(props: PortalProps) {
   }, [])
 
   const countSignal = (signal: string) => stocks.filter((stock) => stock.signal === signal).length
-  const banWatchCount = stocks.filter((stock) => stock.mwplUtilizationPercent >= 80 || stock.mwplRiskZone === 'Ban zone' || stock.mwplRiskZone === 'High risk').length
+
+  // Find the latest trade date present in the universe so F&O Ban Watch only shows today's / latest date's data
+  const latestTradeDate = stocks.reduce((max, s) => (s.latestTradeDate && s.latestTradeDate > max ? s.latestTradeDate : max), '')
+
+  // F&O Ban Watch strictly shows stocks from the latest trading date that meet the ban watch threshold
+  const banWatch = [...stocks]
+    .filter((stock) =>
+      (!latestTradeDate || stock.latestTradeDate === latestTradeDate) &&
+      (stock.mwplUtilizationPercent >= 80 || stock.mwplRiskZone === 'Ban zone' || stock.mwplRiskZone === 'High risk')
+    )
+    .sort((a, b) => b.mwplUtilizationPercent - a.mwplUtilizationPercent)
+
+  const banWatchCount = banWatch.length
   const summary = [
     ['Ban watch', String(banWatchCount), 'High ban risk'],
     ['Long builders', String(countSignal('Long build-up')), 'Strong long build-up'],
@@ -171,9 +183,6 @@ function DashboardPage(props: PortalProps) {
     ['Long unwinding', String(countSignal('Long unwinding')), 'Existing longs unwinding'],
     ['Scan universe', String(stocks.length), 'Tracked F&O stocks'],
   ]
-  const banWatch = [...stocks]
-    .filter((stock) => stock.mwplUtilizationPercent >= 80 || stock.mwplRiskZone === 'Ban zone' || stock.mwplRiskZone === 'High risk')
-    .sort((a, b) => b.mwplUtilizationPercent - a.mwplUtilizationPercent)
 
   return <PortalLayout {...props} title="MWPL institutional tracker">
     <p className="portal-subtitle">Identify position build-up and F&O ban candidates from one clear view.</p>
