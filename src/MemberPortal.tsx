@@ -171,7 +171,9 @@ function DashboardPage(props: PortalProps) {
     ['Long unwinding', String(countSignal('Long unwinding')), 'Existing longs unwinding'],
     ['Scan universe', String(stocks.length), 'Tracked F&O stocks'],
   ]
-  const banWatch = [...stocks].sort((a, b) => b.mwplUtilizationPercent - a.mwplUtilizationPercent).slice(0, 4)
+  const banWatch = [...stocks]
+    .filter((stock) => stock.mwplUtilizationPercent >= 80 || stock.mwplRiskZone === 'Ban zone' || stock.mwplRiskZone === 'High risk')
+    .sort((a, b) => b.mwplUtilizationPercent - a.mwplUtilizationPercent)
 
   return <PortalLayout {...props} title="MWPL institutional tracker">
     <p className="portal-subtitle">Identify position build-up and F&O ban candidates from one clear view.</p>

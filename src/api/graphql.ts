@@ -1,9 +1,34 @@
 import { graphqlRequest } from './client'
 import { scanStockUniverse, type ProcessedStockData, type RawStockMWPLRecord } from '../services/greedFearScanner'
 
+export const GET_LATEST_MWPL_TRADE_DATE_QUERY = `
+  query GetLatestMWPLTradeDate {
+    stock_mwpl_history(order_by: [{ trade_date: desc }], limit: 1) {
+      trade_date
+    }
+  }
+`
+
+export async function fetchLatestMWPLTradeDate(): Promise<string | null> {
+  try {
+    const result = await graphqlRequest<{ stock_mwpl_history: Array<{ trade_date: string }> }>(
+      GET_LATEST_MWPL_TRADE_DATE_QUERY,
+      {},
+      'GetLatestMWPLTradeDate',
+    )
+    return result.stock_mwpl_history[0]?.trade_date ?? null
+  } catch (error) {
+    console.error('Failed to fetch latest MWPL trade date:', error)
+    return null
+  }
+}
+
 export const STOCK_MWPL_QUERY = `
-  query StockMWPLQuery {
-    stock_mwpl_history(order_by: [{ scrip_name: asc }, { trade_date: desc }]) {
+  query StockMWPLQuery($where: stock_mwpl_history_bool_exp) {
+    stock_mwpl_history(
+      where: $where
+      order_by: [{ scrip_name: asc }, { trade_date: desc }]
+    ) {
       stock_mwpl_history_id
       stock_id
       trade_date
@@ -35,13 +60,38 @@ interface StockMWPLHistoryQueryResult {
   stock_mwpl_history: RawStockMWPLRecord[]
 }
 
-export async function fetchStockMWPLHistory(): Promise<RawStockMWPLRecord[]> {
-  const result = await graphqlRequest<StockMWPLHistoryQueryResult>(STOCK_MWPL_QUERY, {}, 'StockMWPLQuery')
+export async function fetchStockMWPLHistory(tradeDate?: string): Promise<RawStockMWPLRecord[]> {
+  const variables = tradeDate ? { where: { trade_date: { _eq: tradeDate } } } : {}
+  const result = await graphqlRequest<StockMWPLHistoryQueryResult, typeof variables>(
+    STOCK_MWPL_QUERY,
+    variables,
+    'StockMWPLQuery',
+  )
   return result.stock_mwpl_history
 }
 
-export async function getScannedStockData(): Promise<ProcessedStockData[]> {
-  return scanStockUniverse(await fetchStockMWPLHistory())
+export async function getScannedStockData(tradeDate?: string): Promise<ProcessedStockData[]> {
+  // If tradeDate not provided, fetch the latest available trade_date (or today's latest date in DB)
+  const targetDate = tradeDate ?? (await fetchLatestMWPLTradeDate())
+
+  if (targetDate) {
+    // 1. Fetch active stocks present on the target/latest trade date
+    const targetDayRecords = await fetchStockMWPLHistory(targetDate)
+    const activeScripNames = [...new Set(targetDayRecords.map((r) => r.stock?.symbol || r.scrip_name).filter(Boolean))] as string[]
+
+    if (activeScripNames.length > 0) {
+      // 2. Fetch multi-day records for only these active stocks to compute Day 0, Day 1, Day 2 comparisons
+      const multiDayResult = await graphqlRequest<StockMWPLHistoryQueryResult>(
+        STOCK_MWPL_QUERY,
+        { where: { scrip_name: { _in: activeScripNames } } },
+        'StockMWPLQuery',
+      )
+      return scanStockUniverse(multiDayResult.stock_mwpl_history, undefined, { latestDateOnly: true })
+    }
+  }
+
+  // Fallback: fetch universe and filter to latest date
+  return scanStockUniverse(await fetchStockMWPLHistory(), undefined, { latestDateOnly: true })
 }
 
 export interface GlobalIndexDefinition {
