@@ -24,13 +24,12 @@ const TELEGRAM_URL = 'https://t.me/menezes725'
 const TELEGRAM_GROUP_URL = 'https://t.me/+RqumyUtpnyZiY2Jl'
 const WHATSAPP_URL = 'https://wa.me/9591463584'
 
-type Policy = 'cookies' | 'terms' | 'privacy' | 'refund' | 'disclaimer' | 'careers'
+type Policy = 'cookies' | 'terms' | 'privacy' | 'disclaimer' | 'careers'
 
 const policyContent: Record<Policy, { title: string; body: string[] }> = {
   cookies: { title: 'Cookie Policy', body: ['We use essential browser storage to remember your cookie preference and keep the website working.', 'You can clear this preference at any time from your browser settings.'] },
   terms: { title: 'Terms & Conditions', body: ['This website provides educational market content. It does not provide investment advice or guarantee returns.', 'By using the site, you accept responsibility for your own trading and investment decisions.'] },
   privacy: { title: 'Privacy Policy', body: ['We only use details you deliberately provide to contact us. Do not submit sensitive financial or payment information through the contact form.', 'Third-party checkout, Telegram, WhatsApp and YouTube services apply their own privacy policies.'] },
-  refund: { title: 'Refund Policy', body: ['For incorrect or duplicate payments, contact greedandfearacademy@gmail.com with your transaction details.', 'Eligibility is reviewed according to the product delivered and the applicable checkout provider terms.'] },
   disclaimer: { title: 'Market Disclaimer', body: ['All posts, discussions and setups are for educational purposes only. We do not provide tips, recommendations or advisory services.', 'Markets and derivatives involve significant risk. Consult a registered financial adviser before making decisions.'] },
   careers: { title: 'Careers', body: ['There are currently no open positions.'] },
 }
@@ -249,7 +248,7 @@ function ContactIcon({ type }: { type: 'chat' | 'email' | 'clock' }) {
 }
 
 function Footer({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
-  return <footer><div className="footer-contact"><a href="mailto:greedandfearacademy@gmail.com">greedandfearacademy@gmail.com</a><a href="tel:+917899404714">+91 78994 04714</a></div><div className="footer-grid"><div><img src={normalLogo} alt="Greed and Fear" /><p>Technical analysis education for thoughtful market participants.</p></div><div><h3>Explore</h3><Link to="/products">Memberships</Link><Link to="/courses">Courses</Link><Link to="/results">Results</Link><Link to="/news">News</Link><Link to="/contact">Contact</Link></div><div><h3>Community</h3><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Telegram</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp</a><Link to="/login">Member login</Link><button onClick={() => onPolicy('careers')}>Careers</button></div><div><h3>Policies</h3>{(['terms', 'privacy', 'refund', 'cookies', 'disclaimer'] as Policy[]).map((item) => <button onClick={() => onPolicy(item)} key={item}>{policyContent[item].title}</button>)}</div></div><div className="copyright">© {new Date().getFullYear()} Greed & Fear. Educational content only.</div></footer>
+  return <footer><div className="footer-contact"><a href="mailto:greedandfearacademy@gmail.com">greedandfearacademy@gmail.com</a><a href="tel:+917899404714">+91 78994 04714</a></div><div className="footer-grid"><div><img src={normalLogo} alt="Greed and Fear" /><p>Technical analysis education for thoughtful market participants.</p></div><div><h3>Explore</h3><Link to="/courses">Courses</Link><Link to="/results">Results</Link><Link to="/news">News</Link><Link to="/contact">Contact</Link></div><div><h3>Community</h3><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">Telegram</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp</a><Link to="/login">Member login</Link><button onClick={() => onPolicy('careers')}>Careers</button></div><div><h3>Policies</h3>{(['terms', 'privacy', 'cookies', 'disclaimer'] as Policy[]).map((item) => <button onClick={() => onPolicy(item)} key={item}>{policyContent[item].title}</button>)}</div></div><div className="copyright">© {new Date().getFullYear()} Greed & Fear. Educational content only.</div></footer>
 }
 
 function CookieBanner({ onChoice, onRead }: { onChoice: (choice: 'accepted' | 'rejected') => void; onRead: () => void }) {
