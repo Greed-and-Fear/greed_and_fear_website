@@ -63,8 +63,8 @@ function App() {
       <main id="main-content">
         <Routes>
           <Route path="/" element={<HomePage onPolicy={setPolicy} />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/daily" element={<ProductsPage />} />
+          {/* <Route path="/products" element={<ProductsPage />} /> */}
+          {/* <Route path="/products/daily" element={<ProductsPage />} /> */}
           <Route path="/products/cartesian-waveshots" element={<LaunchPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/checkout/:planId" element={<CheckoutPage />} />
