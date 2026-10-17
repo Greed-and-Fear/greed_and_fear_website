@@ -12,6 +12,7 @@ import GlobalIndicesPage from './GlobalIndicesPage'
 import FavoriteStocksPage from './FavoriteStocksPage'
 import MwplSaturationPage from './MwplSaturationPage'
 import PreMarketPage from './PreMarketPage'
+import TradingBackground from './components/TradingBackground'
 import logo from '../images/logo/logos.jpeg'
 import './member.css'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
@@ -64,6 +65,7 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
     try { await login(String(data.get('email')), String(data.get('password'))); navigate(getReturnPath(location.state), { replace: true }) } catch (reason) { setError(getApiErrorMessage(reason, 'Unable to sign in.')) } finally { setLoading(false) }
   }
   return <main className="login-page">
+    <TradingBackground theme={theme} variant="subtle" />
     <header className="login-topbar"><Link to="/"><img src={theme === 'dark' ? logo : whiteLogo} alt="Greed and Fear" /></Link><div><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link to="/" className="back-link">Back to home</Link></div></header>
     <section className="login-card">
       <img className="login-mark" src={theme === 'dark' ? normalLogo : normalWhiteLogo} alt="" />
@@ -95,6 +97,7 @@ function PortalLayout({ children, theme, onThemeChange, title, eyebrow = 'Member
   const [menuOpen, setMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   return <div className="portal-shell">
+    <TradingBackground theme={theme} variant="subtle" />
     <aside className={menuOpen ? 'portal-sidebar open' : 'portal-sidebar'}><Link className="portal-logo" to="/"><img src={logo} alt="Greed and Fear" /></Link><nav>{navigation.map(([label, href, icon]) => <NavLink to={href} className={({ isActive }) => isActive && !href.includes('#') ? 'active' : undefined} key={label} onClick={() => setMenuOpen(false)}><span>{icon}</span>{label}</NavLink>)}</nav></aside>
     <div className="portal-workspace"><header className="portal-header"><button className="portal-menu" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle member navigation">Menu</button><div><span className="market-time">Greed & Fear market API</span><span className="live-pill">Connected</span><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="run-button" to="/dashboard">Refresh view</Link><span className="member-avatar">{user?.name.slice(0, 1).toUpperCase() ?? 'M'}</span></div></header><div className="portal-content"><div className="portal-page-title"><div><p>{eyebrow}</p><h1>{title}</h1></div><button className="portal-signout" onClick={() => void logout()}>Sign out</button></div>{children}</div></div>
   </div>
