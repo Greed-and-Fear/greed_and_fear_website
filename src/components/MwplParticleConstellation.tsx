@@ -18,9 +18,16 @@ export interface ConstellationStockItem {
 interface MwplParticleConstellationProps {
   stocks: ConstellationStockItem[]
   banWatchStocks?: ConstellationStockItem[]
-  isBanWatchConnected?: boolean
-  onToggleBanWatchConnection?: () => void
   tableFallback?: ReactNode
+}
+
+interface TopFeederThread {
+  originX: number
+  originY: number
+  targetIndex: number
+  color: string
+  pulseProgress: number
+  pulseSpeed: number
 }
 
 interface ParticleNode {
@@ -62,8 +69,6 @@ function formatCompactNumber(num: number | null | undefined): string {
 export default function MwplParticleConstellation({
   stocks,
   banWatchStocks = [],
-  isBanWatchConnected = false,
-  onToggleBanWatchConnection,
   tableFallback,
 }: MwplParticleConstellationProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -163,36 +168,26 @@ export default function MwplParticleConstellation({
         glowColor = 'rgba(245, 158, 11, 0.5)'
       }
 
-      // Cluster positioning:
-      // Red/Ban stocks cluster on the top-right / right quadrant (connecting to F&O Ban Watch)
-      // Green/Long stocks cluster on the central-left area
-      // Others spread organically across the canvas
-      let targetX: number
-      let targetY: number
-      const padding = 60
+      // Natural organic constellation layout:
+      // Nodes are distributed gracefully across the canvas, with top-tier
+      // opportunity & high-MWPL stocks positioned in the upper region to receive
+      // the glowing data thread flowing from the top of the card.
+      const paddingX = 60
+      const paddingY = 45
+      const cols = Math.min(8, Math.max(5, Math.floor(width / 135)))
+      const row = Math.floor(i / cols)
+      const col = i % cols
+      const colStep = (width - paddingX * 2) / Math.max(1, cols - 1)
+      const totalRows = Math.ceil(sample.length / cols)
+      const rowStep = (height - paddingY * 2 - 35) / Math.max(1, totalRows)
 
-      if (isBan) {
-        // Upper-right sector (Ban Zone)
-        const angle = -0.3 + (i % 6) * 0.25
-        const rad = 70 + (i * 22) % 140
-        targetX = Math.max(padding, width * 0.75 + Math.cos(angle) * rad)
-        targetY = Math.max(padding, height * 0.35 + Math.sin(angle) * rad)
-      } else if (isLong) {
-        // Center-left sector (Opportunity Zone)
-        const angle = Math.PI * 0.6 + (i % 8) * 0.3
-        const rad = 80 + (i * 18) % 160
-        targetX = Math.max(padding, width * 0.32 + Math.cos(angle) * rad)
-        targetY = Math.max(padding, height * 0.45 + Math.sin(angle) * rad)
-      } else {
-        // Natural distribution
-        const cols = 6
-        const row = Math.floor(i / cols)
-        const col = i % cols
-        const jitterX = (Math.sin(i * 13) * width) / 12
-        const jitterY = (Math.cos(i * 17) * height) / 12
-        targetX = padding + (col / (cols - 1)) * (width - padding * 2) + jitterX
-        targetY = padding + (row / 7) * (height - padding * 2) + jitterY
-      }
+      // Stagger alternating rows for a natural celestial grid
+      const stagger = (row % 2) * (colStep * 0.42)
+      const jitterX = Math.sin(i * 11 + 1.7) * (colStep * 0.18)
+      const jitterY = Math.cos(i * 13 + 2.1) * 14
+
+      const targetX = Math.min(width - paddingX, Math.max(paddingX, paddingX + col * colStep + stagger + jitterX))
+      const targetY = Math.min(height - paddingY, Math.max(paddingY + 30, paddingY + 35 + row * rowStep + jitterY))
 
       // Radius based on MWPL saturation
       const minRadius = 7
@@ -218,60 +213,67 @@ export default function MwplParticleConstellation({
       }
     })
 
-    // Build threads
+    // Build Top Feeder Threads (flowing down from top of card into anchor nodes)
+    const topFeeders: TopFeederThread[] = []
+    const topPorts = [
+      { x: width * 0.5, y: 0 },
+      { x: width * 0.26, y: 0 },
+      { x: width * 0.74, y: 0 },
+    ]
+
+    topPorts.forEach((port) => {
+      // Find upper-tier anchor nodes nearest to this top feed port
+      const candidates = nodes
+        .map((n, idx) => ({
+          idx,
+          node: n,
+          dist: Math.hypot(n.baseX - port.x, (n.baseY - port.y) * 1.35),
+        }))
+        .filter((c) => c.node.baseY < height * 0.58)
+        .sort((a, b) => a.dist - b.dist)
+        .slice(0, 2)
+
+      candidates.forEach((c, ci) => {
+        topFeeders.push({
+          originX: port.x,
+          originY: 0,
+          targetIndex: c.idx,
+          color: c.node.tone === 'red' ? '#f87171' : c.node.tone === 'blue' ? '#38bdf8' : '#34d399',
+          pulseProgress: (ci * 0.45 + Math.random() * 0.2) % 1,
+          pulseSpeed: 0.007 + Math.random() * 0.004,
+        })
+      })
+    })
+
+    // Build Inter-Node Network Threads
     const threads: ThreadConnection[] = []
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const a = nodes[i]
         const b = nodes[j]
-
-        // Connect if both are Ban stocks (Red thread)
-        if (a.isBanCluster && b.isBanCluster) {
-          threads.push({
-            fromIndex: i,
-            toIndex: j,
-            color: 'rgba(239, 68, 68, 0.45)',
-            opacity: 0.5,
-            pulseProgress: Math.random(),
-            pulseSpeed: 0.008 + Math.random() * 0.008,
-            isBanThread: true,
-          })
-          continue
-        }
-
-        // Connect if both are Long builders (Green thread)
-        if (a.isLongBuilder && b.isLongBuilder) {
-          const dx = a.baseX - b.baseX
-          const dy = a.baseY - b.baseY
-          const dist = Math.hypot(dx, dy)
-          if (dist < 220) {
-            threads.push({
-              fromIndex: i,
-              toIndex: j,
-              color: 'rgba(16, 185, 129, 0.35)',
-              opacity: 0.4,
-              pulseProgress: Math.random(),
-              pulseSpeed: 0.007 + Math.random() * 0.006,
-              isBanThread: false,
-            })
-          }
-          continue
-        }
-
-        // Proximity connections
         const dx = a.baseX - b.baseX
         const dy = a.baseY - b.baseY
         const dist = Math.hypot(dx, dy)
-        if (dist < 115) {
+
+        // Connect nearby nodes within proximity radius
+        if (dist < 130) {
           const isCrossColor = a.tone !== b.tone
+          const threadColor = isCrossColor
+            ? 'rgba(168, 85, 247, 0.26)'
+            : a.tone === 'red'
+            ? 'rgba(239, 68, 68, 0.3)'
+            : a.tone === 'blue'
+            ? 'rgba(56, 189, 248, 0.3)'
+            : 'rgba(16, 185, 129, 0.3)'
+
           threads.push({
             fromIndex: i,
             toIndex: j,
-            color: isCrossColor ? 'rgba(168, 85, 247, 0.22)' : a.tone === 'red' ? 'rgba(239, 68, 68, 0.25)' : 'rgba(16, 185, 129, 0.25)',
-            opacity: 0.25,
+            color: threadColor,
+            opacity: 0.35,
             pulseProgress: Math.random(),
             pulseSpeed: 0.005 + Math.random() * 0.005,
-            isBanThread: false,
+            isBanThread: a.tone === 'red' && b.tone === 'red',
           })
         }
       }
@@ -340,38 +342,92 @@ export default function MwplParticleConstellation({
         ctx.stroke()
       }
 
-      // Draw F&O Ban Gateway Sector Halo on Top-Right
-      const banHubX = width * 0.82
-      const banHubY = height * 0.28
-      const banGrad = ctx.createRadialGradient(banHubX, banHubY, 10, banHubX, banHubY, 180)
-      banGrad.addColorStop(0, 'rgba(239, 68, 68, 0.14)')
-      banGrad.addColorStop(0.6, 'rgba(239, 68, 68, 0.04)')
-      banGrad.addColorStop(1, 'transparent')
-      ctx.fillStyle = banGrad
-      ctx.beginPath()
-      ctx.arc(banHubX, banHubY, 180, 0, Math.PI * 2)
-      ctx.fill()
+      // Render Top Conduit Emitters along the top boundary of the card
+      for (const port of topPorts) {
+        // Ambient downward radiance from top of card
+        const radGrad = ctx.createRadialGradient(port.x, 0, 0, port.x, 0, 48)
+        radGrad.addColorStop(0, 'rgba(56, 189, 248, 0.35)')
+        radGrad.addColorStop(0.5, 'rgba(168, 85, 247, 0.12)')
+        radGrad.addColorStop(1, 'transparent')
+        ctx.fillStyle = radGrad
+        ctx.beginPath()
+        ctx.arc(port.x, 0, 48, 0, Math.PI)
+        ctx.fill()
 
-      // Gateway Label
-      ctx.fillStyle = 'rgba(239, 68, 68, 0.65)'
-      ctx.font = '600 10.5px Inter, system-ui, sans-serif'
-      ctx.fillText('⚡ F&O BAN THREAT CLUSTER', banHubX - 70, banHubY - 140)
+        // Core pulsing energy port at the card's top edge
+        const pulseR = 3.5 + Math.sin(t * 4 + port.x) * 1
+        ctx.fillStyle = '#38bdf8'
+        ctx.shadowColor = '#38bdf8'
+        ctx.shadowBlur = 10
+        ctx.beginPath()
+        ctx.arc(port.x, 1, pulseR, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.shadowBlur = 0
+      }
 
-      // Opportunity Zone Halo on Left
-      const oppHubX = width * 0.3
-      const oppHubY = height * 0.42
-      const oppGrad = ctx.createRadialGradient(oppHubX, oppHubY, 10, oppHubX, oppHubY, 190)
-      oppGrad.addColorStop(0, 'rgba(16, 185, 129, 0.12)')
-      oppGrad.addColorStop(0.6, 'rgba(16, 185, 129, 0.03)')
-      oppGrad.addColorStop(1, 'transparent')
-      ctx.fillStyle = oppGrad
-      ctx.beginPath()
-      ctx.arc(oppHubX, oppHubY, 190, 0, Math.PI * 2)
-      ctx.fill()
+      // Draw Top Feeder Threads (flowing from the top of the card into the anchor nodes)
+      for (const feeder of topFeeders) {
+        const target = nodes[feeder.targetIndex]
+        if (!target) continue
 
-      ctx.fillStyle = 'rgba(16, 185, 129, 0.65)'
-      ctx.font = '600 10.5px Inter, system-ui, sans-serif'
-      ctx.fillText('✦ MOMENTUM & LONG BUILDERS', oppHubX - 75, oppHubY - 145)
+        const originX = feeder.originX
+        const originY = 0
+
+        // Smooth vertical-curving bezier control points
+        const cp1x = originX
+        const cp1y = target.y * 0.4
+        const cp2x = target.x
+        const cp2y = target.y * 0.65
+
+        const isHoveredTarget = hoveredNodeRef.current?.node === target
+
+        ctx.save()
+        const streamGrad = ctx.createLinearGradient(originX, 0, target.x, target.y)
+        streamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.9)')
+        streamGrad.addColorStop(0.5, 'rgba(168, 85, 247, 0.75)')
+        streamGrad.addColorStop(1, target.color)
+
+        ctx.strokeStyle = isHoveredTarget ? '#38bdf8' : streamGrad
+        ctx.lineWidth = isHoveredTarget ? 2.8 : 1.8
+        ctx.shadowColor = isHoveredTarget ? '#38bdf8' : 'rgba(56, 189, 248, 0.65)'
+        ctx.shadowBlur = isHoveredTarget ? 16 : 8
+
+        ctx.beginPath()
+        ctx.moveTo(originX, originY)
+        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, target.x, target.y)
+        ctx.stroke()
+        ctx.restore()
+
+        // Animated Energy Packets / Photons streaming DOWN from the top of the card into the node
+        if (isPlaying) {
+          feeder.pulseProgress = (feeder.pulseProgress + feeder.pulseSpeed) % 1
+        }
+
+        // Two streaming pulses per thread for a continuous flow
+        for (const offset of [0, 0.5]) {
+          const p = (feeder.pulseProgress + offset) % 1
+          const t1 = 1 - p
+          const px =
+            t1 * t1 * t1 * originX +
+            3 * t1 * t1 * p * cp1x +
+            3 * t1 * p * p * cp2x +
+            p * p * p * target.x
+          const py =
+            t1 * t1 * t1 * originY +
+            3 * t1 * t1 * p * cp1y +
+            3 * t1 * p * p * cp2y +
+            p * p * p * target.y
+
+          ctx.save()
+          ctx.fillStyle = '#ffffff'
+          ctx.shadowColor = '#38bdf8'
+          ctx.shadowBlur = 10
+          ctx.beginPath()
+          ctx.arc(px, py, 3, 0, Math.PI * 2)
+          ctx.fill()
+          ctx.restore()
+        }
+      }
 
       // Update Node positions with organic oscillation
       const t = time / 1000
@@ -393,7 +449,7 @@ export default function MwplParticleConstellation({
         }
       }
 
-      // Draw Threads
+      // Draw Inter-Node Connecting Threads
       for (const thread of threads) {
         const a = nodes[thread.fromIndex]
         const b = nodes[thread.toIndex]
@@ -403,52 +459,33 @@ export default function MwplParticleConstellation({
         const isHoveredThread =
           hoveredNodeRef.current &&
           (hoveredNodeRef.current.node === a || hoveredNodeRef.current.node === b)
-        const isBanHighlight = isBanWatchConnected && thread.isBanThread
 
-        ctx.strokeStyle = isBanHighlight
-          ? 'rgba(239, 68, 68, 0.85)'
-          : isHoveredThread
-          ? '#c084fc'
-          : thread.color
-
-        ctx.lineWidth = isBanHighlight ? 2.2 : isHoveredThread ? 1.8 : 1
+        ctx.save()
+        ctx.strokeStyle = isHoveredThread ? '#c084fc' : thread.color
+        ctx.lineWidth = isHoveredThread ? 2 : 1
+        ctx.shadowColor = isHoveredThread ? '#c084fc' : 'transparent'
+        ctx.shadowBlur = isHoveredThread ? 10 : 0
 
         ctx.beginPath()
         ctx.moveTo(a.x, a.y)
         ctx.lineTo(b.x, b.y)
         ctx.stroke()
+        ctx.restore()
 
         // Moving Photon / Energy Pulse along thread
         if (isPlaying) {
-          thread.pulseProgress = (thread.pulseProgress + thread.pulseSpeed * (isBanHighlight ? 2 : 1)) % 1
+          thread.pulseProgress = (thread.pulseProgress + thread.pulseSpeed) % 1
         }
         const px = a.x + (b.x - a.x) * thread.pulseProgress
         const py = a.y + (b.y - a.y) * thread.pulseProgress
 
-        ctx.fillStyle = thread.isBanThread ? '#ef4444' : thread.color.includes('16, 185, 129') ? '#10b981' : '#c084fc'
+        ctx.save()
+        ctx.fillStyle = isHoveredThread ? '#ffffff' : thread.color.includes('16, 185, 129') ? '#10b981' : '#c084fc'
         ctx.shadowColor = ctx.fillStyle
         ctx.shadowBlur = 6
         ctx.beginPath()
-        ctx.arc(px, py, isBanHighlight ? 3.2 : 2, 0, Math.PI * 2)
+        ctx.arc(px, py, 2, 0, Math.PI * 2)
         ctx.fill()
-        ctx.shadowBlur = 0
-      }
-
-      // If Ban Watch is actively connected from top metric card, draw animated feeder beam
-      if (isBanWatchConnected) {
-        ctx.save()
-        ctx.strokeStyle = '#ef4444'
-        ctx.lineWidth = 2.5
-        ctx.setLineDash([6, 6])
-        ctx.lineDashOffset = -time * 0.05
-        ctx.shadowColor = 'rgba(239, 68, 68, 0.8)'
-        ctx.shadowBlur = 10
-
-        // Draw beam from top right corner (where Ban Watch sits) to Ban Cluster
-        ctx.beginPath()
-        ctx.moveTo(width - 20, 10)
-        ctx.bezierCurveTo(width - 40, height * 0.15, banHubX + 60, banHubY - 40, banHubX, banHubY)
-        ctx.stroke()
         ctx.restore()
       }
 
@@ -523,33 +560,10 @@ export default function MwplParticleConstellation({
       canvas.removeEventListener('mousemove', onMouseMove)
       canvas.removeEventListener('mouseleave', onMouseLeave)
     }
-  }, [viewMode, filteredStocks, isPlaying, searchQuery, isBanWatchConnected])
+  }, [viewMode, filteredStocks, isPlaying, searchQuery])
 
   return (
     <div className="mwpl-constellation-container" ref={containerRef}>
-      {/* Top Banner indicating F&O Ban Watch connection */}
-      {isBanWatchConnected && (
-        <div className="mwpl-ban-connection-ribbon">
-          <span className="mwpl-pulse-dot" />
-          <span>
-            Active Link: <strong>F&O Ban Watch ({banWatchStocks.length} Stocks)</strong> connected to Constellation Network
-          </span>
-          <button
-            type="button"
-            onClick={onToggleBanWatchConnection}
-            style={{
-              marginLeft: 'auto',
-              border: 0,
-              background: 'transparent',
-              color: '#fca5a5',
-              cursor: 'pointer',
-              fontWeight: 700,
-            }}
-          >
-            ✕ Dismiss
-          </button>
-        </div>
-      )}
 
       {/* Main Toolbar */}
       <div className="mwpl-constellation-toolbar">
