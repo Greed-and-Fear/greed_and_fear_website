@@ -7,9 +7,10 @@ import {
   type MwplSaturationStock,
 } from './api/graphql'
 import { getSessionUserId, useAuth } from './auth/auth-context'
+import MwplParticleConstellation, { type ConstellationStockItem } from './components/MwplParticleConstellation'
 
 type FilterCategory = 'ALL' | 'BAN' | 'CRITICAL' | 'ELEVATED' | 'MODERATE' | 'NORMAL'
-type ViewMode = 'CORE' | 'EXTENDED'
+type ViewMode = 'CORE' | 'EXTENDED' | 'CONSTELLATION'
 type SortField =
   | 'symbol'
   | 'day0Mwpl'
@@ -155,6 +156,26 @@ export default function MwplSaturationPage() {
     const sum = stocks.reduce((acc, s) => acc + s.day0Mwpl, 0)
     return sum / stocks.length
   }, [stocks])
+
+  const constellationStocks = useMemo<ConstellationStockItem[]>(() => {
+    return stocks.map((s) => ({
+      symbol: s.symbol,
+      companyName: s.companyName,
+      exchange: s.exchange,
+      priceChangePercent: s.priceChangePercent,
+      day0Mwpl: s.day0Mwpl,
+      day1Mwpl: s.day1Mwpl,
+      day2Mwpl: s.day2Mwpl,
+      day0OI: s.day0OI,
+      mwplUtilizationPercent: s.day0Mwpl,
+      mwplRiskZone: s.riskZone === 'In Ban' ? 'Ban zone' : s.riskZone === 'Critical' ? 'High risk' : 'Normal',
+      signal: s.day0Mwpl >= 95 ? 'In Ban' : (s.priceChangePercent ?? 0) >= 0 ? 'Long build-up' : 'Short build-up',
+    }))
+  }, [stocks])
+
+  const constellationBanStocks = useMemo(() => {
+    return constellationStocks.filter((s) => (s.mwplUtilizationPercent ?? s.day0Mwpl) >= 80)
+  }, [constellationStocks])
 
   // Filtered and sorted stocks
   const displayedStocks = useMemo(() => {
@@ -402,6 +423,14 @@ export default function MwplSaturationPage() {
             >
               Extended View
             </button>
+            <button
+              type="button"
+              className={viewMode === 'CONSTELLATION' ? 'view-mode-btn active' : 'view-mode-btn'}
+              onClick={() => setViewMode('CONSTELLATION')}
+              title="Show animated particle constellation and thread network"
+            >
+              🌌 Constellation
+            </button>
           </div>
 
           <button
@@ -494,7 +523,14 @@ export default function MwplSaturationPage() {
         </div>
       )}
 
-      {!loading && !error && (
+      {!loading && !error && viewMode === 'CONSTELLATION' && (
+        <MwplParticleConstellation
+          stocks={constellationStocks}
+          banWatchStocks={constellationBanStocks}
+        />
+      )}
+
+      {!loading && !error && viewMode !== 'CONSTELLATION' && (
         <div className="raw-stock-table-wrap saturation-table-wrap screenshot-styled-wrap">
           <table className="raw-stock-table saturation-table appsmith-styled-table">
             <thead>
@@ -690,7 +726,7 @@ export default function MwplSaturationPage() {
       )}
 
       {/* Bottom Pagination controls */}
-      {totalPages > 1 && (
+      {totalPages > 1 && viewMode !== 'CONSTELLATION' && (
         <div className="bottom-pagination-bar">
           <span>Showing {(safeCurrentPage - 1) * pageSize + 1} to {Math.min(totalRecords, safeCurrentPage * pageSize)} of {totalRecords} stocks</span>
           <div className="page-nav">
