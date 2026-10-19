@@ -136,42 +136,94 @@ function describeArc(x: number, y: number, innerR: number, outerR: number, start
   ].join(' ')
 }
 
+function extractIstDetails(iso?: string) {
+  if (!iso) return null
+  try {
+    const d = new Date(iso)
+    if (isNaN(d.getTime())) return null
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Kolkata',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(d)
+
+    const getPart = (type: string) => parts.find((p) => p.type === type)?.value || '0'
+    const year = getPart('year')
+    const month = getPart('month')
+    const day = getPart('day')
+    let hour = parseInt(getPart('hour'), 10)
+    if (hour === 24) hour = 0
+    const minute = parseInt(getPart('minute'), 10)
+
+    const dateKey = `${year}-${month}-${day}`
+    const totalMinutes = hour * 60 + minute
+    return { dateKey, hour, minute, totalMinutes }
+  } catch {
+    return null
+  }
+}
+
 interface RunPerformanceEval {
+  dateKey: string
   dashboardCall: 'BULLISH' | 'BEARISH' | 'NEUTRAL'
-  actualSentiment: 'BULLISH' | 'BEARISH'
-  isCorrect: boolean
+  actualSentiment: 'BULLISH' | 'BEARISH' | null
+  isCorrect: boolean | null
   niftyPercentChange?: number | null
+  hasClosed: boolean
 }
 
 function evaluateRun(h: PreMarketIndicatorRun): RunPerformanceEval {
   const legacyRun = h as PreMarketIndicatorRun & { overall?: { overall?: string } }
   const dashboardCall = (h.direction?.call || legacyRun.overall?.overall || 'NEUTRAL') as 'BULLISH' | 'BEARISH' | 'NEUTRAL'
 
-  let actualSentiment: 'BULLISH' | 'BEARISH'
+  const ist = extractIstDetails(h.timestamp)
+  const dateKey = ist ? ist.dateKey : (h.timestamp ? h.timestamp.slice(0, 10) : 'unknown')
+
+  const todayIst = extractIstDetails(new Date().toISOString())?.dateKey
+  const isToday = Boolean(todayIst && dateKey === todayIst)
+
+  // Market close is only considered calculated once the 4:00 PM close job has run:
+  // 1) For today: marketClosedAt must be present (or explicit actualCloseSentiment recorded at close)
+  // 2) For past days: marketClosedAt or actualCloseSentiment from that past session
+  const hasClosed = Boolean(
+    h.marketClosedAt ||
+    (!isToday && (h.actualCloseSentiment === 'BULLISH' || h.actualCloseSentiment === 'BEARISH' || h.actualNiftyClose?.sentiment))
+  )
+
+  let actualSentiment: 'BULLISH' | 'BEARISH' | null = null
   let niftyPercentChange: number | null = null
 
-  if (h.actualCloseSentiment === 'BULLISH' || h.actualCloseSentiment === 'BEARISH') {
-    actualSentiment = h.actualCloseSentiment
-  } else if (h.actualNiftyClose?.sentiment) {
-    actualSentiment = h.actualNiftyClose.sentiment
-  } else {
-    const sMap = Object.fromEntries((h.signals || []).map((s) => [s.key, s]))
-    const gn = sMap.giftNifty?.raw?.percentChange ?? 0
-    const br = (sMap.breadth?.raw?.advances ?? 25) - (sMap.breadth?.raw?.declines ?? 25)
-    actualSentiment = (gn > 0 || (gn === 0 && br >= 0)) ? 'BULLISH' : 'BEARISH'
+  if (hasClosed) {
+    if (h.actualCloseSentiment === 'BULLISH' || h.actualCloseSentiment === 'BEARISH') {
+      actualSentiment = h.actualCloseSentiment
+    } else if (h.actualNiftyClose?.sentiment === 'BULLISH' || h.actualNiftyClose?.sentiment === 'BEARISH') {
+      actualSentiment = h.actualNiftyClose.sentiment
+    } else if (h.actualNiftyClose?.percentChange != null) {
+      actualSentiment = h.actualNiftyClose.percentChange >= 0 ? 'BULLISH' : 'BEARISH'
+    }
+
+    if (h.actualNiftyClose?.percentChange != null) {
+      niftyPercentChange = h.actualNiftyClose.percentChange
+    }
   }
 
-  if (h.actualNiftyClose?.percentChange != null) {
-    niftyPercentChange = h.actualNiftyClose.percentChange
+  // A run is correct only if it had a directional call (BULLISH or BEARISH) and market has closed with matching actual sentiment
+  let isCorrect: boolean | null = null
+  if (hasClosed && actualSentiment && dashboardCall !== 'NEUTRAL') {
+    isCorrect = dashboardCall === actualSentiment
   }
-
-  const isCorrect = dashboardCall === actualSentiment
 
   return {
+    dateKey,
     dashboardCall,
     actualSentiment,
     isCorrect,
     niftyPercentChange,
+    hasClosed,
   }
 }
 
@@ -182,13 +234,64 @@ interface PerformanceTrackerProps {
 function PerformanceTracker({ history }: PerformanceTrackerProps) {
   const [activeHover, setActiveHover] = useState<'correct' | 'incorrect' | null>(null)
 
-  const evaluated = useMemo(() => {
-    return history.map((h) => evaluateRun(h))
+  const { evaluated, neutralExcludedCount } = useMemo(() => {
+    // 1. Group runs by date in IST
+    const dateGroups = new Map<string, PreMarketIndicatorRun[]>()
+    for (const h of history) {
+      const ist = extractIstDetails(h.timestamp)
+      const dateKey = ist ? ist.dateKey : (h.timestamp ? h.timestamp.slice(0, 10) : 'unknown')
+      if (!dateGroups.has(dateKey)) {
+        dateGroups.set(dateKey, [])
+      }
+      dateGroups.get(dateKey)!.push(h)
+    }
+
+    const TARGET_MINUTES = 9 * 60 + 10 // 550 minutes = 9:10 AM IST
+    const evals: RunPerformanceEval[] = []
+    let neutralDates = 0
+
+    dateGroups.forEach((runs) => {
+      // Pick the run closest to 9:10 AM IST on that trading day (ignoring other intra-day runs)
+      let bestRun = runs[0]
+      let minDiff = Infinity
+      for (const r of runs) {
+        const ist = extractIstDetails(r.timestamp)
+        const mins = ist ? ist.totalMinutes : 550
+        const diff = Math.abs(mins - TARGET_MINUTES)
+        if (diff < minDiff) {
+          minDiff = diff
+          bestRun = r
+        }
+      }
+
+      const evalItem = evaluateRun(bestRun)
+
+      // Rule 1: Must have 4:00 PM market close recorded
+      if (!evalItem.hasClosed || !evalItem.actualSentiment) {
+        return
+      }
+
+      // Rule 2: If 9:10 AM direction is NEUTRAL, do NOT consider that date for the pie chart!
+      if (evalItem.dashboardCall === 'NEUTRAL') {
+        neutralDates++
+        return
+      }
+
+      // Evaluated directional session
+      if (evalItem.isCorrect !== null) {
+        evals.push(evalItem)
+      }
+    })
+
+    return {
+      evaluated: evals,
+      neutralExcludedCount: neutralDates,
+    }
   }, [history])
 
   const total = evaluated.length
-  const correctCount = evaluated.filter((e) => e.isCorrect).length
-  const incorrectCount = total - correctCount
+  const correctCount = evaluated.filter((e) => e.isCorrect === true).length
+  const incorrectCount = evaluated.filter((e) => e.isCorrect === false).length
   const correctPct = total > 0 ? (correctCount / total) * 100 : 0
   const incorrectPct = total > 0 ? (incorrectCount / total) * 100 : 0
 
@@ -226,13 +329,13 @@ function PerformanceTracker({ history }: PerformanceTrackerProps) {
           <div>
             <h3 className="pm-perf-title">Performance Tracker</h3>
             <p className="pm-perf-subtitle">
-              Actual Nifty 50 close sentiment vs pre-market dashboard prediction
+              9:10 AM pre-market direction vs 4:00 PM Nifty 50 close {neutralExcludedCount > 0 ? `(${neutralExcludedCount} neutral excluded)` : '(neutral excluded)'}
             </p>
           </div>
         </div>
         <div className="pm-perf-sessions-badge">
           <span className="dot" />
-          <span>{total} Sessions Evaluated</span>
+          <span>{total} Daily Sessions Evaluated</span>
         </div>
       </div>
 
@@ -280,13 +383,13 @@ function PerformanceTracker({ history }: PerformanceTrackerProps) {
           {/* Center Info in Donut Hole */}
           <div className="pm-pie-center-text">
             <span className="pm-pie-center-pct">
-              {activeHover === 'incorrect' ? `${incorrectPct.toFixed(0)}%` : `${correctPct.toFixed(0)}%`}
+              {total === 0 ? '—' : activeHover === 'incorrect' ? `${incorrectPct.toFixed(0)}%` : `${correctPct.toFixed(0)}%`}
             </span>
             <span className="pm-pie-center-label">
-              {activeHover === 'incorrect' ? 'Error Rate' : 'Accuracy'}
+              {total === 0 ? 'No Data' : activeHover === 'incorrect' ? 'Error Rate' : 'Accuracy'}
             </span>
             <span className="pm-pie-center-count">
-              {activeHover === 'incorrect' ? `${incorrectCount} / ${total}` : `${correctCount} / ${total}`}
+              {total === 0 ? '0 sessions' : activeHover === 'incorrect' ? `${incorrectCount} / ${total}` : `${correctCount} / ${total}`}
             </span>
           </div>
         </div>
@@ -310,10 +413,10 @@ function PerformanceTracker({ history }: PerformanceTrackerProps) {
             </div>
             <div className="pm-kpi-count correct">
               {correctCount}
-              <span className="pm-kpi-unit">sessions</span>
+              <span className="pm-kpi-unit">days</span>
             </div>
             <p className="pm-kpi-desc">
-              Dashboard prediction matched Nifty actual close sentiment
+              9:10 AM direction matched 4:00 PM Nifty actual close sentiment
             </p>
           </div>
 
@@ -334,10 +437,10 @@ function PerformanceTracker({ history }: PerformanceTrackerProps) {
             </div>
             <div className="pm-kpi-count incorrect">
               {incorrectCount}
-              <span className="pm-kpi-unit">sessions</span>
+              <span className="pm-kpi-unit">days</span>
             </div>
             <p className="pm-kpi-desc">
-              Intraday trend reversed or diverged from pre-market setup
+              Intraday trend reversed against 9:10 AM pre-market setup
             </p>
           </div>
         </div>
@@ -783,7 +886,6 @@ export default function PreMarketPage() {
                     const hVol = h.volatility?.state || 'STABLE'
                     const sMap = Object.fromEntries((h.signals || []).map((s) => [s.key, s]))
                     const evalItem = evaluateRun(h)
-                    const actualTone = evalItem.actualSentiment === 'BULLISH' ? 'bullish' : 'bearish'
 
                     return (
                       <tr key={h.timestamp || idx}>
@@ -796,18 +898,38 @@ export default function PreMarketPage() {
                         </td>
                         <td>
                           <div className="pm-actual-cell">
-                            <span className={`pm-pill-small ${actualTone}`}>
-                              <span className="dot" />
-                              {evalItem.actualSentiment}
-                            </span>
-                            {evalItem.niftyPercentChange != null && (
-                              <span className={`pm-nifty-pct ${evalItem.niftyPercentChange >= 0 ? 'bullish' : 'bearish'}`}>
-                                {evalItem.niftyPercentChange > 0 ? '+' : ''}{evalItem.niftyPercentChange.toFixed(2)}%
+                            {evalItem.hasClosed && evalItem.actualSentiment ? (
+                              <>
+                                <span className={`pm-pill-small ${evalItem.actualSentiment === 'BULLISH' ? 'bullish' : 'bearish'}`}>
+                                  <span className="dot" />
+                                  {evalItem.actualSentiment}
+                                </span>
+                                {evalItem.niftyPercentChange != null && (
+                                  <span className={`pm-nifty-pct ${evalItem.niftyPercentChange >= 0 ? 'bullish' : 'bearish'}`}>
+                                    {evalItem.niftyPercentChange > 0 ? '+' : ''}{evalItem.niftyPercentChange.toFixed(2)}%
+                                  </span>
+                                )}
+                              </>
+                            ) : (
+                              <span className="pm-pill-small neutral">
+                                <span className="dot" />
+                                Pending Close
                               </span>
                             )}
-                            <span className={`pm-perf-tag ${evalItem.isCorrect ? 'correct' : 'incorrect'}`}>
-                              {evalItem.isCorrect ? '✓ Correct' : '✗ Incorrect'}
-                            </span>
+
+                            {evalItem.dashboardCall === 'NEUTRAL' ? (
+                              <span className="pm-perf-tag neutral" title="Neutral pre-market direction is excluded from accuracy pie chart">
+                                Neutral (Excluded)
+                              </span>
+                            ) : !evalItem.hasClosed ? (
+                              <span className="pm-perf-tag pending" title="Pending 4:00 PM market close">
+                                Pending Close (4:00 PM)
+                              </span>
+                            ) : (
+                              <span className={`pm-perf-tag ${evalItem.isCorrect ? 'correct' : 'incorrect'}`}>
+                                {evalItem.isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                              </span>
+                            )}
                           </div>
                         </td>
                         <td>

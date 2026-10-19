@@ -1154,6 +1154,18 @@
   border: 1px solid rgba(239, 68, 68, 0.32);
 }
 
+.pm-perf-tag.neutral {
+  background: rgba(148, 163, 184, 0.14);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+}
+
+.pm-perf-tag.pending {
+  background: rgba(234, 179, 8, 0.14);
+  color: #fbbf24;
+  border: 1px solid rgba(234, 179, 8, 0.28);
+}
+
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .pm-hero-card {

@@ -354,6 +354,7 @@ export interface PreMarketIndicatorRun {
   signals: PreMarketSignal[]
   actualCloseSentiment?: 'BULLISH' | 'BEARISH' | string
   actualNiftyClose?: PreMarketActualNiftyClose
+  marketClosedAt?: string
 }
 
 export * from '../services/greedFearScanner.ts'
