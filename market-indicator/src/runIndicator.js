@@ -55,21 +55,15 @@ async function runIndicator() {
 
   const signals = [...directionSignals, annotate(vix)];
 
-  const actualCloseSentiment = vixAndBreadth.nifty?.sentiment || (direction.call === "BULLISH" ? "BULLISH" : "BEARISH");
-  const actualNiftyClose = vixAndBreadth.nifty ? {
-    close: vixAndBreadth.nifty.close,
-    percentChange: vixAndBreadth.nifty.percentChange,
-    sentiment: vixAndBreadth.nifty.sentiment
-  } : undefined;
-
   const run = {
     timestamp: new Date().toISOString(),
     direction,
     volatility,
     combined,
     signals,
-    actualCloseSentiment,
-    actualNiftyClose
+    actualCloseSentiment: undefined,
+    actualNiftyClose: undefined,
+    marketClosedAt: undefined
   };
 
   appendRun(run);
