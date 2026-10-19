@@ -14,6 +14,7 @@ import MwplSaturationPage from './MwplSaturationPage'
 import PreMarketPage from './PreMarketPage'
 import TradingBackground from './components/TradingBackground'
 import logo from '../images/logo/logos.jpeg'
+import MwplParticleConstellation from './components/MwplParticleConstellation'
 import './member.css'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
 import normalWhiteLogo from '../images/logo/whiteLogo.png'
@@ -108,6 +109,7 @@ function DashboardPage(props: PortalProps) {
   const [alerts, setAlerts] = useState<MarketAlert[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [isBanWatchConnected, setIsBanWatchConnected] = useState(false)
 
   useEffect(() => {
     Promise.all([
@@ -190,78 +192,128 @@ function DashboardPage(props: PortalProps) {
   return <PortalLayout {...props} title="MWPL institutional tracker">
     <p className="portal-subtitle">Identify position build-up and F&O ban candidates from one clear view.</p>
     {error && <p className="portal-error" role="alert">{error}</p>}
-    <section className="metric-grid">{summary.map(([label, value, detail], index) => <article key={label}><i className={`metric-icon tone-${index}`}>{index + 1}</i><div><span>{label}</span><strong>{value}</strong><small>{detail}</small></div></article>)}</section>
+    <section className="metric-grid">
+      {summary.map(([label, value, detail], index) => (
+        <article
+          key={label}
+          className={index === 0 ? `metric-card-interactive ${isBanWatchConnected ? 'connected-active' : ''}` : undefined}
+          onClick={
+            index === 0
+              ? () => {
+                  setIsBanWatchConnected((prev) => !prev)
+                  const el = document.getElementById('ban-watch')
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+                }
+              : undefined
+          }
+          style={index === 0 ? { cursor: 'pointer' } : undefined}
+          title={
+            index === 0
+              ? isBanWatchConnected
+                ? 'Click to disconnect thread'
+                : 'Click to connect live thread to F&O Ban Watch & Constellation'
+              : undefined
+          }
+        >
+          {index === 0 && (
+            <div className="ban-thread-pulse-indicator">
+              <span className="dot" />
+              <span>{isBanWatchConnected ? 'Thread Active' : 'Connect Thread'}</span>
+            </div>
+          )}
+          <i className={`metric-icon tone-${index}`}>{index + 1}</i>
+          <div>
+            <span>{label}</span>
+            <strong>{value}</strong>
+            <small>{detail}</small>
+          </div>
+        </article>
+      ))}
+    </section>
     <div className="dashboard-grid">
       <section className="portal-panel opportunities-panel" id="opportunities">
-        <PanelHeading title="Top MWPL opportunities" />
-        <div className="table-scroll">
-          <table className="appsmith-styled-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Stock</th>
-                <th>Price %</th>
-                <th>Day 0 MWPL</th>
-                <th>Day 1 MWPL</th>
-                <th>Day 2 MWPL</th>
-                <th>day_1_change</th>
-                <th>day_2_change</th>
-                <th>Day 0 OI</th>
-                <th>Day 1 OI</th>
-                <th>Day 2 OI</th>
-                <th>1D OI Change</th>
-                <th>2D OI Change</th>
-                <th>Signal</th>
-                <th>Risk</th>
-              </tr>
-            </thead>
-            <tbody>
-              {stocks.map((row, index) => (
-                <tr key={row.symbol} title={row.reasons.join(' | ')}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <div className="stock-info-inline">
-                      <strong>{row.symbol}</strong>
-                      <span className={`exchange-pill ${(row.exchange || 'NSE').toLowerCase()}`}>{row.exchange || 'NSE'}</span>
-                    </div>
-                  </td>
-                  <Delta value={row.priceChangePercent} />
-                  <td>
-                    <span className="mwpl-val-bold">{row.day0Mwpl.toFixed(1)}%</span>
-                    <Meter value={row.day0Mwpl} />
-                  </td>
-                  <td>{row.day1Mwpl != null ? `${row.day1Mwpl.toFixed(1)}%` : '—'}</td>
-                  <td>{row.day2Mwpl != null ? `${row.day2Mwpl.toFixed(1)}%` : '—'}</td>
-                  <ChangeBadge value={row.day1MwplChange} />
-                  <ChangeBadge value={row.day2MwplChange} />
-                  <td title={`Day 0 OI: ${row.day0OI.toLocaleString('en-IN')}`}>
-                    <strong>{formatCompactNumber(row.day0OI)}</strong>
-                  </td>
-                  <td title={row.day1OI != null ? `Day 1 OI: ${row.day1OI.toLocaleString('en-IN')}` : undefined}>
-                    {row.day1OI != null ? formatCompactNumber(row.day1OI) : '—'}
-                  </td>
-                  <td title={row.day2OI != null ? `Day 2 OI: ${row.day2OI.toLocaleString('en-IN')}` : undefined}>
-                    {row.day2OI != null ? formatCompactNumber(row.day2OI) : '—'}
-                  </td>
-                  <Delta value={row.oi1DayChangePercent} />
-                  <Delta value={row.oi2DayChangePercent} />
-                  <td><span className={`signal ${row.signal.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>{row.signal}</span></td>
-                  <td><span className={`risk-badge risk-${row.mwplRiskZone.toLowerCase().replace(/\s+/g, '-')}`}>{row.mwplRiskZone}</span></td>
-                </tr>
-              ))}
-              {stocks.length === 0 && (
-                <tr>
-                  <td colSpan={15} style={{ textAlign: 'center', padding: '24px' }}>
-                    {loading ? 'Loading live stock data...' : 'No stock records found.'}
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        <MwplParticleConstellation
+          stocks={stocks}
+          banWatchStocks={banWatch}
+          isBanWatchConnected={isBanWatchConnected}
+          onToggleBanWatchConnection={() => setIsBanWatchConnected((v) => !v)}
+          tableFallback={
+            <div className="table-scroll">
+              <table className="appsmith-styled-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Stock</th>
+                    <th>Price %</th>
+                    <th>Day 0 MWPL</th>
+                    <th>Day 1 MWPL</th>
+                    <th>Day 2 MWPL</th>
+                    <th>day_1_change</th>
+                    <th>day_2_change</th>
+                    <th>Day 0 OI</th>
+                    <th>Day 1 OI</th>
+                    <th>Day 2 OI</th>
+                    <th>1D OI Change</th>
+                    <th>2D OI Change</th>
+                    <th>Signal</th>
+                    <th>Risk</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stocks.map((row, index) => (
+                    <tr key={row.symbol} title={row.reasons.join(' | ')}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <div className="stock-info-inline">
+                          <strong>{row.symbol}</strong>
+                          <span className={`exchange-pill ${(row.exchange || 'NSE').toLowerCase()}`}>{row.exchange || 'NSE'}</span>
+                        </div>
+                      </td>
+                      <Delta value={row.priceChangePercent} />
+                      <td>
+                        <span className="mwpl-val-bold">{row.day0Mwpl.toFixed(1)}%</span>
+                        <Meter value={row.day0Mwpl} />
+                      </td>
+                      <td>{row.day1Mwpl != null ? `${row.day1Mwpl.toFixed(1)}%` : '—'}</td>
+                      <td>{row.day2Mwpl != null ? `${row.day2Mwpl.toFixed(1)}%` : '—'}</td>
+                      <ChangeBadge value={row.day1MwplChange} />
+                      <ChangeBadge value={row.day2MwplChange} />
+                      <td title={`Day 0 OI: ${row.day0OI.toLocaleString('en-IN')}`}>
+                        <strong>{formatCompactNumber(row.day0OI)}</strong>
+                      </td>
+                      <td title={row.day1OI != null ? `Day 1 OI: ${row.day1OI.toLocaleString('en-IN')}` : undefined}>
+                        {row.day1OI != null ? formatCompactNumber(row.day1OI) : '—'}
+                      </td>
+                      <td title={row.day2OI != null ? `Day 2 OI: ${row.day2OI.toLocaleString('en-IN')}` : undefined}>
+                        {row.day2OI != null ? formatCompactNumber(row.day2OI) : '—'}
+                      </td>
+                      <Delta value={row.oi1DayChangePercent} />
+                      <Delta value={row.oi2DayChangePercent} />
+                      <td><span className={`signal ${row.signal.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>{row.signal}</span></td>
+                      <td><span className={`risk-badge risk-${row.mwplRiskZone.toLowerCase().replace(/\s+/g, '-')}`}>{row.mwplRiskZone}</span></td>
+                    </tr>
+                  ))}
+                  {stocks.length === 0 && (
+                    <tr>
+                      <td colSpan={15} style={{ textAlign: 'center', padding: '24px' }}>
+                        {loading ? 'Loading live stock data...' : 'No stock records found.'}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          }
+        />
       </section>
-      <section className="portal-panel ban-panel" id="ban-watch">
+      <section className={`portal-panel ban-panel ${isBanWatchConnected ? 'ban-panel-connected' : ''}`} id="ban-watch">
         <PanelHeading title="F&O ban watch" />
+        {isBanWatchConnected && (
+          <div className="ban-panel-connected-ribbon">
+            <span className="pulse-indicator-red" />
+            <span>Live thread connected from Ban Watch (Top Metric #1) to Constellation Network</span>
+          </div>
+        )}
         <div className="ban-list">
           {banWatch.map((row) => {
             const mwpl = row.mwplUtilizationPercent

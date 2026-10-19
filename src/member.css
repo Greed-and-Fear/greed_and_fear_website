@@ -123,11 +123,78 @@
 .tone-3 { color: var(--portal-blue); background: color-mix(in srgb, var(--portal-blue) 13%, transparent); }
 .tone-4 { color: var(--portal-orange); background: color-mix(in srgb, var(--portal-orange) 13%, transparent); }
 .tone-5 { color: var(--portal-purple); background: color-mix(in srgb, var(--portal-purple) 13%, transparent); }
-.metric-grid article span { display: block; color: var(--portal-text); font-size: .68rem; font-weight: 700; text-transform: uppercase; }
-.metric-grid article strong { margin: 3px 0; display: block; font: 700 1.45rem 'Manrope'; }
-.metric-grid article small { color: var(--portal-muted); font-size: .67rem; line-height: 1.35; }
-.dashboard-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: 12px; }
-.portal-panel { overflow: hidden; border: 1px solid var(--portal-border); border-radius: 9px; background: var(--portal-surface); box-shadow: var(--portal-shadow); }
+.metric-grid article.metric-card-interactive {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.metric-grid article.metric-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.15);
+}
+.metric-grid article.metric-card-interactive.connected-active {
+  border-color: rgba(239, 68, 68, 0.8);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  background: radial-gradient(circle at top right, rgba(239, 68, 68, 0.15), transparent 70%), var(--portal-surface);
+}
+.ban-thread-pulse-indicator {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.14);
+  padding: 1.5px 6px;
+  border-radius: 99px;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+.ban-thread-pulse-indicator .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+  animation: pulseDot 1.2s infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+.portal-panel.ban-panel.ban-panel-connected {
+  border-color: rgba(239, 68, 68, 0.6);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.18);
+  animation: banPanelGlow 3s ease-in-out infinite;
+}
+@keyframes banPanelGlow {
+  0%, 100% { border-color: rgba(239, 68, 68, 0.45); }
+  50% { border-color: rgba(239, 68, 68, 0.85); box-shadow: 0 0 35px rgba(239, 68, 68, 0.28); }
+}
+.ban-panel-connected-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.1));
+  border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+.ban-panel-connected-ribbon .pulse-indicator-red {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
 .panel-heading { min-height: 48px; padding: 0 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--portal-border); }
 .panel-heading h2 { margin: 0; font-size: .9rem; letter-spacing: -.01em; text-transform: uppercase; }
 .panel-heading button { color: var(--portal-purple); border: 0; background: transparent; cursor: pointer; font-size: .7rem; }
