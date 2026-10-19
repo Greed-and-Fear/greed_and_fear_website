@@ -340,12 +340,20 @@ export interface PreMarketSignal {
   volatility?: string
 }
 
+export interface PreMarketActualNiftyClose {
+  close?: number
+  percentChange?: number
+  sentiment?: 'BULLISH' | 'BEARISH'
+}
+
 export interface PreMarketIndicatorRun {
   timestamp: string
   direction: PreMarketDirection
   volatility: PreMarketVolatility
   combined: PreMarketCombined
   signals: PreMarketSignal[]
+  actualCloseSentiment?: 'BULLISH' | 'BEARISH' | string
+  actualNiftyClose?: PreMarketActualNiftyClose
 }
 
 export * from '../services/greedFearScanner.ts'
