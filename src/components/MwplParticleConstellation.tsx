@@ -73,6 +73,7 @@ export default function MwplParticleConstellation({
   const [filterCluster, setFilterCluster] = useState<'ALL' | 'BAN' | 'LONG' | 'SHORT' | 'CRITICAL'>('ALL')
   const [searchQuery, setSearchQuery] = useState('')
   const [hoveredNode, setHoveredNode] = useState<{ node: ParticleNode; screenX: number; screenY: number } | null>(null)
+  const hoveredNodeRef = useRef<{ node: ParticleNode; screenX: number; screenY: number } | null>(null)
   const [isPlaying, setIsPlaying] = useState(true)
 
   // Filter stocks based on search and cluster
@@ -166,8 +167,8 @@ export default function MwplParticleConstellation({
       // Red/Ban stocks cluster on the top-right / right quadrant (connecting to F&O Ban Watch)
       // Green/Long stocks cluster on the central-left area
       // Others spread organically across the canvas
-      let targetX = 0
-      let targetY = 0
+      let targetX: number
+      let targetY: number
       const padding = 60
 
       if (isBan) {
@@ -297,18 +298,22 @@ export default function MwplParticleConstellation({
       }
 
       if (found) {
-        setHoveredNode({
+        const next = {
           node: found,
           screenX: found.x,
           screenY: found.y,
-        })
+        }
+        hoveredNodeRef.current = next
+        setHoveredNode(next)
       } else {
+        hoveredNodeRef.current = null
         setHoveredNode(null)
       }
     }
 
     const onMouseLeave = () => {
       mousePos = { x: -1000, y: -1000 }
+      hoveredNodeRef.current = null
       setHoveredNode(null)
     }
 
@@ -395,7 +400,9 @@ export default function MwplParticleConstellation({
         if (!a || !b) continue
 
         // Active thread highlighting on hover
-        const isHoveredThread = hoveredNode && (hoveredNode.node === a || hoveredNode.node === b)
+        const isHoveredThread =
+          hoveredNodeRef.current &&
+          (hoveredNodeRef.current.node === a || hoveredNodeRef.current.node === b)
         const isBanHighlight = isBanWatchConnected && thread.isBanThread
 
         ctx.strokeStyle = isBanHighlight
@@ -447,7 +454,7 @@ export default function MwplParticleConstellation({
 
       // Draw Nodes
       for (const node of nodes) {
-        const isHovered = hoveredNode && hoveredNode.node === node
+        const isHovered = hoveredNodeRef.current?.node === node
         const isSearched = searchQuery.trim() && node.stock.symbol.toLowerCase().includes(searchQuery.trim().toLowerCase())
 
         // Pulsing outer aura ring
