@@ -324,6 +324,7 @@ export default function MwplParticleConstellation({
 
     const render = (time: number) => {
       ctx.clearRect(0, 0, width, height)
+      const t = time / 1000
 
       // Background subtle constellation grid
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)'
@@ -430,7 +431,6 @@ export default function MwplParticleConstellation({
       }
 
       // Update Node positions with organic oscillation
-      const t = time / 1000
       for (const node of nodes) {
         if (isPlaying) {
           const oscX = Math.sin(t * node.frequency + node.phase) * 9
