@@ -109,7 +109,6 @@ function DashboardPage(props: PortalProps) {
   const [alerts, setAlerts] = useState<MarketAlert[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [isBanWatchConnected, setIsBanWatchConnected] = useState(false)
 
   useEffect(() => {
     Promise.all([
@@ -194,33 +193,7 @@ function DashboardPage(props: PortalProps) {
     {error && <p className="portal-error" role="alert">{error}</p>}
     <section className="metric-grid">
       {summary.map(([label, value, detail], index) => (
-        <article
-          key={label}
-          className={index === 0 ? `metric-card-interactive ${isBanWatchConnected ? 'connected-active' : ''}` : undefined}
-          onClick={
-            index === 0
-              ? () => {
-                  setIsBanWatchConnected((prev) => !prev)
-                  const el = document.getElementById('ban-watch')
-                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-                }
-              : undefined
-          }
-          style={index === 0 ? { cursor: 'pointer' } : undefined}
-          title={
-            index === 0
-              ? isBanWatchConnected
-                ? 'Click to disconnect thread'
-                : 'Click to connect live thread to F&O Ban Watch & Constellation'
-              : undefined
-          }
-        >
-          {index === 0 && (
-            <div className="ban-thread-pulse-indicator">
-              <span className="dot" />
-              <span>{isBanWatchConnected ? 'Thread Active' : 'Connect Thread'}</span>
-            </div>
-          )}
+        <article key={label}>
           <i className={`metric-icon tone-${index}`}>{index + 1}</i>
           <div>
             <span>{label}</span>
@@ -235,8 +208,6 @@ function DashboardPage(props: PortalProps) {
         <MwplParticleConstellation
           stocks={stocks}
           banWatchStocks={banWatch}
-          isBanWatchConnected={isBanWatchConnected}
-          onToggleBanWatchConnection={() => setIsBanWatchConnected((v) => !v)}
           tableFallback={
             <div className="table-scroll">
               <table className="appsmith-styled-table">
@@ -306,14 +277,8 @@ function DashboardPage(props: PortalProps) {
           }
         />
       </section>
-      <section className={`portal-panel ban-panel ${isBanWatchConnected ? 'ban-panel-connected' : ''}`} id="ban-watch">
+      <section className="portal-panel ban-panel" id="ban-watch">
         <PanelHeading title="F&O ban watch" />
-        {isBanWatchConnected && (
-          <div className="ban-panel-connected-ribbon">
-            <span className="pulse-indicator-red" />
-            <span>Live thread connected from Ban Watch (Top Metric #1) to Constellation Network</span>
-          </div>
-        )}
         <div className="ban-list">
           {banWatch.map((row) => {
             const mwpl = row.mwplUtilizationPercent
