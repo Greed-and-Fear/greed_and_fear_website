@@ -87,6 +87,38 @@ function preMarketApiPlugin(): Plugin {
           return
         }
 
+        if (
+          (req.method === 'POST' || req.method === 'GET') &&
+          (parsedUrl.pathname === '/indicator-api/record-close' ||
+            parsedUrl.pathname === '/api/premarket/record-close' ||
+            parsedUrl.pathname === '/api/record-close')
+        ) {
+          res.setHeader('Content-Type', 'application/json')
+          res.setHeader('Access-Control-Allow-Origin', '*')
+          exec(
+            `node -e "const { recordMarketClose } = require('./src/scheduler'); recordMarketClose().then(r => console.log(JSON.stringify(r))).catch(e => { console.error(e); process.exit(1); })"`,
+            { cwd: REPO_PATH },
+            (error: ExecException | null, stdout: string | Buffer, stderr: string | Buffer) => {
+              if (error) {
+                console.error('recordMarketClose error:', stderr.toString() || error.message)
+                res.statusCode = 500
+                return res.end(JSON.stringify({ error: error.message }))
+              }
+              try {
+                const strOutput = stdout.toString()
+                const jsonMatch = strOutput.match(/\{[\s\S]*\}/)
+                if (jsonMatch) {
+                  return res.end(jsonMatch[0])
+                }
+                return res.end(JSON.stringify({ ok: true }))
+              } catch {
+                return res.end(JSON.stringify({ ok: true }))
+              }
+            }
+          )
+          return
+        }
+
         next()
       })
     }

@@ -392,7 +392,7 @@ export default function MwplSaturationPage() {
               onClick={() => setViewMode('CORE')}
               title="Show core multi-day MWPL change columns matching reference"
             >
-              Core Screenshot View
+              Core View
             </button>
             <button
               type="button"
@@ -400,7 +400,7 @@ export default function MwplSaturationPage() {
               onClick={() => setViewMode('EXTENDED')}
               title="Show extended table with MWPL, Open Interest, Limits and Prices"
             >
-              Extended View (MWPL + OI)
+              Extended View
             </button>
           </div>
 

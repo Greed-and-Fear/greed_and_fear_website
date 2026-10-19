@@ -3,7 +3,7 @@ const express = require("express");
 const { PORT } = require("./config");
 const { runIndicator } = require("./runIndicator");
 const { readHistory, readLatest } = require("./store");
-const { startScheduler } = require("./scheduler");
+const { startScheduler, recordMarketClose } = require("./scheduler");
 
 const app = express();
 
@@ -30,6 +30,15 @@ app.all(["/api/run-now", "/api/premarket/run-now"], async (req, res) => {
   try {
     const run = await runIndicator();
     res.json(run);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.all(["/api/record-close", "/api/premarket/record-close"], async (req, res) => {
+  try {
+    const result = await recordMarketClose();
+    res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
