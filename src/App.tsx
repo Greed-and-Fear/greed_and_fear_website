@@ -158,6 +158,7 @@ function HomePage({ onPolicy }: { onPolicy: (policy: Policy) => void }) {
     </section>
     <ChartStrip title="Recent intraday charts" charts={charts} />
     <ChartStrip title="Positional market studies" charts={positions} />
+    <ElliottWaveSection />
     {/* <PlanPreview /> */}
     <section className="testimonials section-pad"><SectionTitle eyebrow="Community" title="What our students say" /><div className="testimonial-grid">{testimonials.map((item) => <article className="quote-card" key={item.name}><p>“{item.text}”</p><strong>{item.name}</strong></article>)}</div></section>
   </>
@@ -168,6 +169,278 @@ function TelegramGallery() {
   const [active, setActive] = useState(0)
   useEffect(() => { const timer = window.setInterval(() => setActive((value) => (value + 1) % images.length), 2500); return () => window.clearInterval(timer) }, [images.length])
   return <div className="gallery"><img src={images[active]} alt={`Telegram community result ${active + 1}`} /><div className="gallery-dots">{images.map((_, index) => <button className={index === active ? 'active' : ''} onClick={() => setActive(index)} key={index} aria-label={`Show image ${index + 1}`} />)}</div></div>
+}
+
+function ElliottWaveSection() {
+  const [started, setStarted] = useState(false)
+  const [waveStep, setWaveStep] = useState(0)
+  const [cycle, setCycle] = useState(0)
+
+  // Start on intersection, then loop forever
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setStarted(true) },
+      { threshold: 0.25 },
+    )
+    const el = document.getElementById('elliott-wave-section')
+    if (el) observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  // Step-by-step progressive draw without blinking past waves, then pause and restart fresh cycle
+  useEffect(() => {
+    if (!started) return
+    if (waveStep < 8) {
+      const delay = waveStep === 0 ? 350 : 650
+      const t = setTimeout(() => setWaveStep((s) => s + 1), delay)
+      return () => clearTimeout(t)
+    } else {
+      // Completed full 8-wave structure: pause 2.5s to display, then start new cycle
+      const t = setTimeout(() => {
+        setCycle((c) => c + 1)
+        setWaveStep(0)
+      }, 2500)
+      return () => clearTimeout(t)
+    }
+  }, [started, waveStep])
+
+  // SVG viewport 500×240 coordinates
+  const pts = [
+    { x: 40, y: 195 }, // 0: Origin
+    { x: 110, y: 108 }, // 1: Wave 1 high
+    { x: 165, y: 148 }, // 2: Wave 2 low
+    { x: 265, y: 52 }, // 3: Wave 3 high
+    { x: 315, y: 102 }, // 4: Wave 4 low
+    { x: 395, y: 35 }, // 5: Wave 5 high
+    { x: 425, y: 68 }, // 6: Wave A low
+    { x: 452, y: 48 }, // 7: Wave B high
+    { x: 472, y: 90 }, // 8: Wave C low
+  ]
+
+  // Distinct wave segments: 1-2-3-4-5 impulse (green), A-B-C corrective (orange)
+  const segments = [
+    { id: '1', from: pts[0], to: pts[1], wave: 1, isCorr: false },
+    { id: '2', from: pts[1], to: pts[2], wave: 2, isCorr: false },
+    { id: '3', from: pts[2], to: pts[3], wave: 3, isCorr: false },
+    { id: '4', from: pts[3], to: pts[4], wave: 4, isCorr: false },
+    { id: '5', from: pts[4], to: pts[5], wave: 5, isCorr: false },
+    { id: 'A', from: pts[5], to: pts[6], wave: 6, isCorr: true },
+    { id: 'B', from: pts[6], to: pts[7], wave: 7, isCorr: true },
+    { id: 'C', from: pts[7], to: pts[8], wave: 8, isCorr: true },
+  ]
+
+  const waveLabels = [
+    { pt: pts[1], label: '1', dx: -18, dy: -14, wave: 1 },
+    { pt: pts[2], label: '2', dx: 6, dy: 18, wave: 2 },
+    { pt: pts[3], label: '3', dx: 0, dy: -16, wave: 3 },
+    { pt: pts[4], label: '4', dx: 6, dy: 18, wave: 4 },
+    { pt: pts[5], label: '5', dx: 0, dy: -16, wave: 5 },
+    { pt: pts[6], label: 'A', dx: 4, dy: 18, wave: 6 },
+    { pt: pts[7], label: 'B', dx: 6, dy: -14, wave: 7 },
+    { pt: pts[8], label: 'C', dx: 0, dy: 18, wave: 8 },
+  ]
+
+  const invalidY = 148
+  const waveNames = ['—', '1', '2', '3', '4', '5', 'A', 'B', 'C']
+  const currentWave = waveNames[Math.min(waveStep, 8)]
+  const structureLabel = waveStep >= 6 ? 'A-B-C Correction' : 'Impulse'
+  const confidence = waveStep >= 5 ? 'High' : waveStep >= 3 ? 'Building' : waveStep >= 1 ? 'Forming' : '—'
+
+  return (
+    <section id="elliott-wave-section" className="elliott-wave-section section-pad">
+      <div className="ew-inner">
+        {/* ── Left copy ── */}
+        <div className="ew-copy">
+          <p className="eyebrow">Elliott Wave Intelligence</p>
+          <h2>Read the wave.<br /><span className="shimmer-text">Know the level.</span></h2>
+          <p className="ew-lead">Markets move in impulses and corrections. We label the wave structure automatically, so you can see where price is in the cycle and what level breaks the count.</p>
+          <div className="ew-features">
+            <div className="ew-feat">
+              <span className="ew-feat-num">5</span>
+              <div>
+                <strong>Impulse Waves, labelled</strong>
+                <small>Impulse 1-2-3-4-5 mapped automatically</small>
+              </div>
+            </div>
+            <div className="ew-feat">
+              <span className="ew-feat-num">3</span>
+              <div>
+                <strong>A-B-C with Fibonacci zones</strong>
+                <small>Corrective waves, plotted</small>
+              </div>
+            </div>
+            <div className="ew-feat">
+              <span className="ew-feat-num">1</span>
+              <div>
+                <strong>One clear count</strong>
+                <small>Current wave, target and invalidation</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Right: cinematic wave chart ── */}
+        <div className="ew-chart-wrap">
+          {/* Header — wave type badge only */}
+          <div className="ew-chart-header ew-chart-header--clean">
+            <span className="ew-wave-label">Elliott Wave · Live Count</span>
+            <span className={`ew-badge ${waveStep >= 6 ? 'ew-badge--corr' : ''}`}>
+              {waveStep >= 6 ? 'Correction A-B-C' : 'Impulse 1-2-3-4-5'}
+            </span>
+          </div>
+
+          {/* SVG chart */}
+          <div className="ew-svg-wrap">
+            <svg viewBox="0 0 500 240" className="ew-svg" aria-label="Animated Elliott Wave structure">
+              <defs>
+                <linearGradient id="ew-grad-green" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#22c55e" stopOpacity="0.16" />
+                  <stop offset="100%" stopColor="#22c55e" stopOpacity="0.01" />
+                </linearGradient>
+                <linearGradient id="ew-grad-orange" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#f97316" stopOpacity="0.16" />
+                  <stop offset="100%" stopColor="#f97316" stopOpacity="0.01" />
+                </linearGradient>
+              </defs>
+
+              {/* Subtle grid */}
+              {[55, 95, 135, 175, 215].map((y) => (
+                <line key={y} x1="25" y1={y} x2="490" y2={y} stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+              ))}
+
+              {/* Invalidation dashed line — once mounted, stays static */}
+              {waveStep >= 2 && (
+                <g key={`c${cycle}-inv`} className="ew-fade-in">
+                  <line
+                    x1="120" y1={invalidY} x2="490" y2={invalidY}
+                    stroke="rgba(239,68,68,0.35)" strokeWidth="1" strokeDasharray="5 4"
+                  />
+                  <text x="485" y={invalidY - 4} textAnchor="end" fill="rgba(239,68,68,0.6)" fontSize="8.5" fontFamily="monospace">
+                    Wave 1 Invalidation
+                  </text>
+                </g>
+              )}
+
+              {/* Area fill under each formed segment — persists without blinking */}
+              {segments.map((seg) => {
+                if (waveStep < seg.wave) return null
+                const isCorr = seg.isCorr
+                return (
+                  <polygon
+                    key={`c${cycle}-area-${seg.id}`}
+                    points={`${seg.from.x},${seg.from.y} ${seg.to.x},${seg.to.y} ${seg.to.x},240 ${seg.from.x},240`}
+                    fill={isCorr ? 'url(#ew-grad-orange)' : 'url(#ew-grad-green)'}
+                    className="ew-fade-in"
+                  />
+                )
+              })}
+
+              {/* Wave segments — each draws only when its turn comes, previous segments remain completely static */}
+              {segments.map((seg) => {
+                if (waveStep < seg.wave) return null
+                const len = Math.ceil(Math.hypot(seg.to.x - seg.from.x, seg.to.y - seg.from.y)) + 2
+                const strokeColor = seg.isCorr ? '#f97316' : '#22c55e'
+                return (
+                  <line
+                    key={`c${cycle}-seg-${seg.id}`}
+                    x1={seg.from.x}
+                    y1={seg.from.y}
+                    x2={seg.to.x}
+                    y2={seg.to.y}
+                    stroke={strokeColor}
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    className="ew-seg-draw"
+                    style={{
+                      strokeDasharray: len,
+                      strokeDashoffset: len,
+                      ['--seg-len' as string]: `${len}px`,
+                    } as React.CSSProperties}
+                  />
+                )
+              })}
+
+              {/* Confirmed pivot nodes */}
+              {waveStep >= 1 && (
+                <circle key={`c${cycle}-p0`} cx={pts[0].x} cy={pts[0].y} r="2.5" fill="#22c55e" className="ew-fade-in" />
+              )}
+              {segments.map((seg) => {
+                if (waveStep < seg.wave) return null
+                return (
+                  <circle
+                    key={`c${cycle}-pv-${seg.id}`}
+                    cx={seg.to.x}
+                    cy={seg.to.y}
+                    r="2.5"
+                    fill={seg.isCorr ? '#f97316' : '#22c55e'}
+                    className="ew-fade-in"
+                  />
+                )
+              })}
+
+              {/* Wave labels (1, 2, 3, 4, 5, A, B, C) — stable keys so they never re-pop/blink */}
+              {waveLabels.map(({ pt, label, dx, dy, wave }) => {
+                if (waveStep < wave) return null
+                const isCorr = ['A', 'B', 'C'].includes(label)
+                const cx = pt.x + dx + 8
+                const cy = pt.y + dy + 8
+                return (
+                  <g key={`c${cycle}-lbl-${label}`} className="ew-label-appear">
+                    <circle
+                      cx={cx} cy={cy} r="10.5"
+                      fill={isCorr ? 'rgba(249,115,22,0.16)' : 'rgba(34,197,94,0.16)'}
+                      stroke={isCorr ? '#f97316' : '#22c55e'}
+                      strokeWidth="1.1"
+                    />
+                    <text x={cx} y={cy + 3.5} textAnchor="middle" fill={isCorr ? '#f97316' : '#22c55e'} fontSize="9.5" fontWeight="800" fontFamily="monospace">
+                      {label}
+                    </text>
+                  </g>
+                )
+              })}
+
+              {/* Pulsing live tip dot — indicates the active wave formation head */}
+              {waveStep > 0 && waveStep <= 8 && (
+                <g key={`c${cycle}-tip-${waveStep}`} className="ew-fade-in">
+                  <circle
+                    cx={pts[waveStep].x}
+                    cy={pts[waveStep].y}
+                    r="8"
+                    fill={waveStep >= 6 ? 'rgba(249,115,22,0.2)' : 'rgba(34,197,94,0.2)'}
+                    className="ew-dot-ring"
+                  />
+                  <circle
+                    cx={pts[waveStep].x}
+                    cy={pts[waveStep].y}
+                    r="3.5"
+                    fill={waveStep >= 6 ? '#f97316' : '#22c55e'}
+                    className="ew-live-dot"
+                  />
+                </g>
+              )}
+            </svg>
+          </div>
+
+          {/* Bottom live stats */}
+          <div className="ew-stats">
+            <div>
+              <span>WAVE</span>
+              <strong>{currentWave}</strong>
+            </div>
+            <div>
+              <span>STRUCTURE</span>
+              <strong>{structureLabel}</strong>
+            </div>
+            <div>
+              <span>SIGNAL</span>
+              <strong className={waveStep >= 5 ? 'ew-stat-green' : ''}>{confidence}</strong>
+            </div>
+          </div>
+          <p className="ew-disclaimer">Educational demonstration only. Not investment advice.</p>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 function ChartStrip({ title, charts }: { title: string; charts: string[] }) {

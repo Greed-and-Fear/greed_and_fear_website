@@ -319,42 +319,42 @@ export default function MwplSaturationPage() {
         <article className="kpi-card tone-ban">
           <div>
             <span>In Ban Zone (≥95%)</span>
-            <strong>{banCount}</strong>
-            <small>F&O trading entry restricted</small>
+            <div className="kpi-icon">⛔</div>
           </div>
-          <div className="kpi-icon">⛔</div>
+          <strong>{banCount}</strong>
+          <small>F&amp;O trading entry restricted</small>
         </article>
         <article className="kpi-card tone-critical">
           <div>
             <span>Critical Saturation (85–95%)</span>
-            <strong>{criticalCount}</strong>
-            <small>Imminent ban candidates</small>
+            <div className="kpi-icon">⚡</div>
           </div>
-          <div className="kpi-icon">⚠️</div>
+          <strong>{criticalCount}</strong>
+          <small>Imminent ban candidates</small>
         </article>
         <article className="kpi-card tone-elevated">
           <div>
             <span>High Saturation (75–85%)</span>
-            <strong>{elevatedCount}</strong>
-            <small>Position limits building</small>
+            <div className="kpi-icon">📈</div>
           </div>
-          <div className="kpi-icon">📈</div>
+          <strong>{elevatedCount}</strong>
+          <small>Position limits building</small>
         </article>
         <article className="kpi-card tone-avg">
           <div>
             <span>Average Saturation</span>
-            <strong>{avgSaturation.toFixed(1)}%</strong>
-            <small>Across all tracked BSE F&O stocks</small>
+            <div className="kpi-icon">◎</div>
           </div>
-          <div className="kpi-icon">📊</div>
+          <strong>{avgSaturation.toFixed(1)}%</strong>
+          <small>Across all tracked BSE F&amp;O stocks</small>
         </article>
         <article className="kpi-card tone-universe">
           <div>
             <span>Tracked Universe</span>
-            <strong>{stocks.length}</strong>
-            <small>BSE multi-day snapshots</small>
+            <div className="kpi-icon">⬡</div>
           </div>
-          <div className="kpi-icon">🎯</div>
+          <strong>{stocks.length}</strong>
+          <small>BSE multi-day snapshots</small>
         </article>
       </div>
 
