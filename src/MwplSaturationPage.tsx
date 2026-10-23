@@ -35,7 +35,7 @@ export default function MwplSaturationPage() {
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState<FilterCategory>('ALL')
-  const [viewMode, setViewMode] = useState<ViewMode>('EXTENDED')
+  const [viewMode, setViewMode] = useState<ViewMode>('CORE')
   const [sortField, setSortField] = useState<SortField>('day0Mwpl')
   const [sortAsc, setSortAsc] = useState(false)
   const [favorites, setFavorites] = useState<Set<number>>(new Set())
@@ -505,8 +505,23 @@ export default function MwplSaturationPage() {
       {!loading && !error && viewMode === 'PULSE' && <MarketPressurePulse stocks={displayedStocks} />}
 
       {!loading && !error && viewMode !== 'PULSE' && (
-        <div className="raw-stock-table-wrap saturation-table-wrap screenshot-styled-wrap">
-          <table className="raw-stock-table saturation-table appsmith-styled-table">
+        <section className="mwpl-data-panel">
+          <header className="mwpl-data-panel-head">
+            <div>
+              <span className="mwpl-data-kicker">BSE position limits</span>
+              <h3>MWPL Monitor</h3>
+              <p>Raw exchange limits, utilization pressure and changes across trading sessions.</p>
+            </div>
+            <div className="mwpl-table-legend" aria-label="Risk level legend">
+              <span><i className="normal" /> Below 75%</span>
+              <span><i className="elevated" /> 75–85%</span>
+              <span><i className="critical" /> 85–95%</span>
+              <span><i className="ban" /> 95%+</span>
+            </div>
+          </header>
+
+          <div className="raw-stock-table-wrap saturation-table-wrap screenshot-styled-wrap mwpl-desktop-grid">
+            <table className="raw-stock-table saturation-table appsmith-styled-table">
             <thead>
               <tr className="table-group-row">
                 <th colSpan={3}>Instrument</th>
@@ -715,8 +730,56 @@ export default function MwplSaturationPage() {
                 </tr>
               )}
             </tbody>
-          </table>
-        </div>
+            </table>
+          </div>
+
+          <div className="mwpl-mobile-list">
+            {paginatedStocks.map((stock) => {
+              const stockId = stock.stockId
+              const isFavorited = stockId ? favorites.has(stockId) : false
+              return (
+                <article className="mwpl-mobile-card" key={`mobile-${stock.snapshotId || stock.symbol}`}>
+                  <div className="mwpl-mobile-card-head">
+                    <div>
+                      <strong>{stock.symbol}</strong>
+                      <span>{stock.companyName}</span>
+                    </div>
+                    <button
+                      type="button"
+                      className={`star-btn ${isFavorited ? 'active' : ''}`}
+                      onClick={() => void handleToggleFavorite(stock)}
+                      aria-label={isFavorited ? `Remove ${stock.symbol} from favorites` : `Add ${stock.symbol} to favorites`}
+                    >
+                      ★
+                    </button>
+                  </div>
+                  <div className="mwpl-mobile-pressure">
+                    <div>
+                      <span>Utilization</span>
+                      <strong className={getSaturationColorClass(stock.day0Mwpl)}>{stock.day0Mwpl.toFixed(2)}%</strong>
+                    </div>
+                    <span className={`risk-badge ${getRiskBadgeClass(stock.riskZone)}`}>{stock.riskZone}</span>
+                  </div>
+                  <div className="utilization-mini-track" aria-hidden="true">
+                    <i className={getSaturationColorClass(stock.day0Mwpl)} style={{ width: `${Math.min(100, stock.day0Mwpl)}%` }} />
+                  </div>
+                  <dl className="mwpl-mobile-metrics">
+                    <div><dt>Today MWPL</dt><dd>{stock.day0MwplLimit.toLocaleString('en-IN')}</dd></div>
+                    <div><dt>Previous day</dt><dd>{stock.day1MwplLimit?.toLocaleString('en-IN') ?? '—'}</dd></div>
+                    <div><dt>1D change</dt><dd className={changeTone(stock.day1MwplChange)}>{formatSignedNumber(stock.day1MwplChange)}</dd></div>
+                    <div><dt>2D change</dt><dd className={changeTone(stock.day2MwplChange)}>{formatSignedNumber(stock.day2MwplChange)}</dd></div>
+                    {viewMode === 'EXTENDED' && (
+                      <>
+                        <div><dt>Open interest</dt><dd>{stock.day0OI.toLocaleString('en-IN')}</dd></div>
+                        <div><dt>Headroom</dt><dd>{stock.day0Mwpl >= 95 ? 'Limit exceeded' : `${stock.remainingToBanPercent.toFixed(1)}%`}</dd></div>
+                      </>
+                    )}
+                  </dl>
+                </article>
+              )
+            })}
+          </div>
+        </section>
       )}
 
       {/* Bottom Pagination controls */}
@@ -842,6 +905,16 @@ function renderChangeCell(val: number | null | undefined) {
       <strong>{formattedVal}</strong>
     </td>
   )
+}
+
+function changeTone(value: number | null | undefined) {
+  if (value == null || value === 0) return 'neutral'
+  return value > 0 ? 'positive' : 'negative'
+}
+
+function formatSignedNumber(value: number | null | undefined) {
+  if (value == null) return '—'
+  return `${value > 0 ? '+' : ''}${value.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`
 }
 
 /**
