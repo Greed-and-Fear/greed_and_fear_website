@@ -493,6 +493,10 @@ export interface MwplSaturationStock {
   day0Mwpl: number
   day1Mwpl: number | null
   day2Mwpl: number | null
+  // Raw exchange MWPL limits for each trading day
+  day0MwplLimit: number
+  day1MwplLimit: number | null
+  day2MwplLimit: number | null
   day1MwplChange: number | null
   day2MwplChange: number | null
 
@@ -621,11 +625,11 @@ export async function getBseMwplSaturationData(): Promise<MwplSaturationStock[]>
       ? Number(((day2OI / day2MwplShares) * 100).toFixed(2))
       : null
 
-    // Changes
-    // day_1_change = Day 0 MWPL - Day 1 MWPL
-    const day1MwplChange = day1Mwpl != null ? Number((day0Mwpl - day1Mwpl).toFixed(2)) : null
-    // day_2_change = Day 1 MWPL - Day 2 MWPL
-    const day2MwplChange = day1Mwpl != null && day2Mwpl != null ? Number((day1Mwpl - day2Mwpl).toFixed(2)) : null
+    // Raw MWPL limit changes, aligned with the values displayed in the table.
+    // day_1_change = today's MWPL - previous trading day's MWPL
+    const day1MwplChange = day1Row ? day0MwplShares - day1MwplShares : null
+    // day_2_change = today's MWPL - MWPL from two trading days ago
+    const day2MwplChange = day2Row ? day0MwplShares - day2MwplShares : null
 
     // OI Changes
     const day1OIChange = day1OI != null ? day0OI - day1OI : null
@@ -666,6 +670,9 @@ export async function getBseMwplSaturationData(): Promise<MwplSaturationStock[]>
       day0Mwpl,
       day1Mwpl,
       day2Mwpl,
+      day0MwplLimit: day0MwplShares,
+      day1MwplLimit: day1Row ? day1MwplShares : null,
+      day2MwplLimit: day2Row ? day2MwplShares : null,
       day1MwplChange,
       day2MwplChange,
 

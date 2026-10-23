@@ -7,10 +7,9 @@ import {
   type MwplSaturationStock,
 } from './api/graphql'
 import { getSessionUserId, useAuth } from './auth/auth-context'
-import MwplParticleConstellation, { type ConstellationStockItem } from './components/MwplParticleConstellation'
 
 type FilterCategory = 'ALL' | 'BAN' | 'CRITICAL' | 'ELEVATED' | 'MODERATE' | 'NORMAL'
-type ViewMode = 'CORE' | 'EXTENDED' | 'CONSTELLATION'
+type ViewMode = 'CORE' | 'EXTENDED' | 'PULSE'
 type SortField =
   | 'symbol'
   | 'day0Mwpl'
@@ -157,26 +156,6 @@ export default function MwplSaturationPage() {
     return sum / stocks.length
   }, [stocks])
 
-  const constellationStocks = useMemo<ConstellationStockItem[]>(() => {
-    return stocks.map((s) => ({
-      symbol: s.symbol,
-      companyName: s.companyName,
-      exchange: s.exchange,
-      priceChangePercent: s.priceChangePercent,
-      day0Mwpl: s.day0Mwpl,
-      day1Mwpl: s.day1Mwpl,
-      day2Mwpl: s.day2Mwpl,
-      day0OI: s.day0OI,
-      mwplUtilizationPercent: s.day0Mwpl,
-      mwplRiskZone: s.riskZone === 'In Ban' ? 'Ban zone' : s.riskZone === 'Critical' ? 'High risk' : 'Normal',
-      signal: s.day0Mwpl >= 95 ? 'In Ban' : (s.priceChangePercent ?? 0) >= 0 ? 'Long build-up' : 'Short build-up',
-    }))
-  }, [stocks])
-
-  const constellationBanStocks = useMemo(() => {
-    return constellationStocks.filter((s) => (s.mwplUtilizationPercent ?? s.day0Mwpl) >= 80)
-  }, [constellationStocks])
-
   // Filtered and sorted stocks
   const displayedStocks = useMemo(() => {
     let list = stocks
@@ -202,9 +181,9 @@ export default function MwplSaturationPage() {
     // Sort
     return [...list].sort((a, b) => {
       let comparison = 0
-      if (sortField === 'day0Mwpl') comparison = a.day0Mwpl - b.day0Mwpl
-      else if (sortField === 'day1Mwpl') comparison = (a.day1Mwpl ?? -1) - (b.day1Mwpl ?? -1)
-      else if (sortField === 'day2Mwpl') comparison = (a.day2Mwpl ?? -1) - (b.day2Mwpl ?? -1)
+      if (sortField === 'day0Mwpl') comparison = a.day0MwplLimit - b.day0MwplLimit
+      else if (sortField === 'day1Mwpl') comparison = (a.day1MwplLimit ?? -1) - (b.day1MwplLimit ?? -1)
+      else if (sortField === 'day2Mwpl') comparison = (a.day2MwplLimit ?? -1) - (b.day2MwplLimit ?? -1)
       else if (sortField === 'day1_change') comparison = (a.day1MwplChange ?? -9999) - (b.day1MwplChange ?? -9999)
       else if (sortField === 'day2_change') comparison = (a.day2MwplChange ?? -9999) - (b.day2MwplChange ?? -9999)
       else if (sortField === 'day0OI') comparison = a.day0OI - b.day0OI
@@ -262,11 +241,11 @@ export default function MwplSaturationPage() {
       'Stock',
       'Exchange',
       'Company',
-      'Day 0 MWPL %',
-      'Day 1 MWPL %',
-      'Day 2 MWPL %',
-      'Day 1 Change %',
-      'Day 2 Change %',
+      'Day 0 MWPL',
+      'Day 1 MWPL',
+      'Day 2 MWPL',
+      'Day 1 Change',
+      'Day 2 Change',
       'Day 0 OI',
       'Day 1 OI',
       'Day 2 OI',
@@ -283,11 +262,11 @@ export default function MwplSaturationPage() {
       s.symbol,
       s.exchange,
       `"${s.companyName.replace(/"/g, '""')}"`,
-      s.day0Mwpl.toFixed(2),
-      s.day1Mwpl != null ? s.day1Mwpl.toFixed(2) : '',
-      s.day2Mwpl != null ? s.day2Mwpl.toFixed(2) : '',
-      s.day1MwplChange != null ? s.day1MwplChange.toFixed(2) : '',
-      s.day2MwplChange != null ? s.day2MwplChange.toFixed(2) : '',
+      s.day0MwplLimit,
+      s.day1MwplLimit ?? '',
+      s.day2MwplLimit ?? '',
+      s.day1MwplChange ?? '',
+      s.day2MwplChange ?? '',
       s.day0OI,
       s.day1OI ?? '',
       s.day2OI ?? '',
@@ -425,11 +404,11 @@ export default function MwplSaturationPage() {
             </button>
             <button
               type="button"
-              className={viewMode === 'CONSTELLATION' ? 'view-mode-btn active' : 'view-mode-btn'}
-              onClick={() => setViewMode('CONSTELLATION')}
-              title="Show animated particle constellation and thread network"
+              className={viewMode === 'PULSE' ? 'view-mode-btn active' : 'view-mode-btn'}
+              onClick={() => setViewMode('PULSE')}
+              title="Show an animated view of market-wide MWPL pressure"
             >
-              🌌 Constellation
+              Pressure Pulse
             </button>
           </div>
 
@@ -523,37 +502,42 @@ export default function MwplSaturationPage() {
         </div>
       )}
 
-      {!loading && !error && viewMode === 'CONSTELLATION' && (
-        <MwplParticleConstellation
-          stocks={constellationStocks}
-          banWatchStocks={constellationBanStocks}
-        />
-      )}
+      {!loading && !error && viewMode === 'PULSE' && <MarketPressurePulse stocks={displayedStocks} />}
 
-      {!loading && !error && viewMode !== 'CONSTELLATION' && (
+      {!loading && !error && viewMode !== 'PULSE' && (
         <div className="raw-stock-table-wrap saturation-table-wrap screenshot-styled-wrap">
           <table className="raw-stock-table saturation-table appsmith-styled-table">
             <thead>
-              <tr>
+              <tr className="table-group-row">
+                <th colSpan={3}>Instrument</th>
+                <th colSpan={2}>Current pressure</th>
+                <th colSpan={2}>Historical MWPL limits</th>
+                <th colSpan={2}>Limit movement</th>
+                {viewMode === 'EXTENDED' && <th colSpan={9}>Market detail</th>}
+              </tr>
+              <tr className="table-label-row">
                 <th className="star-col" title="Favorite stock">Fav</th>
-                <th style={{ width: '45px', textAlign: 'center' }}>#</th>
+                <th className="row-number-col">#</th>
                 <th onClick={() => toggleSort('symbol')} className="sortable-th">
                   Stock {sortField === 'symbol' ? (sortAsc ? '▲' : '▼') : ''}
                 </th>
                 <th onClick={() => toggleSort('day0Mwpl')} className="sortable-th core-mwpl-th">
-                  Day 0 MWPL {sortField === 'day0Mwpl' ? (sortAsc ? '▲' : '▼') : ''}
+                  Today MWPL {sortField === 'day0Mwpl' ? (sortAsc ? '▲' : '▼') : ''}
+                </th>
+                <th className="core-mwpl-th">
+                  Utilization
                 </th>
                 <th onClick={() => toggleSort('day1Mwpl')} className="sortable-th core-mwpl-th">
-                  Day 1 MWPL {sortField === 'day1Mwpl' ? (sortAsc ? '▲' : '▼') : ''}
+                  Previous day {sortField === 'day1Mwpl' ? (sortAsc ? '▲' : '▼') : ''}
                 </th>
                 <th onClick={() => toggleSort('day2Mwpl')} className="sortable-th core-mwpl-th">
-                  Day 2 MWPL {sortField === 'day2Mwpl' ? (sortAsc ? '▲' : '▼') : ''}
+                  Two days ago {sortField === 'day2Mwpl' ? (sortAsc ? '▲' : '▼') : ''}
                 </th>
                 <th onClick={() => toggleSort('day1_change')} className="sortable-th screenshot-th">
-                  day_1_change {sortField === 'day1_change' ? (sortAsc ? '▲' : '▼') : ''}
+                  1D change {sortField === 'day1_change' ? (sortAsc ? '▲' : '▼') : ''}
                 </th>
                 <th onClick={() => toggleSort('day2_change')} className="sortable-th screenshot-th">
-                  day_2_change {sortField === 'day2_change' ? (sortAsc ? '▲' : '▼') : ''}
+                  2D change {sortField === 'day2_change' ? (sortAsc ? '▲' : '▼') : ''}
                 </th>
 
                 {viewMode === 'EXTENDED' && (
@@ -579,8 +563,8 @@ export default function MwplSaturationPage() {
                     <th onClick={() => toggleSort('remaining')} className="sortable-th">
                       Headroom to 95% {sortField === 'remaining' ? (sortAsc ? '▲' : '▼') : ''}
                     </th>
-                    <th onClick={() => toggleSort('mwpl')} className="sortable-th">
-                      MWPL Limit {sortField === 'mwpl' ? (sortAsc ? '▲' : '▼') : ''}
+                    <th>
+                      Permit limit
                     </th>
                     <th>Risk Tier</th>
                   </>
@@ -622,18 +606,28 @@ export default function MwplSaturationPage() {
                     {/* Day 0 MWPL */}
                     <td className="mwpl-num-cell day-0-cell">
                       <span className={`mwpl-val-bold ${getSaturationColorClass(stock.day0Mwpl)}`}>
-                        {stock.day0Mwpl.toFixed(2)}
+                        {stock.day0MwplLimit.toLocaleString('en-IN')}
                       </span>
+                    </td>
+
+                    <td className="utilization-table-cell">
+                      <div className="utilization-table-value">
+                        <strong className={getSaturationColorClass(stock.day0Mwpl)}>{stock.day0Mwpl.toFixed(2)}%</strong>
+                        <span>{stock.riskZone}</span>
+                      </div>
+                      <div className="utilization-mini-track" aria-hidden="true">
+                        <i className={getSaturationColorClass(stock.day0Mwpl)} style={{ width: `${Math.min(100, stock.day0Mwpl)}%` }} />
+                      </div>
                     </td>
 
                     {/* Day 1 MWPL */}
                     <td className="mwpl-num-cell">
-                      <span>{stock.day1Mwpl != null ? stock.day1Mwpl.toFixed(2) : '—'}</span>
+                      <span>{stock.day1MwplLimit != null ? stock.day1MwplLimit.toLocaleString('en-IN') : '—'}</span>
                     </td>
 
                     {/* Day 2 MWPL */}
                     <td className="mwpl-num-cell">
-                      <span>{stock.day2Mwpl != null ? stock.day2Mwpl.toFixed(2) : '—'}</span>
+                      <span>{stock.day2MwplLimit != null ? stock.day2MwplLimit.toLocaleString('en-IN') : '—'}</span>
                     </td>
 
                     {/* day_1_change */}
@@ -696,10 +690,10 @@ export default function MwplSaturationPage() {
                           )}
                         </td>
 
-                        {/* MWPL Limit */}
+                        {/* Permit Limit */}
                         <td>
-                          <span>{formatCompactNumber(stock.mwpl)}</span>
-                          <small className="cell-sub">{stock.mwpl.toLocaleString('en-IN')} shares</small>
+                          <span>{formatCompactNumber(stock.permitLimit)}</span>
+                          <small className="cell-sub">{stock.permitLimit.toLocaleString('en-IN')} shares</small>
                         </td>
 
                         {/* Risk Tier */}
@@ -715,7 +709,7 @@ export default function MwplSaturationPage() {
               })}
               {displayedStocks.length === 0 && (
                 <tr>
-                  <td colSpan={viewMode === 'EXTENDED' ? 17 : 8} style={{ textAlign: 'center', padding: '36px' }}>
+                  <td colSpan={viewMode === 'EXTENDED' ? 18 : 9} style={{ textAlign: 'center', padding: '36px' }}>
                     No stocks matching the selected filter or search term.
                   </td>
                 </tr>
@@ -726,7 +720,7 @@ export default function MwplSaturationPage() {
       )}
 
       {/* Bottom Pagination controls */}
-      {totalPages > 1 && viewMode !== 'CONSTELLATION' && (
+      {totalPages > 1 && viewMode !== 'PULSE' && (
         <div className="bottom-pagination-bar">
           <span>Showing {(safeCurrentPage - 1) * pageSize + 1} to {Math.min(totalRecords, safeCurrentPage * pageSize)} of {totalRecords} stocks</span>
           <div className="page-nav">
@@ -777,6 +771,59 @@ export default function MwplSaturationPage() {
   )
 }
 
+function MarketPressurePulse({ stocks }: { stocks: MwplSaturationStock[] }) {
+  const leaders = [...stocks].sort((a, b) => b.day0Mwpl - a.day0Mwpl).slice(0, 10)
+  const marketAverage = stocks.length
+    ? stocks.reduce((sum, stock) => sum + stock.day0Mwpl, 0) / stocks.length
+    : 0
+
+  return (
+    <section className="pressure-pulse" aria-label="Animated MWPL market pressure overview">
+      <div className="pressure-pulse-heading">
+        <div>
+          <span className="pressure-eyebrow">Live pressure field</span>
+          <h3>Market Pressure Pulse</h3>
+          <p>Each lane shows a leading stock moving toward the 95% ban threshold.</p>
+        </div>
+        <div className="pressure-average">
+          <span>Universe average</span>
+          <strong>{marketAverage.toFixed(1)}%</strong>
+        </div>
+      </div>
+
+      <div className="pressure-stage">
+        <div className="pressure-threshold pressure-threshold-80"><span>80% alert</span></div>
+        <div className="pressure-threshold pressure-threshold-95"><span>95% ban</span></div>
+        <div className="pressure-sweep" aria-hidden="true" />
+        {leaders.map((stock, index) => {
+          const position = Math.min(100, Math.max(2, stock.day0Mwpl))
+          return (
+            <div className="pressure-lane" key={stock.snapshotId || stock.symbol}>
+              <span className="pressure-symbol">{stock.symbol}</span>
+              <div className="pressure-rail">
+                <span
+                  className={`pressure-runner ${getSaturationColorClass(stock.day0Mwpl)}`}
+                  style={{ left: `${position}%`, animationDelay: `${index * -0.22}s` }}
+                >
+                  <i />
+                </span>
+              </div>
+              <strong className={getSaturationColorClass(stock.day0Mwpl)}>{stock.day0Mwpl.toFixed(1)}%</strong>
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="pressure-legend">
+        <span><i className="normal" /> Normal</span>
+        <span><i className="elevated" /> Elevated</span>
+        <span><i className="critical" /> Critical</span>
+        <span><i className="ban" /> In ban</span>
+      </div>
+    </section>
+  )
+}
+
 /**
  * Renders the day_1_change / day_2_change cell using the site's native positive/negative UI colors
  */
@@ -788,7 +835,7 @@ function renderChangeCell(val: number | null | undefined) {
   const isPos = val > 0
   const isNeg = val < 0
   const colorClass = isPos ? 'positive' : isNeg ? 'negative' : 'neutral'
-  const formattedVal = `${val > 0 ? '+' : ''}${val.toFixed(2)}`
+  const formattedVal = `${val > 0 ? '+' : ''}${val.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`
 
   return (
     <td className={`mwpl-num-cell ${colorClass}`}>
