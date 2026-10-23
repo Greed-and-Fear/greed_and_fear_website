@@ -14,7 +14,7 @@ import MwplSaturationPage from './MwplSaturationPage'
 import PreMarketPage from './PreMarketPage'
 import TradingBackground from './components/TradingBackground'
 import logo from '../images/logo/logos.jpeg'
-import MwplParticleConstellation from './components/MwplParticleConstellation'
+import MwplPositionFlow from './components/MwplPositionFlow'
 import './member.css'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
 import normalWhiteLogo from '../images/logo/whiteLogo.png'
@@ -205,77 +205,7 @@ function DashboardPage(props: PortalProps) {
     </section>
     <div className="dashboard-grid">
       <section className="portal-panel opportunities-panel" id="opportunities">
-        <MwplParticleConstellation
-          stocks={stocks}
-          banWatchStocks={banWatch}
-          tableFallback={
-            <div className="table-scroll">
-              <table className="appsmith-styled-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Stock</th>
-                    <th>Price %</th>
-                    <th>Day 0 MWPL</th>
-                    <th>Day 1 MWPL</th>
-                    <th>Day 2 MWPL</th>
-                    <th>day_1_change</th>
-                    <th>day_2_change</th>
-                    <th>Day 0 OI</th>
-                    <th>Day 1 OI</th>
-                    <th>Day 2 OI</th>
-                    <th>1D OI Change</th>
-                    <th>2D OI Change</th>
-                    <th>Signal</th>
-                    <th>Risk</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stocks.map((row, index) => (
-                    <tr key={row.symbol} title={row.reasons.join(' | ')}>
-                      <td>{index + 1}</td>
-                      <td>
-                        <div className="stock-info-inline">
-                          <strong>{row.symbol}</strong>
-                          <span className={`exchange-pill ${(row.exchange || 'NSE').toLowerCase()}`}>{row.exchange || 'NSE'}</span>
-                        </div>
-                      </td>
-                      <Delta value={row.priceChangePercent} />
-                      <td>
-                        <span className="mwpl-val-bold">{row.day0Mwpl.toFixed(1)}%</span>
-                        <Meter value={row.day0Mwpl} />
-                      </td>
-                      <td>{row.day1Mwpl != null ? `${row.day1Mwpl.toFixed(1)}%` : '—'}</td>
-                      <td>{row.day2Mwpl != null ? `${row.day2Mwpl.toFixed(1)}%` : '—'}</td>
-                      <ChangeBadge value={row.day1MwplChange} />
-                      <ChangeBadge value={row.day2MwplChange} />
-                      <td title={`Day 0 OI: ${row.day0OI.toLocaleString('en-IN')}`}>
-                        <strong>{formatCompactNumber(row.day0OI)}</strong>
-                      </td>
-                      <td title={row.day1OI != null ? `Day 1 OI: ${row.day1OI.toLocaleString('en-IN')}` : undefined}>
-                        {row.day1OI != null ? formatCompactNumber(row.day1OI) : '—'}
-                      </td>
-                      <td title={row.day2OI != null ? `Day 2 OI: ${row.day2OI.toLocaleString('en-IN')}` : undefined}>
-                        {row.day2OI != null ? formatCompactNumber(row.day2OI) : '—'}
-                      </td>
-                      <Delta value={row.oi1DayChangePercent} />
-                      <Delta value={row.oi2DayChangePercent} />
-                      <td><span className={`signal ${row.signal.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>{row.signal}</span></td>
-                      <td><span className={`risk-badge risk-${row.mwplRiskZone.toLowerCase().replace(/\s+/g, '-')}`}>{row.mwplRiskZone}</span></td>
-                    </tr>
-                  ))}
-                  {stocks.length === 0 && (
-                    <tr>
-                      <td colSpan={15} style={{ textAlign: 'center', padding: '24px' }}>
-                        {loading ? 'Loading live stock data...' : 'No stock records found.'}
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          }
-        />
+        <MwplPositionFlow stocks={stocks} loading={loading} />
       </section>
       <section className="portal-panel ban-panel" id="ban-watch">
         <PanelHeading title="F&O ban watch" />
@@ -373,15 +303,6 @@ function GlobalIndicesAdminPage(props: PortalProps) {
 }
 
 function PanelHeading({ title, action }: { title: string; action?: string }) { return <header className="panel-heading"><h2>{title}</h2>{action && <button>{action} →</button>}</header> }
-function Delta({ value }: { value: number }) { return <td className={value >= 0 ? 'positive' : 'negative'}>{value >= 0 ? '+' : ''}{value}%</td> }
-function ChangeBadge({ value }: { value: number | null | undefined }) {
-  if (value == null || isNaN(value)) return <td>—</td>
-  return (
-    <td className={value >= 0 ? 'positive' : 'negative'}>
-      {value >= 0 ? '+' : ''}{value.toFixed(2)}
-    </td>
-  )
-}
 function Meter({ value }: { value: number }) { return <span className="meter"><i style={{ width: `${Math.min(value, 100)}%` }} /></span> }
 
 function MemberAuthLoading({ theme }: { theme: Theme }) {
@@ -391,20 +312,5 @@ function MemberAuthLoading({ theme }: { theme: Theme }) {
 function getReturnPath(state: unknown) {
   const from = state && typeof state === 'object' && 'from' in state ? (state as { from?: unknown }).from : null
   return typeof from === 'string' && from.startsWith('/') && !from.startsWith('/login') ? from : '/dashboard'
-}
-
-function formatCompactNumber(num: number): string {
-  if (num == null || isNaN(num) || num === 0) return '0'
-  const abs = Math.abs(num)
-  if (abs >= 10000000) {
-    return `${(num / 10000000).toFixed(2)} Cr`
-  }
-  if (abs >= 100000) {
-    return `${(num / 100000).toFixed(2)} L`
-  }
-  if (abs >= 1000) {
-    return `${(num / 1000).toFixed(1)} K`
-  }
-  return num.toLocaleString('en-IN')
 }
 
