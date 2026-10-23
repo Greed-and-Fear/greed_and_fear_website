@@ -293,12 +293,34 @@ export default function MwplSaturationPage() {
 
   return (
     <section className="mwpl-saturation-page">
+      <section className="mwpl-command-hero">
+        <div className="mwpl-command-copy">
+          <span className="mwpl-command-eyebrow"><i /> Live BSE derivatives intelligence</span>
+          <h2>Position Limit Command Center</h2>
+          <p>Track institutional pressure before stocks enter the F&amp;O ban zone. Raw limits, utilization and multi-session movement are kept separate for clarity.</p>
+          <div className="mwpl-command-meta">
+            <span><b>{stocks.length}</b> instruments</span>
+            <span><b>{banCount + criticalCount}</b> require attention</span>
+            <span><b>{latestTimestamp ? new Date(latestTimestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '—'}</b> last update</span>
+          </div>
+        </div>
+        <div className="mwpl-hero-gauge-wrap">
+          <div className="mwpl-hero-orbit"><i /><i /><i /></div>
+          <div
+            className="mwpl-hero-gauge"
+            style={{ background: `conic-gradient(#3b82f6 0deg, #8b5cf6 ${Math.min(360, avgSaturation * 3.6)}deg, rgba(148,163,184,.15) ${Math.min(360, avgSaturation * 3.6)}deg)` }}
+          >
+            <div><strong>{avgSaturation.toFixed(1)}%</strong><span>Average pressure</span></div>
+          </div>
+        </div>
+      </section>
+
       {/* Top KPI Metrics Cards */}
       <div className="saturation-kpi-grid">
         <article className="kpi-card tone-ban">
           <div>
             <span>In Ban Zone (≥95%)</span>
-            <div className="kpi-icon">⛔</div>
+            <div className="kpi-icon">BAN</div>
           </div>
           <strong>{banCount}</strong>
           <small>F&amp;O trading entry restricted</small>
@@ -306,7 +328,7 @@ export default function MwplSaturationPage() {
         <article className="kpi-card tone-critical">
           <div>
             <span>Critical Saturation (85–95%)</span>
-            <div className="kpi-icon">⚡</div>
+            <div className="kpi-icon">85</div>
           </div>
           <strong>{criticalCount}</strong>
           <small>Imminent ban candidates</small>
@@ -314,7 +336,7 @@ export default function MwplSaturationPage() {
         <article className="kpi-card tone-elevated">
           <div>
             <span>High Saturation (75–85%)</span>
-            <div className="kpi-icon">📈</div>
+            <div className="kpi-icon">75</div>
           </div>
           <strong>{elevatedCount}</strong>
           <small>Position limits building</small>
@@ -322,7 +344,7 @@ export default function MwplSaturationPage() {
         <article className="kpi-card tone-avg">
           <div>
             <span>Average Saturation</span>
-            <div className="kpi-icon">◎</div>
+            <div className="kpi-icon">AVG</div>
           </div>
           <strong>{avgSaturation.toFixed(1)}%</strong>
           <small>Across all tracked BSE F&amp;O stocks</small>
@@ -330,7 +352,7 @@ export default function MwplSaturationPage() {
         <article className="kpi-card tone-universe">
           <div>
             <span>Tracked Universe</span>
-            <div className="kpi-icon">⬡</div>
+            <div className="kpi-icon">ALL</div>
           </div>
           <strong>{stocks.length}</strong>
           <small>BSE multi-day snapshots</small>
@@ -505,7 +527,7 @@ export default function MwplSaturationPage() {
       {!loading && !error && viewMode === 'PULSE' && <MarketPressurePulse stocks={displayedStocks} />}
 
       {!loading && !error && viewMode !== 'PULSE' && (
-        <section className="mwpl-data-panel">
+        <section className={`mwpl-data-panel ${viewMode === 'EXTENDED' ? 'is-extended' : 'is-core'}`}>
           <header className="mwpl-data-panel-head">
             <div>
               <span className="mwpl-data-kicker">BSE position limits</span>
@@ -772,6 +794,14 @@ export default function MwplSaturationPage() {
                       <>
                         <div><dt>Open interest</dt><dd>{stock.day0OI.toLocaleString('en-IN')}</dd></div>
                         <div><dt>Headroom</dt><dd>{stock.day0Mwpl >= 95 ? 'Limit exceeded' : `${stock.remainingToBanPercent.toFixed(1)}%`}</dd></div>
+                        <div><dt>Previous OI</dt><dd>{stock.day1OI?.toLocaleString('en-IN') ?? '—'}</dd></div>
+                        <div><dt>Two-day OI</dt><dd>{stock.day2OI?.toLocaleString('en-IN') ?? '—'}</dd></div>
+                        <div><dt>1D OI change</dt><dd className={changeTone(stock.day1OIChange)}>{formatSignedNumber(stock.day1OIChange)}</dd></div>
+                        <div><dt>2D OI change</dt><dd className={changeTone(stock.day2OIChange)}>{formatSignedNumber(stock.day2OIChange)}</dd></div>
+                        <div><dt>Last price</dt><dd>{stock.currentPrice != null ? `₹${stock.currentPrice.toLocaleString('en-IN')}` : '—'}</dd></div>
+                        <div><dt>Price change</dt><dd className={changeTone(stock.priceChangePercent)}>{stock.priceChangePercent != null ? `${stock.priceChangePercent > 0 ? '+' : ''}${stock.priceChangePercent.toFixed(2)}%` : '—'}</dd></div>
+                        <div><dt>Permit limit</dt><dd>{stock.permitLimit.toLocaleString('en-IN')}</dd></div>
+                        <div><dt>Risk tier</dt><dd>{stock.riskZone}</dd></div>
                       </>
                     )}
                   </dl>
