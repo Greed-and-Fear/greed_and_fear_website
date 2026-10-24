@@ -522,6 +522,30 @@ export default function MwplSaturationPage() {
 
           <div className="raw-stock-table-wrap saturation-table-wrap screenshot-styled-wrap mwpl-desktop-grid">
             <table className="raw-stock-table saturation-table appsmith-styled-table">
+            <colgroup>
+              <col className="col-favorite" />
+              <col className="col-rank" />
+              <col className="col-stock" />
+              <col className="col-mwpl" />
+              <col className="col-utilization" />
+              <col className="col-mwpl" />
+              <col className="col-mwpl" />
+              <col className="col-limit-change" />
+              <col className="col-limit-change" />
+              {viewMode === 'EXTENDED' && (
+                <>
+                  <col className="col-oi" />
+                  <col className="col-oi" />
+                  <col className="col-oi" />
+                  <col className="col-oi-change" />
+                  <col className="col-oi-change" />
+                  <col className="col-ltp" />
+                  <col className="col-headroom" />
+                  <col className="col-permit" />
+                  <col className="col-risk" />
+                </>
+              )}
+            </colgroup>
             <thead>
               <tr className="table-group-row">
                 <th colSpan={3}>Instrument</th>
