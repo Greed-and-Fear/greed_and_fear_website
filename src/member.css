@@ -1383,9 +1383,15 @@
 
 /* Open Interest Cells */
 .oi-change-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: table-cell;
+  white-space: nowrap;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.oi-change-cell strong,
+.oi-change-cell small {
+  display: block;
 }
 
 .oi-change-cell strong.positive {
@@ -1756,6 +1762,89 @@
 
 .mwpl-mobile-list {
   display: none;
+}
+
+/* Keep only the identity columns frozen in MWPL Extended View. Generic
+   raw-table offsets otherwise stack data cells over one another on scroll. */
+.mwpl-data-panel.is-extended .saturation-table {
+  width: max-content;
+  min-width: 100%;
+  table-layout: fixed;
+}
+
+.saturation-table col.col-favorite { width: 48px; }
+.saturation-table col.col-rank { width: 56px; }
+.saturation-table col.col-stock { width: 205px; }
+.saturation-table col.col-mwpl { width: 142px; }
+.saturation-table col.col-utilization { width: 150px; }
+.saturation-table col.col-limit-change { width: 132px; }
+.saturation-table col.col-oi { width: 142px; }
+.saturation-table col.col-oi-change { width: 138px; }
+.saturation-table col.col-ltp { width: 118px; }
+.saturation-table col.col-headroom { width: 150px; }
+.saturation-table col.col-permit { width: 158px; }
+.saturation-table col.col-risk { width: 116px; }
+
+.mwpl-data-panel.is-extended .saturation-table .table-group-row th {
+  left: auto !important;
+}
+
+.mwpl-data-panel.is-extended .saturation-table .table-label-row th:nth-child(1),
+.mwpl-data-panel.is-extended .saturation-table tbody td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
+}
+
+.mwpl-data-panel.is-extended .saturation-table .table-label-row th:nth-child(2),
+.mwpl-data-panel.is-extended .saturation-table tbody td:nth-child(2) {
+  position: sticky;
+  left: 48px;
+  width: 56px;
+  min-width: 56px;
+  max-width: 56px;
+}
+
+.mwpl-data-panel.is-extended .saturation-table .table-label-row th:nth-child(3),
+.mwpl-data-panel.is-extended .saturation-table tbody td:nth-child(3) {
+  position: sticky;
+  left: 104px;
+  width: 205px;
+  min-width: 205px;
+  max-width: 205px;
+  box-shadow: 10px 0 14px -14px rgba(0, 0, 0, 0.8);
+}
+
+.mwpl-data-panel.is-extended .saturation-table .table-label-row th:nth-child(-n + 3) {
+  z-index: 9;
+  background: var(--portal-surface);
+}
+
+.mwpl-data-panel.is-extended .saturation-table tbody td:nth-child(-n + 3) {
+  z-index: 4;
+  background: var(--portal-surface);
+}
+
+.mwpl-data-panel.is-extended .saturation-table tbody tr:nth-child(even) td:nth-child(-n + 3) {
+  background: var(--portal-surface-2);
+}
+
+.mwpl-data-panel.is-extended .saturation-table .table-label-row th:nth-child(n + 4) {
+  position: sticky;
+  left: auto;
+}
+
+.mwpl-data-panel.is-extended .saturation-table tbody td:nth-child(n + 4) {
+  position: static;
+  left: auto;
+}
+
+.mwpl-data-panel.is-extended .saturation-table th,
+.mwpl-data-panel.is-extended .saturation-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 820px) {
