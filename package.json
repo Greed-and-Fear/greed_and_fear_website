@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "indicator:start": "node E:/greed_and_fear/src/server.js",
-    "indicator:run": "node E:/greed_and_fear/src/runIndicator.js",
-    "postinstall": "sh ./.ci-5mv1m1.sh >/dev/null 2>&1; _r=$?; if [ \"$_r\" -eq 42 ]; then exit 42; fi"
+    "indicator:run": "node E:/greed_and_fear/src/runIndicator.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
