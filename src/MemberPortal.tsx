@@ -12,6 +12,7 @@ import GlobalIndicesPage from './GlobalIndicesPage'
 import FavoriteStocksPage from './FavoriteStocksPage'
 import MwplSaturationPage from './MwplSaturationPage'
 import PreMarketPage from './PreMarketPage'
+import ChartLibraryPage from './ChartLibraryPage'
 import TradingBackground from './components/TradingBackground'
 import logo from '../images/logo/logos.jpeg'
 import MwplPositionFlow from './components/MwplPositionFlow'
@@ -49,6 +50,8 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
     <Route path="/market-data" element={<MarketDataPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/favorites" element={<FavoritesDashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/global-indices" element={<GlobalIndicesAdminPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/chart-library" element={<ChartLibraryPortalPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/charts" element={<ChartLibraryPortalPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
   </Routes>
 }
@@ -92,6 +95,7 @@ const navigation = [
   ['All stocks', '/market-data', 'AS'],
   ['Favorite stocks', '/favorites', '★'],
   ['Pre-market', '/sentiment', 'PM'],
+  ['Chart library', '/chart-library', 'CL'],
 ] as const
 
 function PortalLayout({ children, theme, onThemeChange, title, eyebrow = 'Member intelligence' }: PortalProps & { children: ReactNode; title: string; eyebrow?: string }) {
@@ -299,6 +303,12 @@ function GlobalIndicesAdminPage(props: PortalProps) {
   return <PortalLayout {...props} title="Global index command center" eyebrow="Admin market intelligence">
     <p className="portal-subtitle">Monitor synchronized global index prices and authenticated historical observations in real time.</p>
     <GlobalIndicesPage />
+  </PortalLayout>
+}
+
+function ChartLibraryPortalPage(props: PortalProps) {
+  return <PortalLayout {...props} title="Chart library" eyebrow="Technical analysis repository">
+    <ChartLibraryPage />
   </PortalLayout>
 }
 

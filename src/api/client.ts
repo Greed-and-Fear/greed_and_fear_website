@@ -30,12 +30,13 @@ interface ApiRequestInit extends RequestInit {
 
 export async function apiRequest<T>(path: string, init: ApiRequestInit = {}): Promise<T> {
   const { handleUnauthorized = true, ...requestInit } = init
+  const isFormData = typeof FormData !== 'undefined' && requestInit.body instanceof FormData
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...requestInit,
     credentials: 'include',
     headers: {
       Accept: 'application/json',
-      ...(requestInit.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(requestInit.body && !isFormData ? { 'Content-Type': 'application/json' } : {}),
       ...requestInit.headers,
     },
   })
@@ -223,6 +224,31 @@ export interface BoardPositionInput {
   notes?: string | null
 }
 
+export interface StockChart {
+  id: number
+  stock_id: number
+  created_by_user_id: number | null
+  original_filename: string
+  object_path: string
+  storage_host: string
+  image_url: string | null
+  content_type: 'image/jpeg' | 'image/png'
+  file_size: number
+  image_metadata: Record<string, unknown>
+  created_at: string
+  updated_at: string
+}
+
+export interface ChartMetadata {
+  timeframe?: string
+  indicator?: string
+  notes?: string
+  stock_symbol?: string
+  uploaded_by?: string
+  preview_data?: string
+  [key: string]: unknown
+}
+
 export const api = {
   login: (phone: string, password: string) => apiRequest<User>('/api/auth/login', { method: 'POST', body: JSON.stringify({ phone, password }) }),
   currentUser: async () => {
@@ -254,6 +280,28 @@ export const api = {
   updateBoardPosition: (id: number, input: BoardPositionInput) => apiRequest<BoardPosition>(`/api/board/positions/${id}`, { method: 'PATCH', body: JSON.stringify(input) }),
   moveBoardPosition: (id: number, status: BoardStatus, userId?: number) => apiRequest<BoardPosition>(`/api/board/positions/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, changed_by_user_id: userId ?? null }) }),
   deleteBoardPosition: (id: number) => apiRequest<void>(`/api/board/positions/${id}`, { method: 'DELETE' }),
+  charts: (filters: { stockId?: number; createdByUserId?: number; limit?: number } = {}) => {
+    const params = new URLSearchParams()
+    if (filters.stockId !== undefined) params.set('stock_id', String(filters.stockId))
+    if (filters.createdByUserId !== undefined) params.set('created_by_user_id', String(filters.createdByUserId))
+    params.set('limit', String(filters.limit ?? 100))
+    return apiRequest<StockChart[]>(`/api/charts?${params}`)
+  },
+  uploadChart: (stockId: number, image: File | Blob, metadata?: ChartMetadata, filename = 'chart.jpg') => {
+    const form = new FormData()
+    form.append('stock_id', String(stockId))
+    if (image instanceof File) {
+      form.append('image', image)
+    } else {
+      form.append('image', image, filename)
+    }
+    if (metadata) form.append('metadata', JSON.stringify(metadata))
+    return apiRequest<StockChart>('/api/charts', {
+      method: 'POST',
+      body: form,
+    })
+  },
+  deleteChart: (chartId: number | string) => apiRequest<void>(`/api/charts/${chartId}`, { method: 'DELETE' }),
   getPreMarketLatest: async (): Promise<PreMarketIndicatorRun | null> => {
     try {
       let res = await fetch('/indicator-api/latest')
