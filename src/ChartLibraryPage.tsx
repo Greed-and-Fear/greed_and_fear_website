@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, type DragEvent, type FormEvent, type KeyboardEvent } from 'react'
+import { useState, useEffect, useRef, type DragEvent, type FormEvent } from 'react'
 import { useAuth } from './auth/auth-context'
 import { api, type StockSearchResult } from './api/client'
 
@@ -34,7 +34,7 @@ interface ToastMessage {
 
 const STORAGE_KEY = 'gf_chart_library_records_v1'
 
-export async function loadChartsFromStorage(): Promise<ChartRecord[]> {
+async function loadChartsFromStorage(): Promise<ChartRecord[]> {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return []
@@ -49,7 +49,7 @@ export async function loadChartsFromStorage(): Promise<ChartRecord[]> {
   }
 }
 
-export async function saveChartToStorage(
+async function saveChartToStorage(
   record: Omit<ChartRecord, 'id' | 'createdAt'> & { id?: string; createdAt?: string }
 ): Promise<ChartRecord> {
   const newChart: ChartRecord = {
@@ -76,25 +76,25 @@ export async function saveChartToStorage(
       errorObj?.code === 22 ||
       errorObj?.code === 1014
     ) {
-      throw new Error('Browser storage is full. Please delete older charts or clear storage.')
+      throw new Error('Browser storage is full. Please delete older charts or clear storage.', { cause: err })
     }
-    throw new Error('Unable to save chart to storage.')
+    throw new Error('Unable to save chart to storage.', { cause: err })
   }
 }
 
-export async function deleteChartFromStorage(id: string): Promise<void> {
+async function deleteChartFromStorage(id: string): Promise<void> {
   try {
     const currentCharts = await loadChartsFromStorage()
     const updated = currentCharts.filter((chart) => chart.id !== id)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
   } catch (err) {
     console.error('Error deleting chart from localStorage:', err)
-    throw new Error('Failed to delete chart from storage.')
+    throw new Error('Failed to delete chart from storage.', { cause: err })
   }
 }
 
 // Unified Loader: Queries FastAPI GET /api/charts, merges with local cache
-export async function loadAllCharts(): Promise<ChartRecord[]> {
+async function loadAllCharts(): Promise<ChartRecord[]> {
   try {
     const apiCharts = await api.charts()
     if (Array.isArray(apiCharts) && apiCharts.length > 0) {
@@ -139,7 +139,7 @@ export async function loadAllCharts(): Promise<ChartRecord[]> {
 }
 
 // Unified Saver: Calls FastAPI POST /api/charts with stock_id and multipart image
-export async function saveChartRecord(
+async function saveChartRecord(
   record: Omit<ChartRecord, 'id' | 'createdAt'> & { id?: string; createdAt?: string },
   imageBlob?: Blob | null
 ): Promise<ChartRecord> {
@@ -200,7 +200,7 @@ export async function saveChartRecord(
 }
 
 // Unified Deleter: Calls DELETE /api/charts/{id} on backend + removes from storage
-export async function deleteChartRecord(id: string): Promise<void> {
+async function deleteChartRecord(id: string): Promise<void> {
   const numericId = Number(id)
   if (!isNaN(numericId) && numericId > 0) {
     try {
@@ -217,7 +217,7 @@ export async function deleteChartRecord(id: string): Promise<void> {
 // Downscale large images (max 1800px, WebP) before saving
 // ============================================================================
 
-export async function processAndDownscaleImage(
+async function processAndDownscaleImage(
   file: File | Blob
 ): Promise<{ dataUrl: string; blob: Blob; width: number; height: number; size: number }> {
   return new Promise((resolve, reject) => {
@@ -681,7 +681,9 @@ function UploadChartModal({ userName, onClose, onSaved, onError }: UploadModalPr
   }
 
   const handleFileRef = useRef(handleFile)
-  handleFileRef.current = handleFile
+  useEffect(() => {
+    handleFileRef.current = handleFile
+  })
 
   // Clipboard paste listener (Ctrl+V screenshot support)
   useEffect(() => {
