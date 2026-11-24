@@ -58,11 +58,420 @@ const FALLBACK_RUN: PreMarketIndicatorRun = {
       ok: true,
     },
   ],
+  actualCloseSentiment: 'BEARISH',
+  actualNiftyClose: {
+    close: 24195,
+    percentChange: -0.32,
+    sentiment: 'BEARISH',
+  },
+}
+
+const FALLBACK_HISTORY: PreMarketIndicatorRun[] = [
+  {
+    ...FALLBACK_RUN,
+    timestamp: '2026-09-26T14:18:36.688Z',
+    direction: { call: 'BULLISH', counts: { bullish: 3, bearish: 0, neutral: 1 } },
+    actualCloseSentiment: 'BULLISH',
+    actualNiftyClose: { close: 24880, percentChange: 0.62, sentiment: 'BULLISH' },
+  },
+  {
+    ...FALLBACK_RUN,
+    timestamp: '2026-09-26T14:11:55.635Z',
+    direction: { call: 'BULLISH', counts: { bullish: 3, bearish: 0, neutral: 1 } },
+    actualCloseSentiment: 'BULLISH',
+    actualNiftyClose: { close: 24880, percentChange: 0.62, sentiment: 'BULLISH' },
+  },
+  {
+    ...FALLBACK_RUN,
+    timestamp: '2026-08-14T09:10:40.331Z',
+    direction: { call: 'NEUTRAL', counts: { bullish: 2, bearish: 1, neutral: 1 } },
+    actualCloseSentiment: 'BEARISH',
+    actualNiftyClose: { close: 24390, percentChange: -0.32, sentiment: 'BEARISH' },
+  },
+  {
+    ...FALLBACK_RUN,
+    timestamp: '2026-08-12T04:42:28.390Z',
+    direction: { call: 'BEARISH', counts: { bullish: 0, bearish: 4, neutral: 0 } },
+    actualCloseSentiment: 'BEARISH',
+    actualNiftyClose: { close: 24420, percentChange: -0.56, sentiment: 'BEARISH' },
+  },
+  {
+    ...FALLBACK_RUN,
+    timestamp: '2026-08-11T03:38:29.899Z',
+    direction: { call: 'BEARISH', counts: { bullish: 0, bearish: 3, neutral: 1 } },
+    actualCloseSentiment: 'BULLISH',
+    actualNiftyClose: { close: 24650, percentChange: 0.18, sentiment: 'BULLISH' },
+  },
+  {
+    ...FALLBACK_RUN,
+    timestamp: '2026-08-09T08:00:38.148Z',
+    direction: { call: 'BULLISH', counts: { bullish: 3, bearish: 1, neutral: 0 } },
+    actualCloseSentiment: 'BULLISH',
+    actualNiftyClose: { close: 24730, percentChange: 0.38, sentiment: 'BULLISH' },
+  },
+]
+
+function polarToCartesian(centerX: number, centerY: number, radius: number, angleInDegrees: number) {
+  const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0
+  return {
+    x: centerX + radius * Math.cos(angleInRadians),
+    y: centerY + radius * Math.sin(angleInRadians),
+  }
+}
+
+function describeArc(x: number, y: number, innerR: number, outerR: number, startAngle: number, endAngle: number) {
+  const startOuter = polarToCartesian(x, y, outerR, endAngle)
+  const endOuter = polarToCartesian(x, y, outerR, startAngle)
+  const startInner = polarToCartesian(x, y, innerR, startAngle)
+  const endInner = polarToCartesian(x, y, innerR, endAngle)
+
+  const arcSweep = endAngle - startAngle <= 180 ? '0' : '1'
+
+  return [
+    'M', startOuter.x, startOuter.y,
+    'A', outerR, outerR, 0, arcSweep, 0, endOuter.x, endOuter.y,
+    'L', startInner.x, startInner.y,
+    'A', innerR, innerR, 0, arcSweep, 1, endInner.x, endInner.y,
+    'Z',
+  ].join(' ')
+}
+
+function extractIstDetails(iso?: string) {
+  if (!iso) return null
+  try {
+    const d = new Date(iso)
+    if (isNaN(d.getTime())) return null
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Kolkata',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(d)
+
+    const getPart = (type: string) => parts.find((p) => p.type === type)?.value || '0'
+    const year = getPart('year')
+    const month = getPart('month')
+    const day = getPart('day')
+    let hour = parseInt(getPart('hour'), 10)
+    if (hour === 24) hour = 0
+    const minute = parseInt(getPart('minute'), 10)
+
+    const dateKey = `${year}-${month}-${day}`
+    const totalMinutes = hour * 60 + minute
+    return { dateKey, hour, minute, totalMinutes }
+  } catch {
+    return null
+  }
+}
+
+interface RunPerformanceEval {
+  dateKey: string
+  dashboardCall: 'BULLISH' | 'BEARISH' | 'NEUTRAL'
+  actualSentiment: 'BULLISH' | 'BEARISH' | null
+  isCorrect: boolean | null
+  niftyPercentChange?: number | null
+  hasClosed: boolean
+}
+
+function evaluateRun(h: PreMarketIndicatorRun): RunPerformanceEval {
+  const legacyRun = h as PreMarketIndicatorRun & { overall?: { overall?: string } }
+  const dashboardCall = (h.direction?.call || legacyRun.overall?.overall || 'NEUTRAL') as 'BULLISH' | 'BEARISH' | 'NEUTRAL'
+
+  const ist = extractIstDetails(h.timestamp)
+  const dateKey = ist ? ist.dateKey : (h.timestamp ? h.timestamp.slice(0, 10) : 'unknown')
+
+  const todayIst = extractIstDetails(new Date().toISOString())?.dateKey
+  const isToday = Boolean(todayIst && dateKey === todayIst)
+
+  // Market close is only considered calculated once the 4:00 PM close job has run:
+  // 1) For today: marketClosedAt must be present (or explicit actualCloseSentiment recorded at close)
+  // 2) For past days: marketClosedAt or actualCloseSentiment from that past session
+  const hasClosed = Boolean(
+    h.marketClosedAt ||
+    (!isToday && (h.actualCloseSentiment === 'BULLISH' || h.actualCloseSentiment === 'BEARISH' || h.actualNiftyClose?.sentiment))
+  )
+
+  let actualSentiment: 'BULLISH' | 'BEARISH' | null = null
+  let niftyPercentChange: number | null = null
+
+  if (hasClosed) {
+    if (h.actualCloseSentiment === 'BULLISH' || h.actualCloseSentiment === 'BEARISH') {
+      actualSentiment = h.actualCloseSentiment
+    } else if (h.actualNiftyClose?.sentiment === 'BULLISH' || h.actualNiftyClose?.sentiment === 'BEARISH') {
+      actualSentiment = h.actualNiftyClose.sentiment
+    } else if (h.actualNiftyClose?.percentChange != null) {
+      actualSentiment = h.actualNiftyClose.percentChange >= 0 ? 'BULLISH' : 'BEARISH'
+    }
+
+    if (h.actualNiftyClose?.percentChange != null) {
+      niftyPercentChange = h.actualNiftyClose.percentChange
+    }
+  }
+
+  // A run is correct only if it had a directional call (BULLISH or BEARISH) and market has closed with matching actual sentiment
+  let isCorrect: boolean | null = null
+  if (hasClosed && actualSentiment && dashboardCall !== 'NEUTRAL') {
+    isCorrect = dashboardCall === actualSentiment
+  }
+
+  return {
+    dateKey,
+    dashboardCall,
+    actualSentiment,
+    isCorrect,
+    niftyPercentChange,
+    hasClosed,
+  }
+}
+
+interface PerformanceTrackerProps {
+  history: PreMarketIndicatorRun[]
+}
+
+function PerformanceTracker({ history }: PerformanceTrackerProps) {
+  const [activeHover, setActiveHover] = useState<'correct' | 'incorrect' | null>(null)
+
+  const { evaluated, neutralExcludedCount } = useMemo(() => {
+    // 1. Group runs by date in IST
+    const dateGroups = new Map<string, PreMarketIndicatorRun[]>()
+    for (const h of history) {
+      const ist = extractIstDetails(h.timestamp)
+      const dateKey = ist ? ist.dateKey : (h.timestamp ? h.timestamp.slice(0, 10) : 'unknown')
+      if (!dateGroups.has(dateKey)) {
+        dateGroups.set(dateKey, [])
+      }
+      dateGroups.get(dateKey)!.push(h)
+    }
+
+    const TARGET_MINUTES = 9 * 60 + 10 // 550 minutes = 9:10 AM IST
+    const evals: RunPerformanceEval[] = []
+    let neutralDates = 0
+
+    dateGroups.forEach((runs) => {
+      // Pick the run closest to 9:10 AM IST on that trading day (ignoring other intra-day runs)
+      let bestRun = runs[0]
+      let minDiff = Infinity
+      for (const r of runs) {
+        const ist = extractIstDetails(r.timestamp)
+        const mins = ist ? ist.totalMinutes : 550
+        const diff = Math.abs(mins - TARGET_MINUTES)
+        if (diff < minDiff) {
+          minDiff = diff
+          bestRun = r
+        }
+      }
+
+      const evalItem = evaluateRun(bestRun)
+
+      // Rule 1: Must have 4:00 PM market close recorded
+      if (!evalItem.hasClosed || !evalItem.actualSentiment) {
+        return
+      }
+
+      // Rule 2: If 9:10 AM direction is NEUTRAL, do NOT consider that date for the pie chart!
+      if (evalItem.dashboardCall === 'NEUTRAL') {
+        neutralDates++
+        return
+      }
+
+      // Evaluated directional session
+      if (evalItem.isCorrect !== null) {
+        evals.push(evalItem)
+      }
+    })
+
+    return {
+      evaluated: evals,
+      neutralExcludedCount: neutralDates,
+    }
+  }, [history])
+
+  const total = evaluated.length
+  const correctCount = evaluated.filter((e) => e.isCorrect === true).length
+  const incorrectCount = evaluated.filter((e) => e.isCorrect === false).length
+  const correctPct = total > 0 ? (correctCount / total) * 100 : 0
+  const incorrectPct = total > 0 ? (incorrectCount / total) * 100 : 0
+
+  const centerX = 95
+  const centerY = 95
+  const outerR = 76
+  const innerR = 52
+  const gap = 2.5
+
+  const correctAngle = total > 0 ? (correctCount / total) * 360 : 0
+
+  const hasBoth = correctCount > 0 && incorrectCount > 0
+  const correctPath = hasBoth
+    ? describeArc(centerX, centerY, innerR, activeHover === 'correct' ? outerR + 4 : outerR, gap / 2, correctAngle - gap / 2)
+    : correctCount > 0
+    ? describeArc(centerX, centerY, innerR, outerR, 0, 359.99)
+    : ''
+
+  const incorrectPath = hasBoth
+    ? describeArc(centerX, centerY, innerR, activeHover === 'incorrect' ? outerR + 4 : outerR, correctAngle + gap / 2, 360 - gap / 2)
+    : incorrectCount > 0
+    ? describeArc(centerX, centerY, innerR, outerR, 0, 359.99)
+    : ''
+
+  return (
+    <div className="pm-performance-card">
+      <div className="pm-perf-header">
+        <div className="pm-perf-header-left">
+          <div className="pm-perf-icon-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+              <path d="M22 12A10 10 0 0 0 12 2v10z" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="pm-perf-title">Performance Tracker</h3>
+            <p className="pm-perf-subtitle">
+              9:10 AM pre-market direction vs 4:00 PM Nifty 50 close {neutralExcludedCount > 0 ? `(${neutralExcludedCount} neutral excluded)` : '(neutral excluded)'}
+            </p>
+          </div>
+        </div>
+        <div className="pm-perf-sessions-badge">
+          <span className="dot" />
+          <span>{total} Daily Sessions Evaluated</span>
+        </div>
+      </div>
+
+      <div className="pm-perf-body">
+        {/* Left: SVG Pie / Donut Chart */}
+        <div className="pm-perf-chart-wrap">
+          <svg className="pm-pie-svg" width="190" height="190" viewBox="0 0 190 190">
+            {/* Base Track */}
+            <circle
+              cx={centerX}
+              cy={centerY}
+              r={(outerR + innerR) / 2}
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.05)"
+              strokeWidth={outerR - innerR}
+            />
+
+            {/* Correct Slice (Green) */}
+            {correctCount > 0 && (
+              <path
+                d={correctPath}
+                fill="#10b981"
+                className={`pm-pie-slice correct ${activeHover === 'correct' ? 'active' : ''}`}
+                onMouseEnter={() => setActiveHover('correct')}
+                onMouseLeave={() => setActiveHover(null)}
+              >
+                <title>Correct: {correctCount} ({correctPct.toFixed(1)}%)</title>
+              </path>
+            )}
+
+            {/* Incorrect Slice (Red) */}
+            {incorrectCount > 0 && (
+              <path
+                d={incorrectPath}
+                fill="#ef4444"
+                className={`pm-pie-slice incorrect ${activeHover === 'incorrect' ? 'active' : ''}`}
+                onMouseEnter={() => setActiveHover('incorrect')}
+                onMouseLeave={() => setActiveHover(null)}
+              >
+                <title>Incorrect: {incorrectCount} ({incorrectPct.toFixed(1)}%)</title>
+              </path>
+            )}
+          </svg>
+
+          {/* Center Info in Donut Hole */}
+          <div className="pm-pie-center-text">
+            <span className="pm-pie-center-pct">
+              {total === 0 ? '—' : activeHover === 'incorrect' ? `${incorrectPct.toFixed(0)}%` : `${correctPct.toFixed(0)}%`}
+            </span>
+            <span className="pm-pie-center-label">
+              {total === 0 ? 'No Data' : activeHover === 'incorrect' ? 'Error Rate' : 'Accuracy'}
+            </span>
+            <span className="pm-pie-center-count">
+              {total === 0 ? '0 sessions' : activeHover === 'incorrect' ? `${incorrectCount} / ${total}` : `${correctCount} / ${total}`}
+            </span>
+          </div>
+        </div>
+
+        {/* Right: Metrics & Breakdown */}
+        <div className="pm-perf-metrics-grid">
+          {/* Correct KPI Card */}
+          <div
+            className={`pm-perf-kpi-card correct ${activeHover === 'correct' ? 'active' : ''}`}
+            onMouseEnter={() => setActiveHover('correct')}
+            onMouseLeave={() => setActiveHover(null)}
+          >
+            <div className="pm-kpi-head">
+              <div className="pm-kpi-tag correct">
+                <span className="dot" />
+                <span>Correct</span>
+              </div>
+              <span className="pm-kpi-pct-pill correct">
+                {correctPct.toFixed(1)}%
+              </span>
+            </div>
+            <div className="pm-kpi-count correct">
+              {correctCount}
+              <span className="pm-kpi-unit">days</span>
+            </div>
+            <p className="pm-kpi-desc">
+              9:10 AM direction matched 4:00 PM Nifty actual close sentiment
+            </p>
+          </div>
+
+          {/* Incorrect KPI Card */}
+          <div
+            className={`pm-perf-kpi-card incorrect ${activeHover === 'incorrect' ? 'active' : ''}`}
+            onMouseEnter={() => setActiveHover('incorrect')}
+            onMouseLeave={() => setActiveHover(null)}
+          >
+            <div className="pm-kpi-head">
+              <div className="pm-kpi-tag incorrect">
+                <span className="dot" />
+                <span>Incorrect</span>
+              </div>
+              <span className="pm-kpi-pct-pill incorrect">
+                {incorrectPct.toFixed(1)}%
+              </span>
+            </div>
+            <div className="pm-kpi-count incorrect">
+              {incorrectCount}
+              <span className="pm-kpi-unit">days</span>
+            </div>
+            <p className="pm-kpi-desc">
+              Intraday trend reversed against 9:10 AM pre-market setup
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Progress Bar Distribution */}
+      <div className="pm-perf-bar-container">
+        <div className="pm-perf-bar-info">
+          <span>Prediction Distribution: <b>{correctCount} Correct</b> vs <b>{incorrectCount} Incorrect</b></span>
+          <span><b>{correctPct.toFixed(1)}%</b> Accuracy Rate</span>
+        </div>
+        <div className="pm-perf-bar-track">
+          <div
+            className="pm-perf-bar-fill correct"
+            style={{ width: `${correctPct}%` }}
+            title={`Correct: ${correctCount} (${correctPct.toFixed(1)}%)`}
+          />
+          <div
+            className="pm-perf-bar-fill incorrect"
+            style={{ width: `${incorrectPct}%` }}
+            title={`Incorrect: ${incorrectCount} (${incorrectPct.toFixed(1)}%)`}
+          />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function PreMarketPage() {
   const [currentRun, setCurrentRun] = useState<PreMarketIndicatorRun | null>(null)
-  const [history, setHistory] = useState<PreMarketIndicatorRun[]>([])
+  const [history, setHistory] = useState<PreMarketIndicatorRun[]>(FALLBACK_HISTORY)
   const [loading, setLoading] = useState(true)
   const [running, setRunning] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
@@ -350,9 +759,9 @@ export default function PreMarketPage() {
         <SignalCard
           label="NSE Advances/Declines"
           icon="bar-chart"
-          tone="amber"
+          tone={getSignalTone(breadth)}
           value={breadth?.raw ? `${breadth.raw.advances} / ${breadth.raw.declines}` : '23 / 26'}
-          subtitle="Advances / Declines"
+          subtitle={breadth?.raw ? `${breadth.raw.advances} Adv · ${breadth.raw.declines} Dec` : 'Advances / Declines'}
           historyRuns={history}
           signalKey="breadth"
           currentVal={(breadth?.raw?.advances ?? 23) - (breadth?.raw?.declines ?? 26)}
@@ -372,9 +781,9 @@ export default function PreMarketPage() {
       </div>
 
       {/* Volatility Full-Width Card: India VIX */}
-      <div className="pm-card pm-volatility-card purple">
+      <div className="pm-card pm-volatility-card">
         <div className="pm-vol-left">
-          <div className="pm-card-icon purple">
+          <div className={`pm-card-icon ${isVolatile ? 'bearish' : 'neutral'}`}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
             </svg>
@@ -392,11 +801,11 @@ export default function PreMarketPage() {
 
         <div className="pm-vol-graph-wrap">
           <SparklineGlow
-            tone="purple"
+            tone={isVolatile ? 'bearish' : 'neutral'}
             historyRuns={history}
             signalKey="vix"
             currentVal={vix?.raw?.value ?? 11.7}
-            height={56}
+            height={50}
             width={480}
           />
         </div>
@@ -420,6 +829,9 @@ export default function PreMarketPage() {
           Source: Market Data
         </div>
       </div>
+
+      {/* Performance Tracker Card */}
+      <PerformanceTracker history={history} />
 
       {/* Historical Runs Accordion */}
       {history.length > 0 && (
@@ -457,6 +869,7 @@ export default function PreMarketPage() {
                   <tr>
                     <th>Time (IST)</th>
                     <th>Direction</th>
+                    <th>Actual Close Sentiment</th>
                     <th>Volatility</th>
                     <th>NASDAQ</th>
                     <th>Dow Jones</th>
@@ -467,10 +880,13 @@ export default function PreMarketPage() {
                 </thead>
                 <tbody>
                   {history.map((h, idx) => {
-                    const hCall = h.direction?.call || 'NEUTRAL'
+                    const legacyH = h as PreMarketIndicatorRun & { overall?: { overall?: string } }
+                    const hCall = h.direction?.call || legacyH.overall?.overall || 'NEUTRAL'
                     const hTone = hCall === 'BULLISH' ? 'bullish' : hCall === 'BEARISH' ? 'bearish' : 'neutral'
                     const hVol = h.volatility?.state || 'STABLE'
                     const sMap = Object.fromEntries((h.signals || []).map((s) => [s.key, s]))
+                    const evalItem = evaluateRun(h)
+
                     return (
                       <tr key={h.timestamp || idx}>
                         <td>{formatTime(h.timestamp)}</td>
@@ -479,6 +895,42 @@ export default function PreMarketPage() {
                             <span className="dot" />
                             {hCall}
                           </span>
+                        </td>
+                        <td>
+                          <div className="pm-actual-cell">
+                            {evalItem.hasClosed && evalItem.actualSentiment ? (
+                              <>
+                                <span className={`pm-pill-small ${evalItem.actualSentiment === 'BULLISH' ? 'bullish' : 'bearish'}`}>
+                                  <span className="dot" />
+                                  {evalItem.actualSentiment}
+                                </span>
+                                {evalItem.niftyPercentChange != null && (
+                                  <span className={`pm-nifty-pct ${evalItem.niftyPercentChange >= 0 ? 'bullish' : 'bearish'}`}>
+                                    {evalItem.niftyPercentChange > 0 ? '+' : ''}{evalItem.niftyPercentChange.toFixed(2)}%
+                                  </span>
+                                )}
+                              </>
+                            ) : (
+                              <span className="pm-pill-small neutral">
+                                <span className="dot" />
+                                Pending Close
+                              </span>
+                            )}
+
+                            {evalItem.dashboardCall === 'NEUTRAL' ? (
+                              <span className="pm-perf-tag neutral" title="Neutral pre-market direction is excluded from accuracy pie chart">
+                                Neutral (Excluded)
+                              </span>
+                            ) : !evalItem.hasClosed ? (
+                              <span className="pm-perf-tag pending" title="Pending 4:00 PM market close">
+                                Pending Close (4:00 PM)
+                              </span>
+                            ) : (
+                              <span className={`pm-perf-tag ${evalItem.isCorrect ? 'correct' : 'incorrect'}`}>
+                                {evalItem.isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                              </span>
+                            )}
+                          </div>
                         </td>
                         <td>
                           <span className={`pm-pill-small ${hVol === 'VOLATILE' ? 'volatile' : 'stable'}`}>
@@ -523,7 +975,7 @@ export default function PreMarketPage() {
             </div>
             <div className="pm-modal-body">
               <p>
-                The Pre-Market Composite Sentiment Indicator measures global directional momentum and domestic volatility between 9:00 AM and 9:05 AM IST before the Indian equity market opens.
+                The Pre-Market Composite Sentiment Indicator measures global directional momentum and domestic volatility at 9:10 AM IST after pre-open settlement and before the Indian equity market opens at 9:15 AM. An automated 4:00 PM IST market-close evaluation tracks the day's final Nifty 50 closing sentiment to calculate prediction accuracy.
               </p>
               <div className="pm-modal-grid">
                 <div className="pm-modal-box">
@@ -768,15 +1220,15 @@ function SparklineGlow({
 
   // Colors based on tone
   const colors = {
-    bearish: { stroke: '#ff3b69', fillStart: 'rgba(255, 59, 105, 0.35)', fillEnd: 'rgba(255, 59, 105, 0.0)' },
-    bullish: { stroke: '#22c55e', fillStart: 'rgba(34, 197, 94, 0.35)', fillEnd: 'rgba(34, 197, 94, 0.0)' },
-    amber: { stroke: '#fbbf24', fillStart: 'rgba(251, 191, 36, 0.35)', fillEnd: 'rgba(251, 191, 36, 0.0)' },
-    purple: { stroke: '#c084fc', fillStart: 'rgba(192, 132, 252, 0.35)', fillEnd: 'rgba(192, 132, 252, 0.0)' },
-    neutral: { stroke: '#94a3b8', fillStart: 'rgba(148, 163, 184, 0.25)', fillEnd: 'rgba(148, 163, 184, 0.0)' },
-  }[tone] || { stroke: '#94a3b8', fillStart: 'rgba(148, 163, 184, 0.25)', fillEnd: 'rgba(148, 163, 184, 0.0)' }
+    bearish: { stroke: '#ef4444', fillStart: 'rgba(239, 68, 68, 0.12)', fillEnd: 'rgba(239, 68, 68, 0.0)' },
+    bullish: { stroke: '#10b981', fillStart: 'rgba(16, 185, 129, 0.12)', fillEnd: 'rgba(16, 185, 129, 0.0)' },
+    amber: { stroke: '#f59e0b', fillStart: 'rgba(245, 158, 11, 0.10)', fillEnd: 'rgba(245, 158, 11, 0.0)' },
+    purple: { stroke: '#38bdf8', fillStart: 'rgba(56, 189, 248, 0.10)', fillEnd: 'rgba(56, 189, 248, 0.0)' },
+    neutral: { stroke: '#94a3b8', fillStart: 'rgba(148, 163, 184, 0.08)', fillEnd: 'rgba(148, 163, 184, 0.0)' },
+  }[tone] || { stroke: '#94a3b8', fillStart: 'rgba(148, 163, 184, 0.08)', fillEnd: 'rgba(148, 163, 184, 0.0)' }
 
   const gradId = `pm-grad-${signalKey}-${tone}`
-  const filterId = `pm-glow-${signalKey}-${tone}`
+  const lastCoord = coords[coords.length - 1]
 
   return (
     <svg className={isHero ? 'pm-hero-chart-svg' : 'pm-card-graph-svg'} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
@@ -785,41 +1237,39 @@ function SparklineGlow({
           <stop offset="0%" stopColor={colors.fillStart} />
           <stop offset="100%" stopColor={colors.fillEnd} />
         </linearGradient>
-        <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="3.5" result="coloredBlur" />
-          <feMerge>
-            <feMergeNode in="coloredBlur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
       </defs>
 
       {/* Area gradient under the line */}
       <path d={areaPath} fill={`url(#${gradId})`} />
 
-      {/* Neon glowing line */}
+      {/* Crisp financial trendline */}
       <path
         d={linePath}
         fill="none"
         stroke={colors.stroke}
-        strokeWidth={isHero ? '2.4' : '2.0'}
+        strokeWidth={isHero ? '2.0' : '1.8'}
         strokeLinecap="round"
         strokeLinejoin="round"
-        filter={`url(#${filterId})`}
       />
 
-      {/* Vertex dots */}
-      {coords.map((c, i) => (
-        <circle
-          key={i}
-          cx={c.x}
-          cy={c.y}
-          r={isHero ? 3.0 : 2.2}
-          fill="#ffffff"
-          stroke={colors.stroke}
-          strokeWidth="1.8"
-        />
-      ))}
+      {/* Single clean endpoint pulse indicator */}
+      {lastCoord && (
+        <>
+          <circle
+            cx={lastCoord.x}
+            cy={lastCoord.y}
+            r={isHero ? 4.5 : 3.5}
+            fill={colors.stroke}
+            opacity="0.25"
+          />
+          <circle
+            cx={lastCoord.x}
+            cy={lastCoord.y}
+            r={isHero ? 2.5 : 2.0}
+            fill={colors.stroke}
+          />
+        </>
+      )}
     </svg>
   )
 }

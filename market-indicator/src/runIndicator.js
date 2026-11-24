@@ -60,7 +60,10 @@ async function runIndicator() {
     direction,
     volatility,
     combined,
-    signals
+    signals,
+    actualCloseSentiment: undefined,
+    actualNiftyClose: undefined,
+    marketClosedAt: undefined
   };
 
   appendRun(run);

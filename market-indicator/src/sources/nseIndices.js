@@ -22,6 +22,10 @@ async function fetchVixAndBreadth() {
   const advances = Number(niftyEntry.advances);
   const declines = Number(niftyEntry.declines);
 
+  const niftyCloseVal = Number(niftyEntry.last)
+  const niftyPctChange = Number(niftyEntry.percentChange)
+  const niftySentiment = (!isNaN(niftyPctChange) && niftyPctChange >= 0) ? "BULLISH" : "BEARISH"
+
   return {
     vix: {
       key: "vix",
@@ -34,8 +38,13 @@ async function fetchVixAndBreadth() {
       label: "NSE Advances/Declines",
       raw: { advances, declines },
       vote: classifyBreadth(advances, declines)
+    },
+    nifty: {
+      close: niftyCloseVal,
+      percentChange: niftyPctChange,
+      sentiment: niftySentiment
     }
   };
 }
 
-module.exports = { fetchVixAndBreadth };
+module.exports = { fetchVixAndBreadth, fetchNseAllIndices };

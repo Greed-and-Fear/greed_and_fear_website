@@ -1,9 +1,34 @@
 import { graphqlRequest } from './client'
 import { scanStockUniverse, type ProcessedStockData, type RawStockMWPLRecord } from '../services/greedFearScanner'
 
+export const GET_LATEST_MWPL_TRADE_DATE_QUERY = `
+  query GetLatestMWPLTradeDate {
+    stock_mwpl_history(order_by: [{ trade_date: desc }], limit: 1) {
+      trade_date
+    }
+  }
+`
+
+export async function fetchLatestMWPLTradeDate(): Promise<string | null> {
+  try {
+    const result = await graphqlRequest<{ stock_mwpl_history: Array<{ trade_date: string }> }>(
+      GET_LATEST_MWPL_TRADE_DATE_QUERY,
+      {},
+      'GetLatestMWPLTradeDate',
+    )
+    return result.stock_mwpl_history[0]?.trade_date ?? null
+  } catch (error) {
+    console.error('Failed to fetch latest MWPL trade date:', error)
+    return null
+  }
+}
+
 export const STOCK_MWPL_QUERY = `
-  query StockMWPLQuery {
-    stock_mwpl_history(order_by: [{ scrip_name: asc }, { trade_date: desc }]) {
+  query StockMWPLQuery($where: stock_mwpl_history_bool_exp) {
+    stock_mwpl_history(
+      where: $where
+      order_by: [{ scrip_name: asc }, { trade_date: desc }]
+    ) {
       stock_mwpl_history_id
       stock_id
       trade_date
@@ -35,12 +60,22 @@ interface StockMWPLHistoryQueryResult {
   stock_mwpl_history: RawStockMWPLRecord[]
 }
 
-export async function fetchStockMWPLHistory(): Promise<RawStockMWPLRecord[]> {
-  const result = await graphqlRequest<StockMWPLHistoryQueryResult>(STOCK_MWPL_QUERY, {}, 'StockMWPLQuery')
+export async function fetchStockMWPLHistory(tradeDate?: string): Promise<RawStockMWPLRecord[]> {
+  const variables = tradeDate ? { where: { trade_date: { _eq: tradeDate } } } : {}
+  const result = await graphqlRequest<StockMWPLHistoryQueryResult, typeof variables>(
+    STOCK_MWPL_QUERY,
+    variables,
+    'StockMWPLQuery',
+  )
   return result.stock_mwpl_history
 }
 
-export async function getScannedStockData(): Promise<ProcessedStockData[]> {
+export async function getScannedStockData(tradeDate?: string): Promise<ProcessedStockData[]> {
+  if (tradeDate) {
+    const records = await fetchStockMWPLHistory(tradeDate)
+    return scanStockUniverse(records)
+  }
+  // Default: load all universe records for Top MWPL opportunities table
   return scanStockUniverse(await fetchStockMWPLHistory())
 }
 
@@ -458,6 +493,10 @@ export interface MwplSaturationStock {
   day0Mwpl: number
   day1Mwpl: number | null
   day2Mwpl: number | null
+  // Raw exchange MWPL limits for each trading day
+  day0MwplLimit: number
+  day1MwplLimit: number | null
+  day2MwplLimit: number | null
   day1MwplChange: number | null
   day2MwplChange: number | null
 
@@ -586,11 +625,11 @@ export async function getBseMwplSaturationData(): Promise<MwplSaturationStock[]>
       ? Number(((day2OI / day2MwplShares) * 100).toFixed(2))
       : null
 
-    // Changes
-    // day_1_change = Day 0 MWPL - Day 1 MWPL
-    const day1MwplChange = day1Mwpl != null ? Number((day0Mwpl - day1Mwpl).toFixed(2)) : null
-    // day_2_change = Day 1 MWPL - Day 2 MWPL
-    const day2MwplChange = day1Mwpl != null && day2Mwpl != null ? Number((day1Mwpl - day2Mwpl).toFixed(2)) : null
+    // Raw MWPL limit changes, aligned with the values displayed in the table.
+    // day_1_change = today's MWPL - previous trading day's MWPL
+    const day1MwplChange = day1Row ? day0MwplShares - day1MwplShares : null
+    // day_2_change = today's MWPL - MWPL from two trading days ago
+    const day2MwplChange = day2Row ? day0MwplShares - day2MwplShares : null
 
     // OI Changes
     const day1OIChange = day1OI != null ? day0OI - day1OI : null
@@ -631,6 +670,9 @@ export async function getBseMwplSaturationData(): Promise<MwplSaturationStock[]>
       day0Mwpl,
       day1Mwpl,
       day2Mwpl,
+      day0MwplLimit: day0MwplShares,
+      day1MwplLimit: day1Row ? day1MwplShares : null,
+      day2MwplLimit: day2Row ? day2MwplShares : null,
       day1MwplChange,
       day2MwplChange,
 

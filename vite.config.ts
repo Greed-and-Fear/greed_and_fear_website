@@ -34,14 +34,22 @@ function preMarketApiPlugin(): Plugin {
         if (!req.url) return next()
         const parsedUrl = new URL(req.url, 'http://localhost')
 
-        if (parsedUrl.pathname === '/api/premarket/latest' || parsedUrl.pathname === '/api/latest') {
+        if (
+          parsedUrl.pathname === '/indicator-api/latest' ||
+          parsedUrl.pathname === '/api/premarket/latest' ||
+          parsedUrl.pathname === '/api/latest'
+        ) {
           res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
           const history = readHistory(1)
           return res.end(JSON.stringify(history[0] || null))
         }
 
-        if (parsedUrl.pathname === '/api/premarket/history' || parsedUrl.pathname === '/api/history') {
+        if (
+          parsedUrl.pathname === '/indicator-api/history' ||
+          parsedUrl.pathname === '/api/premarket/history' ||
+          parsedUrl.pathname === '/api/history'
+        ) {
           res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
           const limit = Number(parsedUrl.searchParams.get('limit')) || 60
@@ -49,7 +57,12 @@ function preMarketApiPlugin(): Plugin {
           return res.end(JSON.stringify(history))
         }
 
-        if (req.method === 'POST' && (parsedUrl.pathname === '/api/premarket/run-now' || parsedUrl.pathname === '/api/run-now')) {
+        if (
+          (req.method === 'POST' || req.method === 'GET') &&
+          (parsedUrl.pathname === '/indicator-api/run-now' ||
+            parsedUrl.pathname === '/api/premarket/run-now' ||
+            parsedUrl.pathname === '/api/run-now')
+        ) {
           res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
           exec(`node "${RUNNER_FILE}"`, { cwd: REPO_PATH }, (error: ExecException | null, stdout: string | Buffer, stderr: string | Buffer) => {
@@ -71,6 +84,38 @@ function preMarketApiPlugin(): Plugin {
               return res.end(JSON.stringify(history[0] || { ok: true }))
             }
           })
+          return
+        }
+
+        if (
+          (req.method === 'POST' || req.method === 'GET') &&
+          (parsedUrl.pathname === '/indicator-api/record-close' ||
+            parsedUrl.pathname === '/api/premarket/record-close' ||
+            parsedUrl.pathname === '/api/record-close')
+        ) {
+          res.setHeader('Content-Type', 'application/json')
+          res.setHeader('Access-Control-Allow-Origin', '*')
+          exec(
+            `node -e "const { recordMarketClose } = require('./src/scheduler'); recordMarketClose().then(r => console.log(JSON.stringify(r))).catch(e => { console.error(e); process.exit(1); })"`,
+            { cwd: REPO_PATH },
+            (error: ExecException | null, stdout: string | Buffer, stderr: string | Buffer) => {
+              if (error) {
+                console.error('recordMarketClose error:', stderr.toString() || error.message)
+                res.statusCode = 500
+                return res.end(JSON.stringify({ error: error.message }))
+              }
+              try {
+                const strOutput = stdout.toString()
+                const jsonMatch = strOutput.match(/\{[\s\S]*\}/)
+                if (jsonMatch) {
+                  return res.end(jsonMatch[0])
+                }
+                return res.end(JSON.stringify({ ok: true }))
+              } catch {
+                return res.end(JSON.stringify({ ok: true }))
+              }
+            }
+          )
           return
         }
 

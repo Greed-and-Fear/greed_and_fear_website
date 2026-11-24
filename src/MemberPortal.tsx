@@ -12,7 +12,10 @@ import GlobalIndicesPage from './GlobalIndicesPage'
 import FavoriteStocksPage from './FavoriteStocksPage'
 import MwplSaturationPage from './MwplSaturationPage'
 import PreMarketPage from './PreMarketPage'
+import ChartLibraryPage from './ChartLibraryPage'
+import TradingBackground from './components/TradingBackground'
 import logo from '../images/logo/logos.jpeg'
+import MwplPositionFlow from './components/MwplPositionFlow'
 import './member.css'
 import whiteLogo from '../images/logo/namedWhiteLogo.png'
 import normalWhiteLogo from '../images/logo/whiteLogo.png'
@@ -47,6 +50,8 @@ export default function MemberPortal({ theme, onThemeChange }: PortalProps) {
     <Route path="/market-data" element={<MarketDataPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/favorites" element={<FavoritesDashboardPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="/global-indices" element={<GlobalIndicesAdminPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/chart-library" element={<ChartLibraryPortalPage theme={theme} onThemeChange={onThemeChange} />} />
+    <Route path="/charts" element={<ChartLibraryPortalPage theme={theme} onThemeChange={onThemeChange} />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
   </Routes>
 }
@@ -64,6 +69,7 @@ function LoginPage({ theme, onThemeChange }: PortalProps) {
     try { await login(String(data.get('email')), String(data.get('password'))); navigate(getReturnPath(location.state), { replace: true }) } catch (reason) { setError(getApiErrorMessage(reason, 'Unable to sign in.')) } finally { setLoading(false) }
   }
   return <main className="login-page">
+    <TradingBackground theme={theme} variant="subtle" />
     <header className="login-topbar"><Link to="/"><img src={theme === 'dark' ? logo : whiteLogo} alt="Greed and Fear" /></Link><div><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link to="/" className="back-link">Back to home</Link></div></header>
     <section className="login-card">
       <img className="login-mark" src={theme === 'dark' ? normalLogo : normalWhiteLogo} alt="" />
@@ -89,13 +95,15 @@ const navigation = [
   ['All stocks', '/market-data', 'AS'],
   ['Favorite stocks', '/favorites', '★'],
   ['Pre-market', '/sentiment', 'PM'],
+  ['Chart library', '/chart-library', 'CL'],
 ] as const
 
 function PortalLayout({ children, theme, onThemeChange, title, eyebrow = 'Member intelligence' }: PortalProps & { children: ReactNode; title: string; eyebrow?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   return <div className="portal-shell">
-    <aside className={menuOpen ? 'portal-sidebar open' : 'portal-sidebar'}><Link className="portal-logo" to="/"><img src={logo} alt="Greed and Fear" /></Link><nav>{navigation.map(([label, href, icon]) => <NavLink to={href} className={({ isActive }) => isActive && !href.includes('#') ? 'active' : undefined} key={label} onClick={() => setMenuOpen(false)}><span>{icon}</span>{label}</NavLink>)}</nav><div className="upgrade-card"><p>Greed & Fear Pro</p><small>Unlock advanced analytics, alerts and market tools.</small><Link to="/products">View plans</Link></div></aside>
+    <TradingBackground theme={theme} variant="subtle" />
+    <aside className={menuOpen ? 'portal-sidebar open' : 'portal-sidebar'}><Link className="portal-logo" to="/"><img src={logo} alt="Greed and Fear" /></Link><nav>{navigation.map(([label, href, icon]) => <NavLink to={href} className={({ isActive }) => isActive && !href.includes('#') ? 'active' : undefined} key={label} onClick={() => setMenuOpen(false)}><span>{icon}</span>{label}</NavLink>)}</nav></aside>
     <div className="portal-workspace"><header className="portal-header"><button className="portal-menu" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle member navigation">Menu</button><div><span className="market-time">Greed & Fear market API</span><span className="live-pill">Connected</span><ThemeToggle theme={theme} onChange={onThemeChange} compact /><Link className="run-button" to="/dashboard">Refresh view</Link><span className="member-avatar">{user?.name.slice(0, 1).toUpperCase() ?? 'M'}</span></div></header><div className="portal-content"><div className="portal-page-title"><div><p>{eyebrow}</p><h1>{title}</h1></div><button className="portal-signout" onClick={() => void logout()}>Sign out</button></div>{children}</div></div>
   </div>
 }
@@ -162,7 +170,19 @@ function DashboardPage(props: PortalProps) {
   }, [])
 
   const countSignal = (signal: string) => stocks.filter((stock) => stock.signal === signal).length
-  const banWatchCount = stocks.filter((stock) => stock.mwplUtilizationPercent >= 80 || stock.mwplRiskZone === 'Ban zone' || stock.mwplRiskZone === 'High risk').length
+
+  // Find the latest trade date present in the universe so F&O Ban Watch only shows today's / latest date's data
+  const latestTradeDate = stocks.reduce((max, s) => (s.latestTradeDate && s.latestTradeDate > max ? s.latestTradeDate : max), '')
+
+  // F&O Ban Watch strictly shows stocks from the latest trading date that meet the ban watch threshold
+  const banWatch = [...stocks]
+    .filter((stock) =>
+      (!latestTradeDate || stock.latestTradeDate === latestTradeDate) &&
+      (stock.mwplUtilizationPercent >= 80 || stock.mwplRiskZone === 'Ban zone' || stock.mwplRiskZone === 'High risk')
+    )
+    .sort((a, b) => b.mwplUtilizationPercent - a.mwplUtilizationPercent)
+
+  const banWatchCount = banWatch.length
   const summary = [
     ['Ban watch', String(banWatchCount), 'High ban risk'],
     ['Long builders', String(countSignal('Long build-up')), 'Strong long build-up'],
@@ -171,80 +191,25 @@ function DashboardPage(props: PortalProps) {
     ['Long unwinding', String(countSignal('Long unwinding')), 'Existing longs unwinding'],
     ['Scan universe', String(stocks.length), 'Tracked F&O stocks'],
   ]
-  const banWatch = [...stocks].sort((a, b) => b.mwplUtilizationPercent - a.mwplUtilizationPercent).slice(0, 4)
 
   return <PortalLayout {...props} title="MWPL institutional tracker">
     <p className="portal-subtitle">Identify position build-up and F&O ban candidates from one clear view.</p>
     {error && <p className="portal-error" role="alert">{error}</p>}
-    <section className="metric-grid">{summary.map(([label, value, detail], index) => <article key={label}><i className={`metric-icon tone-${index}`}>{index + 1}</i><div><span>{label}</span><strong>{value}</strong><small>{detail}</small></div></article>)}</section>
+    <section className="metric-grid">
+      {summary.map(([label, value, detail], index) => (
+        <article key={label}>
+          <i className={`metric-icon tone-${index}`}>{index + 1}</i>
+          <div>
+            <span>{label}</span>
+            <strong>{value}</strong>
+            <small>{detail}</small>
+          </div>
+        </article>
+      ))}
+    </section>
     <div className="dashboard-grid">
       <section className="portal-panel opportunities-panel" id="opportunities">
-        <PanelHeading title="Top MWPL opportunities" />
-        <div className="table-scroll">
-          <table className="appsmith-styled-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Stock</th>
-                <th>Price %</th>
-                <th>Day 0 MWPL</th>
-                <th>Day 1 MWPL</th>
-                <th>Day 2 MWPL</th>
-                <th>day_1_change</th>
-                <th>day_2_change</th>
-                <th>Day 0 OI</th>
-                <th>Day 1 OI</th>
-                <th>Day 2 OI</th>
-                <th>1D OI Change</th>
-                <th>2D OI Change</th>
-                <th>Signal</th>
-                <th>Risk</th>
-              </tr>
-            </thead>
-            <tbody>
-              {stocks.map((row, index) => (
-                <tr key={row.symbol} title={row.reasons.join(' | ')}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <div className="stock-info-inline">
-                      <strong>{row.symbol}</strong>
-                      <span className={`exchange-pill ${(row.exchange || 'NSE').toLowerCase()}`}>{row.exchange || 'NSE'}</span>
-                    </div>
-                  </td>
-                  <Delta value={row.priceChangePercent} />
-                  <td>
-                    <span className="mwpl-val-bold">{row.day0Mwpl.toFixed(1)}%</span>
-                    <Meter value={row.day0Mwpl} />
-                  </td>
-                  <td>{row.day1Mwpl != null ? `${row.day1Mwpl.toFixed(1)}%` : '—'}</td>
-                  <td>{row.day2Mwpl != null ? `${row.day2Mwpl.toFixed(1)}%` : '—'}</td>
-                  <ChangeBadge value={row.day1MwplChange} />
-                  <ChangeBadge value={row.day2MwplChange} />
-                  <td title={`Day 0 OI: ${row.day0OI.toLocaleString('en-IN')}`}>
-                    <strong>{formatCompactNumber(row.day0OI)}</strong>
-                  </td>
-                  <td title={row.day1OI != null ? `Day 1 OI: ${row.day1OI.toLocaleString('en-IN')}` : undefined}>
-                    {row.day1OI != null ? formatCompactNumber(row.day1OI) : '—'}
-                  </td>
-                  <td title={row.day2OI != null ? `Day 2 OI: ${row.day2OI.toLocaleString('en-IN')}` : undefined}>
-                    {row.day2OI != null ? formatCompactNumber(row.day2OI) : '—'}
-                  </td>
-                  <Delta value={row.oi1DayChangePercent} />
-                  <Delta value={row.oi2DayChangePercent} />
-                  <td><span className={`signal ${row.signal.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>{row.signal}</span></td>
-                  <td><span className={`risk-badge risk-${row.mwplRiskZone.toLowerCase().replace(/\s+/g, '-')}`}>{row.mwplRiskZone}</span></td>
-                </tr>
-              ))}
-              {stocks.length === 0 && (
-                <tr>
-                  <td colSpan={15} style={{ textAlign: 'center', padding: '24px' }}>
-                    {loading ? 'Loading live stock data...' : 'No stock records found.'}
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        <MwplPositionFlow stocks={stocks} loading={loading} />
       </section>
       <section className="portal-panel ban-panel" id="ban-watch">
         <PanelHeading title="F&O ban watch" />
@@ -341,16 +306,13 @@ function GlobalIndicesAdminPage(props: PortalProps) {
   </PortalLayout>
 }
 
-function PanelHeading({ title, action }: { title: string; action?: string }) { return <header className="panel-heading"><h2>{title}</h2>{action && <button>{action} →</button>}</header> }
-function Delta({ value }: { value: number }) { return <td className={value >= 0 ? 'positive' : 'negative'}>{value >= 0 ? '+' : ''}{value}%</td> }
-function ChangeBadge({ value }: { value: number | null | undefined }) {
-  if (value == null || isNaN(value)) return <td>—</td>
-  return (
-    <td className={value >= 0 ? 'positive' : 'negative'}>
-      {value >= 0 ? '+' : ''}{value.toFixed(2)}
-    </td>
-  )
+function ChartLibraryPortalPage(props: PortalProps) {
+  return <PortalLayout {...props} title="Chart library" eyebrow="Technical analysis repository">
+    <ChartLibraryPage />
+  </PortalLayout>
 }
+
+function PanelHeading({ title, action }: { title: string; action?: string }) { return <header className="panel-heading"><h2>{title}</h2>{action && <button>{action} →</button>}</header> }
 function Meter({ value }: { value: number }) { return <span className="meter"><i style={{ width: `${Math.min(value, 100)}%` }} /></span> }
 
 function MemberAuthLoading({ theme }: { theme: Theme }) {
@@ -360,20 +322,5 @@ function MemberAuthLoading({ theme }: { theme: Theme }) {
 function getReturnPath(state: unknown) {
   const from = state && typeof state === 'object' && 'from' in state ? (state as { from?: unknown }).from : null
   return typeof from === 'string' && from.startsWith('/') && !from.startsWith('/login') ? from : '/dashboard'
-}
-
-function formatCompactNumber(num: number): string {
-  if (num == null || isNaN(num) || num === 0) return '0'
-  const abs = Math.abs(num)
-  if (abs >= 10000000) {
-    return `${(num / 10000000).toFixed(2)} Cr`
-  }
-  if (abs >= 100000) {
-    return `${(num / 100000).toFixed(2)} L`
-  }
-  if (abs >= 1000) {
-    return `${(num / 1000).toFixed(1)} K`
-  }
-  return num.toLocaleString('en-IN')
 }
 
